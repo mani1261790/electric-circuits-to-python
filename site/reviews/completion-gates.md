@@ -1078,3 +1078,11 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 固定Chrome再測定はPrelude 11頁、本文3,527頁、合算3,538頁、min/max 24/40、under24=0、107/107 HTML hash一致。`tmp/page-counts.json`は生成`2026-09-04T16:32:02+00:00`、SHA-256=`3cfb4867504c1979f050c01c4d4ac28789e2354165d831c6d14e945cbe725839`である。公開bundle初回検査は1,071ファイル、約21.2MB、HTML 323文書（root/404を含む）、local link 44,791件、failures 0である。
 
 公開は可視性と配布経路を追加するが、学習ゲートの判定を変更しない。引き続き **P0=0 / P1=1 / P2=2 / `learner-ready`保留**であり、公開ページでは「公開制作版」と表示する。
+
+## 115. 2026-09-05 GitHub Pages初回公開確認
+
+公開専用リポジトリ `https://github.com/mani1261790/electric-circuits-to-python` をpublicとして作成し、制作原本とは別のGit履歴へ公開bundleだけを保存した。Pagesはcustom GitHub Actions workflowで構成し、現行commit `f070018dea30c5aa67d4877afb56c387c100d6b3`、Actions run `33896118145` はpublication検査、artifact upload、deployをすべてpassした。公開URLは `https://mani1261790.github.io/electric-circuits-to-python/`、HTTPS enforced=trueである。
+
+公開後にroot、HTML目次、第1章、runner artifact、CC BYライセンスの各URLを外部取得し、すべてHTTP 200を確認した。公開リポジトリのmainはorigin/mainと同期し、Pages workflowはNode 24対応のcheckout v7、configure-pages v6、upload-pages-artifact v5、deploy-pages v5へ更新済みである。
+
+この確認は公開配信ゲートのpassであり、教材内容の未実行acceptance、negative、章固有change/fault、外部domain・物理測定を閉じない。判定は **P0=0 / P1=1 / P2=2 / `learner-ready`保留**を維持する。
