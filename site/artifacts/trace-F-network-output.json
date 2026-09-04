@@ -1,0 +1,279 @@
+{
+  "checks": {
+    "boundary_is_explicit": true,
+    "device_not_claimed": true,
+    "event_ids_unique": true,
+    "event_schema_complete": true,
+    "host_operation_succeeded": true,
+    "loopback_payload_matches": true,
+    "measured_is_false": true,
+    "parent_chain_is_closed": true,
+    "payload_hash_is_stable": true,
+    "physical_measurement_is_false": true,
+    "sequence_is_monotonic": true,
+    "source_reference_is_present": true,
+    "trace_id_is_consistent": true
+  },
+  "cpython": {
+    "ast": "Module(body=[Expr(value=Call(func=Name(id='socket_send', ctx=Load()), args=[Name(id='data', ctx=Load())]))])",
+    "bytecode": [
+      "  0           RESUME                   0",
+      "",
+      "  1           LOAD_NAME                0 (socket_send)",
+      "              PUSH_NULL",
+      "              LOAD_NAME                1 (data)",
+      "              CALL                     1",
+      "              POP_TOP",
+      "              LOAD_CONST               0 (None)",
+      "              RETURN_VALUE"
+    ],
+    "measured": false,
+    "runtime": "CPython",
+    "source": "socket_send(data)",
+    "source_kind": "external_tool_output_without_physical_measurement",
+    "tokens": [
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            11
+          ]
+        ],
+        "value": "socket_send"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            12
+          ]
+        ],
+        "value": "("
+      },
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            16
+          ]
+        ],
+        "value": "data"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            16
+          ],
+          [
+            1,
+            17
+          ]
+        ],
+        "value": ")"
+      },
+      {
+        "kind": "NEWLINE",
+        "span": [
+          [
+            1,
+            17
+          ],
+          [
+            1,
+            18
+          ]
+        ],
+        "value": ""
+      },
+      {
+        "kind": "ENDMARKER",
+        "span": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "value": ""
+      }
+    ],
+    "version": "3.14.7"
+  },
+  "display_example": "socket_send(data)",
+  "events": [
+    {
+      "artifact": "trace-atlas",
+      "event": "source_call",
+      "event_id": "trace-F-network-output:source:1",
+      "layer": "source",
+      "measured": false,
+      "parent_event_id": null,
+      "sequence": 0,
+      "source": "socket_send(data)",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        17
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-F-network-output"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "socket_send_call",
+      "event_id": "trace-F-network-output:ast:2",
+      "function": "socket_send",
+      "layer": "AST",
+      "measured": false,
+      "node_type": "Call",
+      "parent_event_id": "trace-F-network-output:source:1",
+      "sequence": 1,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        17
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-F-network-output"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "compile_socket_send",
+      "event_id": "trace-F-network-output:bytecode:3",
+      "instruction_count": 11,
+      "layer": "bytecode",
+      "measured": false,
+      "parent_event_id": "trace-F-network-output:ast:2",
+      "sequence": 2,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        17
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-F-network-output"
+    },
+    {
+      "artifact": "trace-atlas",
+      "byte_count": 6,
+      "event": "socket_send_builtin_boundary",
+      "event_id": "trace-F-network-output:runtime:4",
+      "layer": "runtime",
+      "measured": false,
+      "parent_event_id": "trace-F-network-output:bytecode:3",
+      "sequence": 3,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        17
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-F-network-output"
+    },
+    {
+      "artifact": "trace-atlas",
+      "byte_count": 6,
+      "event": "send_intent",
+      "event_id": "trace-F-network-output:syscall:5",
+      "layer": "syscall",
+      "measured": false,
+      "parent_event_id": "trace-F-network-output:runtime:4",
+      "sequence": 4,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "executed_model",
+      "syscall": "send",
+      "trace_id": "trace-F-network-output"
+    },
+    {
+      "address_family": "AF_INET",
+      "artifact": "trace-atlas",
+      "byte_count": 6,
+      "event": "loopback_tcp_transfer",
+      "event_id": "trace-F-network-output:socket:6",
+      "layer": "socket",
+      "measured": false,
+      "parent_event_id": "trace-F-network-output:syscall:5",
+      "sequence": 5,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "executed_model",
+      "trace_id": "trace-F-network-output",
+      "transport": "loopback"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "packet_trace_not_run",
+      "event_id": "trace-F-network-output:packet:7",
+      "layer": "packet",
+      "measured": false,
+      "parent_event_id": "trace-F-network-output:socket:6",
+      "reason": "loopback transfer was not captured at packet layer",
+      "sequence": 6,
+      "source_kind": "boundary_record",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "not_run",
+      "trace_id": "trace-F-network-output"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "network_device_not_run",
+      "event_id": "trace-F-network-output:device:8",
+      "layer": "device",
+      "measured": false,
+      "parent_event_id": "trace-F-network-output:packet:7",
+      "reason": "no NIC or physical link observation",
+      "sequence": 7,
+      "source_kind": "boundary_record",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "not_run",
+      "trace_id": "trace-F-network-output"
+    }
+  ],
+  "host_result": {
+    "byte_count": 6,
+    "payload_sha256": "5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03",
+    "transport": "loopback_tcp"
+  },
+  "layer_status": {
+    "device": {
+      "reason": "no NIC or physical link observation",
+      "status": "not_run"
+    },
+    "packet": {
+      "reason": "no packet capture",
+      "status": "not_run"
+    },
+    "socket": {
+      "reason": "CPython loopback TCP send/receive succeeded",
+      "status": "observed_host_operation"
+    }
+  },
+  "measured": false,
+  "schema_version": 1,
+  "source": "socket_send(data)",
+  "source_kind": "executable_host_boundary_model",
+  "trace_id": "trace-F-network-output"
+}

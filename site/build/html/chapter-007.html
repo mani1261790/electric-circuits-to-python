@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第7章　電流、連続の式、電力</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-007-exercises.html">この章の演習</a>　<a href="chapter-007-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-7-1"><code>book run 7 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-007/experiment-01.json">成果物</a></li></ul></section><h1 id="section-7">第7章　<a class="term" href="index.html#term-current">電流</a>、連続の式、電力</h1>
+<h2 id="section-80feec304e"><a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>はどのように「流れる」のか</h2>
+<p>第6章では、<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>を単位電荷あたりのエネルギー差として定義した。ここでは、その電荷が時間あたりにどれだけ移動したかを数える。回路図で導線を一本の線として描いても、実際には断面をもつ空間の中に電荷密度と電荷の速度が分布している。まず全体の流れを電流<code>I</code>で数え、次に局所的な流れを電流密度<code>J</code>で記述する。その二つを電荷保存の式で結び、最後に電場が単位時間にした仕事として電力を定義する。</p>
+<p>本章の数値例は、すべて「解析的に予測した値」「固定runnerを実行して得た契約検査値」「外部測定値」を分離して記録する。<code>book run 7 1</code> は解析・契約adapterで再生済みだが、本文に実測結果があるという意味ではない。</p>
+<h3 id="section-cf43a9e77c">今回の到達点</h3>
+<p>本文を読み、章末課題を終えた時点で、次を式と条件付きで説明できることを目標にする。</p>
+<ul><li>電流を<code>I=dq/dt</code>として定義し、向きと符号を明記する。</li><li><a class="term" href="index.html#term-current_density">電流密度</a><code>J</code>を断面を貫く流れとして定義し、<code>I=∫ J·n dA</code>を使う。</li><li>局所的な電荷保存を<code>∂ρ/∂t+∇·J=0</code>として導き、節点・有限体積の式へ移す。</li><li><a class="term" href="index.html#term-concept_7_term_a2aacf23e9_a2aacf23">定常電流</a>では電荷が消えたのではなく、各制御体積の出入りが釣り合っていると説明する。</li><li><a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a><code>P=VI</code>、局所の発熱密度<code>p=J·E</code>、抵抗の式を符号付きで使う。</li><li>電子の<a class="term" href="index.html#term-drift_velocity">ドリフト速度</a>と、電磁場によるエネルギー輸送を区別する。Poyntingベクトルは発展事項として位置付ける。</li><li>断面変化、境界、向き、単位、電荷保存を含む数値モデルの故障を診断する。</li></ul>
+<h2 id="section-1">1　時間あたりの電荷として電流を定義する</h2>
+<h3 id="section-1-1">1.1　電流は電荷の個数ではなく通過率である</h3>
+<p>ある断面を選び、その断面を時間<code>Δt</code>の間に通過した符号付き電荷を<code>Δq</code>とする。平均電流を</p>
+<pre><code class="language-text">I_avg = Δq / Δt                                      (7.1)</code></pre>
+<p>で定義する。時間幅を0へ縮めた極限が瞬時電流である。</p>
+<pre><code class="language-text">I(t) = dq/dt                                         (7.2)</code></pre>
+<p>電荷の単位は<code>C</code>、時間の単位は<code>s</code>なので、電流の単位は<code>C/s</code>、すなわちアンペア<code>A</code>である。<code>1 A=1 C/s</code>である。ここで数えているのは断面を通る電荷の正味の量であり、金属中でランダムに動いている全電子の総移動距離ではない。</p>
+<p>断面に向きを指定し、その向きへ正電荷が通過する量を正とする。これは「正の電流の向き」であり、電子の運動方向と一致するとは限らない。電流の符号を決めるには、次の三つを毎回書く。</p>
+<ol><li>どの断面を選んだか。</li><li>断面の法線をどちらへ向けたか。</li><li>その法線向きへ運ばれる正電荷を正としたか。</li></ol>
+<h3 id="section-1-2">1.2　電流と電子の向き</h3>
+<p>電子一個の電荷は<code>q_e=-e</code>である。電子が<code>-x</code>方向へ動けば、負の電荷が負方向へ運ばれるので、正電荷の流れとしては<code>+x</code>向きの電流になる。したがって「電子の速度」と「慣用電流の向き」を同じ矢印で描いてはいけない。</p>
+<p>ただし、電流は特定の粒子の流れだけを意味しない。<a class="term" href="index.html#term-hole">正孔</a>、イオン、電子など、符号の異なる担体の寄与を合計した量である。後で物質の導電性を扱うとき、担体の密度、電荷、平均速度を別々に記録する。</p>
+<h3 id="section-1-3">1.3　電流の測定は断面を切り開く操作ではない</h3>
+<p>電流計は、回路のある枝を通過する流れを自分の入力端子へ通すように接続される。理想電流計の内部抵抗を0とみなすのは、測定器を回路の直列枝へ入れても流れを変えないという近似である。現実の測定器には抵抗、帯域、サンプリング、保護回路があり、測定値には条件が付く。</p>
+<p>電流を見たからといって、その断面の両側の<a class="term" href="index.html#term-charge_density">電荷密度</a>が同じとは限らない。局所的に電荷が蓄積しているなら、入る電流と出る電流の差は<code>dQ/dt</code>になる。この差を扱うのが連続の式である。</p>
+<h2 id="section-2">2　電流密度と断面積</h2>
+<h3 id="section-2-1">2.1　局所の流れをベクトルで置く</h3>
+<p>場所<code>r</code>と時刻<code>t</code>で、単位面積・単位時間あたりに運ばれる符号付き電荷を電流密度<code>J(r,t)</code>とする。電流密度はベクトルであり、向きは正電荷の流れの向き、単位は</p>
+<pre><code class="language-text">[J] = A/m^2 = C/(s m^2)                              (7.3)</code></pre>
+<p>である。断面<code>S</code>に面素ベクトル<code>dA=n dA</code>を置くと、断面を貫く電流は</p>
+<pre><code class="language-text">I = ∫_S J · dA = ∫_S J · n dA                       (7.4)</code></pre>
+<p>となる。<code>n</code>は指定した単位法線である。<code>J</code>が法線と同じ向きなら寄与は正、接線方向なら0、逆向きなら負になる。電流密度の大きさだけを面積に掛ける式<code>I=JA</code>は、<code>J</code>が断面上一様で法線と平行な場合に限った短縮形である。</p>
+<h3 id="section-2-2">2.2　断面が変わる導体</h3>
+<p>導体が定常状態にあり、途中に電荷を蓄積せず、枝分かれもないとする。断面積が<code>A_1</code>から<code>A_2</code>へ変わるなら、同じ電流<code>I</code>を運ぶため</p>
+<pre><code class="language-text">J_1 = I/A_1,
+J_2 = I/A_2                                  (7.5)</code></pre>
+<p>となる。細い部分では電流密度が大きく、太い部分では小さい。これは「細い部分で電荷が消費された」という意味ではない。電流が保存される条件では、密度や平均速度のどれかが変化して、面積積分が同じになる。</p>
+<p>例として、<code>I=10 mA=1.0×10^-2 A</code>、<code>A_1=2.0 mm^2=2.0×10^-6 m^2</code>、<code>A_2=0.50 mm^2=5.0×10^-7 m^2</code>とする。</p>
+<pre><code class="language-text">J_1 = 5.0×10^3 A/m^2
+J_2 = 2.0×10^4 A/m^2                             (7.6)</code></pre>
+<p>面積を<code>mm^2</code>のまま代入すると、<code>10^6</code>倍の誤差になる。単位をそろえることは、計算後の飾りではなく、式が何を数えているかを保つ操作である。</p>
+<h3 id="section-2-3">2.3　複数の担体を合計する</h3>
+<p>担体の種類を<code>α</code>とし、数密度を<code>n_α</code>、電荷を<code>q_α</code>、平均速度を<code>v_α</code>とする。十分小さい体積で速度が一方向にそろう近似なら、</p>
+<pre><code class="language-text">J = Σ_α n_α q_α v_α                             (7.7)</code></pre>
+<p>である。<code>n_α</code>の単位は<code>1/m^3</code>、<code>q_α</code>は<code>C</code>、<code>v_α</code>は<code>m/s</code>なので、<code>J</code>の単位は<code>C/(s m^2)</code>になる。式(7.7)は、熱運動のすべてをそのまま足したものではなく、平均速度で表した連続体近似である。互いに逆向きの粒子運動でも、電荷の符号を含めれば電流への寄与を正しく合計できる。</p>
+<h2 id="section-3">3　<a class="term" href="index.html#term-continuity_equation">連続の式</a>：電荷保存を局所化する</h2>
+<h3 id="section-3-1">3.1　まず有限の領域で数える</h3>
+<p>任意の固定された体積<code>Ω</code>に含まれる電荷を</p>
+<pre><code class="language-text">Q_Ω(t) = ∫_Ω ρ(r,t) dV                               (7.8)</code></pre>
+<p>とする。<code>ρ</code>は電荷密度で、単位は<code>C/m^3</code>である。領域の境界<code>∂Ω</code>には外向き法線<code>n</code>を選ぶ。外へ出ていく電流は<code>∂Ω</code>を貫く面積分</p>
+<pre><code class="language-text">I_out = ∮_∂Ω J · n dA                              (7.9)</code></pre>
+<p>である。電荷保存は、領域内の電荷の増加率が外へ出る流れの負になることを表す。</p>
+<pre><code class="language-text">dQ_Ω/dt = -∮_∂Ω J · n dA                           (7.10)</code></pre>
+<p>式(7.10)は「電荷が消えない」という言葉を、境界を指定した計算式へ変換したものだ。外から入る電流が出る電流より多ければ、右辺は正で領域内の電荷が増える。</p>
+<h3 id="section-3-2">3.2　発散定理で局所式にする</h3>
+<p>発散定理</p>
+<pre><code class="language-text">∮_∂Ω J · n dA = ∫_Ω ∇·J dV                 (7.11)</code></pre>
+<p>を式(7.8)と式(7.10)へ代入する。</p>
+<pre><code class="language-text">∫_Ω ∂ρ/∂t dV = -∫_Ω ∇·J dV
+∫_Ω (∂ρ/∂t + ∇·J) dV = 0                  (7.12)</code></pre>
+<p>任意の領域<code>Ω</code>で成立するなら、十分滑らかな場について被積分関数も0でなければならない。これが連続の式である。</p>
+<pre><code class="language-text">∂ρ/∂t + ∇·J = 0                              (7.13)</code></pre>
+<p><code>∇·J</code>は、その点の小さな体積から正味で流れ出す電流密度を表す。発散が正なら、その場所から出る方が多く、電荷密度は減る。発散が負なら、入る方が多く、電荷密度は増える。</p>
+<h3 id="section-3-3">3.3　一次元の有限体積式</h3>
+<p>計算で扱いやすいように、<code>x_i</code>から<code>x_i+Δx</code>までの細長いセルを考える。断面積<code>A</code>が一定で、左から右を正とする。左面から入る電流を<code>I_in</code>、右面から出る電流を<code>I_out</code>とすれば、セル内電荷<code>Q_i=ρ_i AΔx</code>は</p>
+<pre><code class="language-text">dQ_i/dt = I_in - I_out
+dρ_i/dt = (I_in - I_out)/(AΔx)            (7.14)</code></pre>
+<p>となる。<code>I=JA</code>なら、</p>
+<pre><code class="language-text">dρ_i/dt = -(J_out-J_in)/Δx                 (7.15)</code></pre>
+<p>である。数値実装では、この順序を守ると符号を追いやすい。</p>
+<pre><code class="language-python">rho_next = rho + dt * (I_in - I_out) / (area * dx)</code></pre>
+<p>左面の法線を勝手に外向きと読んで<code>I_in</code>へそのまま代入すると、符号を二重に反転しやすい。有限体積法では「流入」「流出」を言葉で固定してから式へ写す。</p>
+<h3 id="section-3-4">3.4　境界条件と源の扱い</h3>
+<p>絶縁境界なら、境界を横切る法線電流を0とする。</p>
+<pre><code class="language-text">J · n = 0                                        (7.16)</code></pre>
+<p>外部回路から電荷を注入する電極では、<code>J·n</code>を与える境界条件として記録する。電荷を生成・消滅させる人工的な体積源を入れるなら、保存則は</p>
+<pre><code class="language-text">∂ρ/∂t + ∇·J = s_ρ                              (7.17)</code></pre>
+<p>のようになる。ただし、電荷の源<code>s_ρ</code>を導入したら、何が電荷を供給するのか、単位が<code>C/(m^3 s)</code>か、閉じた系の保存を破っていないかを明記する。単に計算を安定させるために<code>ρ</code>を毎ステップ消す操作を、物理的な電荷保存と呼んではならない。</p>
+<h2 id="section-4">4　定常電流と回路の節点</h2>
+<h3 id="section-4-1">4.1　定常とは「どこにも変化がない」の一部だけを意味する</h3>
+<p>定常状態では、電荷密度が時間によらないので<code>∂ρ/∂t=0</code>である。連続の式は</p>
+<pre><code class="language-text">∇·J = 0                                        (7.18)</code></pre>
+<p>となる。<code>J</code>が0という意味ではない。電流が流れていても、微小領域へ入る流れと出る流れが釣り合えば、密度は変化しない。</p>
+<p>一様な直線導体なら、式(7.18)は同じ断面を通る電流が一定であることへ縮約される。枝分かれする節点では、制御体積を節点の周りに取り、定常なら</p>
+<pre><code class="language-text">Σ I_in = Σ I_out                              (7.19)</code></pre>
+<p>となる。これは後の回路理論でいう節点電流則の物理的な出発点である。回路図の点で電荷が永遠に積み上がっていると仮定しているのではなく、節点周辺の小さな電荷蓄積が定常近似で無視できるという条件を置いている。</p>
+<h3 id="section-4-2">4.2　定常近似が破れるとき</h3>
+<p>スイッチを閉じた直後、コンデンサを充電している途中、電極へ電荷を注入している途中では、ある場所の<code>ρ</code>が変化し得る。このとき入出力電流が一致しないこと自体は、バグではなく蓄積の記録かもしれない。逆に、定常だと宣言した計算で<code>dρ/dt</code>が大きいなら、境界条件、向き、単位、離散化のいずれかを再確認する。</p>
+<p>「電流が流れると電荷が導線の中で消える」という説明は誤りである。抵抗体で電気エネルギーが熱へ変換されても、連続の式に源を入れない限り電荷は保存される。消費されるのは電力として数えたエネルギーであって、電荷そのものではない。</p>
+<h2 id="section-5">5　電流密度を担体の運動へ戻す</h2>
+<h3 id="section-5-1">5.1　平均ドリフト速度</h3>
+<p>一種類の担体が数密度<code>n</code>、電荷<code>q</code>、平均速度<code>v_d</code>で動くとする。式(7.7)は</p>
+<pre><code class="language-text">J = n q v_d                                       (7.20)</code></pre>
+<p>となる。金属中の電子では<code>q=-e</code>である。<a class="term" href="index.html#term-electric_field">電場</a>による電子の平均ドリフトは電場と逆向きになりやすいので、<code>J</code>は電場と同じ向きになり得る。速度<code>v_d</code>を絶対値だけで入力すると、この符号関係を失う。</p>
+<p>数密度が一定で、断面が一様なら、電流は</p>
+<pre><code class="language-text">I = n q v_d A                                      (7.21)</code></pre>
+<p>となる。断面が細くなったとき、同じ<code>I</code>を保つために<code>v_d</code>が増える模型もあれば、密度が変わる模型もある。どの量を固定したかを決めずに「細いほど電子が速い」と一般化してはいけない。</p>
+<h3 id="section-5-2">5.2　ドリフト速度は信号速度ではない</h3>
+<p>金属中の電子は熱運動をしながら、非常に小さな平均ドリフトを持つ。回路のスイッチを操作したとき遠端へ変化が伝わる時間は、電子一個がその距離をドリフトする時間だけでは決まらない。電磁場の変化、導体と周囲の境界、分布容量・インダクタンス、測定器の帯域が関係する。</p>
+<p>したがって、</p>
+<ul><li>電子の平均速度は電荷担体の運動の模型。</li><li>電流<code>I</code>と電流密度<code>J</code>は断面を通る正味の電荷の流れ。</li><li>信号の伝搬は電磁場と境界の時間変化の問題。</li></ul>
+<p>を別々に記録する。第8章では、<code>J</code>が同じ電場に対して物質ごとに異なる理由を、<a class="term" href="index.html#term-mobility">移動度</a>や抵抗率の古典模型から調べる。</p>
+<h2 id="section-6">6　電場がする仕事と電力</h2>
+<h3 id="section-6-1">6.1　電荷一個の仕事を流れ全体へ足す</h3>
+<p>電位差<code>V_ab=V_a-V_b</code>を、端子<code>a</code>から端子<code>b</code>へ進む電荷が失うエネルギーとして使う。正電荷<code>dq</code>が<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>降下<code>V_ab</code>を通過すると、電場がした仕事は</p>
+<pre><code class="language-text">dW_field = V_ab dq                                (7.22)</code></pre>
+<p>である。時間あたりに通過する電荷が<code>I=dq/dt</code>なら、吸収される電力は</p>
+<pre><code class="language-text">P_abs = dW_abs/dt = V_ab I                         (7.23)</code></pre>
+<p>となる。ここで<code>V_ab</code>は「電流の正方向に進んだときの電位降下」と定義した。<a class="term" href="index.html#term-concept_11_term_1d38fab790_1d38fab7">受動符号規約</a>、つまり電流が素子の高電位端へ入り低電位端から出る向きを採るなら、<code>P_abs=VI&gt;0</code>は素子がエネルギーを吸収していることを意味する。</p>
+<p>電源側では、同じ端子極性へ電流が入ると<code>P=VI&gt;0</code>は電源が内部へ吸収する電力であり、外部へ供給する電力は負になる。<code>VI</code>の数値だけを見て「消費」と決めず、端子の極性と電流矢印を書く。</p>
+<h3 id="section-6-2">6.2　局所の電力密度</h3>
+<p>微小な体積<code>dV</code>で担体種<code>α</code>の数密度を<code>n_α</code>、電荷を<code>q_α</code>、平均速度を<code>v_α</code>とする。担体種ごとの力密度を足すと、単位時間あたりの仕事密度は</p>
+<pre><code class="language-text">p = Σ_α (n_α q_α E) · v_α
+  = E · Σ_α (n_α q_α v_α)                 (7.24)</code></pre>
+<p>となる。第2章で定義した電流密度の担体和<code>J=Σ_α n_α q_α v_α</code>を使えば、</p>
+<pre><code class="language-text">p(r,t) = J(r,t) · E(r,t)                          (7.25)</code></pre>
+<p>を得る。単位は<code>(A/m^2)(V/m)=W/m^3</code>である。体積で積分すると総電力になる。</p>
+<pre><code class="language-text">P = ∫_Ω J · E dV                                  (7.26)</code></pre>
+<p>式(7.25)が正なら、その場所の担体が電場からエネルギーを受け取る向き、負なら場へエネルギーを返す向きである。電荷の流れがあっても、<code>J</code>が<code>E</code>と直交すればこの局所の仕事率は0になる。電流があることと発熱があることは、同じ意味ではない。</p>
+<h3 id="section-6-3-joule">6.3　抵抗の<a class="term" href="index.html#term-concept_7_joule_006f4ca5">Joule熱</a></h3>
+<p>物質が局所的に線形で等方的な応答を示し、</p>
+<pre><code class="language-text">J = σ E                                            (7.27)</code></pre>
+<p>と書ける範囲では、<code>σ</code>は<a class="term" href="index.html#term-conductivity">導電率</a>で単位は<code>S/m</code>である。抵抗率<code>ρ_e=1/σ</code>を使うと、</p>
+<pre><code class="language-text">p = J·E = σ|E|^2 = |J|^2/σ ≥ 0                     (7.28)</code></pre>
+<p>となる。長さ<code>L</code>、断面積<code>A</code>が一様な棒では、<code>V=EL</code>、<code>I=JA</code>と近似できるので</p>
+<pre><code class="language-text">P = VI = I^2 R = V^2/R,
+R = ρ_e L/A                                        (7.29)</code></pre>
+<p>を得る。ただし、式(7.29)は静かに成立する<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>の定義ではなく、局所応答、形状、一様場、定常または準静的近似から導いた集中定数の結果である。第8章で導電率を物質模型から検査する。</p>
+<h3 id="section-6-4">6.4　電源、抵抗、蓄積を分ける</h3>
+<p>抵抗での<code>P=I^2R</code>は、その場所で電磁気的なエネルギーが熱などへ変換される割合である。電源が供給したエネルギー、コンデンサやインダクタへ一時的に蓄えたエネルギー、抵抗で不可逆に変換されたエネルギーは、別のartifact欄へ保存する。<code>P</code>を積分してエネルギーにするには、積分区間、符号、端子または体積、状態を明記する。</p>
+<h2 id="section-7-2">7　発展：場からエネルギーが入るという見方</h2>
+<p>電力を<code>VI</code>だけで表せると、エネルギーが電線の内部を電荷に乗って運ばれ、抵抗で降ろされるように感じやすい。分布した電磁場では、エネルギー流束を</p>
+<pre><code class="language-text">S = E × H                                           (7.30)</code></pre>
+<p>で表す。<code>S</code>は<a class="term" href="index.html#term-poynting_vector">Poyntingベクトル</a>と呼ばれ、単位は<code>W/m^2</code>である。電磁場のエネルギー密度と合わせた局所エネルギー収支は、概念的には</p>
+<pre><code class="language-text">∂u_em/∂t + ∇·S = -J·E                              (7.31)</code></pre>
+<p>と書ける。右辺の<code>-J·E</code>は、場が物質へ渡した電力の反対符号である。</p>
+<p>ここで扱うのは発展欄であり、<code>H</code>、磁性体、時間変化する場の厳密な境界条件を本章の必修到達点にはしない。式(7.30)を導線内の電子の速度ベクトルと同一視してはいけない。また、低周波の<a class="term" href="index.html#term-concept_9_term_522077f2de_522077f2">集中定数模型</a>で<code>P=VI</code>を使えることと、分布場のエネルギー流を詳細に解くことは、異なる解像度の記述である。後の伝送線路と信号完全性で再び扱う。</p>
+<h2 id="section-8">8　断面変化と電荷保存を数値で検査する</h2>
+<h3 id="section-8-1">8.1　実験契約</h3>
+<p>必修の実装・実験は一つのrunner入口にまとめる。</p>
+<pre><code class="language-text">book run 7 1</code></pre>
+<p>現在の<code>tools/book</code>では、この実験は固定runnerの解析・契約adapterで実行され、入力hashと検査結果が保存される。外部domainの実行結果や測定値はまだない。以下は固定する入力と期待される解析予測である。</p>
+<p>#### 問題A：断面変化</p>
+<p><code>+x</code>方向を正とし、定常電流<code>I=10 mA</code>が枝分かれしない導体を流れる。二つの断面を</p>
+<pre><code class="language-text">A_1 = 2.0 mm^2 = 2.0×10^-6 m^2
+A_2 = 0.50 mm^2 = 5.0×10^-7 m^2
+I   = 1.0×10^-2 A</code></pre>
+<p>とする。式(7.4)の一様近似から<code>J_1=5.0×10^3 A/m^2</code>、<code>J_2=2.0×10^4 A/m^2</code>を予測する。各断面で<code>J·n</code>の符号、面積の単位、面積積分の値をartifactへ残す。</p>
+<p>#### 問題B：連続の式を守るセル列と壊すセル列</p>
+<p>断面積<code>A=1.0×10^-4 m^2</code>、セル幅<code>Δx=0.10 m</code>、初期密度<code>ρ=0 C/m^3</code>、時間刻み<code>Δt=1.0×10^-4 s</code>とする。左から<code>J_in=100 A/m^2</code>を流す。</p>
+<p>正しいモデルでは各セルで<code>J_out=J_in</code>とし、</p>
+<pre><code class="language-text">dρ/dt = -(J_out-J_in)/Δx = 0</code></pre>
+<p>となる。比較用の故障モデルでは意図的に<code>J_out=0.90 J_in</code>とする。このモデルは電荷保存を破るため、</p>
+<pre><code class="language-text">dρ/dt = (100 - 90)/0.10 = 100 C/(m^3 s)       (7.32)</code></pre>
+<p>となる予測である。<code>100</code>ステップ（経過時間<code>0.010 s</code>）なら、一定流束を仮定した解析予測は<code>ρ=1.0 C/m^3</code>となる。これは物理的な測定値ではなく、故障モデルを見つけるための予測値である。セル端の境界では、流入・流出をどの面の法線で定義したかを記録する。</p>
+<h3 id="section-8-2-artifact">8.2　最小の更新式とartifact</h3>
+<p>各セルの状態を少なくとも次の項目で保存する。</p>
+<pre><code class="language-text">step, time_s, cell, area_m2, dx_m,
+J_in_A_per_m2, J_out_A_per_m2,
+I_in_A, I_out_A, rho_C_per_m3,
+drho_dt_C_per_m3_s, model, status</code></pre>
+<p><code>status</code>には<code>analytic_prediction_recorded_measurement_not_run</code>、<code>executed</code>、<code>failed</code>などを置く。<code>model</code>には<code>conserving</code>または<code>intentional_leak</code>と書き、保存則を破る比較モデルを本来の結果として混ぜない。<code>J</code>を入力したのか<code>I</code>を入力したのかも実装の設定欄へ残す。<code>I=JA</code>を二度適用すると、単位は合っていても面積を二重に掛ける誤りになる。</p>
+<p>中心となる検査は次である。</p>
+<pre><code class="language-python">def update_density(rho, dt, area, dx, I_in, I_out):
+    return rho + dt * (I_in - I_out) / (area * dx)</code></pre>
+<p>保存モデルでは<code>I_in=I_out</code>の全ステップで<code>rho</code>が初期値にとどまる。故障モデルでは式(7.14)と同じ増加率になる。数値出力がこの解析予測から外れたとき、まず<code>A</code>と<code>dx</code>の単位、次に<code>I_in-I_out</code>の符号、最後にセル境界の条件を確認する。</p>
+<h3 id="section-8-3">8.3　変更課題と故障診断</h3>
+<p>次の順で一つずつ変更する。</p>
+<ol><li><code>A_1</code>と<code>A_2</code>を交換し、同じ<code>I</code>で<code>J</code>が逆比になることを確認する。</li><li><code>J_in</code>を<code>-100 A/m^2</code>へ変え、指定法線に対する電流と密度の符号を反転する。</li><li>左端を絶縁境界にして<code>J·n=0</code>とし、外部から電荷が流れ込まない条件を確認する。</li><li><code>J_out=0.90J_in</code>の故障を保存モデルの成功ログへ混ぜず、別の<code>model</code>として記録する。</li></ol>
+<p>よくある故障は次の通りである。</p>
+<ul><li><code>mm^2</code>を<code>m^2</code>へ直さず、<code>J</code>が<code>10^6</code>倍ずれる。</li><li>面積を半径や直径として入力し、<code>A=πr^2</code>を適用し忘れる。</li><li>外向き法線の面積分と「流入」を同じ符号で足し、入出力差を反転する。</li><li>電子速度をそのまま<code>J</code>の向きにし、<code>q=-e</code>の符号を落とす。</li><li><code>ρ</code>を毎ステップ0へ戻して、保存則の故障を隠す。</li><li><code>VI</code>の符号を端子極性なしで「消費電力」と呼ぶ。</li></ul>
+<h3 id="section-8-4">8.4　この数値実験で言えることと言えないこと</h3>
+<p>この実験で言えるのは、指定した断面、流束、セル幅、境界条件のもとで、面積積分と有限体積更新が電荷保存の式に合うかどうかである。金属の導電率、電子散乱、温度上昇、電磁波の伝搬、実際の電力計の誤差を測定したことにはならない。<code>J·E</code>を電力密度として追加する場合は、<code>E</code>の単位、領域、局所応答の模型を新たな入力とartifactへ加える。</p>
+<h2 id="section-9">9　模型の境界と次章への接続</h2>
+<p>本章の中心は、電流を電荷の通過率、電流密度を局所の流束として置き、電荷保存を連続の式へ落とすことだった。定常状態の<code>∇·J=0</code>は、電流がないという意味ではなく、局所的な蓄積がないという意味である。断面が変わっても電流が保存されるなら、<code>J</code>は断面積に応じて変わる。</p>
+<p><code>P=VI</code>と<code>p=J·E</code>は、電場が電荷へした仕事を時間あたりに数えた式である。抵抗のJoule熱はその特殊な応答の結果であり、電源の供給、蓄積、熱への変換を分けて記録する。Poyntingベクトルは分布場のエネルギー流を示す発展記述で、ドリフト速度や集中定数の電流と同一視しない。</p>
+<p>第8章では、同じ電場を与えても物質によって<code>J</code>が異なる理由を、キャリア密度、移動度、導電率、<a class="term" href="index.html#term-resistivity">抵抗率</a>の古典模型で調べる。<code>J=σE</code>を万能な定義として使わず、どの材料・温度・周波数・電場範囲で成り立つかを確認する。</p>
+<h2 id="section-10">10　章の確認</h2>
+<p>次を、符号・単位・仮定付きで説明できるか確認する。</p>
+<ul><li><code>I=dq/dt</code>は、選んだ断面と法線に対する符号付きの電荷通過率である。</li><li><code>I=∫J·n dA</code>であり、<code>I=JA</code>は一様で法線方向の特別な場合である。</li><li><code>∂ρ/∂t+∇·J=0</code>は、有限領域の入出力収支から導ける。</li><li>定常電流では<code>∂ρ/∂t=0</code>だが、<code>J</code>は0とは限らない。</li><li>電子の速度、慣用電流、信号の伝搬速度は異なる量である。</li><li><code>P=VI</code>と<code>p=J·E</code>は、端子極性・方向・領域を指定して初めて符号を解釈できる。</li><li><code>P=I^2R</code>は局所的な線形応答と集中定数近似の結果で、物質の導電性を次章で検査する。</li><li>解析予測、runner実行結果、測定値、故障モデルの結果を同じ欄へ保存しない。</li></ul>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-7-3">7.補助演習　手を動かす導出帳</h2>
+<p>電流、連続の式、電力の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-4">例題1　断面変化の電流密度と連続の式の有限体積検査</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 7 1</code>である。入力は<code>["定常電流I=10 mA、A1=2.0 mm^2、A2=0.50 mm^2", "セル断面A=1.0e-4 m^2、dx=0.10 m、dt=1.0e-4 s、初期rho=0 C/m^3", "保存モデルJ_in=J_out=100 A/m^2", "故障モデルJ_in=100 A/m^2、J_out=90 A/m^2", "+x向きの電流と外向き法線の規約", "保存モデルとintentional_leakモデルの状態分離"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-5">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>電流</code>は、指定断面を時間あたりに通過する符号付き電荷。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電流</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電流密度</code>は、単位面積あたりの局所的な電荷流束を表すベクトル。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電流密度</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>連続の式</code>は、電荷密度の時間変化と電流密度の発散を結ぶ局所保存則。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>連続の式</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>定常電流</code>は、電荷密度が時間変化せず、局所の流入と流出が釣り合う状態。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>定常電流</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電力</code>は、電場が電荷へ渡す、または素子が吸収・供給するエネルギーの時間率。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電力</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Joule熱</code>は、導電体で電磁気的エネルギーが熱へ変換される局所的な電力。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Joule熱</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Poyntingベクトル</code>は、分布した電磁場のエネルギー流束を表す発展概念。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Poyntingベクトル</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-5">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（有限領域から連続の式を導く）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（一次元流束の発散と密度変化）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（節点の電流収支と蓄積）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（ドリフト速度と信号伝搬）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（端子電力の符号）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（局所Joule熱）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（有限体積の電荷保存故障）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（runner結果、モデル、測定値の状態分離）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-3">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-3">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-7-4">7.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>電流、連続の式、電力</strong>の中心問題「導線を流れる電流と、局所的な電荷の移動をどう結びつけるか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-6">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["A1ではJ1=5.0e3 A/m^2、A2ではJ2=2.0e4 A/m^2の解析予測", "保存モデルでは流入・流出が一致し、rhoが初期値から変化しない予測", "故障モデルではdrho/dt=100 C/(m^3 s)、100 step後rho=1.0 C/m^3の予測", "法線反転または電流方向反転で符号が反転する", "mm^2とm^2の混在…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>定常電流I=10 mA、A1=2.0 mm^2、A2=0.50 mm^2</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>セル断面A=1.0e-4 m^2、dx=0.10 m、dt=1.0e-4 s、初期rho=0 C/m^3</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>保存モデルJ_in=J_out=100 A/m^2</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>故障モデルJ_in=100 A/m^2、J_out=90 A/m^2</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>+x向きの電流と外向き法線の規約</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>保存モデルとintentional_leakモデルの状態分離</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「局所電流密度を断面へ積分し、I=∫_S J·n dAを得る。」で、参照する式IDまたは検証項目は <code>一様断面のI=JA、断面積交換、法線反転</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「有限領域の電荷収支と発散定理から∂ρ/∂t+∇·J=0を得る。」で、参照する式IDまたは検証項目は <code>一様流束、流束勾配、有限体積更新</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「∂ρ/∂t=0の条件から、節点のΣI_in=ΣI_outを得る。」で、参照する式IDまたは検証項目は <code>枝分かれ、入出力差による電荷蓄積</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「担体の数密度、電荷、平均速度からJ=Σ n_alpha q_alpha v_alphaを得る。」で、参照する式IDまたは検証項目は <code>電子の負電荷と負速度、断面積を使ったI</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「電荷へ働く力の仕事率を体積で数え、p=J·E、P=∫J·E dVを得る。」で、参照する式IDまたは検証項目は <code>直交場でp=0、線形応答でp=σ|E|^2、端子VIとの比較</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「J=σE、一様棒、V=EL、I=JAからP=VI=I^2R=V^2/Rを得る。」で、参照する式IDまたは検証項目は <code>単位検査、電流反転でP不変、端子極性の符号</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-6">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 断面変化の電流密度と連続の式の有限体積検査</p>
+<p>入口は <code>book run 7 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-07-current-density-source", "chapter-07-continuity-source", "chapter-07-current-output", "chapter-07-continuity-output", "chapter-07-failure-log"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["A1ではJ1=5.0e3 A/m^2、A2ではJ2=2.0e4 A/m^2の解析予測", "保存モデルでは流入・流出が一致し、rhoが初期値から変化しない予測", "故障モデルではdrho/dt=100 C/(m^3 s)、100 step後rho=1.0 C/m^3の予測", "法線反転または電流方向反転で符号が反転する", "mm^2とm^2の混在…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-4">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>電流の正方向は正電荷の流れであり、電子の速度方向と一般には逆である。</li><li>I=JAは一様で法線方向の特別な場合で、非一様なJは面積分する。</li><li>連続の式は電荷保存の収支であり、数値密度を強制的に消す操作を正当化しない。</li><li>定常電流は電荷密度が時間不変という条件であり、電流が0という意味ではない。</li><li>I=ΣIの節点式は節点の蓄積を無視できる近似または定常条件に依存する。</li><li>ドリフト速度は信号の伝搬速度ではない。場、境界、分布効果を含まない。</li><li>P=VIは端子極性と電流矢印を指定しないと、吸収・供給の符号を解釈できない。</li><li>p=J·EとJoule熱は、局所応答と領域を指定した式で、すべての電流が発熱するとは限らない。</li><li>J=σEとP=I^2Rは線形・等方的・定常または準静的な材料と形状の近似である。</li><li>Poyntingベクトルは発展概念で、電子速度や集中定数電流のベクトルとは別物である。</li><li>domain adapter未導入時の数値は解析予測であり、実測値や再現ログを意味しない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第5章の電荷、電場、法線、面積分</li><li>第6章の電位差、端子、電場の仕事、エネルギー</li><li>第3章の微分積分、発散、<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>、数値更新</li><li>第4章の解析予測・数値予測・測定値・未実装状態の分離</li><li>固定Linux環境と共通実行入口 book run &lt;chapter-id&gt; &lt;experiment-id&gt;</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第8章で導電率、抵抗率、移動度、キャリア密度からJ=σEを検査する</li><li>第9章で分布した電場・電流を節点<a class="term" href="index.html#term-voltage">電圧</a>と枝電流へ縮約する</li><li>第11章以降で電流保存を回路、<a class="term" href="index.html#term-semiconductor">半導体</a>、MOS、CPUの電力条件へ再利用する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-5">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — <a class="term" href="index.html#term-current">current</a>_density_and_continuity。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — finite_volume_balance。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — power_sign_and_resolution。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — runner_analytic_replay_is_not_external_measurement。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — exercise_solution_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — independent_review_pending。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-5">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 断面変化の電流密度と連続の式の有限体積検査</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 7 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["A1ではJ1=5.0e3 A/m^2、A2ではJ2=2.0e4 A/m^2の解析予測", "保存モデルでは流入・流出が一致し、rhoが初期値から変化しない予測", "故障モデルではdrho/dt=100 C/(m^3 s)、100 step後rho=1.0 C/m^3の予測", "法線反転または電流方向反転で符号が反転する", "mm^2とm^2の混在…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-2">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

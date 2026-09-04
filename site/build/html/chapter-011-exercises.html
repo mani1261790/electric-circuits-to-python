@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第11章　抵抗、コンデンサ、インダクタの時間発展　演習</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-11">第11章 演習</h1>
+<p>数値は、特に指定しない限りSI単位へ直してから計算する。各問で、<a class="term" href="index.html#term-voltage">電圧</a>・電流の正方向、初期条件、<code>source_kind</code>を明記する。段階的ヒントを一つずつ使い、最後に自分の式またはコードを最初からやり直す。</p>
+<h2 id="section-e1">E1　単位と時間尺度</h2>
+<p><code>R=2.0 kΩ</code>、<code>C=0.50 μF</code>、<code>L=20 mH</code>について、(a)<code>τ=RC</code>、(b)<code>ω_0=1/sqrt(LC)</code>、(c)<code>R/(2L)</code>を求めよ。各値の単位を示し、指数<code>exp(-t/τ)</code>と正弦<code>sin(ω_0t)</code>の引数が無次元になることを確認せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>kΩ</code>、<code>μF</code>、<code>mH</code>を<code>Ω</code>、<code>F</code>、<code>H</code>へ変換する。</li><li><code>Ω·F=s</code>、<code>H·F=s^2</code>を使う。</li><li><code>R/(2L)</code>は<code>(V/A)/(V·s/A)=1/s</code>になる。</li></ol>
+</div></details>
+<h2 id="section-e2">E2　<a class="term" href="index.html#term-concept_11_term_1d38fab790_1d38fab7">受動符号規約</a>とエネルギー</h2>
+<p>コンデンサの正端子へ<code>i_C=2.0 mA</code>が入り、<code>v_C=3.0 V</code>で<code>dv_C/dt=4.0×10^3 V/s</code>である。<code>C=0.50 μF</code>とする。(a)<code>i_C=C dv_C/dt</code>を確認し、(b)瞬時<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>、(c)<code>dU_C/dt</code>を求めよ。同じ向きで<code>v_L=2.0 V</code>、<code>i_L=0.50 A</code>、<code>L=10 mH</code>の場合、<code>di_L/dt</code>と<code>dU_L/dt</code>も求めよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>μF</code>を<code>F</code>へ直すと、<code>C dv/dt</code>はAになる。</li><li>受動符号規約では<code>p=vi</code>、コンデンサは<code>U_C=1/2 Cv^2</code>である。</li><li>インダクタは<code>v=L di/dt</code>、<code>U_L=1/2 Li^2</code>を使う。</li></ol>
+</div></details>
+<h2 id="section-e3-rc">E3　RC充電の導出と解析値</h2>
+<p><code>R=1.0 kΩ</code>、<code>C=1.0 μF</code>、<code>V_in=5.0 V</code>の段差を<code>t=0</code>で加える。<code>v_C(0)=0 V</code>として、(a)<a class="term" href="index.html#term-concept_10_kirchhoff_205c0d1f">KVL</a>から微分方程式を導き、(b)<code>v_C(t)</code>と<code>i(t)</code>を求め、(c)<code>t=τ</code>と<code>5τ</code>の値を計算せよ。これは<code>analytic_prediction</code>であり、実測値ではないことも記録する。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>5−Ri−v_C=0</code>、<code>i=C dv_C/dt</code>を組み合わせる。</li><li><code>τ=RC=1.0 ms</code>で、初期値<code>V_i=0</code>、最終値<code>V_f=5</code>を式(11.12)へ入れる。</li><li><code>exp(-1)</code>と<code>exp(-5)</code>を使う。</li></ol>
+</div></details>
+<h2 id="section-e4-rc">E4　RC放電と部品変更</h2>
+<p><code>v_C(0)=5.0 V</code>のコンデンサを<code>R=2.0 kΩ</code>へ接続し、最終値<code>V_f=0 V</code>へ放電する。<code>C=1.0 μF</code>として、(a)<code>τ</code>、(b)<code>t=τ</code>の電圧と抵抗<a class="term" href="index.html#term-current">電流</a>、(c)<code>R</code>を半分にしたときの<code>t=τ</code>の電圧を求めよ。電流の正方向は、コンデンサ上端から抵抗へ流れる向きとする。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>放電は<code>v_C=V_i exp(-t/τ)</code>である。</li><li><code>i=(V_f−V_i)exp(-t/τ)/R</code>という向きを使うと負号が出る。</li><li><code>R</code>を半分にすると<code>τ</code>も半分だが、同じ「一<a class="term" href="index.html#term-concept_11_term_8a294c0490_8a294c04">時定数</a>後」の無次元値は変わらない。</li></ol>
+</div></details>
+<h2 id="section-e5-euler">E5　陽<a class="term" href="index.html#term-concept_4_euler_168fab74">Euler法</a>と安定性</h2>
+<p>E3のRC回路を陽Euler法で計算する。(a)<code>Δt=0.1 ms</code>のとき、<code>v_C(0)=0</code>から1ステップ後の値を求め、(b)<code>Δt=2.1 ms</code>の誤差増幅因子を求め、(c)後者が不安定になる理由を説明せよ。<code>h=Δt/τ</code>を使うこと。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>更新式は<code>v[n+1]=v[n]+Δt(V_f−v[n])/(RC)</code>である。</li><li><code>v=V_f+(v_0−V_f)(1−h)^n</code>と書ける。</li><li><code>|1−h|&gt;1</code>なら誤差が増幅する。<code>h&gt;1</code>では単調性も失う。</li></ol>
+</div></details>
+<h2 id="section-e6">E6　解析解と<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>の比較計画</h2>
+<p>E3のRCで、<code>Δt=0.5 ms、0.1 ms、0.01 ms</code>の三通りを使う予定実験を設計せよ。(a)各刻みの<code>h</code>を求め、(b)<code>t=τ</code>のEuler値を計算し、(c)解析値との差を比較する列を含むJSONLの最小schemaを書け。(d)値が違うときに、数値誤差と単位・初期条件の誤りをどう分けるか。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>一つの<code>τ</code>に対するステップ数を整数へ丸めるか、評価時刻へ補間するかを先に決める。</li><li>Eulerの反復を手計算または短いPython関数で行い、解析式を別経路で計算する。</li><li><code>source_kind</code>、<code>status</code>、<code>dt_s</code>、<code>analytic_v</code>、<code>numeric_v</code>、<code>error</code>、<code>units</code>を別欄にする。</li></ol>
+</div></details>
+<h2 id="section-e7-rlc">E7　直列RLCの状態方程式</h2>
+<p>電源<code>V_in(t)</code>、<code>R</code>、<code>L</code>、<code>C</code>の直列回路について、電流を電源からCへ、<code>v_C</code>をC上端が正となる向きに定義する。(a)KVLを書き、(b)<code>dv_C/dt</code>と<code>di/dt</code>の二状態方程式を導き、(c)各項の単位を確認せよ。(d)二階方程式も書け。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>V_in−Ri−L di/dt−v_C=0</code>である。</li><li><code>i=C dv_C/dt</code>を使う。</li><li>KVLを時間微分して<code>LC d²v_C/dt²+RC dv_C/dt+v_C=V_in</code>を得る。</li></ol>
+</div></details>
+<h2 id="section-e8">E8　減衰分類と最初のピーク</h2>
+<p><code>R=10 Ω</code>、<code>L=10 mH</code>、<code>C=1 μF</code>、<code>V_f=5 V</code>、初期状態<code>v_C(0)=i(0)=0</code>の直列RLCを考える。(a)<code>α</code>、<code>ω_0</code>、<code>ω_d</code>を求め、(b)不足減衰か分類し、(c)<code>t_p≈π/ω_d</code>と最初のピーク電圧を求めよ。解析予測であることを明示する。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>α=R/(2L)</code>、<code>ω_0=1/sqrt(LC)</code>を使う。</li><li><code>ω_d=sqrt(ω_0^2−α^2)</code>である。</li><li><code>v_C(t_p)=V_f(1+exp(-πα/ω_d))</code>となる。<code>exp(-πα/ω_d)</code>を計算する。</li></ol>
+</div></details>
+<h2 id="section-e9">E9　初期条件の連続性と理想源</h2>
+<p>次の三ケースを分類せよ。(a)有限<code>R</code>を通じて、<code>v_C(0−)=2 V</code>のCへ<code>5 V</code>を加える。(b)有限<code>L</code>へ有限電圧を加えるが、<code>i_L(0−)=0.1 A</code>とする。(c)<code>v_C(0−)=0 V</code>の理想Cへ、抵抗なしで理想<code>5 V</code>電源を直結する。各ケースで<code>0+</code>の状態、必要な追加模型、単純ODEを使えるかを説明せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>有限の電流ではC電圧、有限の電圧ではL電流は瞬時に変わらない。</li><li>(a)では<code>v_C(0+)=2 V</code>、(b)では<code>i_L(0+)=0.1 A</code>である。</li><li>(c)ではインパルス電流、電源内部抵抗、スイッチ抵抗などを検討する。</li></ol>
+</div></details>
+<h2 id="section-e10-spice">E10　SPICE比較の設計</h2>
+<p>E3のRCとE8のRLCをSPICEで比較する予定である。(a)RCのnetlist断片、(b)RLCの素子接続、(c)<code>.tran</code>の最大刻み、(d)初期条件と有限立上りの記録欄を設計せよ。解析解とSPICEの差を実測差と呼んではならない理由も書け。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>node名、素子値、電源の正負、groundを明示する。</li><li><code>.ic</code>と<code>.tran</code>を使い、<code>values_si</code>とsolver設定を別に保存する。</li><li>SPICEは計算予測であり、実測には実部品・計器・配線のartifactが必要である。</li></ol>
+</div></details>
+<h2 id="section-e11">E11　故障診断と負のテスト</h2>
+<p>予定runnerへ次の入力が渡された。(a)<code>C=1</code>と書かれた<code>1 μF</code>、(b)<code>L=−10 mH</code>、(c)状態ベクトルを<code>[i,v_C]</code>で作ったのに式は<code>[v_C,i]</code>を仮定、(d)Eulerで<code>Δt/τ=2.1</code>、(e)SPICEが初期条件不整合で未収束。各ケースの期待状態、止める段階、追加ログを設計せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>(a)は数学的に解けても単位・値の入力契約違反である。</li><li>(b)は受動線形インダクタの値検査で止める。</li><li>(c)は実装検査、(d)は安定性検査、(e)はSPICE状態を<code>measurement</code>と混ぜず記録する。</li></ol>
+</div></details>
+<h2 id="section-e12-12">E12　第12章へ時間波形を渡す</h2>
+<p>RCの<code>τ=1 ms</code>とRLCの<code>ω_d≈1.0×10^4 rad/s</code>を、第12章で<a class="term" href="index.html#term-concept_12_term_78a1430d5d_78a1430d">周波数応答</a>・帯域・共振へ使う。 (a)<code>1/τ</code>と<code>ω_d/(2π)</code>を求め、(b)時間波形から周波数を見るときのサンプリング条件を一つ挙げ、(c)第9章の伝搬時間比<code>κ</code>が大きくなったとき、集中RLCのどの仮定を見直すべきか説明せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>1/τ</code>はHzではなく<code>1/s</code>、角周波数をHzへ直すには<code>2π</code>で割る。</li><li>最短の振動周期を十分細かくサンプルし、観測窓も低い周波数分解能を決める。</li><li><code>κ</code>が大きいと位置依存のVとI、終端、反射を残し、素子へ一括化した線路模型を再検討する。</li></ol>
+</div></details></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第3章　必要な数学を必要な場所で使う</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-003-exercises.html">この章の演習</a>　<a href="chapter-003-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-3-1"><code>book run 3 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-003/experiment-01.json">成果物</a></li></ul></section><h1 id="section-3">第3章　必要な数学を必要な場所で使う</h1>
+<h2 id="section-2e093ca68d">この章の中心問題</h2>
+<p>第2章では、<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>、理想化したモデル、設計上の契約、特定の実装を分けるための抽象化台帳を作った。本章では、その台帳に書かれる式を、数値だけでなく「単位」と「形」を持つものとして扱う。</p>
+<p>最初に、次の二つの式を比べる。</p>
+<pre><code class="language-text">正しい候補:   τ = R C
+誤った候補:   τ = R + C</code></pre>
+<p>抵抗 <code>R = 1 kΩ</code>、コンデンサ <code>C = 1 μF</code>なら、<code>RC = 1 ms</code>である。<code>R+C</code>は数値を無理に足しても、ΩとFを足しているので時間にならない。値を電卓へ入力できることと、式が物理量として意味を持つことは別である。</p>
+<p>同じ確認は下位の回路だけに限らない。平均メモリアクセス時間（average memory access time）では時間を確率で重み付けし、状態の反復では行列の<a class="term" href="index.html#term-eigenvalue">固有値</a>を使い、Pythonの処理系では文字列を形式文法で分解する。数式は、後の章で突然登場する呪文ではない。何を表し、どの単位を持ち、どの境界で使えるかを先に決めれば、電磁場、回路、量子、CPU、OS、処理系を同じ台帳へ接続できる。</p>
+<p>この章の目標は、数学をすべて先に学習することではない。次の問いに答えられる共通の記法を作ることである。</p>
+<ul><li>その式の左右は同じ種類の量か。</li><li>量の単位は何か。単位を変えても式の意味は変わらないか。</li><li>スカラー、ベクトル、行列、関数、確率、<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>、文字列規則のどれで表すべきか。</li><li>どの下位状態を隠しており、どの範囲で予測が成立するか。</li><li>計算結果を、後の回路・CPU・OS・MiniPyのどこへ渡すのか。</li></ul>
+<h2 id="section-1">1　<a class="term" href="index.html#term-concept_3_term_f73bae5062_f73bae50">記号台帳</a>を先に置く</h2>
+<h3 id="section-1-1">1.1　数値、単位、次元</h3>
+<p>「5」という数値だけでは、<a class="term" href="index.html#term-voltage">電圧</a>5 V、時間5 s、メモリ容量5 byteを区別できない。物理量は、数値と単位の組として記録する。</p>
+<pre><code class="language-text">電圧:       V = 5 V
+時間:       t = 5 s
+容量:       C = 5 F</code></pre>
+<p>ここでいう次元（dimension）は、単位の名前よりさらに粗い種類である。第3章では、力学量と電気量を次の4つの基本次元で表す。</p>
+<table><thead><tr><th>記号</th><th>意味</th></tr></thead>
+<tbody><tr><td>M</td><td>質量 (mass)</td></tr><tr><td>L</td><td>長さ (length)</td></tr><tr><td>T</td><td>時間 (time)</td></tr><tr><td>I</td><td><a class="term" href="index.html#term-current">電流</a> (electric current)</td></tr></tbody>
+</table>
+<p>SI単位系で、いくつかの量は次の次元を持つ。</p>
+<table><thead><tr><th>量</th><th>記号</th><th>SI単位</th><th>次元 <code>(M,L,T,I)</code></th></tr></thead>
+<tbody><tr><td>時間</td><td><code>t</code></td><td>s</td><td><code>(0,0,1,0)</code></td></tr><tr><td>長さ</td><td><code>x</code></td><td>m</td><td><code>(0,1,0,0)</code></td></tr><tr><td>電流</td><td><code>I</code></td><td>A</td><td><code>(0,0,0,1)</code></td></tr><tr><td>電圧</td><td><code>V</code></td><td>V</td><td><code>(1,2,-3,-1)</code></td></tr><tr><td>抵抗</td><td><code>R</code></td><td>Ω</td><td><code>(1,2,-3,-2)</code></td></tr><tr><td>容量</td><td><code>C</code></td><td>F</td><td><code>(-1,-2,4,2)</code></td></tr><tr><td><a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a></td><td><code>q</code></td><td>C</td><td><code>(0,0,1,1)</code></td></tr><tr><td><a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a></td><td><code>P</code></td><td>W</td><td><code>(1,2,-3,0)</code></td></tr></tbody>
+</table>
+<p>導出の例を一つ書く。電圧は電力を電流で割ったものなので、</p>
+<pre><code class="language-text">V = P/I</code></pre>
+<p>である。したがって</p>
+<pre><code class="language-text">dim(V) = (1,2,-3,0) - (0,0,0,1)
+       = (1,2,-3,-1)</code></pre>
+<p>抵抗は電圧を電流で割るから、</p>
+<pre><code class="language-text">dim(R) = dim(V) - dim(I)
+       = (1,2,-3,-2)</code></pre>
+<p>容量は電荷を電圧で割るから、</p>
+<pre><code class="language-text">dim(C) = (0,0,1,1) - (1,2,-3,-1)
+       = (-1,-2,4,2)</code></pre>
+<p>次元を掛けると指数を足し、割ると指数を引く。足し算と引き算は、同じ次元の量だけに許す。これが<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>（dimensional analysis）の最小規則である。</p>
+<h3 id="section-1-2">1.2　単位と次元を混同しない</h3>
+<p>メートルとセンチメートルは単位が異なるが、次元は同じ長さである。<code>1 m = 100 cm</code>という換算は、同じ次元の単位を取り替える操作だ。一方、メートルと秒の間に換算係数を置いて足すことはできない。</p>
+<p>角度のラジアンは、弧の長さを半径で割った比であり、次元は無次元である。しかし「無次元だから何でも足せる」という意味ではない。角度、確率、論理値は次元が同じでも別の意味と契約を持つ。単位検査は、意味の検査を完全には代替しない。</p>
+<p>同じ注意は計算機にもある。<code>0x10000000</code>という値は、RISC-V機体のアドレス、<a class="term" href="index.html#term-process">プロセス</a>内の整数、単なる16進表記の数として現れ得る。数値が同じでも、単位または層の契約が異なる。数式台帳には、数値だけでなく対象と層を書く。</p>
+<h3 id="section-1-3">1.3　共通の記号台帳</h3>
+<p>後続章で再利用する記号を、次のように固定する。<code>dim</code>欄は単位の変換ではなく、式の整合性を検査するための情報である。</p>
+<table><thead><tr><th>記号</th><th>対象</th><th>種類</th><th>単位または形</th><th>主な利用章</th><th>成立条件の例</th></tr></thead>
+<tbody><tr><td><code>q</code></td><td>電荷</td><td>スカラー</td><td>C</td><td>5, 17, 18</td><td>点電荷近似なら距離尺度を明示</td></tr><tr><td><code>E</code></td><td><a class="term" href="index.html#term-electric_field">電場</a></td><td>ベクトル場</td><td>N/C または V/m</td><td>5, 8, 17</td><td>位置と時間の関数である</td></tr><tr><td><code>V</code></td><td><a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>・電圧</td><td>スカラー場または差</td><td>V</td><td>6, 9, 20</td><td><a class="term" href="index.html#term-concept_6_term_bc3281ce43_bc3281ce">基準電位</a>を明示</td></tr><tr><td><code>I</code></td><td>電流</td><td>スカラーまたは密度の流束</td><td>A</td><td>7, 9, 10</td><td>符号規約と断面を明示</td></tr><tr><td><code>R,C,L</code></td><td>回路素子</td><td>スカラーのパラメータ (parameter)</td><td>Ω, F, H</td><td>10--16</td><td>周波数・温度・寄生を確認</td></tr><tr><td><code>t</code></td><td>時間</td><td>スカラー</td><td>s</td><td>4, 10, 36</td><td>初期時刻と刻み幅を明示</td></tr><tr><td><code>x</code></td><td>状態または位置</td><td>スカラー・ベクトル</td><td>量による</td><td>5, 36, 81</td><td>成分の単位と順序を明示</td></tr><tr><td><code>A</code></td><td>線形写像</td><td>行列</td><td>出力単位/入力単位</td><td>14, 36, 45</td><td>行と列の意味を固定</td></tr><tr><td><code>λ</code></td><td>固有値</td><td>スカラー</td><td>写像と状態の単位関係</td><td>14, 36, 81</td><td>固有ベクトルが定義される空間を明示</td></tr><tr><td><code>p</code></td><td>確率</td><td>スカラー</td><td>1（無次元）</td><td>14, 63, 81</td><td><code>0 ≤ p ≤ 1</code></td></tr><tr><td><code>G</code></td><td>グラフ</td><td>頂点と辺の集合</td><td>単位なし、辺に重み可</td><td>31, 45, 80, 92</td><td>有向・無向、重みの意味を明示</td></tr><tr><td><code>S</code></td><td>文字列</td><td>記号列</td><td>文字集合上の列</td><td>91--95</td><td>符号化 (encoding) と文法を明示</td></tr></tbody>
+</table>
+<p>この表を覚えることが目的ではない。式を追加するたびに、記号の対象、単位、形、成立条件を埋められることが目的である。</p>
+<h2 id="section-2">2　次元解析で式の入口を検査する</h2>
+<h3 id="section-2-1">2.1　足せるもの、掛けられるもの</h3>
+<p>同じ次元の量だけを足せる。</p>
+<pre><code class="language-text">3 m + 20 cm = 3.20 m       （同じ長さへ換算してから足す）
+5 V + 2 A                  （そのままでは意味が決まらない）</code></pre>
+<p>後者が常に禁止という意味ではない。回路の状態を <code>(V, I)</code>という二成分ベクトルにまとめることはできる。ただし、成分を別々に保持する構造を明示し、スカラーの和として扱わない。</p>
+<p>掛け算は、次元を合成する。</p>
+<pre><code class="language-text">P = V I       [W] = [V][A]
+q = I t       [C] = [A][s]
+τ = R C       [s] = [Ω][F]</code></pre>
+<p><code>τ=RC</code>では、ΩとFを基本次元へ分解すると時間だけが残る。したがって、RC回路の<a class="term" href="index.html#term-concept_11_term_8a294c0490_8a294c04">時定数</a>（time constant）が時間であるという予測を、実験や微分方程式を解く前に検査できる。</p>
+<h3 id="section-2-2">2.2　無次元数は「小さい」ことと同じではない</h3>
+<p>指数関数や<a class="term" href="index.html#term-concept_3_term_8d8794d7de_8d8794d7">対数</a>の引数は無次元でなければならない。</p>
+<pre><code class="language-text">exp(-t/τ)       t/τ は無次元なので許される
+exp(-t)         t が秒なら、単位を無視している
+log(n/n0)       比が無次元なので許される
+log(n)          n が個数なら、基準を明示しないと曖昧になる</code></pre>
+<p>この条件は、数式の見た目ではなく、単位を変えたときの不変性を守るために必要である。<code>t=1 s</code>を<code>1000 ms</code>に書き換えても、<code>t/τ</code>の値は変わるが、<code>exp(-t)</code>と書いた式では入力する数値が変わり、結果まで変わってしまう。</p>
+<h3 id="section-2-3">2.3　次元解析が見抜けないもの</h3>
+<p>次元が合っていても、式が正しいとは限らない。<code>τ=2RC</code>も単位は秒だが、係数2が必要かどうかは回路の構成と微分方程式から決まる。符号、境界条件、係数、初期値、近似の範囲は、次元検査だけでは分からない。</p>
+<p>同様に、<code>T = h T_c + (1-h) T_m</code>は時間の次元を持つが、ミス時にキャッシュ探索時間を再度加えるか、メモリ並列性をどう扱うかは、アクセス契約の定義に依存する。次元検査を通過した式を、実装の観測値と同一視しない。</p>
+<h2 id="section-3-2">3　ベクトルは「方向のついた量」を記録する</h2>
+<h3 id="section-3-1">3.1　<a class="term" href="index.html#term-concept_3_term_7fc5835483_7fc58354">スカラーとベクトル</a></h3>
+<p>温度、電位、抵抗値は、場所を固定すれば一つの数で表すスカラーである。力、速度、電場は、値だけでなく向きを持つのでベクトルである。</p>
+<p>二次元ベクトルを列として書く。</p>
+<pre><code class="language-text">a = (a_x, a_y)^T
+b = (b_x, b_y)^T</code></pre>
+<p>同じ形のベクトルは成分ごとに足す。</p>
+<pre><code class="language-text">a + b = (a_x + b_x, a_y + b_y)^T</code></pre>
+<p>内積（dot product）は二つのベクトルからスカラーを作る。</p>
+<pre><code class="language-text">a · b = a_x b_x + a_y b_y</code></pre>
+<p>内積は、力が移動方向へした仕事 <code>W = F · Δr</code>、電場から<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>を得る線積分、行列の行と列の計算に現れる。外積（cross product）は3次元で向きを持つベクトルを作り、磁場中の力やトルクで使う。外積の向きは座標系の向きに依存するため、右手系を明示する。</p>
+<h3 id="section-3-2-2">3.2　単位付きベクトル</h3>
+<p>ベクトルの各成分は、通常同じ次元を持つ。位置 <code>r=(x,y,z)</code>の各成分はm、速度 <code>v=(v_x,v_y,v_z)</code>の各成分はm/sである。異なる単位の成分を一つのベクトルへ置くなら、成分の役割を台帳へ書く。</p>
+<p>電磁気では、電場 <code>E(r,t)</code>は位置と時間を入力に取り、各点でベクトルを返すベクトル場である。スカラー電位 <code>V(r,t)</code>から電場を求める式</p>
+<pre><code class="language-text">E = -∇V</code></pre>
+<p>では、<code>∇</code>が空間方向の微分をまとめている。<code>V</code>がV、位置がmなら、<code>∇V</code>はV/mとなり、電場の単位と整合する。ここでは式の意味と単位だけを固定し、境界条件を含む解法は第5章以降で扱う。</p>
+<h3 id="section-3-3-cpu-os">3.3　CPU、OS、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のベクトル</h3>
+<p>ベクトルは物理量だけの道具ではない。CPUのレジスタ状態を</p>
+<pre><code class="language-text">x = (x0, x1, ..., x31)^T</code></pre>
+<p>と書けば、一つの命令を状態ベクトルへの写像として表せる。OSのプロセス表も、各プロセスの状態を集合またはレコードの列として持つ。MiniPyの実行時環境も、スタック、環境、ヒープを状態ベクトルに似た構造として記録できる。ただし、これらは物理ベクトルではなく、成分に意味を割り当てた離散状態である。形が似ているからといって、物理の単位をそのまま付けてはいけない。</p>
+<h2 id="section-4">4　<a class="term" href="index.html#term-concept_3_term_670f9907da_670f9907">微分と積分</a>は「変化」と「累積」をつなぐ</h2>
+<h3 id="section-4-1">4.1　微分の単位</h3>
+<p>時間に関する微分は、単位あたりの変化を表す。</p>
+<pre><code class="language-text">dq/dt        [C/s] = [A]
+dV/dt        [V/s]
+dT/dt        [K/s]</code></pre>
+<p>電流は、電荷の時間変化率として</p>
+<pre><code class="language-text">I = dq/dt</code></pre>
+<p>と定義される。<code>q</code>がC、<code>t</code>がsなので、<code>I</code>はAになる。</p>
+<p>微分を「小さい差分」とだけ扱うと、刻み幅を変えたときの誤差を見失う。数値計算では</p>
+<pre><code class="language-text">dx/dt ≈ (x(t+Δt) - x(t)) / Δt</code></pre>
+<p>と置くが、これは近似である。<code>Δt</code>を小さくすれば常によくなるわけではない。丸め誤差、測定ノイズ、計算時間、モデルの時間尺度を一緒に調べる必要がある。第4章では、この近似と解析解を比較する。</p>
+<h3 id="section-4-2">4.2　積分の単位</h3>
+<p>積分は、微小な量を足し合わせる。</p>
+<pre><code class="language-text">q(t) - q(t0) = ∫[t0,t] I(u) du</code></pre>
+<p><code>I</code>がA、<code>du</code>がsなので、積分結果はCである。速度を時間で積分すれば位置の変化になり、電力を時間で積分すればエネルギーになる。</p>
+<pre><code class="language-text">Δr = ∫ v(t) dt       [m/s] [s] = [m]
+U  = ∫ P(t) dt       [W] [s]   = [J]</code></pre>
+<p>積分区間、初期値、境界値を省略した式は、数値だけ合っていても再現できない。台帳には必ず区間と基準を残す。</p>
+<h3 id="section-4-3-rc">4.3　RC回路の<a class="term" href="index.html#term-concept_3_term_5bae8298d2_5bae8298">常微分方程式</a></h3>
+<p>抵抗 <code>R</code>と容量 <code>C</code>を直列につなぎ、入力電圧を一定値 <code>V_s</code>、コンデンサ電圧を <code>V_C(t)</code>とする。抵抗を流れる電流は、<a class="term" href="index.html#term-concept_11_term_1d38fab790_1d38fab7">受動符号規約</a>のもとで</p>
+<pre><code class="language-text">I_R = (V_s - V_C) / R</code></pre>
+<p>であり、コンデンサの関係は</p>
+<pre><code class="language-text">I_C = C dV_C/dt</code></pre>
+<p>である。直列枝で電流が同じという近似を置くと、</p>
+<pre><code class="language-text">C dV_C/dt = (V_s - V_C) / R</code></pre>
+<p>または</p>
+<pre><code class="language-text">dV_C/dt = (V_s - V_C) / (R C)</code></pre>
+<p>となる。左辺はV/s、右辺もV/(ΩF)=V/sで、単位がそろう。</p>
+<p>入力を時刻0で急に0 Vから <code>V_s</code>へ変え、初期値を <code>V_C(0)=0</code>とする理想モデルでは、解は</p>
+<pre><code class="language-text">V_C(t) = V_s (1 - exp(-t/τ))
+τ = R C</code></pre>
+<p>である。<code>t/τ</code>が無次元なので指数関数の引数が成立し、<code>V_C</code>の単位は<code>V_s</code>のVのままである。</p>
+<p>この式を使える条件を台帳へ書く。</p>
+<table><thead><tr><th>項目</th><th>RC充電モデルでの内容</th></tr></thead>
+<tbody><tr><td>下位表現</td><td>抵抗・コンデンサ端子の電圧、電流、電荷、時間</td></tr><tr><td>上位契約</td><td>指定した入力と初期値に対し、<code>V_C(t)</code>を予測する</td></tr><tr><td>隠す変数</td><td>配線のインダクタンス、漏れ、ESR、スイッチの有限時間、温度</td></tr><tr><td>成立条件</td><td>集中定数近似、線形・一定のRとC、入力の立上りが十分速い、定格内</td></tr><tr><td>破綻条件</td><td>高周波、寄生素子、飽和・漏れ、入力波形の無視、測定器の負荷</td></tr><tr><td>検証</td><td>解析解、<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>、SPICEまたは測定の波形を同じ時刻軸で比較</td></tr></tbody>
+</table>
+<p>式が正しいかを問う前に、<code>R</code>と<code>C</code>が本当に一定か、入力がステップ関数とみなせるかを確認する。後の第4章では同じ式を別の刻み幅で計算し、数値解の誤差を観察する。</p>
+<h3 id="section-4-4">4.4　<a class="term" href="index.html#term-concept_3_term_937ab75013_937ab750">偏微分方程式</a>への入口</h3>
+<p><code>V_C(t)</code>は時間だけの関数なので、常微分方程式（ordinary differential equation、ODE）である。電場 <code>E(r,t)</code>や電位 <code>V(r,t)</code>のように位置と時間の両方に依存する量では、偏微分方程式（partial differential equation、PDE）が必要になる。</p>
+<p>例えば熱や拡散の模型には</p>
+<pre><code class="language-text">∂u/∂t = D ∇²u</code></pre>
+<p>の形が現れる。<code>u</code>が温度なら、左辺はK/s、<code>∇²u</code>はK/m²なので、<code>D</code>はm²/sである。電磁場の波動方程式も空間微分と時間微分を結びつける。ここで重要なのは、微分記号を増やすことではない。変数の数が増えると境界条件・初期条件・空間の離散化が必要になり、回路の一つの時定数だけでは予測できなくなることである。</p>
+<h2 id="section-5">5　複素数とフーリエは「変化の形」を分ける</h2>
+<h3 id="section-5-1">5.1　複素数を二つの実数として読む</h3>
+<p>複素数（complex number）は</p>
+<pre><code class="language-text">z = a + i b,  i^2 = -1</code></pre>
+<p>と書く。<code>a</code>は実部、<code>b</code>は虚部である。複素数を導入しても、測定器が負の電圧を直接「虚数V」として測るわけではない。複素数は、二つの成分を一つの計算規則で扱う表現である。</p>
+<p>Eulerの公式</p>
+<pre><code class="language-text">exp(i θ) = cos θ + i sin θ</code></pre>
+<p>を使うと、正弦波の位相を掛け算で表せる。<code>θ</code>は角度で無次元、<code>exp(iθ)</code>も無次元である。交流回路の定常状態では、電圧や電流の振幅を複素数で表すフェーザ（phasor）を使うことがある。その場合、抵抗は<code>R</code>、コンデンサは</p>
+<pre><code class="language-text">Z_C = 1/(i ω C)</code></pre>
+<p>というインピーダンスで表せる。角周波数 <code>ω</code>はrad/s、ラジアンは無次元なので、<code>ωC</code>は1/Ω、<code>Z_C</code>はΩとなる。</p>
+<p>この表現は、正弦波の定常状態という範囲に限る。スイッチを入れた直後の過渡応答、非線形素子、広い周波数帯の信号では、複素数一つの値に隠れている条件を開く必要がある。</p>
+<h3 id="section-5-2">5.2　フーリエ分解の用途</h3>
+<p>周期信号を、異なる周波数の正弦波の和として表す考えをフーリエ級数（Fourier series）と呼ぶ。連続時間の概念的な形は</p>
+<pre><code class="language-text">x(t) = Σ_k A_k exp(i k ω0 t)</code></pre>
+<p>である。<code>A_k</code>は各周波数成分と同じ量の単位を持つ係数、<code>ω0</code>は基本角周波数である。有限長の記録へ同じ式を適用する場合は、記録を周期延長した離散フーリエ変換（DFT）なのか、窓を掛けた近似なのか、または連続フーリエ変換なのかを別に記録する。現実の回路では、信号の帯域、配線の遅延、測定器の帯域、サンプリング周波数を区別する。</p>
+<p>フーリエ変換を使う場所は三つに分ける。</p>
+<table><thead><tr><th>対象</th><th>周波数表現が与えるもの</th><th>隠される危険</th></tr></thead>
+<tbody><tr><td>RC回路</td><td>周波数ごとの減衰と位相</td><td>過渡初期、非線形、有限窓</td></tr><tr><td>デジタル回路</td><td>クロック (<a class="term" href="index.html#term-clock">clock</a>)、立上り、ノイズの帯域</td><td>連続波形を0/1へ戻す閾値</td></tr><tr><td>CPUの実行記録 (trace)</td><td>周期・待ち時間の統計的な成分</td><td>事象の順序、因果関係、分岐</td></tr></tbody>
+</table>
+<p>連続時間信号を一定間隔で読むとき、十分なサンプリング周波数がなければ高い周波数が低い周波数に見えるエイリアシング（aliasing）が起きる。したがって、スペクトルの図が滑らかでも、元信号を完全に復元したことにはならない。第4章でサンプリングと数値積分を並べて扱う。</p>
+<h2 id="section-6">6　線形代数と固有値で状態の変化を表す</h2>
+<h3 id="section-6-1">6.1　行列は入力ベクトルを別のベクトルへ写す</h3>
+<p>線形写像（linear map）は、ベクトルの足し算とスカラー倍を保つ写像である。行列 <code>A</code>を使って</p>
+<pre><code class="language-text">y = A x</code></pre>
+<p>と書く。行列の行は出力成分、列は入力成分に対応する。<code>A</code>が2×2、<code>x</code>が2×1なら、<code>y</code>も2×1になる。</p>
+<p>各成分の単位が同じなら、行列の要素は無次元でよい。入力の温度を出力の温度へ写すなら係数は無次元である。入力を電圧、出力を電流へ写す行列の要素はS（ジーメンス）のように単位を持つ。異なる次元を持つ状態を一つのベクトルへ積む場合、行列の各要素が行と列の単位比を持つことを台帳へ書く。</p>
+<h3 id="section-6-2">6.2　固有値は反復で残る形を見つける</h3>
+<p>ゼロでないベクトル <code>v</code>について</p>
+<pre><code class="language-text">A v = λ v</code></pre>
+<p>を満たす<code>λ</code>を固有値（<a class="term" href="index.html#term-eigenvalue">eigenvalue</a>）、<code>v</code>を固有ベクトル（eigenvector）という。<code>v</code>の向きは行列<code>A</code>で変わらず、長さだけが<code>λ</code>倍される。</p>
+<p>反復状態</p>
+<pre><code class="language-text">x_(n+1) = A x_n</code></pre>
+<p>では、絶対値が1未満の固有値に対応する成分は減衰し、絶対値が1を超える成分は増大する（他の条件が整っている場合）。この見方は、RC回路の離散時間計算、反復解法、キャッシュの状態遷移、マルコフ連鎖、量子力学の状態演算子に再利用される。</p>
+<h3 id="section-6-3">6.3　小さな固有値問題</h3>
+<p>次の無次元行列を使う。</p>
+<pre><code class="language-text">A = [[0.8, 0.1],
+     [0.2, 0.7]]</code></pre>
+<p>固有方程式は</p>
+<pre><code class="language-text">det(A - λI) = 0</code></pre>
+<p>であり、トレースと行列式から</p>
+<pre><code class="language-text">λ^2 - 1.5 λ + 0.54 = 0</code></pre>
+<p>となる。判別式は<code>1.5^2 - 4×0.54 = 0.09</code>なので、固有値は<code>λ=0.9</code>と<code>λ=0.6</code>である。行列が無次元で、状態ベクトルの入力と出力の単位が同じなら、固有値も無次元である。</p>
+<p>ここで「固有値はいつでも0.9や0.6」と覚えてはいけない。行列の成分、状態の定義、時間を一回進める幅、境界条件を変えれば固有値は変わる。連続時間の微分方程式では、固有値が1/sのような単位を持ち、<code>exp(λt)</code>の引数を無次元にすることもある。離散時間の遷移行列の固有値と、連続時間系の減衰率を同じ単位で扱わない。</p>
+<h3 id="section-6-4-cpu">6.4　量子、回路、CPUへの接続</h3>
+<p>量子力学では状態をベクトル、観測量を演算子として表し、固有値が測定結果の候補になる。回路の小信号解析では、複数の節点電圧をベクトル、線形化した抵抗・容量関係を行列で表す。CPUでは、同じ形式を制御状態やパイプラインの状態遷移へ使える。</p>
+<p>これらは数学的な形を共有するが、<a class="term" href="index.html#term-quantum_state">量子状態</a>の複素振幅、回路の実電圧、CPUのビット列は同じ物理量ではない。台帳の「対象」と「契約」を毎回分ける。</p>
+<h2 id="section-7">7　確率、対数、平均を性能の式へつなぐ</h2>
+<h3 id="section-7-1">7.1　確率は単位を持たない重み</h3>
+<p>確率<code>p</code>は0以上1以下の無次元量である。互いに排反な事象の確率を足すと全体の確率になる。時間や電力を確率で重み付けすると、期待値（expected value）が得られる。</p>
+<p>2段のキャッシュを単純化し、</p>
+<pre><code class="language-text">T_c = キャッシュを調べる時間
+T_m = 主記憶から追加で読む時間
+h   = キャッシュに見つかる確率</code></pre>
+<p>とする。ミスのときは、キャッシュ探索に加えて主記憶の時間がかかるという契約なら、平均アクセス時間は</p>
+<pre><code class="language-text">T_avg = h T_c + (1-h)(T_c + T_m)
+       = T_c + (1-h) T_m</code></pre>
+<p>である。すべての項が時間なので、<code>T_avg</code>も時間になる。</p>
+<p>例えば<code>T_c=4 ns</code>、<code>T_m=80 ns</code>、<code>h=0.95</code>なら、</p>
+<pre><code class="language-text">T_avg = 4 ns + 0.05 × 80 ns = 8 ns</code></pre>
+<p>となる。ただし、書込みと読出し、複数段キャッシュ、並列要求、<a class="term" href="index.html#term-translation_lookaside_buffer">TLB</a>ミス (TLB miss)、ページフォルトを含めるなら、事象を分けて式を作り直す。<code>h</code>を測定せずに理想値として固定すれば、平均値は予測であって観測ではない。</p>
+<h3 id="section-7-2">7.2　対数は桁と比を扱う</h3>
+<p>対数は積を和へ変える。</p>
+<pre><code class="language-text">log(ab) = log(a) + log(b)
+log2(2^n) = n</code></pre>
+<p><code>log</code>の底は用途で変わる。情報量をbitで数えるときは<code>log2</code>、指数的な時間変化を扱うときは自然対数<code>ln</code>が現れる。<code>log(x)</code>の<code>x</code>は正で、物理量を入れる場合は基準量との比 <code>x/x0</code> を使う。</p>
+<p>CPUのアドレス幅<code>w</code> bitで表せるアドレス数が<code>2^w</code>、必要なbit数が<code>log2(N)</code>という関係は、メモリ設計で使う。アルゴリズムの計算量の<code>O(log N)</code>は、入力サイズが増えたときの増え方を表す模型であり、CPUの実時間を直接保証するものではない。キャッシュ、分岐予測、I/O、割込み、メモリ階層が隠れている。</p>
+<p>RC回路の<code>exp(-t/τ)</code>と対数は逆関数である。測定した電圧から時刻を推定するなら</p>
+<pre><code class="language-text">t = -τ ln(1 - V_C/V_s)</code></pre>
+<p>となる。ただし<code>0 ≤ V_C &lt; V_s</code>、入力と初期値がモデルどおり、測定ノイズが小さいという条件がある。<code>V_C</code>が<code>V_s</code>に近いほど、微小な誤差が推定時刻を大きく変える。</p>
+<h2 id="section-8">8　離散数学、グラフ、<a class="term" href="index.html#term-concept_3_term_75b7d9ae4a_75b7d9ae">形式文法</a></h2>
+<h3 id="section-8-1">8.1　集合と論理</h3>
+<p>集合（<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>）は要素の集まりである。回路の信号名、CPUのレジスタ、OSのプロセス、MiniPyの変数名を集合として記録できる。集合の包含、共通部分、差分は、資源の所有や可視性を表す。</p>
+<p>論理値<code>true</code>と<code>false</code>、論理積、論理和、否定は、条件分岐とゲート回路に共通する。ただし、回路の論理値は電圧範囲から読み出す契約であり、Pythonの<code>bool</code>は言語の値である。同じ真偽表を使えても、入力の型と成立条件は別である。</p>
+<p>数学的帰納法は、有限ビットの加算器、リスト処理、命令列の<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a>を証明するために使う。</p>
+<ol><li>基底の場合に成立することを示す。</li><li><code>n</code>で成立すると仮定し、<code>n+1</code>でも成立することを示す。</li></ol>
+<p>この二段を省いて、いくつかの例が動いたことだけで全長のプログラムを保証してはいけない。後の<a class="term" href="index.html#term-formal_verification">形式検証</a>では、命令の全ビットパターンや回路の全入力に対する性質を、機械的に調べる。</p>
+<h3 id="section-8-2">8.2　グラフは接続を表す</h3>
+<p>グラフ<code>G=(V,E)</code>は頂点集合<code>V</code>と辺集合<code>E</code>からなる。辺に向きがある有向グラフなら、処理の流れ、信号の向き、依存関係を表せる。</p>
+<table><thead><tr><th>グラフの頂点</th><th>辺の意味</th><th>後の対象</th></tr></thead>
+<tbody><tr><td>回路の節点</td><td>素子端子や配線の接続</td><td><a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>、ネットリスト</td></tr><tr><td>CPUの状態</td><td>命令による状態遷移</td><td>control-flow、<a class="term" href="index.html#term-pipeline">pipeline</a></td></tr><tr><td>OSのプロセス</td><td>親子・待ち・通信</td><td><a class="term" href="index.html#term-process">process</a> tree、socket</td></tr><tr><td>処理系の構文</td><td>文法規則による遷移</td><td>AST、parser</td></tr><tr><td>メモリ階層</td><td>命中・不命中 (hit/miss) や転送経路</td><td>キャッシュ (<a class="term" href="index.html#term-cache">cache</a>)、TLB、ページ</td></tr></tbody>
+</table>
+<p>グラフで経路を見つけるだけでは、辺を通る時間、容量、単位は決まらない。重み付き辺に遅延や確率を付ける場合、その重みの定義を台帳へ追加する。</p>
+<h3 id="section-8-3">8.3　形式文法は文字列から構造へ写す契約</h3>
+<p>処理系では、入力文字列が許される構造を形式文法（formal <a class="term" href="index.html#term-grammar">grammar</a>）で定める。簡略化した式の文法をEBNF風に書く。</p>
+<pre><code class="language-ebnf">expression = term , { ( &quot;+&quot; | &quot;-&quot; ) , term } ;
+term       = factor , { ( &quot;*&quot; | &quot;/&quot; ) , factor } ;
+factor     = number | identifier | &quot;(&quot; , expression , &quot;)&quot; ;</code></pre>
+<p><code>{ ... }</code>は0回以上、<code>|</code>は選択、<code>,</code>は並びを表す。この文法は、例えば<code>1 + 2 * 3</code>を受理するが、演算子の優先順位は<code>expression</code>と<code>term</code>を分けた構造によって表す。文法が受理することは、式の計算結果が正しいことや、実行時に副作用がないことを保証しない。</p>
+<p>文法から構文木を作る処理は、字句解析、構文解析、意味検査へ分かれる。<code>identifier</code>が宣言済みか、型が演算に適合するか、関数呼出しに副作用があるかは、文法だけでは決まらない。第91章以降で、MiniPyの文法、AST、<a class="term" href="index.html#term-bytecode">bytecode</a>を同じ境界で追う。</p>
+<p>形式文法と回路の真理値表は、どちらも「許される入力と結果」を定める規則だが、文法は記号列の構造、真理値表は論理入力の状態遷移を対象とする。型や単位まで同じだと考えてはいけない。</p>
+<h2 id="section-9">9　数学の道具を後続層へ割り当てる</h2>
+<p>ここまでの道具を、用途、共通記法、隠すもの、破綻条件でまとめる。</p>
+<table><thead><tr><th>道具</th><th>最小の記法</th><th>使う場所</th><th>隠すもの</th><th>破綻・注意</th></tr></thead>
+<tbody><tr><td>次元解析</td><td><code>dim(x)</code></td><td>全物理、回路、性能</td><td>係数、符号、境界条件</td><td>次元が合っても式が正しいとは限らない</td></tr><tr><td>ベクトル</td><td><code>x</code>, <code>E</code>, <code>∇V</code></td><td>電磁場、状態、線形代数</td><td>成分間の関係</td><td>座標系、成分の単位、基底</td></tr><tr><td>微分積分</td><td><code>dx/dt</code>, <code>∫x dt</code></td><td>電流、エネルギー、過渡</td><td>微視的な変化、測定ノイズ</td><td>刻み幅、初期値、積分範囲</td></tr><tr><td>ODE</td><td><code>dx/dt=f(x,t)</code></td><td>RC、RLC、制御</td><td>空間分布</td><td>連続モデル、安定性、初期値</td></tr><tr><td>PDE</td><td><code>∂u/∂t=D∇²u</code></td><td>電磁場、熱、波</td><td>空間の原子・格子</td><td>境界条件、離散化、メッシュ</td></tr><tr><td>複素数</td><td><code>a+ib</code>, <code>exp(iθ)</code></td><td>交流、量子、信号</td><td>位相表現</td><td>定常正弦波、複素振幅の意味</td></tr><tr><td>フーリエ</td><td><code>Σ A_k exp(i kωt)</code></td><td>信号、回路、クロック (clock)</td><td>時間局所性</td><td>窓、帯域、エイリアシング (aliasing)</td></tr><tr><td>行列</td><td><code>y=Ax</code></td><td>節点方程式、状態遷移</td><td>成分の相互作用</td><td>行列の順序、単位、特異性</td></tr><tr><td>固有値</td><td><code>Av=λv</code></td><td>モード、安定性、量子</td><td>基底の選択</td><td>離散と連続の単位を混同しない</td></tr><tr><td>確率</td><td><code>E[X]=Σp_ix_i</code></td><td>キャッシュ、分岐 (branch)、OS</td><td>個別の経路</td><td>分布、独立性、尾部遅延</td></tr><tr><td>対数</td><td><code>log2 N</code>, <code>ln(x/x0)</code></td><td>bit幅、減衰、計算量</td><td>定数、実装の低レベル詳細</td><td>底、正の引数、基準量</td></tr><tr><td>離散数学</td><td>集合、論理、帰納法</td><td>回路、<a class="term" href="index.html#term-concept_44_isa_52ed4c0e">ISA</a>、検証</td><td>連続時間・電圧</td><td>前提と全域を明示</td></tr><tr><td>グラフ</td><td><code>G=(V,E)</code></td><td>接続、依存、制御</td><td>辺の物理量</td><td>有向性、重み、循環</td></tr><tr><td>形式文法</td><td>EBNF、生成規則</td><td><a class="term" href="index.html#term-lexer">lexer</a>/parser、MiniPy</td><td>実行時の意味</td><td>文法と意味・型・副作用を分離</td></tr></tbody>
+</table>
+<p>この表は「数学を覚えたか」を判定する表ではなく、「次の章でどの道具を取り出すか」を決める索引である。式が表にない場合は、対象、形、単位、成立条件を追加してから使う。</p>
+<h2 id="section-10">10　再現可能な単位検査の実験</h2>
+<h3 id="section-10-1-runner">10.1　runnerの位置づけ</h3>
+<p>この章の必修実験は、数値を手で計算するだけでなく、式の各演算に次元を持たせて誤った加算を止める。共通runnerの入口は次である。</p>
+<pre><code class="language-text">book run 3 1</code></pre>
+<p>現在の <code>book run 3 1</code> は固定Linux環境の解析・契約adapterで実行済みであり、コード、入力hash、期待結果、検査結果を保存する。ただしEuler/RK4や実測器を実行した結果ではない。読者が直接Pythonを実行する手順を併記する場合も、CPythonや外部domainの測定値へは昇格させない。</p>
+<h3 id="section-10-2">10.2　単位付き量の最小コード</h3>
+<p>以下は実験で使う最小の検査コードである。4基本次元を指数のタプル <code>(M,L,T,I)</code>にし、掛け算・割り算では指数を計算し、足し算・引き算では一致を要求する。</p>
+<pre><code class="language-python">from dataclasses import dataclass
+from math import sqrt
+
+DIMLESS = (0, 0, 0, 0)
+TIME = (0, 0, 1, 0)
+VOLT = (1, 2, -3, -1)
+OHM = (1, 2, -3, -2)
+FARAD = (-1, -2, 4, 2)
+
+
+@dataclass(frozen=True)
+class Q:
+    value: float
+    dim: tuple[int, int, int, int]
+
+    def __add__(self, other):
+        if self.dim != other.dim:
+            raise ValueError(f&quot;dimension mismatch: {self.dim} + {other.dim}&quot;)
+        return Q(self.value + other.value, self.dim)
+
+    def __sub__(self, other):
+        if self.dim != other.dim:
+            raise ValueError(f&quot;dimension mismatch: {self.dim} - {other.dim}&quot;)
+        return Q(self.value - other.value, self.dim)
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Q(self.value * other, self.dim)
+        return Q(self.value * other.value,
+                 tuple(a + b for a, b in zip(self.dim, other.dim)))
+
+    __rmul__ = __mul__
+
+    def __truediv__(self, other):
+        if isinstance(other, (int, float)):
+            return Q(self.value / other, self.dim)
+        return Q(self.value / other.value,
+                 tuple(a - b for a, b in zip(self.dim, other.dim)))
+
+
+def require_dim(label, q, expected):
+    if q.dim != expected:
+        raise AssertionError(f&quot;{label}: got {q.dim}, expected {expected}&quot;)
+
+
+R = Q(1_000.0, OHM)
+C = Q(1e-6, FARAD)
+tau = R * C
+require_dim(&quot;RC time constant&quot;, tau, TIME)
+
+Vs = Q(5.0, VOLT)
+Vc = Vs * (1.0 - 2.718281828459045 ** (-1.0))
+require_dim(&quot;RC voltage&quot;, Vc, VOLT)
+
+# A is a map from a dimensionless state to the same state.
+A = ((0.8, 0.1), (0.2, 0.7))
+assert all(isinstance(a, float) for row in A for a in row)
+trace = A[0][0] + A[1][1]
+det = A[0][0] * A[1][1] - A[0][1] * A[1][0]
+disc = trace * trace - 4.0 * det
+eigenvalues = ((trace + sqrt(disc)) / 2.0,
+               (trace - sqrt(disc)) / 2.0)
+eigenvalue_dim = DIMLESS
+require_dim(&quot;eigenvalue of dimensionless A&quot;, Q(eigenvalues[0], eigenvalue_dim), DIMLESS)
+
+Tc = Q(4e-9, TIME)
+Tm = Q(80e-9, TIME)
+h = Q(0.95, DIMLESS)
+Tavg = h * Tc + (Q(1.0, DIMLESS) - h) * (Tc + Tm)
+require_dim(&quot;average access time&quot;, Tavg, TIME)
+
+print(&quot;RC tau&quot;, tau.value, &quot;s&quot;)
+print(&quot;eigenvalues&quot;, eigenvalues)
+print(&quot;average access&quot;, Tavg.value, &quot;s&quot;)</code></pre>
+<p>上の<code>Vc</code>の計算は、RC式が電圧を返すことを確認するための値であり、測定値ではない。<code>A</code>の要素を無次元と宣言しているのは、状態を「基準値で正規化した二成分」としたからである。正規化しない電圧と電流を同じベクトルへ入れるなら、行列の各要素の単位比を記録し直す必要がある。</p>
+<p>runnerが生成すべき期待形は次である。数値はこの入力から計算した予測であり、実験環境で取得したログの主張ではない。</p>
+<pre><code class="language-text">RC tau 0.001 s
+eigenvalues (0.9, 0.6)
+average access 8e-09 s</code></pre>
+<h3 id="section-10-3">10.3　失敗を成功として記録する</h3>
+<p>次の行を追加すると、ΩとFを足そうとして<a class="term" href="index.html#term-exception">例外</a>になる。</p>
+<pre><code class="language-python">bad = R + C</code></pre>
+<p>これはrunnerの故障ではなく、検査が誤った式を見つけたという成功である。次元検査を無効化して数値だけを足し、<code>1000.000001</code>という答えを得ることは、物理的に意味のある計算ではない。</p>
+<p>反対に、<code>2 * R * C</code>は単位検査を通過するが、RC回路の時定数が2倍になる根拠はこの検査から出ない。係数は回路の接続、微分方程式、定義した時定数の閾値から検証する。</p>
+<h2 id="section-11">11　四分類で数学の主張を台帳に残す</h2>
+<p>第2章の<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a>へ、本章の数学を一行追加する。</p>
+<pre><code class="language-text">対象: RC回路の時定数 τ=RC
+分類: 理想化モデル（RとCが一定の集中定数回路）
+下位表現: 端子電圧、枝電流、電荷、時間、寄生素子
+上位契約: ステップ入力と初期値から V_C(t) を予測する
+隠される変数: ESR、漏れ、配線インダクタンス、入力の有限時間、温度
+成立条件: 線形素子、一定のパラメータ、回路寸法が波長より十分小さい
+破綻条件: 高周波、飽和、寄生、測定器負荷、初期条件の不一致
+検証方法: 次元検査、解析解、数値解、SPICEまたは測定波形の比較</code></pre>
+<pre><code class="language-text">対象: 二段cacheの平均アクセス時間
+分類: 性能の確率模型
+下位表現: hit/missイベント、各経路の遅延、要求の到着列
+上位契約: 定義した事象分割と確率のもとで期待時間を計算する
+隠される変数: missの相関、queue、TLB、並列性、tail latency
+成立条件: hit率と各遅延の測定期間・定義がそろっている
+破綻条件: 確率の取り違え、事象の重複、平均値だけで最悪値を表す
+検証方法: traceからイベントを数え、式の予測と分布を比較する</code></pre>
+<pre><code class="language-text">対象: A v = λ v
+分類: 線形代数のモデルまたは仕様化された状態写像
+下位表現: 状態成分、行列要素、時間刻み、基底
+上位契約: 固有方向では写像がスカラー倍として作用する
+隠される変数: 基底の選び方、丸め、非線形項、境界条件
+成立条件: 線形写像が対象範囲で成立し、固有値・固有ベクトルが定義できる
+破綻条件: 非線形、特異・欠陥行列、単位の異なる成分の無記録、数値不安定
+検証方法: 行列積と固有方程式の残差を計算し、単位と誤差を記録する</code></pre>
+<p>数式の種類を「自然法則」とだけ書かない。RCの微分方程式は回路素子のモデルと接続規則を使った模型であり、平均アクセス時間はイベントの分割を決めた性能模型である。固有値の式は数学的定義だが、どの行列を状態として選んだかは実装や測定の契約に依存する。</p>
+<h2 id="section-12">12　この章で確定した境界</h2>
+<p>本章の道具は、次の順で取り出す。</p>
+<ol><li>対象をスカラー、ベクトル、行列、関数、確率、グラフ、文字列のどれで記録するか決める。</li><li>各記号に単位または次元を付け、足し算・指数・対数の入口を検査する。</li><li>微分・積分なら、変化率または累積量の単位、初期値、積分区間を記録する。</li><li>行列・固有値なら、状態の成分、行列の行列、時間刻み、固有値の単位を記録する。</li><li>確率・平均なら、事象を重複なく分け、平均が隠す分布や最悪値を残す。</li><li>グラフ・文法なら、頂点・辺、生成規則、意味検査の境界を分ける。</li></ol>
+<p>逆に、次の主張は本章の数学だけでは保証しない。</p>
+<ul><li>次元が合う式の係数、符号、初期条件が正しいこと。</li><li>RC解析解が、寄生素子を含む実部品の波形と一致すること。</li><li>固有値が小さいから、任意の非線形系が安定すること。</li><li>平均アクセス時間が、個々の要求の遅延やtail <a class="term" href="index.html#term-latency">latency</a>を代表すること。</li><li>フーリエ係数があるから、有限サンプルから元の信号を一意に復元できること。</li><li>文法を受理した文字列が、型検査や実行時の副作用まで安全であること。</li></ul>
+<p>これらは、第4章以降の測定、回路モデル、量子状態、CPU状態、OS trace、処理系の意味規則で別に検証する。</p>
+<h2 id="section-bca4249327">次章への接続</h2>
+<p>次章では、ここで出したRCの常微分方程式を、解析解、<a class="term" href="index.html#term-concept_4_euler_168fab74">Euler法</a>、Runge--Kutta法、SPICEの四つの表現で比べる。<code>Δt</code>、丸め、初期条件、測定器の入力抵抗を含め、同じ「波形」がどの層の模型と実装から得られたかを記録する。</p>
+<p>本章の橋渡しは、電荷と場をベクトルで書くことである。次章以降では、電荷<code>q</code>、電場<code>E</code>、電位<code>V</code>、電流<code>I</code>を同じ記号台帳へ追加し、力や場の向きと単位を持ったまま回路の近似へ進む。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-3-3">3.補助演習　手を動かす導出帳</h2>
+<p>必要な数学を必要な場所で使うの計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、処理系のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-rc">例題1　RC、固有値、平均アクセス時間の次元を検査する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 3 1</code>である。入力は<code>["本文10.2のQ型単位検査コード", "R=1000 ohm、C=1e-6 F、Vs=5 V", "A=[[0.8,0.1],[0.2,0.7]]、無次元状態", "Tc=4 ns、Tm=80 ns、h=0.95", "負のテストR+C"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-4">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・不変条件</th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>次元解析</code>は、物理量の足し算・掛け算・無次元量を式の入口で検査する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>次元解析</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>記号台帳</code>は、記号の対象、単位、形、利用章、成立条件を固定する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>記号台帳</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>スカラーとベクトル</code>は、値だけの量と方向・成分を持つ量を分ける。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>スカラーとベクトル</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>微分と積分</code>は、変化率と累積量を単位、初期値、積分区間付きで扱う。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>微分と積分</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>常微分方程式</code>は、RCの状態が時間に沿って変わる関係を記録する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>常微分方程式</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>偏微分方程式</code>は、位置と時間に依存する場や拡散を、境界条件付きで扱う入口を示す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>偏微分方程式</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>複素数とフェーザ</code>は、正弦波の振幅と位相、交流インピーダンスを計算する表現。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>複素数とフェーザ</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>フーリエ解析</code>は、信号を周波数成分に分け、帯域・窓・サンプリングの境界を記録する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>フーリエ解析</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>行列と線形写像</code>は、複数の状態成分を一つの写像として表す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>行列と線形写像</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>固有値</code>は、反復で減衰・増大する状態の方向と倍率を調べる。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>固有値</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>確率と期待値</code>は、cache、分岐、OSの経路を重み付き平均として表す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>確率と期待値</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>対数</code>は、bit幅、指数的な減衰、計算量、基準比を表す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>対数</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>離散数学と数学的帰納法</code>は、集合・論理・有限状態・不変条件を記述し、全域の検証へつなぐ。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>離散数学と数学的帰納法</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>グラフ</code>は、接続、制御フロー、依存、状態遷移を頂点と辺で表す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>グラフ</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>形式文法</code>は、文字列を構文構造へ写す生成規則を記述する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>形式文法</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-4">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E6</code>（RCの常微分方程式）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（Euler法の刻み幅）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（複素数とインピーダンス）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（フーリエとサンプリング）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（固有値と状態の反復）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（確率と平均アクセス時間）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（グラフと形式文法）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E13</code>（入力依存性を消した計算）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-3">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-4">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-3-5">3.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>必要な数学を必要な場所で使う</strong>の中心問題「電磁気、量子、回路、CPU、OS、処理系をつなぐために、どの数学がどこで要るのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-5">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["RCの時定数は0.001 sで、次元はTIME", "指定行列の固有値は0.9と0.6で、次元はDIMLESS", "平均アクセス時間は8e-09 sで、次元はTIME", "R+Cはdimension mismatchとして拒否される", "出力は予測値・実測値・runnerとPythonの版情報を分離する"]</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>本文10.2のQ型単位検査コード</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>R=1000 ohm、C=1e-6 F、Vs=5 V</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>A=[[0.8,0.1],[0.2,0.7]]、無次元状態</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>Tc=4 ns、Tm=80 ns、h=0.95</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>負のテストR+C</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「電圧、抵抗、容量、電荷、電力の次元を (M,L,T,I) の指数で導出する。」で、参照する式IDまたは検証項目は <code>book run 3 1 のQ型演算とrequire_dimで指数を比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「理想RC回路の C dV_C/dt=(V_s-V_C)/R から τ=RC と V_C(t)=V_s(1-exp(-t/τ)) を得る。」で、参照する式IDまたは検証項目は <code>解析解、Euler法、後続章のSPICE波形を同じ時刻軸で比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「無次元状態を写す2x2行列 A の固有値は無次元で、指定例の値は0.9と0.6である。」で、参照する式IDまたは検証項目は <code>det(A-lambda I)の残差と次元台帳を比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「ミス時にもキャッシュ探索を一度行う契約では T_avg=T_c+(1-h)T_m となる。」で、参照する式IDまたは検証項目は <code>book run 3 1 のQ型演算と複数のhで比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-6">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: RC、固有値、平均アクセス時間の次元を検査する</p>
+<p>入口は <code>book run 3 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-03-symbol-ledger", "chapter-03-unit-check-source", "chapter-03-unit-check-output", "chapter-03-failure-log"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["RCの時定数は0.001 sで、次元はTIME", "指定行列の固有値は0.9と0.6で、次元はDIMLESS", "平均アクセス時間は8e-09 sで、次元はTIME", "R+Cはdimension mismatchとして拒否される", "出力は予測値・実測値・runnerとPythonの版情報を分離する"]</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-4">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>次元解析は式の係数、符号、境界条件、初期値、モデルの正しさを証明しない。</li><li>単位が同じでも、角度、確率、論理値、アドレスなど意味の異なる無次元量を足してよいとは限らない。</li><li>ベクトル、行列、固有値の形が共通でも、電磁場、回路電圧、CPUビット列、OS状態、Python値を同一の物理量と扱わない。</li><li>RCの解析解は線形・一定parameter・集中定数・指定入力と初期値の範囲に限る。</li><li>Euler法の単位が合っても、刻み幅の安定性、丸め、モデル誤差は別に検査する。</li><li>複素インピーダンスは線形な正弦波定常状態の表現であり、任意の過渡・非線形素子の完全な記述ではない。</li><li>フーリエ変換は時間の順序、分岐、因果関係を完全には保存せず、有限窓とサンプリングに依存する。</li><li>固有値の減衰・増大は、固定線形写像の範囲に限り、非線形・飽和・外乱を含む実装全体の安定性を保証しない。</li><li>平均アクセス時間は、個々の遅延、tail latency、相関、並列性を表さない。</li><li>グラフは接続の模型であり、辺の遅延・抵抗・確率の意味と単位を別途定義する。</li><li>形式文法は文字列構造を定めるが、名前解決、型、実行時副作用、例外の安全性を定めない。</li><li>単位検査の解析adapter成果物は生成済みだが、外部toolの測定ログは未生成であり、期待出力を実測結果として扱わない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第2章の抽象化台帳（下位表現、上位契約、隠される変数、成立条件、破綻条件、検証方法）</li><li>第1章のtrace A（Pythonの式、OS境界、CPU状態を同一の実装経路と誤認しない）</li><li>先行一周の<a class="term" href="index.html#term-concept_prelude_term_b9702cc871_b9702cc8">全層縦断図</a>（本章では全層の数学の用途を記号台帳へ落とす）</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第4章でRCの解析解、Euler法、<a class="term" href="index.html#term-concept_4_runge_kutta_556d0861">Runge--Kutta法</a>、SPICE、測定の差を同じ時刻軸で比較する</li><li>第5章で電荷に働く力をベクトルとして表し、電場と電位の単位・向きへ進む</li><li>第9章以降で集中定数回路、節点方程式、複素インピーダンス、フーリエを再利用する</li><li>第14章以降で行列・固有値・確率を回路状態、量子状態、CPU・cacheへ接続する</li><li>第31章以降でグラフと離散数学を論理、CPU、OS、処理系の検証へ接続する</li><li>第91章以降で形式文法をMiniPyのlexer、parser、ASTへ接続する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-5">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — chapter_text_starts_with_dimensional_observation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — symbol_ledger_and_units。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — required_math_map。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — equations_have_assumptions_units_and_break_conditions。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — <a class="term" href="index.html#term-exec">exec</a>utable_unit_check_is_defined。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — runner_analytic_replay_is_not_external_measurement。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — exercise_count_and_coverage。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — change_and_failure_diagnosis。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — four_kinds_are_separated。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — independent_review_pending。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-3">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: RC、固有値、平均アクセス時間の次元を検査する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 3 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["RCの時定数は0.001 sで、次元はTIME", "指定行列の固有値は0.9と0.6で、次元はDIMLESS", "平均アクセス時間は8e-09 sで、次元はTIME", "R+Cはdimension mismatchとして拒否される", "出力は予測値・実測値・runnerとPythonの版情報を分離する"]</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-4">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-4">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11-2">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

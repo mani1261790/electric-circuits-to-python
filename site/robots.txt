@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mani1261790.github.io/electric-circuits-to-python/sitemap.xml

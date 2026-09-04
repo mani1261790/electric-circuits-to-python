@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第15章　原子、Pauli原理、Fermi–Dirac統計</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-015-exercises.html">この章の演習</a>　<a href="chapter-015-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-15-1"><code>book run 15 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-015/experiment-01.json">成果物</a></li></ul></section><h1 id="section-15-pauli-fermi-dirac">第15章　原子、Pauli原理、Fermi–Dirac統計</h1>
+<h2 id="section-1">1　同じ井戸へ何個の電子を入れられるか</h2>
+<p>第14章の幅<code>L=1.0 nm</code>の<a class="term" href="index.html#term-concept_13_term_0b7b6b561a_0b7b6b56">無限量子井戸</a>では、空間状態のエネルギーが<code>E_1≈0.3760 eV</code>、<code>E_2≈1.504 eV</code>、<code>E_3≈3.384 eV</code>となった。電子にはスピン<code>↑</code>と<code>↓</code>という二つの状態がある。空間波動関数<code>φ_1</code>が同じでも、<code>(n=1,↑)</code>と<code>(n=1,↓)</code>は別の一粒子状態として数える。</p>
+<p>では、同じ<code>n=1</code>の状態へ電子を3個入れてよいか。答えは、同じ空間状態・同じスピン状態を二つの電子が共有することを禁じる<a class="term" href="index.html#term-pauli_exclusion">Pauliの排他原理</a>によって決まる。最初の二個が<code>↑</code>と<code>↓</code>を一つずつ占めた後、三個目は<code>n=2</code>など別の一粒子状態へ進む。これは電子同士が古典的な小球としてぶつかるからではなく、同種フェルミ粒子の多粒子状態が反対称でなければならないという量子の性質から生じる。</p>
+<p>さらに、温度<code>T=300 K</code>で、エネルギー<code>E_0=0 eV</code>と<code>E_1=0.10 eV</code>の二準位（それぞれスピン<a class="term" href="index.html#term-degeneracy">縮退</a>2）へ電子を平均2個入れる。化学ポテンシャルを<code>μ=0.050 eV</code>に選ぶと、Fermi–Dirac占有率の解析予測は、</p>
+<pre><code class="language-text">f(E_0)≈0.8737,
+f(E_1)≈0.1263</code></pre>
+<p>である。各準位の縮退2を掛ければ合計占有数は約2個になる。<code>f(E)</code>は一つの電子の位置確率<code>|ψ(x)|²</code>ではなく、同じエネルギーの一粒子状態が平均して占められる割合である。</p>
+<p>本章の中心問題は次である。</p>
+<blockquote>多数の電子が同じ最低エネルギー状態へ落ち込まないのはなぜか。</blockquote>
+<p>第14章では一粒子の<a class="term" href="index.html#term-wavefunction">波動関数</a>と固有値を扱った。本章では、同じ一粒子状態を多粒子系の「状態の箱」として数え、Pauli原理とFermi–Dirac分布を導入する。第16章では、この状態の箱が周期ポテンシャルの中でバンドへ広がる。第17章以降では、バンドと占有が半導体のキャリアへ接続する。</p>
+<p>ここでの占有数、<a class="term" href="index.html#term-chemical_potential">化学ポテンシャル</a>、準位は解析または数値の予測であり、実在原子の分光測定ではない。<code>book run 15 1</code>は固定入力から契約モデルを実行済みだが、外部domain solverや実在原子の分光測定は未実行（<code>measurement.status=not_run</code>）である。</p>
+<h2 id="section-2-pauli">2　同種粒子とPauliの排他原理</h2>
+<h3 id="section-2-1">2.1　粒子を番号付きの小球として交換しない</h3>
+<p>二つの同種粒子の状態を<code>Ψ(x_1,s_1;x_2,s_2)</code>と書く。<a class="term" href="index.html#term-fermion">フェルミ粒子</a>では、粒子ラベルを交換したとき</p>
+<pre><code class="language-text">Ψ(1,2) = -Ψ(2,1)                         (15.1)</code></pre>
+<p>でなければならない。二つの粒子が同じ一粒子状態<code>u</code>を占めると、反対称化した状態は</p>
+<pre><code class="language-text">Ψ(1,2) = [u(1)u(2)-u(2)u(1)]/sqrt(2) = 0</code></pre>
+<p>になる。零関数は規格化できる物理状態ではないため、同じ一粒子状態を二つの電子が共有できない。これがPauliの排他原理である。</p>
+<p>電子はスピン<code>1/2</code>を持つフェルミ粒子である。空間状態だけが同じでもスピンが異なれば、一粒子状態<code>(φ_n,↑)</code>と<code>(φ_n,↓)</code>は異なるので、二個まで入れる。スピンを状態ラベルから落とすと、原子の殻や固体の電子数を誤って数える。</p>
+<h3 id="section-2-2">2.2　一粒子状態と多粒子状態</h3>
+<p>第14章の<code>φ_n(x)</code>は、一個の粒子を位置で観測する確率振幅である。多粒子系では、各電子がどの一粒子状態<code>(n,s)</code>を占めるかを並べた占有配置を考える。占有数<code>N_{n,s}</code>はフェルミ粒子なら</p>
+<pre><code class="language-text">N_{n,s} ∈ {0,1}                            (15.2)</code></pre>
+<p>である。スピンを含めて同じ一粒子状態でなければ、同じ空間準位に二個置ける。</p>
+<p>占有率<code>f_n</code>は、多数回の準備、または大きな系での平均値で、<code>0≤f_n≤1</code>である。<code>|φ_n(x)|²</code>は占有された一粒子状態の位置分布、<code>f_n</code>はその状態が使われる割合であり、掛け合わせて密度へ寄与させる場合でも別の意味を失わない。</p>
+<h3 id="section-2-3">2.3　原子の殻を最小模型で見る</h3>
+<p>実原子の軌道には角運動量、スピン軌道相互作用、電子間相互作用などがある。ここでは単純化して、同じ空間準位へスピンの違う電子が二個まで入る箱を考える。低いエネルギーの箱から占めると、全電子を最低箱へ詰め込めないため、より高い箱が必要になる。</p>
+<p>これは「電子が互いに反発して押し出される」だけではない。電子間反発は準位を変える要因だが、反発を0にしても、同じ一粒子状態を二つの電子が共有できない排他性は残る。Pauli原理とCoulomb相互作用を別の原因として記録する。</p>
+<h2 id="section-3-fermi-dirac">3　Fermi–Dirac占有</h2>
+<h3 id="section-3-1">3.1　分布の式</h3>
+<p>熱平衡にある非相互作用フェルミ粒子の一粒子状態<code>E</code>の平均占有率は、</p>
+<pre><code class="language-text">f_FD(E;μ,T) = 1/[exp((E-μ)/(k_B T))+1]     (15.3)</code></pre>
+<p>である。<code>E</code>、<code>μ</code>、<code>k_B T</code>は同じエネルギー単位、<code>T</code>はK、<code>f_FD</code>は無次元である。指数の引数は無次元でなければならない。</p>
+<p><code>μ</code>は化学ポテンシャルで、粒子数を変えるときの熱力学的なエネルギー尺度である。有限温度で常に「最高に占有された準位」と呼べるわけではない。指定した総粒子数、準位、縮退、温度を満たすように決める。</p>
+<h3 id="section-3-2">3.2　絶対零度と有限温度</h3>
+<p><code>T→0</code>では、</p>
+<pre><code class="language-text">f_FD(E)=1  (E&lt;μ),
+          0  (E&gt;μ)                         (15.4)</code></pre>
+<p>という階段関数へ近づく。<code>E=μ</code>の値は極限の取り方で境界になる。有限温度では、<code>μ</code>の周囲およそ数<code>k_B T</code>の範囲で占有がなだらかになる。</p>
+<p>先の二準位例では<code>k_B T≈0.02585 eV</code>、<code>μ=0.050 eV</code>なので、</p>
+<pre><code class="language-text">f(E_0)=1/[exp(-0.050/0.02585)+1]≈0.8737
+f(E_1)=1/[exp(+0.050/0.02585)+1]≈0.1263</code></pre>
+<p>である。各準位の縮退を<code>g_0=g_1=2</code>とすれば、粒子数は<code>2f(E_0)+2f(E_1)=2</code>となる。<code>μ</code>を勝手に固定せず、数え上げ条件を確認する。</p>
+<h3 id="section-3-3">3.3　化学ポテンシャルを数え上げから決める</h3>
+<p>準位<code>E_i</code>の縮退を<code>g_i</code>とすると、期待粒子数は</p>
+<pre><code class="language-text">N(μ,T)=Σ_i g_i f_FD(E_i;μ,T)               (15.5)</code></pre>
+<p>である。指定粒子数<code>N_target</code>に対し、<code>N(μ,T)=N_target</code>を解く。<code>f_FD</code>は<code>μ</code>の増加とともに増えるので、有限準位なら二分法で区間を狭められる。探索区間、許容誤差、準位の打ち切り、縮退をartifactへ保存する。</p>
+<p>有限個の準位の総縮退を<code>G=Σ_i g_i</code>とすると、<code>T&gt;0</code>で有限の<code>μ</code>が存在するのは<code>0&lt;N_target&lt;G</code>の範囲である。<code>N_target=0</code>と<code>N_target=G</code>はそれぞれ<code>μ→−∞</code>、<code>μ→+∞</code>の境界として、有限値の二分法とは別の状態へ記録する。<code>T=0</code>で準位の間に粒子数を満たす場合、ギャップ内の<code>μ</code>は一意でないため、採用した代表値（例えば区間中央）と非一意性を保存する。準位を無限個へ伸ばす場合は、<a class="term" href="index.html#term-density_of_states">状態密度</a>と高エネルギー側の収束が必要になる。低い準位だけを足して粒子数が合わないとき、化学ポテンシャルを無理に範囲外へ押し込む前に、状態数と打ち切りを点検する。</p>
+<h2 id="section-4">4　<a class="term" href="index.html#term-concept_15_term_1571aba314_1571aba3">古典極限</a>との比較</h2>
+<h3 id="section-4-1-boltzmann">4.1　Boltzmann分布が現れる条件</h3>
+<p><code>E-μ</code>が<code>k_B T</code>より十分大きいと、指数の<code>+1</code>を無視でき、</p>
+<pre><code class="language-text">f_FD(E) ≈ exp[-(E-μ)/(k_B T)]            (15.6)</code></pre>
+<p>となる。これは<a class="term" href="index.html#term-fermi_dirac_distribution">Fermi–Dirac分布</a>が古典極限でBoltzmann型になるという意味である。全ての状態の占有率が小さく、Pauliによる詰まりが見えない密度・温度の範囲で使う。</p>
+<p><code>f_FD</code>を<code>exp(-E/(k_B T))</code>とだけ書くと、粒子数を調整する<code>μ</code>や規格化定数を失う。エネルギーの基準を変えたとき、<code>E</code>と<code>μ</code>を同じ量だけ移せば占有率は変わらない。</p>
+<h3 id="section-4-2">4.2　量子統計と回路の熱雑音</h3>
+<p>第12章の抵抗熱雑音は、温度と帯域から連続信号のスペクトル密度を表した。ここでの<code>T</code>は同じ温度の単位を使うが、Fermi–Dirac分布は一粒子状態の占有率を表す。雑音のPSDと占有率を同じ「確率」と呼んではならない。</p>
+<p>高温・低密度の<a class="term" href="index.html#term-semiconductor">半導体</a>ではBoltzmann近似が役立つ場合があるが、金属のように多くの状態が詰まっている系ではFermi面近くの占有が重要になる。古典導電率へ量子統計を接続するときは、状態密度、散乱、バンドを別の模型として追加する。</p>
+<h3 id="section-4-3">4.3　縮退を数え忘れない</h3>
+<p>エネルギーが同じ状態が<code>g</code>個あれば、粒子数への寄与は<code>g f_FD(E)</code>である。スピン縮退2を落とすと、同じ粒子数を得るために誤った<code>μ</code>を選ぶ。空間、スピン、軌道、バンド、k点など、何を一粒子状態のラベルに含めたかを表へ書く。</p>
+<h2 id="section-5">5　数値ノートを設計する</h2>
+<h3 id="section-5-1">5.1　準位と占有の入力</h3>
+<p>予定ノートには、次を入力する。</p>
+<pre><code class="language-text">levels = [(E_0, g_0), (E_1, g_1), ...]
+temperature_K = T
+target_particle_count = N_target</code></pre>
+<p>内部エネルギーはJ、表示はeVを併記する。<code>k_B T</code>と<code>E-μ</code>の単位を一致させ、指数の大きすぎる値には<a class="term" href="index.html#term-concept_33_overflow_10e80591">overflow</a>を避ける安定な評価を使う。占有率を0未満または1より大きく丸めて成功扱いにしない。</p>
+<h3 id="section-5-2">5.2　二分法でμを求める</h3>
+<p><code>μ_low</code>では<code>N(μ_low)&lt;N_target</code>、<code>μ_high</code>では<code>N(μ_high)&gt;N_target</code>となる区間を用意する。中央値<code>μ_mid</code>で式(15.5)を評価し、粒子数の大小で区間を半分にする。停止条件は、</p>
+<pre><code class="language-text">|N(μ_mid)-N_target| &lt; tolerance_N
+または μ_high-μ_low &lt; tolerance_mu              (15.7)</code></pre>
+<p>とする。準位を有限個で打ち切る場合、<code>N_target</code>がその最大占有数を超えていないかを先に検査する。</p>
+<h3 id="section-5-3-runner">5.3　<a class="term" href="index.html#term-finite_difference">有限差分</a>・runner・測定の位置</h3>
+<p>第14章の有限差分は一粒子Hamiltonianから<code>E_i</code>と<code>φ_i</code>を作る。本章の占有計算はその準位へ統計的な<code>f_i</code>を掛ける別段階であり、有限差分が自動的にPauli原理や温度を含むわけではない。</p>
+<p>runner出力には、<code>levels_source</code>、<code>degeneracy</code>、<code>temperature_K</code>、<code>mu_J</code>、<code>occupancy</code>、<code>particle_count</code>、<code>model</code>、<code>source_kind</code>、<code>status</code>を保存する。実在原子や金属の占有を測定するには、試料、温度、化学環境、分光・輸送装置の条件が別に必要である。</p>
+<h2 id="section-6">6　単位、数値安定性、模型限界</h2>
+<h3 id="section-6-1">6.1　エネルギーと温度</h3>
+<p><code>E</code>、<code>μ</code>、<code>k_B T</code>をJまたはeVのどちらかへそろえる。<code>k_B</code>をJ/Kで使うなら、<code>E</code>と<code>μ</code>もJにする。<code>T=0 K</code>では式(15.3)を指数関数へ直接入れず、階段関数の極限として扱う。</p>
+<p><code>E=0.10 eV</code>、<code>μ=0.05 eV</code>、<code>T=300 K</code>のように全てeVで計算する場合、<code>k_B</code>を<code>8.617333262×10^-5 eV/K</code>で使う。Jの<code>k_B</code>とeVの<code>k_B</code>を混ぜない。</p>
+<h3 id="section-6-2-overflow">6.2　指数関数のoverflowと境界</h3>
+<p><code>x=(E-μ)/(k_B T)</code>が大きいと<code>exp(x)</code>がoverflowする。<code>x</code>が十分正なら<code>f≈exp(-x)</code>、十分負なら<code>f≈1-exp(x)</code>など、範囲に応じて安定に評価する。これは計算上の近似であり、占有率を1へ無条件にクリップする処理とは分ける。</p>
+<p>準位の縮退、粒子数、温度、化学ポテンシャルの範囲が指定されていないと、占有率を一意に決められない。<code>μ</code>を「最低準位」や「電源<a class="term" href="index.html#term-voltage">電圧</a>」と同一視しない。</p>
+<h3 id="section-6-3">6.3　<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a></h3>
+<table><thead><tr><th>層</th><th>下位表現</th><th>上位契約</th><th>隠す変数</th><th>成立条件</th><th>破綻条件</th></tr></thead>
+<tbody><tr><td>一粒子量子</td><td><code>φ_i,E_i</code>、スピン</td><td>一粒子状態の集合</td><td>多粒子相関、環境</td><td>指定Hamiltonian</td><td>強相関、時間依存、開放系</td></tr><tr><td>Pauli原理</td><td>反対称多粒子状態</td><td>同じ一粒子状態の占有は0または1</td><td>粒子ラベル、交換位相</td><td>同種フェルミ粒子</td><td>区別可能粒子、近似の破綻</td></tr><tr><td>Fermi–Dirac</td><td><code>f(E;μ,T)</code></td><td>平均占有率</td><td>個々の配置、相関</td><td>熱平衡、指定準位・縮退</td><td>非平衡、相互作用、有限寿命</td></tr><tr><td>古典極限</td><td>Boltzmann型重み</td><td>低占有率の近似</td><td>排他の影響</td><td>希薄・高温側</td><td>高密度、Fermi面、低温</td></tr><tr><td>数値統計</td><td>準位表、二分法、出力</td><td><code>N(μ,T)</code>の再現可能な値</td><td>丸め、打ち切り、solver</td><td>単位・収束・範囲</td><td>overflow、準位不足、状態混同</td></tr></tbody>
+</table>
+<p>Pauli原理は、電子同士を古典的な反発球にすることではない。Fermi–Dirac分布は、排他可能な一粒子状態へ熱平衡の平均占有を割り当てる。相互作用や非平衡を加えると、同じ式を使う前に新しい模型の成立条件を確認する。</p>
+<h2 id="section-7-14-16-17">7　第14章・第16章・第17章へ渡す</h2>
+<p>第14章からは、<code>E_i</code>、<code>φ_i</code>、規格化、ポテンシャル、境界、有限差分の収束と残差を受け取る。<a class="term" href="index.html#term-spin">スピン自由度</a>は本章で一粒子状態ラベルへ追加した。第12章からは、温度、スペクトル、測定帯域、解析・数値・runner・測定の状態分離を受け取る。本章ではそこへ粒子数、縮退、化学ポテンシャル、統計模型を追加した。</p>
+<p>第16章では、単一の井戸の準位を<a class="term" href="index.html#term-periodic_potential">周期ポテンシャル</a>のBloch状態とバンドへ広げる。<code>n</code>だけでなく波数<code>k</code>、バンド番号、単位胞、境界条件を状態ラベルへ追加する。第17章では、バンドの占有と温度から電子・正孔キャリアを作り、導電率へ接続する。</p>
+<p>予定出力は次のように保存する。</p>
+<pre><code class="language-text">{
+  &quot;levels_source&quot;: &quot;chapter-14-analytic-or-fd&quot;,
+  &quot;ensemble&quot;: &quot;thermal_equilibrium&quot;,
+  &quot;state_label&quot;: {&quot;spatial_level&quot;: &quot;E_i&quot;, &quot;internal_state&quot;: &quot;spin_up_or_down&quot;},
+  &quot;degeneracy&quot;: {&quot;spin&quot;: 2},
+  &quot;temperature_K&quot;: 300.0,
+  &quot;mu_eV&quot;: 0.050,
+  &quot;target_particle_count&quot;: 2.0,
+  &quot;source_kind&quot;: &quot;analytic_prediction&quot;,
+  &quot;status&quot;: &quot;analytic_prediction_recorded_measurement_not_run&quot;
+}</code></pre>
+<p><code>0.8737</code>と<code>0.1263</code>は、二準位・縮退2・<code>T=300 K</code>・<code>μ=0.050 eV</code>という条件付きの解析予測である。実行済み、または原子の測定結果として表示しない。Pauli原理、準位数、温度、粒子数、化学ポテンシャルを同じ状態契約へ残すことが、次の統計・バンド・半導体の議論を壊さないための条件である。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-15">15.補助演習　手を動かす導出帳</h2>
+<p>原子、Pauli原理、Fermi–Dirac統計の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-pauli-fermi-dirac">例題1　二準位・井戸準位の占有をPauli原理とFermi–Dirac分布で計算する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 15 1</code>である。入力は<code>[{"二準位": "E0=0 eV、E1=0.10 eV、各縮退g=2、T=300 K、N_target=2"}, {"ensemble": "thermal_equilibrium（非平衡入力は本章のFermi–Dirac式の適用外として別状態へ記録）"}, "温度掃引T=0 K、100 K、300 K、1000 Kと、粒子数・縮退の比較", "第14章の1 nm井戸準位E1=0.3760 eV、E2=1.504 eV、E3=3.384 eVを入力するcase", "化学ポテンシャルは粒子数方程式を二分法で解き、探索範囲・許容誤差・準位打ち切りを保存する", "空間状態・スピン状態の列挙と、同じ一粒子状態の重複拒否を別caseで検査する", "temperature&lt;0、非正縮退、負の目標粒子数、NaN、J/eV・K単位混同、overflow、準位不足、非規格化、非平衡を負のテストとする。T=0およびE&lt;=muは極限・有効入力として別に検査する"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>フェルミ粒子</code>は、粒子交換で多粒子波動関数が反対称になる同種粒子。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>フェルミ粒子</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Pauliの排他原理</code>は、同じ一粒子状態を二つのフェルミ粒子が共有できないという帰結。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Pauliの排他原理</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>占有数と縮退</code>は、一粒子状態を何個の粒子が占めるかと、同じエネルギーを持つ状態の数。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>占有数と縮退</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Fermi–Dirac分布</code>は、熱平衡で一粒子状態が占められる平均割合。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Fermi–Dirac分布</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>化学ポテンシャル</code>は、準位・温度・粒子数を結ぶ熱力学的なエネルギー尺度。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>化学ポテンシャル</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>古典極限</code>は、占有率が小さくFermi–Dirac分布がBoltzmann型へ近づく条件。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>古典極限</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-4">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（T=0、有限温度、mu付近のなだらかさ）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（Boltzmann近似と低占有率の条件）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（スピン縮退と状態の二重計数）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（化学ポテンシャルの数値二分法）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（overflow、単位、占有率範囲、準位不足）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（|psi|^2とFermi–Dirac占有の違い）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（解析・数値・runner・測定と状態条件）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第16章のバンド・第17章の半導体キャリアへの橋渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-3">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<h3 id="section-7">7　分布から半導体の入力へ</h3>
+<p>Fermi–Dirac分布を半導体の数値へ使うときは、分布関数だけで結論を出さない。まず状態密度<code>g(E)</code>と占有率<code>f(E)</code>を別の列に置き、積<code>g(E)f(E)</code>をエネルギー区間で積分する。状態密度の単位、温度の単位、化学ポテンシャルの基準を明記し、スピン縮退を一度だけ数える。<code>f(E)</code>の<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>が滑らかでも、状態密度に不連続やcutoffがあれば、粒子数の積分は別の誤差を持つ。</p>
+<p>代表例として、同じ<code>T</code>と<code>μ</code>でエネルギー刻みを半分にする。<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>の粒子数が変わるなら、分布の物理的変化ではなく積分誤差を疑う。一方、<code>μ</code>を固定して<code>T</code>だけを変えた場合は、占有率の境界が広がるという予測を先に書く。予測、計算結果、測定欄を別々に保存し、<code>measured:false</code>を実験装置で確認していない印として維持する。</p>
+<p>次章へ渡す値は、単一の占有率ではなく<code>(T, μ, g(E), quadrature_step, carrier_density, normalization, status, measured)</code>である。これらのどれかを省くと、同じ数値が出ても別の粒子数を計算している可能性がある。分布が古典極限へ近づく条件も、式の近似と適用範囲を一緒に記録する。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-15-2">15.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>原子、Pauli原理、Fermi–Dirac統計</strong>の中心問題「多数の電子が同じ最低エネルギー状態へ落ち込まないのはなぜか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["T=300 K、E0=0 eV、E1=0.10 eV、g0=g1=2、N=2、mu=0.050 eVでf0≈0.8737、f1≈0.1263という解析予測", "T&gt;0の有限準位では0&lt;N_target&lt;sum(g)だけが有限muの二分法対象で、N_target=0またはsum(g)はmuの±無限境界として別状態にする予測", "T=0で準位間にあるm…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"二準位": "E0=0 eV、E1=0.10 eV、各縮退g=2、T=300 K、N_target=2"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"ensemble": "thermal_equilibrium（非平衡入力は本章のFermi–Dirac式の適用外として別状態へ記録）"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>温度掃引T=0 K、100 K、300 K、1000 Kと、粒子数・縮退の比較</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>第14章の1 nm井戸準位E1=0.3760 eV、E2=1.504 eV、E3=3.384 eVを入力するcase</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>化学ポテンシャルは粒子数方程式を二分法で解き、探索範囲・許容誤差・準位打ち切りを保存する</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>空間状態・スピン状態の列挙と、同じ一粒子状態の重複拒否を別caseで検査する</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目7: <code>temperature&lt;0、非正縮退、負の目標粒子数、NaN、J/eV・K単位混同、overflow、準位不足、非規格化、非平衡を負のテストとする。T=0およびE&lt;=muは極限・有効入力として別に検査する</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-4">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「同種フェルミ粒子の交換反対称性から、同じ一粒子状態を二つの粒子が占める状態が零になり、占有数が0または1になることを示す。」で、参照する式IDまたは検証項目は <code>exchange-sign test, duplicate-state zero test, spin-label count</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「熱平衡の一粒子状態へf(E;mu,T)=1/(exp((E-mu)/(k_B T))+1)を割り当てる。」で、参照する式IDまたは検証項目は <code>zero-temperature step, half-occupation at E=mu, 0&lt;=f&lt;=1</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「準位の縮退g_iを含めたN(mu,T)=sum_i g_i f(E_i;mu,T)を解き、指定粒子数からmuを決める。」で、参照する式IDまたは検証項目は <code>monotonic bisection, degeneracy scaling, particle-count residual</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「E-muがk_B Tより十分大きい領域で、Fermi–Dirac占有がexp(-(E-mu)/(k_B T))へ近づくことを示す。」で、参照する式IDまたは検証項目は <code>low-occupancy ratio, temperature sweep, limit check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「一粒子空間状態へスピン状態を含め、Pauli原理により低い準位から二つずつ占める最小原子模型を数える。」で、参照する式IDまたは検証項目は <code>state-label count, duplicate-state rejection, interaction-boundary check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「占有式の指数overflow、J/eV混同、準位打ち切り、二分法残差を検査し、解析・数値・runner・測定を別状態で保存する。」で、参照する式IDまたは検証項目は <code>overflow-safe evaluation, bisection convergence, state separation</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-4">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 二準位・井戸準位の占有をPauli原理とFermi–Dirac分布で計算する</p>
+<p>入口は <code>book run 15 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-15-occupancy-source", "chapter-15-atomic-state-source", "chapter-15-occupancy-output", "chapter-15-diagnostic-output", "chapter-15-occupancy-plot"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["T=300 K、E0=0 eV、E1=0.10 eV、g0=g1=2、N=2、mu=0.050 eVでf0≈0.8737、f1≈0.1263という解析予測", "T&gt;0の有限準位では0&lt;N_target&lt;sum(g)だけが有限muの二分法対象で、N_target=0またはsum(g)はmuの±無限境界として別状態にする予測", "T=0で準位間にあるm…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-4">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>Pauli原理の排他性は電子間の古典Coulomb反発とは別の<a class="term" href="index.html#term-quantum_state">量子状態</a>の反対称性から生じる。</li><li>Fermi–Dirac分布は熱平衡の平均占有率であり、個々の電子の位置確率、時間波形、測定値ではない。</li><li>化学ポテンシャルは準位、縮退、粒子数、温度、粒子交換条件で決まり、有限温度で常に「最高占有準位」とは限らない。</li><li>Boltzmann近似は低占有率の古典極限であり、高密度・低温のFermi面やPauliによる詰まりを含まない。</li><li>二準位・スピン縮退2の模型は実原子の角運動量、電子間相互作用、遮蔽、スピン軌道相互作用を含まない。</li><li>単一粒子準位を有限個で打ち切る数え上げは、化学ポテンシャルが範囲内で粒子数条件を満たすことを別に検査する。</li><li>数値的に0&lt;=f&lt;=1へ収まっても、温度、単位、状態数、相互作用、非平衡という物理条件が正しいとは限らない。</li><li>本章の固定runnerは契約を再生済みだが、図・表の外部tool実行は未実行で、具体値は解析または数値予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第14章の一粒子準位、波動関数、規格化、<a class="term" href="index.html#term-eigenvalue">固有値</a>。スピン自由度は本章で新たに状態ラベルへ導入する</li><li>第13章の<a class="term" href="index.html#term-concept_13_term_ae56558e7e_ae56558e">古典連続エネルギー</a>、原子の古典限界、量子井戸</li><li>第12章の周波数、熱雑音、温度、離散電荷への問題提起</li><li>第8章の古典<a class="term" href="index.html#term-conductivity">導電率</a>、キャリア、物質模型の限界</li><li>第5章のCoulomb力と原子</li><li>第3章の確率、数え上げ、指数関数、数値二分法、<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a></li><li>第4章の解析・数値・測定・runner状態、誤差と収束</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第16章で周期ポテンシャル、<a class="term" href="index.html#term-bloch_theorem">Blochの定理</a>、k空間、エネルギーバンドを扱う</li><li>第17章でバンドの占有、真性半導体、電子・<a class="term" href="index.html#term-hole">正孔</a>キャリアへ接続する</li><li>第18章以降で<a class="term" href="index.html#term-doping">ドーピング</a>、化学ポテンシャル、Fermi準位、輸送へ接続する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-4">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — <a class="term" href="index.html#term-fermion">fermion</a>_exchange_and_pauli。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — single_particle_vs_many_particle。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — fermi_dirac_units_and_limits。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — chemical_potential_counting。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — classical_boltzmann_limit。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — atomic_state_counting。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — numerical_bi<a class="term" href="index.html#term-concept_70_section_20182fbc">section</a>_and_stability。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — analytic_numeric_runner_measurement_separation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — units_and_negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — chapter_14_16_17_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — artifact_figure_source_registry_links。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — exercise_solution_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-2">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 二準位・井戸準位の占有をPauli原理とFermi–Dirac分布で計算する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 15 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["T=300 K、E0=0 eV、E1=0.10 eV、g0=g1=2、N=2、mu=0.050 eVでf0≈0.8737、f1≈0.1263という解析予測", "T&gt;0の有限準位では0&lt;N_target&lt;sum(g)だけが有限muの二分法対象で、N_target=0またはsum(g)はmuの±無限境界として別状態にする予測", "T=0で準位間にあるm…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

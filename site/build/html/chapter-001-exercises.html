@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第1章　一行のPythonが通る全層　演習</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-1">第1章　演習</h1>
+<p>演習では、先に自分の記録を書いてからヒントを見る。実験コマンドは教材共通runnerの実行入口であり、固定Linux環境で入力由来の契約を再生できる。CPython固有の観測、外部domain tool、実機測定は別経路なので、固定runnerの結果と混同しない。各問は、答えを読んだかではなく、最後の「再挑戦」を自分で説明できるかで合格とする。</p>
+<h2 id="section-e1-ast">E1　ASTと<a class="term" href="index.html#term-bytecode">バイトコード</a>の境界</h2>
+<p>次の二つを比較する。</p>
+<pre><code class="language-python">print(1 + 2)</code></pre>
+<pre><code class="language-python">a = 1
+b = 2
+print(a + b)</code></pre>
+<ol><li>ASTで、最初の例の加算と二つ目の例の加算の入力がどのノードになっているか書く。</li><li>ASTに<code>BinOp(Add)</code>があることから、CPUの<code>ADD</code>が必ず実行されると言えない理由を書く。</li><li><code>dis</code>の観測は、ASTに対してどの段階の情報を追加するか説明する。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: ASTはソースの構造で、実行手順そのものではない。</li><li>ヒント2: 最初の加算の左右は<code>Constant</code>、二つ目は<code>Name</code>である。</li><li>ヒント3: <code>dis</code>が表示するのはCPythonの評価ループ向けの命令であって、<a class="term" href="index.html#term-rv32i">RV32I</a>命令ではない。</li></ul>
+</div></details>
+<h2 id="section-e2">E2　<a class="term" href="index.html#term-concept_1_term_9d7741cd3e_9d7741cd">定数畳み込み</a>を確認する</h2>
+<p><code>print(1 + 2)</code>について、次の二つの主張を「観測」「推論」「未確認」に分類する。</p>
+<ul><li>A: ASTに<code>1</code>、<code>2</code>、<code>Add</code>が現れる。</li><li>B: 基準CPythonのバイトコードに、定数<code>3</code>を読む形が現れることがある。</li><li>C: どのCPUでも加算器を通らない。</li><li>D: <code>a = 1; b = 2; print(a + b)</code>では、名前を読み出してから加算する形が比較対象になる。</li></ul>
+<p>次に、定数例に一行のコメントを追加しても計算結果が同じになる理由を、コメントが実行値に影響しない範囲で説明する。最後に、<code>a</code>または<code>b</code>を関数呼び出しの結果に置き換えたとき、定数畳み込みを無条件にはできない理由を書く。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 「この入力とこの版で表示された」は観測、「すべてのCPUで」は一般化である。</li><li>ヒント2: 名前の値は、実行前に確定しているとは限らない。</li><li>ヒント3: Pythonの意味を変えない変換だけが許される。</li></ul>
+</div></details>
+<h2 id="section-e3">E3　出力経路を分類する</h2>
+<p>本文の短縮<a class="term" href="index.html#term-system_call">システムコール</a>列を使い、次の出来事を「Python処理系」「OSカーネルとの境界」「端末側」に分類する。</p>
+<ol><li><code>print</code>が整数を文字列表現へ変換する。</li><li>ファイル記述子1へ<code>"3\n"</code>を渡す。</li><li><code>write</code>の戻り値が2になる。</li><li>端末エミュレータが<code>0x33</code>を字形へ対応づける。</li><li>フォントの字形が画素へラスタライズされる。</li></ol>
+<p>分類した後、「<code>write</code>成功」と「画面に見えた」が同じ主張でないことを一文で説明する。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: システムコールは、<a class="term" href="index.html#term-process">プロセス</a>からカーネルへ依頼する境界である。</li><li>ヒント2: バイト列を文字や画素へする処理は、その境界の後にも残る。</li></ul>
+</div></details>
+<h2 id="section-e4-cpu">E4　CPUトレースを手で進める</h2>
+<p>次の命令列について、各行の後の<code>x5</code>、<code>x6</code>、<code>x7</code>、<code>x8</code>、<code>x10</code>と<a class="term" href="index.html#term-concept_67_uart_3c85ca67">UART</a>イベントを表にする。</p>
+<pre><code class="language-asm">addi x5,  x0, 1
+addi x6,  x0, 2
+add  x7,  x5, x6
+addi x8,  x0, 51
+lui  x10, 0x10000
+sw   x8,  0(x10)
+addi x8,  x0, 10
+sw   x8,  0(x10)</code></pre>
+<p>追加課題として、3行目を<code>sub x7, x5, x6</code>へ変更した場合のトレースを作り、どの期待結果が壊れるかを記録する。<code>x0</code>が常に0であること、<code>lui</code>が上位20ビットを設定することを前提にしてよい。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 1と2を加えるのは3行目である。</li><li>ヒント2: ASCIIの<code>'3'</code>は16進数<code>0x33</code>、十進数51である。</li><li>ヒント3: <code>sw</code>はCPUが文字を表示する命令ではなく、<a class="term" href="index.html#term-memory_map">メモリマップ</a>ドUARTへ値を書き込む命令である。</li></ul>
+</div></details>
+<h2 id="section-e5">E5　故障診断：改行がない</h2>
+<p>次のトレースは、数字3は出るが、端末のプロンプトが同じ行に続いてしまう。</p>
+<pre><code class="language-text">pc=0x00000014  sw x8,0(x10)  UART[DATA]=0x33
+program exited normally</code></pre>
+<ol><li>観測された事実を二つ書く。</li><li>もっとも小さい修正を、CPU命令または上位の出力処理として提案する。</li><li>修正後に期待するUARTイベントを示す。</li><li>「CPUが画面を描いた」と誤って結論しない理由を書く。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: <code>0x33</code>は数字3であり、改行の値ではない。</li><li>ヒント2: 改行はASCIIの<code>0x0a</code>である。</li><li>ヒント3: UARTイベント、端末の解釈、画面更新を別々に記録する。</li></ul>
+</div></details>
+<h2 id="section-e6">E6　故障診断：変数例を定数化し過ぎる</h2>
+<p>ある簡略<a class="term" href="index.html#term-compiler">コンパイラ</a>が、次のプログラムを常に<code>print(3)</code>へ置き換えてしまう。</p>
+<pre><code class="language-python">a = read_number()
+b = 2
+print(a + b)</code></pre>
+<p>入力が1なら3が出るが、入力が10でも3が出る。次を答える。</p>
+<ol><li>どの変換が誤っているか。</li><li><code>print(1 + 2)</code>の定数畳み込みと何が違うか。</li><li>変換を許すために必要な条件を一つ以上挙げる。</li><li>AST、バイトコード、実行結果のどこを追加観測すれば診断できるか。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: <code>read_number()</code>の戻り値は、実行前に確定した定数ではない。</li><li>ヒント2: 見た目が似た<code>+</code>でも、入力が定数か名前・呼出し結果かで安全性が違う。</li><li>ヒント3: 期待値を複数の入力で比較する。</li></ul>
+</div></details>
+<h2 id="section-e7">E7　<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>・模型・規格・実装を分ける</h2>
+<p>次の文を四分類し、分類の根拠を一行ずつ書く。</p>
+<ol><li>RV32Iの<code>ADD</code>は二つのレジスタ値の和を宛先へ書く。</li><li>CPUトレースでは<code>ADD</code>を一つの状態更新として表す。</li><li>信号の<a class="term" href="index.html#term-voltage">電圧</a>は電荷と電場の状態に関係する。</li><li>教材の<code>rv32edu</code>ではUARTを<code>0x10000000</code>に割り当てる。</li><li><code>write</code>成功後も端末エミュレータの処理が残る。</li></ol>
+<p>四分類に当てはめにくい文があれば、複数の層を混ぜていないかを確認し、二つ以上の文に分解する。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 自然法則は、特定の教材実装だけに有効な約束ではない。</li><li>ヒント2: 規格は結果や境界の契約、実装はその契約を満たす具体的な選択である。</li><li>ヒント3: 模型は、都合よく隠した変数と成立範囲を持つ。</li></ul>
+</div></details>
+<h2 id="section-e8">E8　三つの「アドレス」を分ける</h2>
+<p>次の三つを、それぞれ何のアドレスか説明し、同じ数値に見えても同一視できない理由を書く。</p>
+<ol><li>Pythonの<code>write</code>へ渡される文字列のポインタ。</li><li>プロセスの<a class="term" href="index.html#term-address_space">仮想アドレス空間</a>にあるページ番号。</li><li><code>rv32edu</code>でUARTのデータレジスタへ割り当てた<code>0x10000000</code>。</li></ol>
+<p>最後に、「1のポインタをそのまま3の物理的なUART端子へ接続できる」と主張する説明を一文で反証する。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 1は<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>とOSが使うプロセス内の住所である。</li><li>ヒント2: 2はCPUとOSのアドレス変換を経て、物理ページへ対応する。</li><li>ヒント3: 3はrv32eduが選んだMMIOの契約であり、<a class="term" href="index.html#term-dram">DRAM</a>の番地でも端子の電圧でもない。</li></ul>
+</div></details>
+<h2 id="section-f3daf6614b">合格の記録</h2>
+<p>次の四項目を自分の記録へ残す。</p>
+<ul><li>const/runtime二例のASTとバイトコードの差を、版依存部分と意味上の差に分けて説明した。</li><li><code>write</code>、UARTイベント、端末表示を別々に説明した。</li><li>CPUトレースを一行ずつ再現し、<code>sub</code>または改行欠落の故障を診断した。</li><li>自然法則、模型、規格、実装を混ぜずに少なくとも一例ずつ説明した。</li></ul>
+<p>一つでも説明できない項目があれば、本文の該当節へ戻り、同じ問ではなく solutions.txt の再挑戦問題を解く。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

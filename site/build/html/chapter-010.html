@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第10章　Kirchhoff則の由来と限界</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-010-exercises.html">この章の演習</a>　<a href="chapter-010-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-10-1"><code>book run 10 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-010/experiment-01.json">成果物</a></li></ul></section><h1 id="section-10-kirchhoff">第10章　Kirchhoff則の由来と限界</h1>
+<h2 id="section-1">1　まず、二つの節点の<a class="term" href="index.html#term-voltage">電圧</a>を決める</h2>
+<p>次の回路を紙に描く。ground（基準節点）から測ったnode 1とnode 2があり、node 1とgroundの間に<code>1 kΩ</code>、node 2とgroundの間に<code>2 kΩ</code>、node 1とnode 2の間に<code>1 kΩ</code>の抵抗を置く。さらに、groundからnode 1へ<code>3 mA</code>、groundからnode 2へ<code>1 mA</code>の<a class="term" href="index.html#term-current">電流</a>源を接続する。</p>
+<p>node 1とnode 2の電圧はいくらか。node 1からnode 2へ流れる電流はどちら向きで、何mAか。</p>
+<p>抵抗の端子関係だけなら、第8章の<a class="term" href="index.html#term-concept_8_term_952b1c0d87_952b1c0d">オーム則</a>から、node 1からnode 2へ流れる電流は</p>
+<pre><code class="language-text">I_12 = (V_1 - V_2)/(1 kΩ)</code></pre>
+<p>である。しかし、<code>V_1</code>と<code>V_2</code>を決めるには、各nodeで電流の出入りを数えなければならない。これは「電流はnodeで消える」という規則ではない。第7章の<a class="term" href="index.html#term-continuity_equation">連続の式</a>を、nodeの周りの小さな体積へ適用した収支である。</p>
+<p>この章で扱う数値は、指定した抵抗・電流源・電圧源から求めた解析予測である。<code>book run 10 1</code>の解析adapterは固定入力を再生済みだが、SPICEや実回路の測定は実行していない。回路を実際に測った結果と、式から計算した値とを同じ表へ上書きしてはならない。</p>
+<p>本章の問いは次である。</p>
+<blockquote><a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>とKVLは暗記規則ではなく、どの保存則と近似から出てくるのか。</blockquote>
+<p>第9章では、電磁場を節点電圧と枝電流へ縮約できる時間・空間の条件を調べた。その縮約を採用すると、回路はnode（節点）、branch（枝）、loop（閉路）の組として表せる。本章では、節点の電流収支をKCL、閉路の電圧収支を<a class="term" href="index.html#term-concept_10_kirchhoff_205c0d1f">KVL</a>へ変換し、行列として解く。最後に、電荷を蓄えるコンデンサや磁気エネルギーを蓄えるインダクタを加えたとき、何が変わるかを次章へ渡す。</p>
+<h2 id="section-2-kcl">2　連続の式からKCLを作る</h2>
+<h3 id="section-2-1">2.1　小さな制御体積の収支</h3>
+<p>第7章の連続の式を、nodeを包む制御体積<code>Ω_n</code>へ積分する。</p>
+<pre><code class="language-text">∂ρ/∂t + div(J) = 0</code></pre>
+<p>体積積分と発散定理から、</p>
+<pre><code class="language-text">dQ_n/dt + ∮_(∂Ω_n) J · n dA = 0                 (10.1)</code></pre>
+<p>を得る。ここで<code>Q_n=∫_(Ω_n)ρ dV</code>は制御体積内の<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>、<code>n</code>は制御体積の外向き法線である。境界を枝の断面で切ると、面積分は各枝を制御体積の外へ出る電流の和になる。枝<code>b</code>の電流を「nodeから外へ」を正として<code>I_b^out</code>と書けば、</p>
+<pre><code class="language-text">dQ_n/dt + Σ_b I_b^out = 0</code></pre>
+<p>である。したがって、一般のnode収支は</p>
+<pre><code class="language-text">Σ_b I_b^out = -dQ_n/dt                       (10.2)</code></pre>
+<p>となる。式(10.2)がKCLの出発点である。左辺が0なのは、右辺を捨てても誤差が小さいときだけである。</p>
+<p>枝電流を「nodeへ入る」を正に統一する場合は、符号が変わり、</p>
+<pre><code class="language-text">Σ_b I_b^in = dQ_n/dt</code></pre>
+<p>となる。二つの書き方は同じ物理を表す。重要なのは、一つの計算の中で外向きと内向きを混ぜないことである。</p>
+<h3 id="section-2-2-kcl">2.2　蓄積を無視する近似としてのKCL</h3>
+<p>節点にたまる電荷が、観測する時間尺度でほぼ一定なら、<code>dQ_n/dt≈0</code>と置ける。このとき、式(10.2)は</p>
+<pre><code class="language-text">Σ_b I_b^out = 0                               (10.3)</code></pre>
+<p>になる。これが<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">Kirchhoff電流則</a>（Kirchhoff's current law, KCL）の集中定数版である。内向きを正にした場合は<code>Σ I_b^in=0</code>となる。KCLは電荷保存を弱めた規則ではなく、電荷保存へ「節点内の蓄積をこの解像度では残さない」という近似を加えた結果である。</p>
+<p>nodeへ容量をつないだときは、容量へ流れる枝電流を収支へ残す。例えば容量の上端nodeの電圧を<code>V_n</code>、groundを基準にすれば、</p>
+<pre><code class="language-text">I_C = C dV_n/dt</code></pre>
+<p>である。容量を隠したまま<code>Σ I=0</code>とするのではなく、容量枝を含めたKCLを書く。容量電流をさらに捨てるのは、ゆっくりした観測や小さな容量など、別に確認した条件である。この扱いは第11章で時間発展として詳しく行う。</p>
+<h3 id="section-2-3">2.3　節点、枝、閉路を<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>として固定する</h3>
+<p>回路図の交差した線が同じnodeであるかは、線が交差しているかではなく、接続点の契約で決める。次の記録を先に作る。</p>
+<table><thead><tr><th>記録</th><th>例</th><th>役割</th></tr></thead>
+<tbody><tr><td>node番号</td><td><code>0=ground</code>, <code>1</code>, <code>2</code></td><td><a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>を割り当てる名前</td></tr><tr><td>branch</td><td><code>1→2</code>の<code>1 kΩ</code></td><td>二つのnodeを結ぶ素子と向き</td></tr><tr><td>電流の正方向</td><td><code>I_12</code>は<code>1→2</code></td><td>KCLへ入れる符号</td></tr><tr><td>電圧の極性</td><td><code>V_12=V_1−V_2</code></td><td>オーム則とKVLへ入れる符号</td></tr><tr><td>ground</td><td>node <code>0</code></td><td>電圧の基準、未知数から除くnode</td></tr></tbody>
+</table>
+<p>nodeの番号は物理量ではない。番号を入れ替えても電圧差と枝電流が同じなら、同じ回路を表す。groundも「そこは電圧が存在しない」という意味ではなく、全ての電圧を比較する基準である。groundを一つ選んでも、回路の電圧差と電流の物理は変わらない。</p>
+<p>図10-01では、連続の式の制御体積、外向きの枝電流、蓄積電荷を同じ図へ置く。矢印の向きは計算上の正方向であり、解が負になることを禁止しない。</p>
+<h3 id="section-2-4">2.4　電流源と抵抗の向き</h3>
+<p>以下では、抵抗<code>R</code>をnode<code>a</code>とnode<code>b</code>の間に置き、抵抗の電流を<code>a→b</code>向きに定義する。</p>
+<pre><code class="language-text">I_ab = (V_a - V_b)/R                         (10.4)</code></pre>
+<p>これは第8章のオーム則<code>V=RI</code>を、node間の電圧差へ適用したものだ。<code>V_a&lt;V_b</code>なら<code>I_ab</code>は負となり、実際の電流が<code>b→a</code>向きであることを表す。</p>
+<p>電流源<code>I_s</code>を<code>a→b</code>向きに置くと、node<code>a</code>から見た外向き電流へ<code>+I_s</code>、node<code>b</code>から見た外向き電流へ<code>-I_s</code>が加わる。反対に、行列の右辺を「nodeへ注入する電流」と定義すれば、node<code>a</code>へ<code>-I_s</code>、node<code>b</code>へ<code>+I_s</code>を加える。この符号反転は誤りではないが、右辺の定義を途中で変えてはいけない。</p>
+<h2 id="section-3-faraday-kvl">3　Faraday則からKVLを作る</h2>
+<h3 id="section-3-1">3.1　閉路の電圧は<a class="term" href="index.html#term-electric_field">電場</a>の線積分から来る</h3>
+<p>第6章では、静電場で<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>を</p>
+<pre><code class="language-text">φ(b) - φ(a) = -∫_a^b E · dℓ</code></pre>
+<p>と表した。この式から、電場の線積分を枝の電圧降下へ対応付ける。閉路<code>C</code>を一周する向きを選び、その向きに沿った枝の電圧降下を<code>v_b</code>とする。</p>
+<p>しかし、時間変化する磁場があると電場は一般に保存場ではない。Faradayの積分則は、</p>
+<pre><code class="language-text">∮_C E · dℓ = -dΦ_B/dt                         (10.5)</code></pre>
+<p>である。<code>Φ_B=∫_S B·dA</code>は閉路が囲む面を通る磁束で、面の法線は閉路の向きと右手系で対応させる。枝電圧をこの閉路の線積分に対応させれば、一般の閉路収支は</p>
+<pre><code class="language-text">Σ_b v_b = -dΦ_B/dt                            (10.6)</code></pre>
+<p>となる。式(10.6)では、右辺が誘導電場による起<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>である。</p>
+<h3 id="section-3-2-kvl">3.2　磁束変化を捨てた条件付きのKVL</h3>
+<p>閉路を貫く磁束の変化が、測定した電圧の許容誤差に比べて小さいなら、<code>dΦ_B/dt≈0</code>と置ける。さらに第9章で確認した<a class="term" href="index.html#term-propagation_delay">伝搬遅延</a>を、同じ時刻の端子電圧へまとめられる条件に限る。このとき式(10.6)は</p>
+<pre><code class="language-text">Σ_b v_b = 0                                  (10.7)</code></pre>
+<p>となる。これが<a class="term" href="index.html#term-concept_10_kirchhoff_205c0d1f">Kirchhoff電圧則</a>（Kirchhoff's voltage law, KVL）の集中定数・準静的版である。閉路の向きを逆にすれば、全ての<code>v_b</code>の符号と磁束の符号が同時に反転し、物理的な予測は変わらない。</p>
+<p>KVLを「一周すると電圧が必ず0へ戻る」と暗記すると、式(10.5)の右辺を見落とす。例えば、閉路の面を貫く磁束が<code>Φ_B(t)=Φ_0 sin(ωt)</code>なら、</p>
+<pre><code class="language-text">-dΦ_B/dt = -ω Φ_0 cos(ωt)</code></pre>
+<p>であり、閉路の電圧和は一般に0ではない。これは抵抗の値を間違えた故障ではなく、単純KVLの適用範囲を外れた現象である。</p>
+<h3 id="section-3-3-kvl">3.3　KVLが破れる三つの境界</h3>
+<p>第一は、外部磁場または別のコイルの電流による磁束変化である。閉路の面を小さく描けばよいとは限らない。実際の導体配置が囲む面、近くの導体との結合、周波数を確認する。</p>
+<p>第二は、配線の長さに対して信号の立上りが速い場合である。第9章の<code>κ=t_prop/t_rise</code>が大きいと、閉路の各枝を同じ時刻の端子電圧で代表できない。反射や放射を、単純な枝電圧の和へ隠すことはできない。</p>
+<p>第三は、分布した素子や測定器が作る経路である。測定プローブの接地リードも閉路の一部になり、追加の面積とインダクタンスを作る。KVLの残差を見たら、まず式の符号だけでなく、実際に積分している閉路と観測帯域を確認する。</p>
+<p>図10-02では、閉路の向き、面の法線、磁束、枝電圧を示し、<code>dΦ_B/dt≈0</code>のときだけ右辺を0へ縮める。図には実測波形を置かず、磁束入力からの解析予測と、runnerで後から作る予定の系列を分ける。</p>
+<h2 id="section-4">4　<a class="term" href="index.html#term-concept_10_term_ce9af88844_ce9af888">節点解析</a>を行列へ変換する</h2>
+<h3 id="section-4-1">4.1　未知数を節点電圧へそろえる</h3>
+<p>groundをnode<code>0</code>とし、非基準nodeの電圧を未知数にする。抵抗だけの回路では、各抵抗の電流を式(10.4)で表してKCLへ代入する。電流源は「nodeへ注入する電流」を右辺<code>j</code>へ集める。</p>
+<p>すると、</p>
+<pre><code class="language-text">G v = j                                      (10.8)</code></pre>
+<p>という連立一次方程式になる。<code>v</code>の単位は<code>V</code>、<code>j</code>の単位は<code>A</code>、行列<code>G</code>の単位は<code>S=1/Ω</code>である。<code>G</code>はコンダクタンス行列と呼ぶ。</p>
+<p>抵抗<code>R</code>をnode<code>a</code>とnode<code>b</code>の間へ刻印する（stamp）規則は次である。<code>g=1/R</code>とし、groundでないnodeだけを行列へ入れる。</p>
+<pre><code class="language-text">G[a,a] += g
+G[b,b] += g
+G[a,b] -= g
+G[b,a] -= g</code></pre>
+<p><code>a</code>または<code>b</code>がgroundなら、そのnodeの行・列を追加しない。例えば<code>a</code>とgroundの抵抗なら、<code>G[a,a]+=g</code>だけが残る。電流源が<code>a→b</code>向きなら、注入ベクトルは</p>
+<pre><code class="language-text">j[a] -= I_s
+j[b] += I_s</code></pre>
+<p>である。ここで<code>j</code>をnodeへ注入する向きと定義したため、外向き電流のKCLから符号が反転している。</p>
+<h3 id="section-4-2">4.2　具体例：二つの電流源を解く</h3>
+<p>冒頭の回路を、<code>V_1</code>,<code>V_2</code>を未知数として書く。抵抗値をΩ、電流値をAで表す。</p>
+<pre><code class="language-text">R_1g = 1000 Ω
+R_2g = 2000 Ω
+R_12 = 1000 Ω
+j_1 = 0.003 A
+j_2 = 0.001 A</code></pre>
+<p>各nodeのKCLから、</p>
+<pre><code class="language-text">(1/1000 + 1/1000)V_1 - (1/1000)V_2 = 0.003
+-(1/1000)V_1 + (1/2000 + 1/1000)V_2 = 0.001</code></pre>
+<p>したがって、</p>
+<pre><code class="language-text">[ 0.0020  -0.0010 ] [V_1] = [0.003]
+[−0.0010   0.0015 ] [V_2]   [0.001]</code></pre>
+<p>である。単位を<code>mA</code>と<code>kΩ</code>へそろえて計算するなら、行列の数値を<code>mS</code>、右辺を<code>mA</code>としてよい。</p>
+<pre><code class="language-text">2 V_1 - V_2 = 3
+-V_1 + 1.5 V_2 = 1</code></pre>
+<p>より、解析予測は</p>
+<pre><code class="language-text">V_1 = 2.75 V
+V_2 = 2.50 V</code></pre>
+<p>となる。枝電流の予測は、</p>
+<pre><code class="language-text">I_1g = V_1/1 kΩ = 2.75 mA
+I_2g = V_2/2 kΩ = 1.25 mA
+I_12 = (V_1−V_2)/1 kΩ = 0.25 mA</code></pre>
+<p>である。node 1では、抵抗へ出る<code>2.75+0.25=3.00 mA</code>と、電流源が注入する<code>3.00 mA</code>がつり合う。node 2では、抵抗からgroundへ出る<code>1.25 mA</code>が、電流源の注入<code>1.00 mA</code>とnode 1から入る<code>0.25 mA</code>の和に等しい。</p>
+<p>この計算は、電流がnode 1でnode 2へ「分割された」という言葉を、電荷保存の式へ戻している。負の枝電流が出ても、定義した向きと逆に流れるだけであり、解を失敗扱いしない。</p>
+<h3 id="section-4-3">4.3　閉路の式との対応</h3>
+<p>同じ回路をKVLで書くこともできる。例えばnode 1とnode 2の間の抵抗、node 2とgroundの抵抗、node 1とgroundの抵抗を含む閉路を選ぶと、電圧降下を同じ向きに定義して式(10.7)を立てられる。ただし、閉路の向きと枝電流の向きが異なると<code>RI</code>の符号が変わる。</p>
+<p>節点解析はnode電圧を未知数にするので、閉路を大量に選んで冗長な式を増やさずに済む。反対に、電圧源が多く、枝電流を直接知りたい場合には、次節の<a class="term" href="index.html#term-concept_10_term_db743b7c73_db743b7c">修正節点解析</a>で電圧源電流を未知数へ追加する。どちらの方法を選ぶかは計算上の表現の違いであり、KCL・KVLの物理的出所が変わるわけではない。</p>
+<h2 id="section-5">5　理想電圧源を含む修正節点解析</h2>
+<h3 id="section-5-1">5.1　なぜ電圧源を普通の抵抗のように刻印できないか</h3>
+<p>抵抗なら、端子電圧を決めれば電流が<code>I=V/R</code>で決まる。理想電圧源は、端子電圧を<code>V_a−V_b=V_s</code>へ固定するが、電流を決める抵抗値を持たない。したがって、電圧源の電流を未知数として追加する。</p>
+<p>電圧源<code>k</code>の電流を、正端子<code>a</code>から負端子<code>b</code>へ向かう<code>i_k</code>と定義する。非基準nodeの電圧ベクトルを<code>v</code>、電圧源電流ベクトルを<code>i_s</code>とすると、MNA（modified nodal analysis、修正節点解析）は、</p>
+<pre><code class="language-text">[ G  B ] [ v   ] = [ j ]
+[ C  0 ] [ i_s ]   [ e ]                         (10.9)</code></pre>
+<p>と書ける。<code>G</code>は抵抗の刻印、<code>j</code>は電流源の注入、<code>e</code>は電圧源の値である。理想電圧源の正端子と負端子が同じnode番号順に並ぶとき、<code>B</code>には<code>+1</code>と<code>-1</code>を刻印する。受動素子だけを扱う標準的なMNAでは<code>C</code>は<code>B</code>の転置に対応するが、実装では電圧制約の向きが一致しているかを行ごとに確認する。</p>
+<p>行列の電圧行は<code>V_a−V_b=V_s</code>を表し、電流列はKCLへ<code>+i_k</code>（正端子）と<code>-i_k</code>（負端子）を加える。これにより、抵抗・電流源・電圧源を別々の方程式へ分けず、同じ線形系を解ける。</p>
+<h3 id="section-5-2">5.2　具体例：浮いた電圧源</h3>
+<p>node 1とnode 2の間に、正端子をnode 1、負端子をnode 2とする<code>5 V</code>の理想電圧源を置く。さらに各nodeからgroundへ<code>1 kΩ</code>の抵抗を置く。電圧源の電流<code>i_s</code>の正方向をnode 1からnode 2とする。</p>
+<p>抵抗のコンダクタンスを<code>g=0.001 S</code>とすると、MNAの予測式は、</p>
+<pre><code class="language-text">[ 0.001   0       1 ] [V_1 ]   [0]
+[ 0       0.001  -1 ] [V_2 ] = [0]
+[ 1      -1       0 ] [i_s ]   [5]</code></pre>
+<p>である。第三行は<code>V_1−V_2=5 V</code>という制約である。解は、</p>
+<pre><code class="language-text">V_1 =  2.50 V
+V_2 = -2.50 V
+i_s = -2.50 mA</code></pre>
+<p>という解析予測になる。<code>i_s</code>が負なのは、実際にはnode 2からnode 1へ<code>2.50 mA</code>流れることを表す。電圧源はnode 1へ電流を押し込んでいる。</p>
+<p>この例では、各抵抗の消費電力が</p>
+<pre><code class="language-text">P_1 = V_1^2/(1 kΩ) = 6.25 mW
+P_2 = V_2^2/(1 kΩ) = 6.25 mW</code></pre>
+<p>である。<a class="term" href="index.html#term-concept_11_term_1d38fab790_1d38fab7">受動符号規約</a>で電圧源の電圧を<code>+5 V</code>、電流を正端子へ入る向きとして読むと、電圧源の電力は<code>P_s=5 V×(-2.50 mA)=-12.5 mW</code>となる。負号は供給を表し、三つの枝の電力の和は0になる。この符号を捨てて「全ての電力が消費」と呼ぶと、電源がエネルギーを供給する事実を失う。</p>
+<p>図10-05では、浮いた電圧源を抵抗へ置き換えず、電圧源電流を追加した未知数と、電圧制約の行として描く。node 2の電圧が負になることは、groundが最低電位であるという意味ではない。groundは比較の基準にすぎない。</p>
+<h3 id="section-5-3">5.3　接地と方程式の独立性</h3>
+<p>抵抗網を全て同じ電位へ持ち上げても、抵抗の電圧差は変わらない。groundのない回路では、絶対的な電圧を決める方程式が不足し、行列が特異になる。これは「電圧が全部0」という解ではない。</p>
+<p>非基準nodeが<code>N</code>個ある抵抗網では、基本的に<code>N</code>個の独立なKCLが必要である。KCLを全nodeへ書いても、その和は枝電流が相殺されるため、groundを含む全nodeの式には一つの冗長な関係がある。groundの電圧を0へ固定し、残りの<code>N</code>式を使うのは、冗長性を除き基準を選ぶ操作である。</p>
+<p>閉路解析でも、全ての閉路を無制限に選んではいけない。ある閉路が他の閉路の式の和になっているなら独立ではない。独立な閉路の数は、接続グラフの枝数とnode数の関係から数えられるが、電圧源や理想短絡が同じ制約を重ねていないかを別に検査する。</p>
+<p>図10-03には、node、branch、ground、独立な節点式と冗長な全体収支を示す。図10-04には抵抗の四つの行列刻印と、電流源の右辺符号を示す。</p>
+<h2 id="section-6-python-mna">6　Pythonで作る最小MNAソルバ</h2>
+<h3 id="section-6-1">6.1　入力の契約を先に決める</h3>
+<p>実装予定のartifactでは、数値と向きを次のように固定する。</p>
+<pre><code class="language-text">Resistor(a, b, ohm)       : a-b間の抵抗、ohm &gt; 0
+CurrentSource(a, b, A)    : aからbへ流れる電流源、単位A
+VoltageSource(a, b, V)    : a-b間をV_a-V_b=Vとする電圧源、単位V
+node 0                    : ground
+node 1..N                 : 非基準node</code></pre>
+<p>入力値はSI単位へ変換してから渡す。<code>1 kΩ</code>を<code>1000</code>、<code>3 mA</code>を<code>0.003</code>と保存する。入力が資料値なのか、計算用の仮定なのか、runnerの予測なのか、測定値なのかは、数値フィールドと別の<code>status</code>・<code>source_kind</code>列へ保存する。</p>
+<p>以下は、Python標準機能だけを用いる予定コードの骨格である。ここに示したコードは、執筆時点でrunnerへ投入した実行結果ではない。</p>
+<pre><code class="language-python">from dataclasses import dataclass
+from math import isfinite
+
+
+@dataclass(frozen=True)
+class Resistor:
+    a: int
+    b: int
+    ohm: float
+
+
+@dataclass(frozen=True)
+class CurrentSource:
+    a: int
+    b: int
+    ampere: float
+
+
+@dataclass(frozen=True)
+class VoltageSource:
+    a: int
+    b: int
+    volt: float
+
+
+def solve_mna(node_count, resistors, current_sources, voltage_sources):
+    if not isinstance(node_count, int) or node_count &lt; 1:
+        raise ValueError(&quot;node_count must be a positive integer&quot;)
+
+    def check_node(node):
+        if not isinstance(node, int) or not 0 &lt;= node &lt;= node_count:
+            raise ValueError(&quot;node is outside 0..node_count&quot;)
+
+    def index(node):
+        return None if node == 0 else node - 1
+
+    for item in resistors:
+        check_node(item.a)
+        check_node(item.b)
+        if item.a == item.b or not isfinite(item.ohm) or item.ohm &lt;= 0:
+            raise ValueError(&quot;a resistor needs two nodes and positive finite ohms&quot;)
+    for item in current_sources:
+        check_node(item.a)
+        check_node(item.b)
+        if item.a == item.b or not isfinite(item.ampere):
+            raise ValueError(&quot;current source has invalid nodes or value&quot;)
+    for item in voltage_sources:
+        check_node(item.a)
+        check_node(item.b)
+        if item.a == item.b or not isfinite(item.volt):
+            raise ValueError(&quot;voltage source has invalid nodes or value&quot;)
+
+    n = node_count
+    m = len(voltage_sources)
+    size = n + m
+    matrix = [[0.0 for _ in range(size)] for _ in range(size)]
+    rhs = [0.0 for _ in range(size)]
+
+    def add(row, col, value):
+        if row is not None and col is not None:
+            matrix[row][col] += value
+
+    for item in resistors:
+        g = 1.0 / item.ohm
+        a, b = index(item.a), index(item.b)
+        add(a, a, g)
+        add(b, b, g)
+        add(a, b, -g)
+        add(b, a, -g)
+
+    for item in current_sources:
+        a, b = index(item.a), index(item.b)
+        if a is not None:
+            rhs[a] -= item.ampere
+        if b is not None:
+            rhs[b] += item.ampere
+
+    for k, item in enumerate(voltage_sources):
+        a, b = index(item.a), index(item.b)
+        col = n + k
+        if a is not None:
+            matrix[a][col] += 1.0
+            matrix[col][a] += 1.0
+        if b is not None:
+            matrix[b][col] -= 1.0
+            matrix[col][b] -= 1.0
+        rhs[col] = item.volt
+
+    scale = max(1.0, *(abs(value) for row in matrix for value in row))
+    tolerance = 1.0e-12 * scale
+    for col in range(size):
+        pivot = max(range(col, size), key=lambda row: abs(matrix[row][col]))
+        if abs(matrix[pivot][col]) &lt;= tolerance:
+            raise ValueError(&quot;singular or floating circuit&quot;)
+        if pivot != col:
+            matrix[col], matrix[pivot] = matrix[pivot], matrix[col]
+            rhs[col], rhs[pivot] = rhs[pivot], rhs[col]
+        for row in range(col + 1, size):
+            factor = matrix[row][col] / matrix[col][col]
+            for k in range(col, size):
+                matrix[row][k] -= factor * matrix[col][k]
+            rhs[row] -= factor * rhs[col]
+
+    answer = [0.0 for _ in range(size)]
+    for row in range(size - 1, -1, -1):
+        tail = sum(matrix[row][col] * answer[col]
+                   for col in range(row + 1, size))
+        answer[row] = (rhs[row] - tail) / matrix[row][row]
+    return answer[:n], answer[n:]</code></pre>
+<p>この実装では、<code>matrix</code>の行列単位が混ざらないよう、抵抗を必ず<a class="term" href="index.html#term-conductivity">導電率</a>へ変換してから刻印する。部分ピボットは、行列の対角成分が小さいときに、同じ列の大きな要素を選んで行を交換する。ピボットが許容値以下なら、浮いた回路、矛盾した理想電圧源、接続欠落などを含む「解けない入力」として止める。</p>
+<h3 id="section-6-2">6.2　答えの後に残差を計算する</h3>
+<p>線形消去が終わっただけでは、回路の実装が正しいとは言えない。元のstampを使って、次の残差を計算する。</p>
+<pre><code class="language-text">r_node = G v + B i_s - j
+r_source = C v - e</code></pre>
+<p>理想的な二重精度計算なら、<code>r_node</code>と<code>r_source</code>は丸め誤差の範囲で0になる。出力には絶対残差だけでなく、行の右辺と係数で規格化した残差、使用した単位、ピボット許容値、入力の状態を保存する。小さな残差は行列と解の整合性を示すが、<code>1 kΩ</code>を<code>1 Ω</code>と入力した物理的な誤りを発見するとは限らない。</p>
+<p>電流源回路では、解析予測の<code>V_1=2.75 V</code>、<code>V_2=2.50 V</code>を元の枝式へ戻し、nodeごとに<code>3.00 mA−3.00 mA=0</code>、<code>1.25 mA−1.25 mA=0</code>を確認する。電圧源回路では、<code>V_1−V_2−5 V=0</code>と、各nodeのKCLを別々に確認する。KCL残差が0でもKVLの閉路を誤っている可能性、KVL残差が0でも単位や測定条件を誤っている可能性は残る。</p>
+<h3 id="section-6-3">6.3　予定実験の出力状態</h3>
+<p><code>book run 10 1</code>では、回路入力、行列、解、枝電流、各残差、電力、負のテスト結果をJSONLへ保存する予定である。予定出力の状態を次のように分ける。</p>
+<table><thead><tr><th>状態</th><th>意味</th><th>本章の扱い</th></tr></thead>
+<tbody><tr><td><code>analytic_prediction</code></td><td>入力と式から手計算した値</td><td>数値例へ使用する</td></tr><tr><td><code>runner_prediction</code></td><td>共通runnerが入力由来の解析・契約モデルを実行して得た値</td><td>実行済み。<code>measurement.status=not_run</code>で、実測ではない</td></tr><tr><td><code>measurement</code></td><td>計器・実回路で得た値</td><td>本章にはない</td></tr><tr><td><code>invalid_input</code></td><td>単位・値・接続の契約違反</td><td>解として扱わない</td></tr><tr><td><code>singular_system</code></td><td>行列が解けない入力</td><td>原因候補とともに記録する</td></tr></tbody>
+</table>
+<p>図10-06では、node残差、電圧源制約残差、抵抗と電源の電力を別系列にする。予定図へ実測点を置かない。runner実行後も、計算値を測定値というラベルへ変更するには、別の測定artifactと条件が必要である。</p>
+<h2 id="section-7">7　故障を物理・符号・数値に分ける</h2>
+<h3 id="section-7-1-kcl">7.1　KCL残差が大きいとき</h3>
+<p>まず、同じnodeへつながる枝を全て列挙し、各枝の正方向を図へ書き直す。電流源の<code>a→b</code>を、右辺へ<code>+I</code>としてnode<code>a</code>へ加えたなら、注入ベクトルの定義が混ざっている。<code>a→b</code>はnode<code>a</code>から外へ出るので、node<code>a</code>の注入は<code>-I</code>である。</p>
+<p>次に、抵抗電流の電圧差を確認する。<code>I_ab=(V_a−V_b)/R</code>であり、<code>V_b−V_a</code>へ変えるなら枝の向きも変えなければならない。電圧源の電流をMNAへ追加したか、容量などの蓄積枝を誤って消していないかも確認する。</p>
+<p>最後に、<code>mA</code>と<code>A</code>、<code>kΩ</code>と<code>Ω</code>を確認する。数値を1000倍する故障は、収支式を解けても、実回路との比較を壊す。値、単位、状態を別の列へ保存すると、表示の丸めと入力単位を追跡できる。</p>
+<h3 id="section-7-2-kvl">7.2　KVL残差が大きいとき</h3>
+<p>閉路を同じ向きにたどり、枝の電圧極性が閉路の向きと一致するかを一つずつ記録する。抵抗の枝を逆に読むと<code>RI</code>の符号が反転する。電圧源は正端子から負端子へ進むと<code>+V_s</code>の降下、負端子から正端子へ進むと<code>-V_s</code>の降下として扱う。</p>
+<p>符号を直しても残差が大きいなら、Faradayの式(10.6)の右辺を調べる。変化磁束が無視できないとき、KVLを0へ固定する方が故障である。さらに第9章の<code>κ</code>、観測点、終端、測定器の接地リードを確認する。速い信号で枝電圧が位置依存になるなら、集中定数の一つの閉路へ押し込めず、分布線路や寄生インダクタンスを残す。</p>
+<h3 id="section-7-3">7.3　行列が特異なとき</h3>
+<p>「解が0だった」と表示して終わらせない。候補は次の通りである。</p>
+<ol><li>groundへつながらない浮いた部分回路がある。</li><li>同じnode間へ、異なる値の理想電圧源を並列に置いている。</li><li>同じ電圧制約を同じ向きで重複して刻印している。</li><li>node番号の誤りで、意図した抵抗や電圧源が別のnodeへつながっている。</li><li>抵抗0を、無限導電率の抵抗として未定義のまま渡している。</li></ol>
+<p>groundを追加すれば必ず正しい回路になるとは限らない。浮いた回路が物理的に意図したものなら、基準を置く理由や測定器の入力抵抗をモデルへ含める。理想短絡を扱うなら、0Ω抵抗として除算するのではなく、電圧制約として別途設計する。</p>
+<h3 id="section-7-4">7.4　電力で最後の整合性を確認する</h3>
+<p>受動符号規約では、枝の電圧の正端子へ電流が入る向きを正とし、</p>
+<pre><code class="language-text">P_b = V_b I_b</code></pre>
+<p>とする。抵抗は<code>P_b≥0</code>、独立電源は供給時に<code>P_b&lt;0</code>になる。静的な線形回路で理想素子以外の蓄積を無視するなら、全枝の電力和が0になることを検査できる。</p>
+<p>ただし、この検査は単位と極性を確認する補助であって、回路が実在の電磁場を完全に表す証明ではない。誘導、放射、<a class="term" href="index.html#term-concept_4_term_f45c8e51fa_f45c8e51">測定器負荷</a>、温度変化、周波数依存を捨てた模型なら、捨てたエネルギー経路を別に記録する。</p>
+<h2 id="section-8-kcl-kvl">8　KCLとKVLの<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a></h2>
+<p>この章の縮約を、下位の物理から上位の計算契約まで表にする。</p>
+<table><thead><tr><th>層</th><th>下位表現</th><th>上位契約</th><th>隠す変数</th><th>成立条件</th><th>破綻条件</th></tr></thead>
+<tbody><tr><td>電磁場</td><td><code>ρ(x,t)</code>, <code>J(x,t)</code>, <code>E(x,t)</code>, <code>B(x,t)</code></td><td>Maxwell方程式と物質則</td><td>なし（この層では場を残す）</td><td>指定した媒質と境界</td><td>模型・測定帯域の不足</td></tr><tr><td>節点収支</td><td>制御体積の<code>Q_n</code>と枝面の電流</td><td>式(10.2)</td><td>node内部の分布</td><td>枝断面と制御体積を定義</td><td>空間分布、遅延、蓄積を無視</td></tr><tr><td>KCL</td><td><code>ΣI=0</code></td><td>節点の代数収支</td><td><code>dQ_n/dt</code></td><td>蓄積が許容誤差以下、または容量枝を含む</td><td>過渡蓄積、分布線路</td></tr><tr><td>閉路収支</td><td><code>∮E·dℓ</code></td><td>式(10.6)</td><td>閉路内の細かな場</td><td>閉路・面・向きが定義済み</td><td>変化磁束、放射、伝搬</td></tr><tr><td>KVL</td><td><code>ΣV=0</code></td><td>準静的な代数収支</td><td><code>-dΦ_B/dt</code></td><td>磁束変化と遅延が許容誤差以下</td><td>誘導、速い信号、分布効果</td></tr><tr><td>MNA</td><td>stamp行列と未知数</td><td><code>A x=z</code></td><td>素子内部・場・数値誤差の詳細</td><td>線形集中素子、正しいground、非特異行列</td><td>非線形、時間発展、特異・矛盾入力</td></tr></tbody>
+</table>
+<p>上位の<code>ΣI=0</code>や<code>ΣV=0</code>は、下位の保存則と矛盾していない。隠した変数を、指定した誤差内で省略している。ただし、ソルバが行列を解けたことは、隠した変数の影響が小さいことを自動的に保証しない。第9章の<code>κ</code>、磁束の見積もり、終端、測定帯域を、行列を作る前に確認する。</p>
+<h2 id="section-9">9　次章へ：保存則を時間発展へ戻す</h2>
+<p>抵抗網だけなら、<code>Gv=j</code>は代数方程式である。コンデンサを含めると、電荷<code>Q=CV</code>の変化率が枝電流になるため、KCLには<code>C dV/dt</code>が現れる。インダクタを含めると、磁束と電流の時間変化が枝電圧になるため、KVLには<code>L dI/dt</code>が現れる。回路の未知数は一つの数値ではなく、初期条件を持つ時間関数になる。</p>
+<p>そのときもKCLは連続の式の節点版、KVLはFaraday則の閉路版である。変わるのは、蓄積と磁束を隠さず、微分方程式の状態として残すことだ。第11章では、抵抗・コンデンサ・インダクタの端子方程式、初期条件、RCとRLCの時間応答を扱う。本章の<code>capacitor_current</code>、<code>power</code>、<code>kcl_node_balance</code>、<code>kvl_quasistatic_loop</code>を、時間依存の式へ接続する。</p>
+<h2 id="section-10">10　この章の数値を再現するときの境界</h2>
+<p>本章で示した<code>2.75 V</code>、<code>2.50 V</code>、<code>0.25 mA</code>、<code>5 V</code>、<code>−2.50 mA</code>、各抵抗の<code>6.25 mW</code>は、回路入力を理想集中素子として扱った解析予測である。runner実行後は、行列刻印の出力と照合し、丸め誤差・ピボット許容値・入力単位を保存する。実回路の測定結果へ置き換える場合は、電源内部抵抗、抵抗公差、測定器入力、配線インダクタンス、温度、周波数、磁束を別artifactに記録する。</p>
+<p>KCLとKVLを使えるかどうかは、式を覚えているかではなく、どの保存則をどの制御体積・閉路へ適用し、何を隠したかを説明できるかで判定する。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-10-2">10.補助演習　手を動かす導出帳</h2>
+<p>Kirchhoff則の由来と限界の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-mna">例題1　抵抗網・電流源・電圧源を最小MNAソルバで解き、収支と故障を検査する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 10 1</code>である。入力は<code>[{"電流源回路": "1 kΩ、2 kΩ、1 kΩの抵抗と、node 1へ3 mA、node 2へ1 mAを注入する電流源"}, {"電圧源回路": "node 1とnode 2の間に5 Vの理想電圧源、各nodeからgroundへ1 kΩ"}, "ground=0、抵抗はΩ、電流はA、電圧はVのSI入力", "抵抗値、電流源向き、電圧源極性、ground、単位、接続欠落の負のテスト"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>Kirchhoff電流則（KCL）</code>は、節点の電荷蓄積が無視できるとき、符号付き枝電流の和をゼロとする収支。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Kirchhoff電流則（KCL）</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Kirchhoff電圧則（KVL）</code>は、閉路内の変化する磁束を無視できるとき、符号付き枝電圧の和をゼロとする収支。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Kirchhoff電圧則（KVL）</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>節点解析</code>は、基準節点からの電圧を未知数としてKCLを連立方程式にする方法。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>節点解析</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>修正節点解析</code>は、電圧源の電流を追加の未知数としてKCLと電圧制約を同じ行列へ入れる方法。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>修正節点解析</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>節点残差</code>は、解を得た後に収支式の左辺と右辺のずれを数値で点検する量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>節点残差</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-4">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（接地、節点数、枝数、閉路と独立性）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（浮いた理想電圧源を含むMNA）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（抵抗・電流源・電圧源の行列刻印）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（最小Pythonソルバの入力検査と部分ピボット）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（結果が合わないときの故障切り分け）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（KCL・KVL残差と電力収支）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（特異行列、矛盾電圧源、ゼロ抵抗の扱い）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第9章の分布模型と第11章の時間発展への橋渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-10-3">10.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>Kirchhoff則の由来と限界</strong>の中心問題「KCLとKVLは暗記規則ではなく、どの保存則と近似から出てくるのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["電流源回路のnode 1電圧は2.75 V、node 2電圧は2.50 Vという解析予測", "同回路のnode 1-node 2間の電流は0.25 mA（node 1からnode 2向き）という解析予測", "電圧源回路はnode 1=2.50 V、node 2=-2.50 V、電圧源電流は定義した正方向に-2.50 mAという解析予測", "抵抗の…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"電流源回路": "1 kΩ、2 kΩ、1 kΩの抵抗と、node 1へ3 mA、node 2へ1 mAを注入する電流源"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"電圧源回路": "node 1とnode 2の間に5 Vの理想電圧源、各nodeからgroundへ1 kΩ"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>ground=0、抵抗はΩ、電流はA、電圧はVのSI入力</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>抵抗値、電流源向き、電圧源極性、ground、単位、接続欠落の負のテスト</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-2">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「連続の式を節点の制御体積へ積分し、節点電荷の時間変化が無視できるとき、符号付き枝電流の和が0になる。」で、参照する式IDまたは検証項目は <code>finite-volume balance, current-direction reversal, node-capacitance limit</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「Faradayの積分則を閉路へ適用し、囲む磁束の時間変化が無視できるとき、枝電圧の閉路和が0になる。」で、参照する式IDまたは検証項目は <code>loop-orientation sign check, changing-flux counterexample, propagation-boundary check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「抵抗枝のI=(V_a-V_b)/RをKCLへ代入すると、コンダクタンス行列Gと電流源ベクトルjを持つGV=jが得られる。」で、参照する式IDまたは検証項目は <code>resistor-stamp, current-source sign, KCL residual</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「理想電圧源の電流を未知数へ追加し、KCLとV_a-V_b=V_sをブロック行列へまとめる。」で、参照する式IDまたは検証項目は <code>floating-voltage-source example, source-current sign, singularity test</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-2">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 抵抗網・電流源・電圧源を最小MNAソルバで解き、収支と故障を検査する</p>
+<p>入口は <code>book run 10 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-10-mna-source", "chapter-10-circuit-output", "chapter-10-diagnostic-output", "chapter-10-circuit-plot"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["電流源回路のnode 1電圧は2.75 V、node 2電圧は2.50 Vという解析予測", "同回路のnode 1-node 2間の電流は0.25 mA（node 1からnode 2向き）という解析予測", "電圧源回路はnode 1=2.50 V、node 2=-2.50 V、電圧源電流は定義した正方向に-2.50 mAという解析予測", "抵抗の…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>KCLの単純な形は、節点に蓄積する電荷の時間変化を0または別枝の電流として扱える条件に限る。節点容量を消してよいという<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>ではない。</li><li>KVLの単純な形は、閉路を貫く磁束の時間変化と伝搬効果を誤差内で無視できる条件に限る。Faradayの誘導電場がある閉路では右辺0のKVLにならない。</li><li>節点解析は抵抗などの端子関係を集中定数の代数式へ縮約する。分布線路の位置変数、反射、放射、周波数依存を自動的に含まない。</li><li>理想電圧源は任意の電流を供給できる模型であり、内部抵抗、電流制限、電源の過渡を隠す。電圧源を抵抗枝として扱うには別の模型が要る。</li><li>行列が解けても入力の単位、極性、接地、素子値、物理模型が正しいとは限らない。残差は実装の整合性を点検するが、物理的妥当性を証明しない。</li><li>行列の特異性は、浮いた部分回路、矛盾する理想電圧源、重複した制約などを示す候補であり、ゼロ電圧やゼロ電流という結果ではない。</li><li>電力の符号は受動符号規約と枝の向きに依存する。抵抗の消費電力と電源の供給電力を符号なしの値だけで混ぜない。</li><li>本章の固定runnerは契約を再生済みだが、図・表の外部tool実行は未実行であり、本文の具体値は手計算または入力からの解析予測である。実測結果ではない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第7章の連続の式、有限体積の電流収支、電力と符号</li><li>第8章のオーム則、導電率、<a class="term" href="index.html#term-resistivity">抵抗率</a>、抵抗の幾何依存</li><li>第9章の集中定数と分布定数、<a class="term" href="index.html#term-concept_9_term_c4bb369c5d_c4bb369c">伝搬時間</a>、終端、近似境界</li><li>第6章の電位差と電場の線積分</li><li>第3章の単位解析、行列、連立一次方程式</li><li>第4章の予測・測定・runner状態の分離</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第11章でCとLのエネルギー蓄積を含む微分方程式へ進む</li><li>第12章で周波数、反射、誘導、分布効果をさらに検査する</li><li>第20章以降で節点・枝・行列の考え方を論理回路、CPU、メモリへ接続する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-4">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — central_question_and_concrete_observation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — continuity_to_kcl。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — faraday_to_kvl。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — reference_and_independence。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — nodal_resistor_<a class="term" href="index.html#term-current">current</a>_source。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — <a class="term" href="index.html#term-voltage">voltage</a>_source_mna。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — solver_validation_boundary。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — bridge_to_dynamic_circuit。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-2">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 抵抗網・電流源・電圧源を最小MNAソルバで解き、収支と故障を検査する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 10 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["電流源回路のnode 1電圧は2.75 V、node 2電圧は2.50 Vという解析予測", "同回路のnode 1-node 2間の電流は0.25 mA（node 1からnode 2向き）という解析予測", "電圧源回路はnode 1=2.50 V、node 2=-2.50 V、電圧源電流は定義した正方向に-2.50 mAという解析予測", "抵抗の…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-4">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

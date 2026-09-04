@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第4章　観測、測定、数値計算　解答</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-4">第4章　演習解答と再挑戦</h1>
+<h2 id="section-e1">E1　解答</h2>
+<ol><li>解析解。微分方程式を解いた式を連続時刻で評価している。</li><li>数値解。<a class="term" href="index.html#term-concept_4_euler_168fab74">Euler法</a>の有限刻み更新を配列へ保存している。</li><li>SPICE。netlistと素子モデルを回路ソルバへ渡し、節点方程式を解いている。</li><li>測定。プローブ、帯域、サンプラー、量子化を通った記録である。</li></ol>
+<p>数値解も計算結果だが、回路ソルバが内部で使うモデルや時間刻みを明示的に持つSPICEとは、入力と隠れた設定の境界が異なる。実装が同じ浮動小数点を使っていても、出所は同一にならない。</p>
+<h3 id="section-r1">再挑戦 R1</h3>
+<p>「Pythonの配列へ実測CSVを読み込んだので、それは数値解である」という説明を訂正せよ。</p>
+<p>#### R1 解答</p>
+<p>配列は保存形式であって生成経路ではない。実測CSVを読み込んだ値は、生成経路が測定なら測定値である。必要なら<code>source: measurement</code>、計器情報、サンプリング、量子化をartifactへ保存する。</p>
+<h2 id="section-e2">E2　解答</h2>
+<p>抵抗<a class="term" href="index.html#term-current">電流</a>とコンデンサ電流を等置する。</p>
+<pre><code class="language-text">(V_s-V_C)/R = C dV_C/dt
+dV_C/dt = (V_s-V_C)/(RC)</code></pre>
+<p><code>R=1000 Ω</code>、<code>C=1e-6 F</code>なので、</p>
+<pre><code class="language-text">τ=RC=1000×1e-6 s=1e-3 s=1 ms</code></pre>
+<p><code>V_0=0</code>の解は、</p>
+<pre><code class="language-text">V_C(t)=5(1-exp(-t/1 ms)) V</code></pre>
+<p><code>t=τ</code>では<code>5(1-exp(-1))≈5×0.632=3.16 V</code>である。非線形な容量、時間で変わるRやC、有限立上りを無視できない入力、プローブ負荷、分布定数が支配的な配線では、この理想解をそのまま使えない。</p>
+<h3 id="section-r2">再挑戦 R2</h3>
+<p><code>V_s=3.3 V</code>、<code>V_0=1.0 V</code>、<code>τ=2 ms</code>のとき、<code>t=τ</code>の<code>V_C</code>を求めよ。</p>
+<p>#### R2 解答</p>
+<pre><code class="language-text">V_C(τ)=3.3+(1.0-3.3)e^-1
+      ≈3.3-2.3×0.3679
+      ≈2.45 V</code></pre>
+<p>初期値が0でないため、<code>V_s(1-e^-1)</code>だけにはならない。</p>
+<h2 id="section-e3">E3　解答</h2>
+<p><code>τ=1 ms</code>である。<code>Δt=0.2 ms</code>なら<code>Δt/τ=0.2</code>なので、</p>
+<pre><code class="language-text">V_1=0+0.2(5-0)=1.0 V</code></pre>
+<p><code>Δt=2 ms</code>なら比は2で、</p>
+<pre><code class="language-text">V_1=0+2(5-0)=10 V</code></pre>
+<p>これは理想充電の範囲<code>0≤V_C≤5 V</code>を一歩で破る。Euler法の安定性の境界に当たり、次の一歩では誤差の符号が反転する。コードでは<code>dt_s=0.2e-3</code>と明示し、<code>tau_s=R_ohm*C_farad</code>と同じ秒へそろえる。<code>dt_s/tau_s</code>を計算して、入力条件に対する刻み幅を記録する。</p>
+<h3 id="section-r3">再挑戦 R3</h3>
+<p><code>R=2 kΩ</code>、<code>C=0.5 μF</code>、<code>V_s=3 V</code>、<code>Δt=0.1 ms</code>で<code>V_1</code>を求めよ。</p>
+<p>#### R3 解答</p>
+<p><code>τ=2000×0.5e-6=1e-3 s=1 ms</code>、<code>Δt/τ=0.1</code>だから、</p>
+<pre><code class="language-text">V_1=0+0.1×3=0.3 V</code></pre>
+<h2 id="section-e4">E4　解答</h2>
+<p>実装では、同じ<code>f(t,V)=(1 V - V)/(1 s)</code>、同じ初期値、同じ終端時刻を使う。<code>f</code>の単位はV/sである。秒とボルトを1で割った無次元化変数を使う場合は、その変換をコードとartifactへ明記する。解析解は<code>V(1 s)=1-e^-1≈0.6321206 V</code>である。</p>
+<p>Euler法の<code>Δt=0.2</code>では5回更新し、</p>
+<pre><code class="language-text">V_5 = 1-(1-0.2)^5 = 1-0.8^5 = 0.67232 V</code></pre>
+<p>解析解との差は約<code>0.04020 V</code>である。RK4は同じ各区間で4傾きを使う。各<code>k</code>をV/sで計算し、更新は</p>
+<pre><code class="language-text">k1=f(t,V)
+k2=f(t+Δt/2,V+Δt k1/2)
+k3=f(t+Δt/2,V+Δt k2/2)
+k4=f(t+Δt,V+Δt k3)
+V_next=V+Δt(k1+2k2+2k3+k4)/6</code></pre>
+<p>とする。式から計算した期待値は次の通りである（共通runnerの契約出力とは区別する解析予測値）。</p>
+<table><thead><tr><th>Δt (s)</th><th>Euler終点 (V)</th><th>Euler誤差 (V)</th><th>RK4終点 (V)</th><th>RK4誤差 (V)</th></tr></thead>
+<tbody><tr><td>0.2</td><td>0.672320000</td><td>0.040199441</td><td>0.632114762</td><td>-0.000005797</td></tr><tr><td>0.1</td><td>0.651321560</td><td>0.019201001</td><td>0.632120226</td><td>-0.000000333</td></tr><tr><td>0.05</td><td>0.641514078</td><td>0.009393519</td><td>0.632120539</td><td>-0.000000020</td></tr></tbody>
+</table>
+<p>ここではrunnerを実行していないので、表は計算による期待値であり、RK4の具体的な出力を実測済みとは記録しない。</p>
+<p><code>Δt</code>を半分、さらに半分にした表では、Eulerの大域誤差が概ね刻み幅に比例して減る傾向、RK4がより速く減る傾向を期待する。実際の比は、評価点、浮動小数点、実装の丸めによって確認する。計算誤差の収束は、測定器の入力抵抗やノイズによる誤差の収束を意味しない。</p>
+<h3 id="section-r4">再挑戦 R4</h3>
+<p><code>f(t,V)=2-V</code>、<code>V(0)=0</code>、<code>Δt=0.25 s</code>でEuler法を2歩進めよ。解析解<code>V(t)=2(1-exp(-t))</code>と比較する。</p>
+<p>#### R4 解答</p>
+<pre><code class="language-text">V_1=0+0.25×(2-0)=0.5
+V_2=0.5+0.25×(2-0.5)=0.875</code></pre>
+<p><code>t=0.5</code>の解析解は<code>2(1-e^-0.5)≈0.7869</code>なので、Euler値は約<code>0.0881</code>大きい。係数2は平衡値を変えるが、<a class="term" href="index.html#term-concept_11_term_8a294c0490_8a294c04">時定数</a>は微分方程式の係数から決まる。</p>
+<h2 id="section-e5">E5　解答</h2>
+<p>倍率<code>g=1-Δt/τ</code>は次の通り。</p>
+<table><thead><tr><th><code>Δt/τ</code></th><th><code>g</code></th><th>読み方</th></tr></thead>
+<tbody><tr><td>0.5</td><td>0.5</td><td>絶対値が1未満で単調に近づく</td></tr><tr><td>1.5</td><td>-0.5</td><td>符号が交互に変わるが絶対値は減る</td></tr><tr><td>2.0</td><td>-1.0</td><td>誤差の大きさが保たれ、収束しない境界</td></tr><tr><td>2.5</td><td>-1.5</td><td>絶対値が増え、発散する</td></tr></tbody>
+</table>
+<p>この一次線形RCのEuler更新では<code>|g|&lt;1</code>が安定性の目安になる。<code>Δt</code>を過小にすると更新回数が増え、各差分が浮動小数点の分解能や入力ノイズより小さくなり得る。従って、打切り誤差を減らすことだけを目的に無限に小さくするのではなく、収束表、丸め、計算時間、測定の時間分解能を合わせて選ぶ。</p>
+<h3 id="section-r5">再挑戦 R5</h3>
+<p><code>Δt/τ=1.2</code>と<code>1.8</code>の倍率を求め、どちらがより振動的か説明せよ。</p>
+<p>#### R5 解答</p>
+<p>それぞれ<code>-0.2</code>、<code>-0.8</code>である。両方とも絶対値は1未満だが、1.8の方が絶対値が大きく、符号反転した誤差が遅く減るため、より振動的に見える。</p>
+<h2 id="section-e6">E6　解答</h2>
+<p><code>R=1 MΩ</code>、<code>R_in=10 MΩ</code>の並列抵抗は、</p>
+<pre><code class="language-text">R_eff = (1×10)/(1+10) MΩ = 10/11 MΩ ≈0.909 MΩ</code></pre>
+<p>従って無負荷の<code>τ=1 MΩ×1 μF=1 s</code>に対し、負荷ありは約<code>0.909 s</code>、約9.09%短くなる。10 MΩは1 MΩの10倍だが、時定数変化を1%以内にしたいなら十分ではない。許容幅を5%までとするなら、9.09%はまだ大きい。この判断には「十分」の基準が必要である。</p>
+<h3 id="section-r6">再挑戦 R6</h3>
+<p><code>R=10 kΩ</code>、<code>C=100 nF</code>、<code>R_in=10 MΩ</code>なら、時定数の相対変化の目安を求めよ。</p>
+<p>#### R6 解答</p>
+<p>抵抗比は<code>R_in/R=1000</code>で、並列抵抗は<code>R/(1+R/R_in)=R/1.001≈0.999001R</code>。時定数は約0.0999%短くなる。1%を許容する測定なら、抵抗だけの負荷は小さいと判断できるが、入力容量や帯域は別に確認する。</p>
+<h2 id="section-e7">E7　解答</h2>
+<ol><li>条件付きではなく誤り。<code>f_s&gt;2f_max</code>だけでなく、信号が帯域制限され、理想に近い再構成条件が必要である。急峻なステップには無限に高い成分がある。</li><li>条件付きで正しい。対象の時間尺度より測定器の立上りが十分短く、入力負荷やノイズも許容範囲なら帯域の影響を小さくできる。</li><li>誤り。有限帯域の測定器と有限サンプリングは、ステップを丸め、サンプル列へ変換する。</li><li>誤り。短い窓は時間位置を限定しやすいが、周波数分解能を上げるとは限らない。窓長が短いほど周波数分解能は一般に悪くなる。</li></ol>
+<h3 id="section-r7">再挑戦 R7</h3>
+<p>最高周波数が20 kHzの帯域制限信号を理想サンプリングするとき、入口となるサンプリング周波数の条件を書け。さらに、実装上の余裕を一つ挙げよ。</p>
+<p>#### R7 解答</p>
+<p>理想条件の入口は<code>f_s&gt;40 kHz</code>。実際にはフィルタの遷移帯域、時計の揺らぎ、ノイズ、再構成余裕を考え、40 kHzぎりぎりより高い周波数とanti-aliasing filterを選ぶ。</p>
+<h2 id="section-e8">E8　解答</h2>
+<p>レンジ幅は<code>2 V</code>、コード数は<code>256</code>なので、量子化幅の目安は</p>
+<pre><code class="language-text">ΔV=2/256 V≈7.8125 mV</code></pre>
+<p>入力<code>1.2 V</code>は上限<code>+1 V</code>を超えるので、量子化誤差だけでは説明できない。ADCの入力段で飽和、クリップ、または範囲外エラーになる。量子化誤差を一様ノイズと近似できない例は、飽和、信号が1コード未満で固定される場合、コード境界に同期した周期信号、量子化誤差が入力と強く相関する場合である。</p>
+<h3 id="section-r8">再挑戦 R8</h3>
+<p>レンジ<code>0 V</code>から<code>4 V</code>、10 bit ADCの量子化幅の目安と、入力<code>2 V</code>が範囲内かを答えよ。</p>
+<p>#### R8 解答</p>
+<p><code>ΔV=4/1024≈3.90625 mV</code>。<code>2 V</code>は範囲内だが、実際の誤差は量子化だけでなく基準<a class="term" href="index.html#term-voltage">電圧</a>、非直線性、ノイズを含み得る。</p>
+<h2 id="section-e9">E9　解答</h2>
+<p>式(4.9)より、</p>
+<pre><code class="language-text">u_τ/τ ≈ sqrt(0.02^2+0.05^2)
+      = sqrt(0.0029)
+      ≈0.0539 = 5.39%</code></pre>
+<p><code>τ=1 ms</code>なら絶対不確かさの目安は<code>0.0539 ms</code>、約<code>54 μs</code>である。温度でRとCが同じ方向に変化するなら独立性が崩れる可能性があり、共分散や温度係数を含むモデルへ変える必要がある。</p>
+<h3 id="section-r9">再挑戦 R9</h3>
+<p>Rの相対不確かさ1%、Cの相対不確かさ1%、完全に同じ方向へ動くと仮定する。独立式をそのまま使うことの問題を説明せよ。</p>
+<p>#### R9 解答</p>
+<p>独立式なら約1.41%だが、完全相関で同じ方向なら相対変化は概ね加算され、約2%になる。相関を無視すると不確かさを過小評価し得る。</p>
+<h2 id="section-e10">E10　解答</h2>
+<p>最小構成は次のようになる。</p>
+<pre><code class="language-yaml">schema: rc-comparison/v1
+run:
+  chapter: 4
+  experiment: 1
+  status: planned
+input:
+  R_ohm: 1000
+  C_farad: 1.0e-6
+  Vs_volt: 5.0
+  V0_volt: 0.0
+methods: [analytic, euler, rk4, spice]
+outputs:
+  analytic: analytic.csv
+  euler: euler.csv
+  rk4: rk4.csv
+  spice: spice.csv
+provenance:
+  command: book run 4 1
+  environment: pinned-linux
+  versions: versions.txt</code></pre>
+<p>測定を行った場合は<code>measurement</code>をmethodsへ追加し、入力波形、計器設定、サンプリング、量子化、raw dataの場所を加える。<code>status: planned</code>、<code>measured</code>、<code>reproduced</code>、<code>failed</code>を区別すれば、ファイルの有無だけで実験状態を推測せずに済む。</p>
+<h3 id="section-r10">再挑戦 R10</h3>
+<p>domain adapterが終了コード2で「未導入実験」を返したときのartifactを設計せよ。</p>
+<p>#### R10 解答</p>
+<pre><code class="language-yaml">status: failed
+failure:
+  kind: unimplemented_experiment
+  command: book run 4 1
+  exit_code: 2
+  stderr: artifacts/chapter-04/failure.stderr.txt
+  next_action: runner implementation required</code></pre>
+<p>解析解の期待値を同じログへ成功値として書かない。未実装は未実装のまま記録し、再実行の条件を残す。</p>
+<h2 id="section-e11">E11　解答</h2>
+<p>差の全てを数値誤差と呼んではいけない。理想ステップと0.2 msの有限立上りは入力条件が違うため、まずモデル入力の差である。実測入力を同じ時刻軸へ補間し、その入力を電圧源として数値解またはSPICEへ与える方法がある。それでも差が残るなら、部品値・出力抵抗、プローブの入力負荷、測定器帯域、サンプリング・量子化、温度、ノイズを仮説として一つずつ確認する。</p>
+<h3 id="section-r11">再挑戦 R11</h3>
+<p>実測入力を使ったシミュレーションでも時定数が5%ずれる。次に「モデル不足」と「部品ばらつき」を区別する一つの比較を提案せよ。</p>
+<p>#### R11 解答</p>
+<p>部品を個別に測って得たR/C値を使うモデルと、公称値を使うモデルを比較する。個別値でずれが消えれば部品ばらつきの説明力が上がる。消えなければ、プローブ負荷、漏れ、温度、配線、測定帯域などのモデル不足を追加して比較する。</p>
+<h2 id="section-e12">E12　解答</h2>
+<p>直ちに測定が間違いとは断定できない。RK4とSPICEの一致は、選んだ理想モデル内での計算経路の整合性を示すだけである。</p>
+<p>調べる順番の例は次の通り。</p>
+<ol><li>実測入力波形、時刻基準、プローブ接続、サンプリングが想定と一致するか確認する。</li><li>R/Cの個体値、信号源の出力抵抗、温度、コンデンサの漏れやプローブの入力負荷を確認する。</li><li>SPICEへ実測入力と測定器模型を加え、帯域・量子化・ノイズを含めたモデルとの残差を比較する。</li></ol>
+<p>必要なartifactは、raw input、raw output、probe <a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>tings、校正・版情報、SPICE netlist、解析・数値の入力manifest、比較表、収束ログ、失敗ログである。これらがあれば、他の人は「測定が正しいか」という一語の議論ではなく、各仮説を再現できる。</p>
+<h3 id="section-r12">再挑戦 R12</h3>
+<p>Euler法だけが測定値へ近く、RK4とSPICEが一致して遠い場合に、考えられる故障を二つ挙げよ。</p>
+<p>#### R12 解答</p>
+<p>一つはEuler法の刻み幅が粗く、数値誤差が偶然測定値へ近づいただけである。もう一つは、RK4とSPICEへ同じ誤った入力・初期値・単位を渡している可能性である。まず解析解との差、刻み幅収束、入力波形、部品・プローブ模型を確認し、「測定に近い」ことだけを正しさの基準にしない。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

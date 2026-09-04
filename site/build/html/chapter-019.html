@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第19章　drift、diffusion、再結合</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-019-exercises.html">この章の演習</a>　<a href="chapter-019-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-19-1"><code>book run 19 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-019/experiment-01.json">成果物</a></li></ul></section><h1 id="section-19-drift-diffusion">第19章　drift、diffusion、再結合</h1>
+<h2 id="section-1">1　キャリアは<a class="term" href="index.html#term-electric_field">電場</a>と濃度のむらで動く</h2>
+<p>第18章では、<a class="term" href="index.html#term-donor">ドナー</a>とアクセプタを含む半導体で、伝導帯電子の密度<code>n</code>、価電子帯正孔の密度<code>p</code>、Fermi準位<code>E_F</code>を電荷中性から求めた。ここでは、その数が空間と時間で変化するとき、電流と再結合をどう書くかを開く。</p>
+<p>電場<code>E</code>だけがあると、電子と<a class="term" href="index.html#term-hole">正孔</a>は反対向きへ動く。しかし電子の電荷は<code>-q</code>なので、慣用電流は電子の運動方向と反対になる。濃度にむらがあると、粒子は高濃度から低濃度へ拡散する。電子の拡散電流と正孔の拡散電流の符号は、この二つの反転を別々に記録しなければ決められない。</p>
+<p><a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>の大きさを<code>q=e&gt;0</code>とする。移動度は電子を<code>mu_e</code>、正孔を<code>mu_h</code>と書き、単位は<code>m^2/(V s)</code>、拡散係数<code>D_n,D_p</code>の単位は<code>m^2/s</code>、電流密度<code>J_n,J_p</code>の単位は<code>A/m^2</code>である。<code>mu_n,mu_p</code>は第18章から受け取る準Fermi準位専用の記号として予約する。一定の電場<code>E=100 V/m</code>、<code>n=1.0×10^21 m^-3</code>、<code>p=1.0×10^20 m^-3</code>、<code>mu_e=0.10 m^2/(V s)</code>、<code>mu_h=0.05 m^2/(V s)</code>なら、drift電流の解析予測は</p>
+<pre><code class="language-text">J_n,drift = q mu_e n E ≈ 1.60×10^3 A/m^2
+J_p,drift = q mu_h p E ≈ 8.01×10^1 A/m^2             (19.1)</code></pre>
+<p>である。これは指定した<a class="term" href="index.html#term-mobility">移動度</a>と密度の計算値であり、実材料の測定値ではない。<code>book run 19 1</code>は固定runnerの入力由来契約モデルまで実行済みで、外部domain tool・実測は未実行（<code>measurement.status=not_run</code>）である。</p>
+<p>この章の中心問題は次である。</p>
+<blockquote>電場によるdrift、濃度勾配によるdiffusion、<a class="term" href="index.html#term-concept_19_term_0ccc09a111_0ccc09a1">生成・再結合</a>を、符号と保存則を壊さずにどう足し合わせるか。</blockquote>
+<p>第18章からは<code>n,p,E_F,T</code>、電子と正孔の電荷符号、平衡・非平衡の区別を受け取る。第20章では、n型とp型を接合して空乏層、<a class="term" href="index.html#term-built_in_potential">内蔵電位</a>、接触を扱う。</p>
+<h2 id="section-2-drift">2　drift<a class="term" href="index.html#term-current">電流</a>と移動度</h2>
+<h3 id="section-2-1">2.1　散乱があるキャリアの平均運動</h3>
+<p>有効質量<code>m^*</code>を持つキャリアへ電場を掛け、散乱で速度が緩和するとする。緩和時間<code>tau</code>を使う最小模型は、</p>
+<pre><code class="language-text">m^* dv/dt = q_c E - m^* v/tau                  (19.2)</code></pre>
+<p>である。<code>q_c</code>はキャリアの電荷で、電子なら<code>-q</code>、正孔なら<code>+q</code>。定常状態<code>dv/dt=0</code>では<code>v=q_c tau E/m^*</code>となる。移動度を正値</p>
+<pre><code class="language-text">mu = |q_c| tau/m^*                              (19.3)</code></pre>
+<p>と定義すれば、電子の平均速度は<code>v_n=-mu_e E</code>、正孔の平均速度は<code>v_p=+mu_h E</code>である。移動度は「電場1 V/mあたりの速度の大きさ」で、電荷の符号を含めない。</p>
+<h3 id="section-2-2">2.2　電流の符号を二度確認する</h3>
+<p><a class="term" href="index.html#term-current_density">電流密度</a>は電荷×粒子流束である。電子は<code>-q</code>を持ち、電場と逆向きへ動くので、電子のdrift電流は電場と同じ向きになる。正孔は<code>+q</code>を持ち、電場と同じ向きへ動くので、正孔のdrift電流も電場と同じ向きになる。</p>
+<pre><code class="language-text">J_n,drift = q mu_e n E
+J_p,drift = q mu_h p E                         (19.4)
+J_drift  = q(mu_e n + mu_h p)E</code></pre>
+<p><code>E</code>と<code>J</code>はベクトルである。一次元で<code>E&gt;0</code>なら、両式の電流は<code>+x</code>向き。粒子速度<code>v_n</code>をそのまま電子電流と呼ぶと符号が反転するので、速度、粒子流束、慣用電流を別の変数へ保存する。</p>
+<p>式(19.4)は局所・線形・低電場の模型である。強電場で速度が飽和する場合、磁場がある場合、移動度が位置・温度・濃度で変わる場合は、<code>mu_e,mu_h</code>を固定値のまま使わない。</p>
+<h2 id="section-3-diffusion-einstein">3　diffusion電流と<a class="term" href="index.html#term-einstein_relation">Einstein関係</a></h2>
+<h3 id="section-3-1-fick">3.1　Fick則から電流へ</h3>
+<p>粒子の拡散流束は濃度勾配に逆らう。電子と正孔の粒子流束を</p>
+<pre><code class="language-text">Gamma_n,diff = -D_n grad(n)
+Gamma_p,diff = -D_p grad(p)                         (19.5)</code></pre>
+<p>とする。電子は<code>-q</code>を持つため、電子の<a class="term" href="index.html#term-diffusion_current">拡散電流</a>は<code>+q D_n grad(n)</code>、正孔は<code>+q</code>を持つため<code>-q D_p grad(p)</code>になる。</p>
+<pre><code class="language-text">J_n = q mu_e n E + q D_n grad(n)
+J_p = q mu_h p E - q D_p grad(p)                  (19.6)
+J_total = J_n + J_p</code></pre>
+<p>例えば<code>x</code>方向に電子濃度が増える、つまり<code>dn/dx&gt;0</code>なら、電子は<code>-x</code>へ拡散するが、電子拡散電流は<code>+x</code>へ向く。正孔濃度が増える方向では、正孔拡散電流はその反対方向へ向く。式を暗記する前に、粒子流束へ電荷を掛けて検算する。</p>
+<h3 id="section-3-2-einstein">3.2　Einstein関係</h3>
+<p>熱平衡近くの非<a class="term" href="index.html#term-degeneracy">縮退</a>キャリアでは、移動度と拡散係数に</p>
+<pre><code class="language-text">D_n/mu_e = D_p/mu_h = k_B T/q                   (19.7)</code></pre>
+<p>というEinstein関係がある。<code>k_B T/q</code>の単位はV、<code>D/mu</code>も<code>(m^2/s)/(m^2/(V s))=V</code>。300 Kなら<code>k_B T/q≈0.02585 V</code>である。これはキャリアの種類にかかわらず同じ温度での熱エネルギーと電荷の比を表すが、縮退、高電場、強い非平衡では修正が必要になる。</p>
+<h3 id="section-3-3-drift-diffusion">3.3　driftとdiffusionが相殺する条件</h3>
+<p>電子について一方向の電流を0とすると、</p>
+<pre><code class="language-text">E = -(D_n/mu_e) (grad(n)/n)
+  = -(k_B T/q) grad(ln n)                         (19.8)</code></pre>
+<p>となる。正孔では、</p>
+<pre><code class="language-text">E = +(k_B T/q) grad(ln p)                         (19.9)</code></pre>
+<p>となる。平衡では電場と濃度勾配がこのように釣り合うことがある。接合で生じる空乏層と内蔵電位は、この局所的な釣り合いを空間全体で解く次の問題であり、まだここで導出しない。</p>
+<h2 id="section-4">4　<a class="term" href="index.html#term-continuity_equation">連続の式</a>、生成、再結合</h2>
+<h3 id="section-4-1">4.1　数を保存する収支</h3>
+<p>生成率と再結合率を、単位体積・単位時間あたりの正の量<code>G_gross</code>、<code>R_gross</code>で表す。単位は<code>m^-3 s^-1</code>。電子と正孔が対で生成・再結合する単純な場合、</p>
+<pre><code class="language-text">∂n/∂t = (1/q) div(J_n) + G_gross - R_gross
+∂p/∂t = -(1/q) div(J_p) + G_gross - R_gross             (19.10)</code></pre>
+<p>である。電子式の<code>div(J_n)</code>の符号が正なのは、電子の電荷が負だからである。正孔式は正電荷なので符号が反対になる。空間一様で電流が発散しなければ、<code>∂n/∂t=∂p/∂t=G_gross-R_gross</code>となる。</p>
+<p>自由キャリアの<a class="term" href="index.html#term-charge_density">電荷密度</a>を<code>rho_free=q(p-n)</code>と書く。ドナー・アクセプタの固定電荷も含めてPoisson方程式へ渡す全電荷密度は、第18章のイオン化濃度を受けて</p>
+<pre><code class="language-text">rho_total = q(p + N_D^+ - n - N_A^-)</code></pre>
+<p>となる。固定した<code>N_D^+</code>と<code>N_A^-</code>は時間微分の収支では定数として相殺されるため、式(19.10)の生成・再結合の検算は<code>rho_free</code>で行える。しかし第20章の接合・空乏層の空間電荷源には<code>rho_total</code>を渡し、<code>rho_free</code>と混同しない。</p>
+<h3 id="section-4-2">4.2　寿命の一次模型</h3>
+<p>光や注入で平衡値からの過剰電子密度を<code>delta_n=n-n_0</code>、過剰正孔密度を<code>delta_p=p-p_0</code>とする。低レベル注入で、過剰キャリアが寿命<code>tau_n</code>で失われると近似すれば、</p>
+<pre><code class="language-text">R_net ≈ delta_n/tau_n,
+d(delta_n)/dt = -delta_n/tau_n,
+delta_n(t)=delta_n(0) exp(-t/tau_n)             (19.11)</code></pre>
+<p>となる。<code>tau_n</code>の単位はs、<code>R_net</code>は<code>m^-3 s^-1</code>。<code>delta_n(0)=1.0×10^22 m^-3</code>、<code>tau_n=1.0 ns</code>なら初期再結合率は<code>1.0×10^31 m^-3 s^-1</code>、2 ns後の過剰密度は約<code>1.35×10^21 m^-3</code>という解析予測である。</p>
+<p>この寿命は材料固有の普遍定数ではない。欠陥、表面、温度、注入レベル、試料形状によって変わる。runnerや測定で得た寿命と、式(19.11)へ与えた仮定値を分けて保存する。</p>
+<h3 id="section-4-3-shockley-read-hall">4.3　Shockley–Read–Hallの最小式</h3>
+<p><a class="term" href="index.html#term-band_gap">バンドギャップ</a>内の欠陥準位<code>E_t</code>を介した再結合を、SRH模型で</p>
+<pre><code class="language-text">U_SRH = (n p - n_i^2)
+        / [tau_p (n+n_1) + tau_n (p+p_1)]       (19.12)
+n_1 = N_c exp[-(E_c-E_t)/(k_B T)]
+p_1 = N_v exp[-(E_t-E_v)/(k_B T)]</code></pre>
+<p>と表す。<code>U_SRH&gt;0</code>を正味再結合、<code>U_SRH&lt;0</code>を正味生成と定義する。<code>n,p,n_i,n_1,p_1</code>は密度、<code>tau_n,tau_p</code>はsなので、分子の密度二乗を分母の密度×時間で割った単位は<code>m^-3 s^-1</code>になる。平衡で<code>np=n_i²</code>なら<code>U_SRH=0</code>。非平衡でも、局所準平衡・単一<a class="term" href="index.html#term-trap">trap</a>という仮定の範囲ならこの式へ実際の<code>n,p</code>を入れてよい。ただし<code>np=n_i²</code>を強制せず、準Fermi準位の分離を反映した正味率として扱う。仮定を外れる過渡捕獲・多準位・量子輸送は別モデルにする。</p>
+<p>連続の式との接続を一つに決める。<code>G_gross</code>と<code>R_gross</code>を別々の正の総生成・総再結合率として使うcaseでは、式(19.10)の源を<code>S=G_gross-R_gross</code>とする。SRHを使うcaseでは、符号付き<code>U_SRH</code>を再結合率として採用し、源を<code>S=-U_SRH</code>（つまり式の<code>G_gross-R_gross</code>を<code>-U_SRH</code>へ置換）とする。両caseを同じ時刻へ足し合わせたり、<code>R_gross</code>へ<code>U_SRH</code>をもう一度加えたりしない。artifactには<code>recombination_mode="gross_pair_rates"</code>または<code>"srh_net_rate"</code>と、採用した源<code>S</code>を保存する。</p>
+<p>SRHは一つの再結合模型であり、放射再結合、Auger再結合、表面再結合を自動的に含まない。複数の経路を加えるなら、各係数、単位、適用範囲を別に記録する。</p>
+<h2 id="section-5">5　一次元数値計算を設計する</h2>
+<h3 id="section-5-1">5.1　定数係数の<a class="term" href="index.html#term-finite_difference">有限差分</a></h3>
+<p>一次元で<code>E,mu_e,mu_h,D</code>を一定とし、式(19.6),(19.10)を格子<code>x_j=j Delta_x</code>へ置く。濃度勾配を中心差分で近似し、電流を面の値で計算してから発散を取る。濃度そのものを中心差分で直接更新するより、各セルの流入・流出を数える有限体積の方が、収支を追いやすい。</p>
+<p>陽解法で拡散項を更新する場合、目安として</p>
+<pre><code class="language-text">Delta_t &lt;= Delta_x^2/(2 max(D_n,D_p))          (19.13)</code></pre>
+<p>を満たす必要がある。drift項にも<code>Delta_t |mu E|/Delta_x</code>のCFL条件がある。厳しい条件を避けるため陰解法を使う場合でも、時間刻みを粗くすれば過渡応答を解像できない。時間刻み、格子幅、境界条件、収束判定をartifactへ保存する。</p>
+<h3 id="section-5-2">5.2　境界条件</h3>
+<p>オーミック接触では、接触が指定する平衡濃度や<a class="term" href="index.html#term-quasi_fermi_level">準Fermi準位</a>を境界値として与える。絶縁境界では、法線方向の<code>J_n</code>と<code>J_p</code>を0にする。表面再結合を扱うなら、表面速度<code>S</code>と表面での過剰濃度を使い、バルク寿命と別の境界モデルとして記録する。</p>
+<p>同じ「端の濃度を固定」と書いても、電流を固定する境界とは別である。境界条件を変えた結果を同じrunner出力へ上書きせず、<code>boundary_kind</code>とcase IDを付ける。</p>
+<h3 id="section-5-3">5.3　検算の順番</h3>
+<p>最初は<code>E=0,G_gross=R_gross=0</code>で一様濃度を入れ、<code>J_n=J_p=0</code>を確認する。次に一様電場・一様濃度でdrift式だけを確認する。その後、電場0で濃度勾配を与え、式(19.6)のdiffusion符号を確認する。最後に寿命模型へ過剰キャリアを入れ、指数減衰の時間定数と比較する。</p>
+<p>各caseで、</p>
+<pre><code class="language-text">current_unit_check
+charge_continuity_residual
+nonnegative_density_check
+boundary_flux_residual
+time_step_stability_check
+analytic_relative_error</code></pre>
+<p>を保存する。数値結果が滑らかでも、電荷収支、負の濃度、境界流束、時間刻みを通過したとは限らない。</p>
+<h2 id="section-6">6　単位、符号、平衡・非平衡</h2>
+<p><code>q</code>はC、<code>n,p</code>は<code>m^-3</code>、<code>E</code>はV/m、移動度<code>mu_e,mu_h</code>は<code>m^2/(V s)</code>、<code>D</code>は<code>m^2/s</code>、<code>J</code>はA/m²、<code>G_gross,R_gross,U_SRH</code>は<code>m^-3 s^-1</code>、<code>tau</code>はsで統一する。例えば<code>q mu_e n E</code>は<code>C·m²/(V s)·m^-3·V/m=A/m²</code>となる。</p>
+<p>電子の速度は<code>-mu_e E</code>だが電子のdrift電流は<code>+q mu_e n E</code>。電子の拡散流束は<code>-D_n grad(n)</code>だが電子の拡散電流は<code>+q D_n grad(n)</code>。正孔はこの二つの符号がそれぞれ反対である。<code>p</code>を負の数として正孔の正電荷を表す方法は採用しない。</p>
+<p>熱平衡なら一つの<a class="term" href="index.html#term-fermi_level">Fermi準位</a><code>E_F</code>で<code>n,p</code>を決め、平衡では正味再結合<code>U=0</code>。注入や光照射中の非平衡なら<code>mu_n,mu_p</code>を使い、<code>G_gross,R_gross</code>または<code>U_SRH</code>のどちらか一つと連続の式を時間・空間で解く。平衡の<code>np=n_i²</code>を非平衡の入力へ無条件に入れない。</p>
+<h2 id="section-7-runner">7　runner、測定、モデルの境界</h2>
+<p>予定runnerは<code>book run 19 1</code>。入力caseは、(a)純粋drift、(b)純粋diffusion、(c)Einstein関係、(d)一様濃度の保存、(e)寿命による過剰キャリア減衰、(f)SRH再結合、(g)一次元の境界条件と格子・時間収束を含める。第18章からの<code>n,p,T,E_F</code>と平衡状態を受け、必要な非平衡の<code>mu_n,mu_p</code>、移動度<code>mu_e,mu_h</code>、拡散係数、電場、濃度勾配、<code>G_gross,R_gross</code>または<code>U_SRH</code>を追加する。</p>
+<p>出力には、<code>n,p</code>、<code>J_n,J_p</code>、<code>E</code>、移動度<code>mu_e,mu_h</code>、準Fermi準位を使う場合だけ<code>mu_n,mu_p</code>、<code>D_n,D_p</code>、<code>G_gross,R_gross</code>または<code>U_SRH</code>、源<code>S</code>、境界、格子幅、時間刻み、収支残差、解析参照、<code>source_kind</code>、<code>status</code>、<code>measured</code>を保存する。解析値は<code>analytic_prediction</code>、差分解は<code>numeric_prediction</code>、runner実行後は<code>runner_output</code>、装置で得た値だけ<code>measurement</code>。固定runnerは契約artifactを再生済みであり、外部domain・測定は未実行のため<code>measurement.status=not_run</code>を維持する。</p>
+<p>次の入力は負のテストとして拒否または別statusにする。</p>
+<pre><code class="language-text">q&lt;=0を電荷の大きさとして入力、n&lt;0、p&lt;0、D_n/D_p&lt;0、mu_e/mu_h&lt;0、tau&lt;=0
+EをV/mでなくV、密度勾配をm^-4でなくcm^-4のまま混在
+電子の速度をそのまま電子電流へ代入
+G_gross,R_grossを密度で入力、Jを体積あたりで入力
+平衡なのにnp != ni^2、非平衡なのにmu_n/mu_pがない
+陽解法でDelta_tが安定条件を超える
+固定濃度境界と無流束境界を同じ端へ同時に指定
+負濃度を0へclipして保存則の失敗を隠す
+runner未実行の曲線をmeasurementと記録する</code></pre>
+<h2 id="section-8">8　次章へ渡す設計判断</h2>
+<p>第20章「<a class="term" href="index.html#term-pn_junction">p-n接合</a>と金属接触」へは、次の入力と境界を固定して渡す。</p>
+<ul><li>電子電流は<code>J_n=q mu_e n E+q D_n grad(n)</code>、正孔電流は<code>J_p=q mu_h p E-q D_p grad(p)</code>とし、電子・正孔の粒子速度と慣用電流を別に保存する。<code>mu_n,mu_p</code>は準Fermi準位として別欄へ保存する。</li><li><code>n,p</code>、電場<code>E</code>、移動度<code>mu_e,mu_h</code>、拡散係数、温度、自由キャリア電荷密度<code>rho_free=q(p-n)</code>の単位を揃える。第20章のPoisson源には固定イオンを含む<code>rho_total=q(p+N_D^+-n-N_A^-)</code>を渡す。<code>q</code>は正の電荷の大きさとして、電子の符号は式の構造で表す。</li><li>連続の式では電子と正孔の発散符号、総生成・再結合<code>G_gross,R_gross</code>または符号付きSRH率<code>U_SRH</code>のどちらか一つ、境界流束を個別に検査する。過剰キャリアの寿命は仮定値と測定値を分ける。</li><li>熱平衡の一つのFermi準位と、非平衡の準Fermi準位を区別し、<code>np=n_i^2</code>の適用条件をrunner入力へ残す。</li><li>n型とp型を接合すると、濃度勾配によるdiffusionと電場によるdriftが空間的に釣り合う領域が現れる。第20章ではPoisson方程式、空乏近似、内蔵電位、接触の境界条件を追加する。</li><li>数値解は格子幅、時間刻み、境界条件、電荷収支残差、解析参照を持つ。未実行runnerの出力を測定と呼ばない。</li></ul>
+<h2 id="section-9">9　この章で使った模型の限界</h2>
+<p>drift–diffusion模型は、局所平衡に近いキャリアを移動度<code>mu_e,mu_h</code>と拡散係数<code>D_n,D_p</code>で記述する。平均自由行程がデバイス寸法に近い場合、強電場、磁場、縮退、量子輸送、バリスティック輸送では、局所的な移動度と拡散係数だけでは足りない。</p>
+<p>再結合も、寿命一つまたはSRH一つで全材料を表せるわけではない。放射、Auger、表面、欠陥、発熱、光生成を追加する場合は、生成・再結合の単位と符号を再確認する。第20章の接合では、<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>と電荷分布をPoisson方程式で結合し、bulkの電荷中性だけではない境界問題になる。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-19">19.補助演習　手を動かす導出帳</h2>
+<p>drift、diffusion、再結合の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-drift-diffusion">例題1　一次元<a class="term" href="index.html#term-semiconductor">半導体</a>のdrift・diffusion・再結合を保存則付きで計算する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 19 1</code>である。入力は<code>[{"drift case": "q=1.602176634e-19 C、n=1.0e21 m^-3、p=1.0e20 m^-3、E=100 V/m、mu_e=0.10、mu_h=0.05 m^2/(V s)。未丸め期待値はJn=1.602176634e3、Jp=8.01088317e1、Jtotal=1.6822854657e3 A/m^2で、保存した浮動小数値との相対誤差1e-12以下"}, {"diffusion/Einstein case": "T=300 K、mu_e=0.10、mu_h=0.05 m^2/(V s)、D_n=2.585e-3、D_p=1.2925e-3 m^2/s、n=n0 exp(x/L_n)、p=p0 exp(x/L_p)、n0=1.0e21、p0=1.0e20 m^-3、L_n=L_p=1.0e-5 m、E=0。x=0の期待値はJn_diff=4.142e4、Jp_diff=-2.071e3 A/m^2"}, {"continuity case": "N=101、dx=1.0e-6 m、dt=1.0e-10 s、E=0、G_gross=R_gross=0、初期n=1.0e21、p=1.0e20 m^-3、両端no_flux。1 step後の最大相対変化と電荷収支残差を1e-12以下にする"}, {"lifetime case": "delta_n(0)=1.0e22 m^-3、tau_n=1.0e-9 s、t=2.0e-9 s。未丸め期待値はR_net(0)=1.0e31 m^-3 s^-1、delta_n(t)=1.353352832366e21 m^-3で、保存した浮動小数値との相対誤差1e-12以下"}, {"SRH case": "n=1.0e22、p=1.0e20、ni=1.0e16、n1=3.0e18、p1=3.333333333333e13（ni^2/n1）m^-3、tau_n=1.0e-6、tau_p=2.0e-6 s、recombination_mode=srh_net_rate。未丸め期待値はU_SRH=4.973639700796e25 m^-3 s^-1、連続の式の源S=-U_SRH。平衡case n=p=niではU_SRH=0"}, {"convergence case": "dx=1.0e-6 m、D_max=2.585e-3 m^2/s、dt_max=1.934e-10 s、採用dt=1.0e-10 s、no_flux、電荷収支残差・解析指数減衰との差を保存"}, "q&lt;=0、n&lt;0、p&lt;0、D_n&lt;0、D_p&lt;0、mu_e&lt;0、mu_h&lt;0、tau&lt;=0、VとV/m混同、m^-3とcm^-3混同、平衡np不一致、非平衡準Fermi欠落、負濃度clip、gross_pair_ratesとsrh_net_rateの二重計上、measured=trueを負のテストとする"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>ドリフト電流</code>は、電場と移動度によって生じるキャリアの慣用電流。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>ドリフト電流</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>拡散電流</code>は、濃度勾配による粒子流束へ電荷を掛けた電流。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>拡散電流</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Einstein関係</code>は、熱平衡近くで移動度と拡散係数を結ぶ関係。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Einstein関係</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>生成・再結合</code>は、単位体積・単位時間あたりのキャリア対の増減。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>生成・再結合</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>キャリア寿命</code>は、過剰キャリアが一次近似で減衰する時間尺度。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>キャリア寿命</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>連続の式</code>は、キャリア数と電流発散、生成、再結合を結ぶ局所収支。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>連続の式</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Shockley–Read–Hall再結合</code>は、バンドギャップ内の欠陥準位を介した再結合の最小模型。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Shockley–Read–Hall再結合</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（電場と濃度勾配の相殺条件）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（電子・正孔の連続の式、生成、再結合）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（過剰キャリア、寿命、指数減衰）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（SRH再結合、平衡極限、単位）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（一次元有限体積、境界条件、安定条件）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（単位、符号、負濃度、非平衡、clipの失敗）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（解析・数値・runner・測定の出所分離）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第20章のp-n接合、空乏層、内蔵電位への橋渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-19-2">19.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>drift、diffusion、再結合</strong>の中心問題「半導体中の電流は、電場による移動と濃度のむらによる拡散をどう足し合わせるのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["一様濃度・電場0・G_gross=R_gross=0でdrift・diffusion電流と時間変化が0になる解析予測", "電子速度は電場と逆だが電子drift電流は電場と同じ、正孔電流も電場と同じ向きになる予測", "濃度勾配のdiffusion電流符号が電子と正孔で異なり、Einstein関係の比がkBT/qへ近づく予測", "寿命模型の過剰キャリ…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"drift case": "q=1.602176634e-19 C、n=1.0e21 m^-3、p=1.0e20 m^-3、E=100 V/m、mu_e=0.10、mu_h=0.05 m^2/(V s)。未丸め期待値はJn=1.602176634e3、Jp=8.01088317e1、Jtotal=1.6822854657e3 A/m^2で、保存した浮動…</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"diffusion/Einstein case": "T=300 K、mu_e=0.10、mu_h=0.05 m^2/(V s)、D_n=2.585e-3、D_p=1.2925e-3 m^2/s、n=n0 exp(x/L_n)、p=p0 exp(x/L_p)、n0=1.0e21、p0=1.0e20 m^-3、L_n=L_p=1.0e-5 m、E=0。x…</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>{"continuity case": "N=101、dx=1.0e-6 m、dt=1.0e-10 s、E=0、G_gross=R_gross=0、初期n=1.0e21、p=1.0e20 m^-3、両端no_flux。1 step後の最大相対変化と電荷収支残差を1e-12以下にする"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>{"lifetime case": "delta_n(0)=1.0e22 m^-3、tau_n=1.0e-9 s、t=2.0e-9 s。未丸め期待値はR_net(0)=1.0e31 m^-3 s^-1、delta_n(t)=1.353352832366e21 m^-3で、保存した浮動小数値との相対誤差1e-12以下"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>{"SRH case": "n=1.0e22、p=1.0e20、ni=1.0e16、n1=3.0e18、p1=3.333333333333e13（ni^2/n1）m^-3、tau_n=1.0e-6、tau_p=2.0e-6 s、recombination_mode=srh_net_rate。未丸め期待値はU_SRH=4.973639700796e25 m^…</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>{"convergence case": "dx=1.0e-6 m、D_max=2.585e-3 m^2/s、dt_max=1.934e-10 s、採用dt=1.0e-10 s、no_flux、電荷収支残差・解析指数減衰との差を保存"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目7: <code>q&lt;=0、n&lt;0、p&lt;0、D_n&lt;0、D_p&lt;0、mu_e&lt;0、mu_h&lt;0、tau&lt;=0、VとV/m混同、m^-3とcm^-3混同、平衡np不一致、非平衡準Fermi欠落、負濃度clip、gross_pair_ratesとsrh_net_rateの二重計上、measured=trueを負のテストとする</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-3">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「<a class="term" href="index.html#term-concept_8_term_aa573899e8_aa573899">緩和時間模型</a>から電子・正孔の速度と移動度を得て、電荷符号を含むdrift電流を導く。」で、参照する式IDまたは検証項目は <code>velocity-current-sign, dimensional-analysis, zero-field-limit</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「粒子流束Gamma=-D grad(c)へ電子・正孔の電荷を掛け、符号付きdiffusion電流を得る。」で、参照する式IDまたは検証項目は <code>ficks-sign, particle-current-conversion, dimensional-analysis</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「熱平衡近くの非縮退キャリアについてD_n/mu_e=D_p/mu_h=kBT/qを検査する。mu_nとmu_pは準Fermi準位として別入力欄に保持する。」で、参照する式IDまたは検証項目は <code>unit-check, temperature-scaling, carrier-type-consistency</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「電荷符号を使って電子・正孔の電流発散と生成G・再結合Rを連続の式へ入れる。」で、参照する式IDまたは検証項目は <code>charge-conservation, uniform-limit, sign-balance</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「低レベル注入の過剰キャリアをR=delta_n/tauで近似し、指数減衰と寿命を得る。」で、参照する式IDまたは検証項目は <code>exponential-decay, lifetime-fit, equilibrium-zero-excess</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「欠陥準位Etを介したSRH正味再結合率とn1,p1を、平衡でゼロになる形で評価する。」で、参照する式IDまたは検証項目は <code>equilibrium-zero, unit-check, generation-sign, parameter-limit</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出7: <code>derivation-7</code></p>
+<p>到達する結果は「drift・diffusion電流を面で計算し、有限体積または有限差分で連続の式を時間更新する。」で、参照する式IDまたは検証項目は <code>charge-balance, positivity, CFL-diffusion, boundary-flux, grid-time-convergence</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-2">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 一次元半導体のdrift・diffusion・再結合を保存則付きで計算する</p>
+<p>入口は <code>book run 19 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-19-transport-source", "chapter-19-recombination-source", "chapter-19-transport-output", "chapter-19-recombination-output", "chapter-19-diagnostic-output", "chapter-19-tr…</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["一様濃度・電場0・G_gross=R_gross=0でdrift・diffusion電流と時間変化が0になる解析予測", "電子速度は電場と逆だが電子drift電流は電場と同じ、正孔電流も電場と同じ向きになる予測", "濃度勾配のdiffusion電流符号が電子と正孔で異なり、Einstein関係の比がkBT/qへ近づく予測", "寿命模型の過剰キャリ…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>drift–diffusionは局所平衡に近い低電場・低密度の輸送模型で、強電場、<a class="term" href="index.html#term-velocity_saturation">速度飽和</a>、磁場、縮退、量子輸送を含まない。</li><li>移動度と拡散係数は材料、温度、濃度、散乱、結晶欠陥で変わるため、固定値は指定caseだけの入力である。</li><li>Einstein関係は熱平衡近くの非縮退条件に限られ、非平衡・高密度では修正が必要になる。</li><li>寿命模型とSRHは再結合の候補であり、放射、Auger、表面、<a class="term" href="index.html#term-trap">トラップ</a>分布を自動的に含まない。</li><li>バルクの連続の式だけでは接触、表面、接合、空乏層の電位分布は決まらない。</li><li>数値解の安定性は物理的正しさを保証しない。単位、符号、収支、境界、収束を別に検査する。</li><li>非平衡では第18章の単一Fermi準位を流用せず、必要なら電子・正孔の準Fermi準位を入力する。</li><li>本章の固定runnerは契約を再生済みだが、図・電流・再結合率・過渡曲線の外部tool実行は未実行で、具体値は解析または数値予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第18章のn、p、Fermi準位、準Fermi準位、ドナー・<a class="term" href="index.html#term-acceptor">アクセプタ</a>、温度、平衡・非平衡</li><li>第17章の電子・正孔、DOS、<a class="term" href="index.html#term-mass_action_law">質量作用則</a>、電子-eと正孔+eの符号</li><li>第16章のバンド、<a class="term" href="index.html#term-density_of_states">状態密度</a>、結晶の状態数</li><li>第14章の有限差分、境界条件、数値時間発展</li><li>第8章の<a class="term" href="index.html#term-conductivity">導電率</a>、移動度、drift速度、物質模型</li><li>第7章の電流密度、連続の式、電荷収支</li><li>第3章の微分、指数、単位、数値安定性</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第20章へdriftとdiffusionの釣り合い、n型・p型、n、p、電荷符号を渡す</li><li>第20章へ電荷中性から空間電荷・Poisson方程式へ拡張する課題を渡す</li><li>第21章以降へ表面キャリア、境界フラックス、再結合、電位制御の入力を渡す</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-3">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — drift_velocity_<a class="term" href="index.html#term-current">current</a>_sign。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — drift_current_units。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — diffusion_current_sign。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — einstein_relation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — drift_diffusion_balance。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — continuity_generation_recombination。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — lifetime_and_srh。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — boundary_and_numerical_stability。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — charge_and_density_conservation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — units_limits_negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — <a class="term" href="index.html#term-provenance">provenance</a>_and_artifact_registry。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — exercise_solution_and_pn_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 一次元半導体のdrift・diffusion・再結合を保存則付きで計算する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 19 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["一様濃度・電場0・G_gross=R_gross=0でdrift・diffusion電流と時間変化が0になる解析予測", "電子速度は電場と逆だが電子drift電流は電場と同じ、正孔電流も電場と同じ向きになる予測", "濃度勾配のdiffusion電流符号が電子と正孔で異なり、Einstein関係の比がkBT/qへ近づく予測", "寿命模型の過剰キャリ…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、<a class="term" href="index.html#term-voltage">電圧</a>、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

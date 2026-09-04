@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第31章　組合せ論理の合成</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-031-exercises.html">この章の演習</a>　<a href="chapter-031-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-31-1"><code>book run 31 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-01.json">成果物</a></li><li><a href="runner.html#run-31-2"><code>book run 31 2</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-02.json">成果物</a></li><li><a href="runner.html#run-31-3"><code>book run 31 3</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-03.json">成果物</a></li><li><a href="runner.html#run-31-4"><code>book run 31 4</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-04.json">成果物</a></li><li><a href="runner.html#run-31-5"><code>book run 31 5</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-05.json">成果物</a></li><li><a href="runner.html#run-31-6"><code>book run 31 6</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-06.json">成果物</a></li><li><a href="runner.html#run-31-7"><code>book run 31 7</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-07.json">成果物</a></li><li><a href="runner.html#run-31-8"><code>book run 31 8</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-031/experiment-08.json">成果物</a></li></ul></section><h1 id="section-31">第31章　組合せ論理の合成</h1>
+<h2 id="section-31-1">31.1 この章の問い</h2>
+<p>第30章で、NANDだけでも基本的な論理関数を表せることを見た。しかし「この真理値表を満たす回路がほしい」という要求から、式とゲートの接続をどう作ればよいだろうか。問いは「望む入出力表から、少ないゲートで同じ機能を持つ回路をどう作るか」である。</p>
+<p>この章では、真理値表→論理式→<a class="term" href="index.html#term-nand_netlist">NANDネットリスト</a>という流れを作る。式の簡単化はBooleanの模型、ゲート数・段数・fan-outの見積りは実装コストの模型、runnerは記号ネットリストの実行である。SPICEや測定を実行した結果は含めない。</p>
+<h2 id="section-31-2">31.2 真理値表を式へ写す</h2>
+<p>入力が<code>A,B,C</code>で、出力が1になる行を選ぶ。各行から、1の入力はそのまま、0の入力はNOTした積（AND）を作り、それらをORで足し合わせる。この形を<a class="term" href="index.html#term-sum_of_products">積和形</a>という。出力が0になる行から和積形を作る方法もある。</p>
+<p>この手順は、有限個の入力組合せを列挙するという論理契約である。行の順序、入力名、未定義値、don't-careを明示しなければ、同じ表を再現できない。表から得た式の真理値を元表へ戻して全行で確認する。</p>
+<h2 id="section-31-3">31.3 簡単化は同値変形である</h2>
+<p><code>A AND 1 = A</code>、<code>A OR 0 = A</code>、<code>A OR NOT(A) = 1</code>などの恒等式で式を短くできる。共通項を共有したり、カルノー図やアルゴリズムで項をまとめたりすることもできる。簡単化前後で、全入力組合せに対する出力が同じことを確認する。</p>
+<p>ただし、短い文字列が常に少ない物理ゲート数になるとは限らない。NOTをNANDへ展開する方法、同じ部分を共有するか、入力を何度駆動するかで、ゲート数、段数、<a class="term" href="index.html#term-fanout">fan-out</a>、負荷が変わる。式の文字数と回路コストを同じものとして扱わない。</p>
+<h2 id="section-31-4-nand">31.4 NANDネットリストへの変換</h2>
+<p>第30章のNAND-only形式へ変換するとき、NOT・AND・ORの各演算をNAND構成へ置き換える。各中間結果に固有のwire名を与え、共有する場合は、そのwireを何個の後段が読むかを記録する。二重駆動や未接続がないことを確認する。</p>
+<p>合成器の出力は、入力表、元の式、簡単化後の式、NANDノード、出力wire、ゲート数、論理段数、fan-out、検査結果を含む。元表と同値であることは必要条件であり、遅延や<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>の測定値ではない。</p>
+<p>具体例として、3入力<code>F(A,B,C)=A+BC</code>を使う。入力を<code>[A,B,C]</code>の順に並べると、出力1の行は<code>011,100,101,110,111</code>である。canonical SOPは</p>
+<p><code>not(A)BC + A not(B)not(C) + A not(B)C + AB not(C) + ABC</code></p>
+<p>で、恒等式により<code>A + BC</code>へ簡単化できる。簡単化後のNAND構成を <code>nA=NAND(A,A)</code>、<code>nBC=NAND(B,C)</code>、<code>Y=NAND(nA,nBC)</code> とする。これは3ゲート、最長論理深さ2、入力Aの最大fan-out 2という予定の構造値である（ここでのfan-outはNAND入力端子数の数え方を採用する）。<code>C_load=2.0e-15 F</code>、各NANDの一次遅延<code>d_i=1.0e-11 s</code>と仮定した解析模型なら、<code>D_est=2.0e-11 s</code>となる。これらはrunnerやSPICEの実行値、測定値ではない。</p>
+<p>定数0・定数1の論理関数では、積和項や経路が空になることがある。空を「壊れたネットリスト」と即断せず、定数セルまたは明示した定数契約として扱う。一方、通常の入力表で行が欠けている状態は別の<code>missing_row</code>であり、正当な定数ケースと混同しない。</p>
+<h2 id="section-31-5">31.5 遅延とゲート数の見積り</h2>
+<p>教育用の一次見積りでは、各ゲート段の遅延を<code>d_i</code>として、最長の入力→出力経路の和を</p>
+<p><code>D_est = max_path sum_i d_i</code></p>
+<p>と書く。これは段数と仮定した一段遅延から得る解析予測で、実際の<a class="term" href="index.html#term-cmos">CMOS</a>遅延ではない。<code>d_i</code>は入力slew、C_load、network、電源、温度によって変わるので、同じゲート数でも遅延は一致しない。</p>
+<p>ゲート数<code>N_gate</code>、最長段数<code>N_depth</code>、最大fan-out、見積り条件を別フィールドにする。簡単化でゲート数が減っても、共有wireのfan-outが増えて遅くなることがある。逆にゲート数が増えても、段数を減らして速くなる場合がある。</p>
+<h2 id="section-31-6-runner-spice">31.6 runnerとSPICEの比較</h2>
+<p>runnerは真理値表の全行をネットリストへ入力し、元の要求と出力を比較する。SPICEはNANDやインバータのMOSモデル、寄生、入力波形を計算し、<a class="term" href="index.html#term-voltage">電圧</a>波形と遅延を返す。実機測定は別の装置と条件を必要とする。三者の一致を主張するには、それぞれの入力とartifactが必要である。</p>
+<p>本章の予定runnerは、式の同値、NAND変換、コスト見積り、負のテストを対象にする。SPICEと測定は橋渡しの仕様だけを記録し、<code>measured: false</code>のままにする。</p>
+<h2 id="section-31-7">31.7 負のテスト</h2>
+<p>表の行で入力数が不揃い、出力が0/1以外、入力名が重複、don't-careの解釈が未指定、簡単化後の式が同値でない、wireが二重駆動、段数が計算されていない、SPICE予測を実測と表示する場合は失敗にする。</p>
+<p>コスト見積りの単位が欠ける、負の段数、空の経路、fan-outの数え漏れも同様である。合成器は式を勝手に修正せず、元の真理値表と診断を保存する。</p>
+<h2 id="section-31-8">31.8 次章への橋</h2>
+<p>真理値表からNANDネットリストを作る手順ができた。次は、人間がゲート接続を一つずつ書く代わりに、<a class="term" href="index.html#term-hdl">HDL</a>でMUXやdecoderを記述し、シミュレーションと合成を別の道具で行う。HDLの文面、論理runner、合成されたゲート、物理SPICEを混同しないことが次章の出発点になる。</p>
+<h3 id="section-5af6083ed6">まとめ</h3>
+<ul><li>真理値表から積和形・和積形を作り、全行で同値性を確認する。</li><li><a class="term" href="index.html#term-boolean_simplification">Boolean簡単化</a>と、ゲート数・段数・fan-outの実装コストを分ける。</li><li>NANDネットリストではwireと共有、二重駆動、内部nodeを明示する。</li><li><code>D_est</code>は条件つき一次見積りで、SPICEや測定値ではない。</li><li>合成・runner・SPICE・測定のsource_kind/status/measuredを分離する。</li></ul>
+<p>&lt;!-- expanded-study-notes --&gt;</p>
+<h2 id="section-31-4">31.補助線　式を状態へ戻す</h2>
+<p>組合せ論理の合成で最初に固定する問いは、望む入出力表から、少ないゲートで同じ機能を持つ回路をどう作るか。 この問いへ答えるときは、いきなり結果の数値を覚えず、入力、状態変化、出力、成立条件の順に書く。入力の単位や符号が一つでも抜けると、同じ数値が出ても別の模型を計算している可能性がある。そこで以下の節では、manifestに宣言した代表入力を一つずつ、手計算と小さなプログラムの両方で追う。</p>
+<h3 id="section-56fb0056e2">具体例の読み方</h3>
+<p>各例では、まず『何を固定したか』を一行で書く。次に、途中の状態を表にし、最後に期待値と照合する。期待値は解析予測であり、測定値ではない。実験装置や外部toolを使わない例でも、予測、実行記録、測定欄を混ぜないことがこの教材の重要な練習になる。</p>
+<h3 id="section-1-3">実験1　3入力真理値表から積和形</h3>
+<p>実行入口は<code>book run 31 1</code>である。caseは<code>sop_generation</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>row_order_and_input_names_preserved</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-2-boolean">実験2　Boolean簡単化</h3>
+<p>実行入口は<code>book run 31 2</code>である。caseは<code>boolean_simplification</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>all_rows_equivalent</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-3-f-a-bc-nand">実験3　F=A+BCのNANDネットリスト変換</h3>
+<p>実行入口は<code>book run 31 3</code>である。caseは<code>nand_synthesis</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>nand_only_and_unique_wires</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-4">実験4　ゲート数と深さ</h3>
+<p>実行入口は<code>book run 31 4</code>である。caseは<code>logic_cost</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>count_depth_fanout_separated</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-5">実験5　遅延見積り</h3>
+<p>実行入口は<code>book run 31 5</code>である。caseは<code>first_order_delay</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>analytic_estimate_not_measurement</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-6-runner-spice">実験6　runnerとSPICEの出所</h3>
+<p>実行入口は<code>book run 31 6</code>である。caseは<code>synthesis_provenance</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>source_kinds_separate</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-7">実験7　合成負のテスト</h3>
+<p>実行入口は<code>book run 31 7</code>である。caseは<code>negative_synthesis_cases</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>malformed_tables_fail_closed</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-8-hdl">実験8　HDLへの橋</h3>
+<p>実行入口は<code>book run 31 8</code>である。caseは<code>hdl_bridge</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>netlist_contract_ready_for_hdl</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-550beb6ff0">状態表を自分で作る</h3>
+<p>本文を読み終える前に、次の五列を紙またはテキストへ写す。『層』『入力』『内部状態』『上位の契約』『破綻条件』である。層には物理量、数値模型、回路、命令、OS、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のどれかを入れ、同じ名前の量を別層で使うときは型と単位を併記する。</p>
+<p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続電圧を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタや<a class="term" href="index.html#term-stack_pointer">stack pointer</a>を隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
+<p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
+<h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
+<ul><li>真理値表から積和形または和積形を作れる</li><li>Boolean恒等式で簡単化し、全行の同値性を検査できる</li><li>式をNANDネットリストへ変換し、共有wireと二重駆動を管理できる</li><li>ゲート数、最長段数、fan-outを別のコストとして数えられる</li><li><a class="term" href="index.html#term-first_order_delay_estimate">一次遅延見積り</a>、runner、SPICE、測定の証拠を分離できる</li><li>入力表の不備、don't-care不明、同値性不一致、出所不一致をfail closedにできる</li></ul>
+<p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
+<h3 id="section-86aa35e5e4">故障診断の手順</h3>
+<p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>
+<ul><li><code>row_arity_mismatch</code>: 入力は行ごとに入力数が異なる。期待する診断は<code>row_arity_mismatch</code>で、正常値として続行しない。</li><li><code>output_value_invalid</code>: 入力は出力に0/1以外を入れる。期待する診断は<code>output_value_invalid</code>で、正常値として続行しない。</li><li><code>dont_care_unspecified</code>: 入力はdon't-careを使うが意味を未指定。期待する診断は<code>dont_care_unspecified</code>で、正常値として続行しない。</li><li><code>simplification_not_equivalent</code>: 入力は簡単化後に一行だけ値が違う。期待する診断は<code>simplification_not_equivalent</code>で、正常値として続行しない。</li><li><code>wire_double_driver</code>: 入力は二つのNANDが同じwireを出力。期待する診断は<code>wire_double_driver</code>で、正常値として続行しない。</li><li><code>path_empty</code>: 入力は遅延見積りの経路が空。期待する診断は<code>path_empty</code>で、正常値として続行しない。</li><li><code>duplicate_row</code>: 入力は同じ入力組合せの行を重複させる。期待する診断は<code>duplicate_row</code>で、正常値として続行しない。</li><li><code>missing_row</code>: 入力は3入力8行のうち一行を欠落させる。期待する診断は<code>missing_row</code>で、正常値として続行しない。</li><li><code>contradictory_output</code>: 入力は同じ入力組合せに0と1を併記する。期待する診断は<code>contradictory_output</code>で、正常値として続行しない。</li><li><code>source_kind_mismatch</code>: 入力はanalyticまたはrunnerをmeasurementと表示。期待する診断は<code>source_kind_mismatch</code>で、正常値として続行しない。</li></ul>
+<p>失敗を再現するときは、一度に一条件だけを変える。二つ以上を同時に変えると、どの境界が効いたか分からなくなる。エラーメッセージだけでなく、入力hash、章・実験ID、上流artifactの状態も保存する。</p>
+<h3 id="section-03f956a059">条件を一つ変えて再挑戦する</h3>
+<p>最初の成功例をそのまま複製するだけでは、契約の意味は分からない。値の符号、刻み幅、負荷、命令、型、アドレス、実行順のうち一つを変え、どの出力が変わり、どの<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a>が残るかを記録する。変えてはいけない条件も明記する。</p>
+<ul><li>再挑戦候補 <code>E8</code>: fan-out。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E9</code>: runner。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E10</code>: 負のテスト。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E11</code>: 出所。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E12</code>: 次章への橋。成功条件と失敗時の診断を先に書く。</li><li>予測値を変えるときは、変更前後の入力を同じ表に置き、差分を一つの列にする。</li><li>実行環境を変えるときは、<a class="term" href="index.html#term-host">host</a>、target、tool versionを別欄にし、結果の差を環境差として記録する。</li><li>境界を越えた場合は、成功したように見える値を残さず、未対応または範囲外として止める。</li></ul>
+<h3 id="section-75b995748a">前後の章へ渡すもの</h3>
+<p>この章は独立した計算帳ではない。前から受け取った量を、次の層が読める契約へ変換する。</p>
+<ul><li>受け取る: 前章で定義した入力を受け取る</li><li>渡す: 次章へ検証済みの状態を渡す</li></ul>
+<p>渡す値には、値だけでなく単位、版、source kind、status、measuredフラグを付ける。後章で同じ記号が現れたとき、初出の定義と再利用の条件を辿れるようにする。</p>
+<h3 id="section-c5ca5f88d4">模型の境界を言葉にする</h3>
+<ul><li>積和形は有限の真理値表を表す論理模型で、アナログ電圧を含まない。</li><li>Boolean簡単化の短さは物理ゲート数・面積・遅延・電力の最小性を保証しない。</li><li>D_estは仮定した段遅延の解析予測で、SPICEや測定の結果ではない。</li><li>don't-care、共有、fan-out、入力slew、寄生を指定しないコスト比較は不完全である。</li><li>本章のrunnerは契約を再生済みだが、合成・SPICE/実測は未実行・未取得である。</li></ul>
+<p>境界を知ることは、式を弱めることではない。式が成立する条件を明示すれば、次により詳しい模型や測定へ進む理由を説明できる。逆に、条件を隠したまま桁の多い数値を出すと、精度ではなく誤解だけが増える。</p>
+<h3 id="section-5ebd79a6a2">章末の自己確認</h3>
+<p>最後に、代表実験を見ずに三つの文を書く。第一文は入力と単位、第二文は内部状態から出力までの一つの変化、第三文は最も近い破綻条件である。三文が書けたら、対応するartifactとrunnerの行を開き、本文の説明と同じ<a class="term" href="index.html#term-trace_id">trace ID</a>・statusになっているか照合する。</p>
+<p>この確認を通過しても、外部toolや実測器を使ったとは限らない。実行可能モデル、解析予測、実測、独立レビューは別の欄で管理する。その区別を保ったまま次章へ進むことが、この章の最後の成果物である。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-31-6">31.補助演習　手を動かす導出帳</h2>
+<p>組合せ論理の合成の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、処理系のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-3-2">例題1　3入力真理値表から積和形</h3>
+<p>固定するcaseは<code>sop_generation</code>、入口は<code>book run 31 1</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>row_order_and_input_names_preserved</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-2-boolean-2">例題2　Boolean簡単化</h3>
+<p>固定するcaseは<code>boolean_simplification</code>、入口は<code>book run 31 2</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>all_rows_equivalent</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-3-f-a-bc-nand-2">例題3　F=A+BCのNANDネットリスト変換</h3>
+<p>固定するcaseは<code>nand_synthesis</code>、入口は<code>book run 31 3</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・<a class="term" href="index.html#term-frame">frame</a>・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>nand_only_and_unique_wires</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-4-2">例題4　ゲート数と深さ</h3>
+<p>固定するcaseは<code>logic_cost</code>、入口は<code>book run 31 4</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>count_depth_fanout_separated</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-5-2">例題5　遅延見積り</h3>
+<p>固定するcaseは<code>first_order_delay</code>、入口は<code>book run 31 5</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>analytic_estimate_not_measurement</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-6-runner-spice-2">例題6　runnerとSPICEの出所</h3>
+<p>固定するcaseは<code>synthesis_provenance</code>、入口は<code>book run 31 6</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>source_kinds_separate</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-7-2">例題7　合成負のテスト</h3>
+<p>固定するcaseは<code>negative_synthesis_cases</code>、入口は<code>book run 31 7</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>malformed_tables_fail_closed</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-8-hdl-2">例題8　HDLへの橋</h3>
+<p>固定するcaseは<code>hdl_bridge</code>、入口は<code>book run 31 8</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>netlist_contract_ready_for_hdl</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・不変条件</th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・trace ID</td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>積和形</code>は、出力1の行からAND項を作りORで結ぶ式の形。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>積和形</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Boolean簡単化</code>は、恒等式や共有で論理同値を保ったまま式を変形すること。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Boolean簡単化</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>論理合成器</code>は、真理値表や式からNANDネットリストを生成するrunner。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>論理合成器</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>論理コスト</code>は、ゲート数、深さ、fan-out、遅延などの比較指標。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>論理コスト</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>一次遅延見積り</code>は、仮定した一段遅延を最長経路へ足す解析模型。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>一次遅延見積り</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、host/<a class="term" href="index.html#term-target">target</a>、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（共有wire）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（ゲート数）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（遅延見積り）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（fan-out）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（runner）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（負のテスト）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（出所）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（次章への橋）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-3">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-31-9">31.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>組合せ論理の合成</strong>の中心問題「望む入出力表から、少ないゲートで同じ機能を持つ回路をどう作るか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-2">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>sop_generation</code></p>
+<p>このcaseは <code>expression_with_row_provenance_and_all_rows_equivalent</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>inputs</code> = <code>["A", "B", "C"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>rows</code> = <code>[{"input": [0, 0, 0], "output": 0}, {"input": [0, 0, 1], "output": 0}, {"input": [0, 1, 0], "output": 0}, {"input": [0, 1, 1], "output": 1}, {"input": [1, 0, 0], "output": 1}, {"i…</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>dont_care</code> = <code>[]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>canonical_sop</code> = <code>not(A) B C + A not(B) not(C) + A not(B) C + A B not(C) + A B C</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>simplified_expression</code> = <code>A + B C</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース2: <code>first_order_delay</code></p>
+<p>このcaseは <code>{"D_est_s": 2e-11, "gate_count": 3, "logic_depth": 2, "max_fanout": 2}</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>gate_delay_s</code> = <code>1e-11</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>path_ids</code> = <code>["path_A_to_Y", "path_B_to_Y", "path_C_to_Y"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>paths</code> = <code>[{"gate_ids": ["nA", "Y"], "id": "path_A_to_Y", "input": "A", "stages": 2}, {"gate_ids": ["nBC", "Y"], "id": "path_B_to_Y", "input": "B", "stages": 2}, {"gate_ids": ["nBC", "Y"], …</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>fanout</code> = <code>2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>C_load_F</code> = <code>2e-15</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>delay_model</code> = <code>max_path_sum</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース3: <code>concrete_nand_netlist</code></p>
+<p>このcaseは <code>nand_only_netlist_with_gate_count_3_depth_2</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>top_inputs</code> = <code>["A", "B", "C"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>top_output</code> = <code>Y</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>wires</code> = <code>["A", "B", "C", "nA", "nBC", "Y"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>nodes</code> = <code>[{"gate": "NAND", "id": "nA", "inputs": ["A", "A"], "output": "nA"}, {"gate": "NAND", "id": "nBC", "inputs": ["B", "C"], "output": "nBC"}, {"gate": "NAND", "id": "Y", "inputs": ["…</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>dependency_order</code> = <code>["nA", "nBC", "Y"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_internal_values</code> = <code>[{"inputs": {"A": 0, "B": 0, "C": 0}, "wires": {"Y": 0, "nA": 1, "nBC": 1}}, {"inputs": {"A": 0, "B": 1, "C": 1}, "wires": {"Y": 1, "nA": 1, "nBC": 0}}, {"inputs": {"A": 1, "B": 0…</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=runner_output</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース4: <code>constant_functions</code></p>
+<p>このcaseは <code>empty_path_is_valid_only_with_explicit_constant_contract</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>constant_zero</code> = <code>{"expected_output": 0, "representation": "explicit_constant_zero", "sop_terms": []}</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>constant_one</code> = <code>{"expected_output": 1, "representation": "explicit_constant_one", "sop_terms": []}</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-2">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-31-sop</code></p>
+<p>到達する結果は「真理値表から積和形・和積形へ変換」で、参照する式IDまたは検証項目は <code>["truth_table_sop"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-31-equivalence</code></p>
+<p>到達する結果は「簡単化前後の全入力行同値性」で、参照する式IDまたは検証項目は <code>["boolean_equivalence"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-31-nand-netlist</code></p>
+<p>到達する結果は「式からNAND-onlyネットリストへ変換」で、参照する式IDまたは検証項目は <code>["nand_netlist_synthesis"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-31-delay-estimate</code></p>
+<p>到達する結果は「最長経路の一次遅延見積り」で、参照する式IDまたは検証項目は <code>["logic_depth_delay_estimate"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-31-concrete-example</code></p>
+<p>到達する結果は「3入力F(A,B,C)=A+BCのSOP簡単化とNAND化」で、参照する式IDまたは検証項目は <code>["truth_table_sop", "boolean_equivalence", "nand_netlist_synthesis", "logic_depth_delay_estimate"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-2">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 3入力真理値表から積和形</p>
+<p>入口は <code>book run 31 1</code>、caseは <code>sop_generation</code>、required artifactは <code>["chapter-31-truth-table-output", "chapter-31-expression-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>row_order_and_input_names_preserved</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験2: Boolean簡単化</p>
+<p>入口は <code>book run 31 2</code>、caseは <code>boolean_simplification</code>、required artifactは <code>["chapter-31-expression-output", "chapter-31-equivalence-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>all_rows_equivalent</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験3: F=A+BCのNANDネットリスト変換</p>
+<p>入口は <code>book run 31 3</code>、caseは <code>nand_synthesis</code>、required artifactは <code>["chapter-31-nand-output", "chapter-31-equivalence-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>nand_only_and_unique_wires</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験4: ゲート数と深さ</p>
+<p>入口は <code>book run 31 4</code>、caseは <code>logic_cost</code>、required artifactは <code>["chapter-31-cost-output", "chapter-31-nand-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>count_depth_fanout_separated</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験5: 遅延見積り</p>
+<p>入口は <code>book run 31 5</code>、caseは <code>first_order_delay</code>、required artifactは <code>["chapter-31-cost-output", "chapter-31-provenance-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>analytic_estimate_not_measurement</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験6: runnerとSPICEの出所</p>
+<p>入口は <code>book run 31 6</code>、caseは <code>synthesis_provenance</code>、required artifactは <code>["chapter-31-equivalence-output", "chapter-31-provenance-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>source_kinds_separate</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験7: 合成負のテスト</p>
+<p>入口は <code>book run 31 7</code>、caseは <code>negative_synthesis_cases</code>、required artifactは <code>["chapter-31-diagnostic-output", "chapter-31-provenance-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>malformed_tables_fail_closed</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験8: HDLへの橋</p>
+<p>入口は <code>book run 31 8</code>、caseは <code>hdl_bridge</code>、required artifactは <code>["chapter-31-nand-output", "chapter-31-cost-output", "chapter-31-provenance-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>netlist_contract_ready_for_hdl</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>#### 反例1: <code>row_arity_mismatch</code></p>
+<p>入力は <code>行ごとに入力数が異なる</code>、期待する診断は <code>row_arity_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例2: <code>output_value_invalid</code></p>
+<p>入力は <code>出力に0/1以外を入れる</code>、期待する診断は <code>output_value_invalid</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例3: <code>dont_care_unspecified</code></p>
+<p>入力は <code>don't-careを使うが意味を未指定</code>、期待する診断は <code>dont_care_unspecified</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例4: <code>simplification_not_equivalent</code></p>
+<p>入力は <code>簡単化後に一行だけ値が違う</code>、期待する診断は <code>simplification_not_equivalent</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例5: <code>wire_double_driver</code></p>
+<p>入力は <code>二つのNANDが同じwireを出力</code>、期待する診断は <code>wire_double_driver</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例6: <code>path_empty</code></p>
+<p>入力は <code>遅延見積りの経路が空</code>、期待する診断は <code>path_empty</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例7: <code>duplicate_row</code></p>
+<p>入力は <code>同じ入力組合せの行を重複させる</code>、期待する診断は <code>duplicate_row</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例8: <code>missing_row</code></p>
+<p>入力は <code>3入力8行のうち一行を欠落させる</code>、期待する診断は <code>missing_row</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例9: <code>contradictory_output</code></p>
+<p>入力は <code>同じ入力組合せに0と1を併記する</code>、期待する診断は <code>contradictory_output</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例10: <code>source_kind_mismatch</code></p>
+<p>入力は <code>analyticまたはrunnerをmeasurementと表示</code>、期待する診断は <code>source_kind_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例11: <code>cost_unit_missing</code></p>
+<p>入力は <code>遅延の単位を省略</code>、期待する診断は <code>cost_unit_missing</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<h3 id="section-5-4">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>積和形は有限の真理値表を表す論理模型で、アナログ電圧を含まない。</li><li>Boolean簡単化の短さは物理ゲート数・面積・遅延・電力の最小性を保証しない。</li><li>D_estは仮定した段遅延の解析予測で、SPICEや測定の結果ではない。</li><li>don't-care、共有、fan-out、入力slew、寄生を指定しないコスト比較は不完全である。</li><li>本章のrunnerは契約を再生済みだが、合成・SPICE/実測は未実行・未取得である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第</li><li>2</li><li>9</li><li>章</li><li>の</li><li>B</li><li>o</li><li>o</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第</li><li>3</li><li>2</li><li>章</li><li>へ</li><li>、</li><li>真</li><li>理</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-2">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A31-01</code> — truth_to_expression。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A31-02</code> — simplification。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A31-03</code> — nand_netlist。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A31-04</code> — cost_delay。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A31-05</code> — <a class="term" href="index.html#term-provenance">provenance</a>。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A31-06</code> — negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-3">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 3入力真理値表から積和形</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 1</code></td></tr><tr><td>case</td><td><code>sop_generation</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>row_order_and_input_names_preserved</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表2: Boolean簡単化</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 2</code></td></tr><tr><td>case</td><td><code>boolean_simplification</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>all_rows_equivalent</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表3: F=A+BCのNANDネットリスト変換</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 3</code></td></tr><tr><td>case</td><td><code>nand_synthesis</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>nand_only_and_unique_wires</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表4: ゲート数と深さ</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 4</code></td></tr><tr><td>case</td><td><code>logic_cost</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>count_depth_fanout_separated</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表5: 遅延見積り</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 5</code></td></tr><tr><td>case</td><td><code>first_order_delay</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>analytic_estimate_not_measurement</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表6: runnerとSPICEの出所</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 6</code></td></tr><tr><td>case</td><td><code>synthesis_provenance</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>source_kinds_separate</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表7: 合成負のテスト</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 7</code></td></tr><tr><td>case</td><td><code>negative_synthesis_cases</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>malformed_tables_fail_closed</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表8: HDLへの橋</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 31 8</code></td></tr><tr><td>case</td><td><code>hdl_bridge</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>netlist_contract_ready_for_hdl</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

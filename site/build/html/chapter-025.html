@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第25章　論理電圧、雑音余裕、信号再生</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-025-exercises.html">この章の演習</a>　<a href="chapter-025-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-25-1"><code>book run 25 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-01.json">成果物</a></li><li><a href="runner.html#run-25-2"><code>book run 25 2</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-02.json">成果物</a></li><li><a href="runner.html#run-25-3"><code>book run 25 3</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-03.json">成果物</a></li><li><a href="runner.html#run-25-4"><code>book run 25 4</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-04.json">成果物</a></li><li><a href="runner.html#run-25-5"><code>book run 25 5</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-05.json">成果物</a></li><li><a href="runner.html#run-25-6"><code>book run 25 6</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-06.json">成果物</a></li><li><a href="runner.html#run-25-7"><code>book run 25 7</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-07.json">成果物</a></li><li><a href="runner.html#run-25-8"><code>book run 25 8</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-025/experiment-08.json">成果物</a></li></ul></section><h1 id="section-25">第25章　論理<a class="term" href="index.html#term-voltage">電圧</a>、雑音余裕、信号再生</h1>
+<h2 id="section-1">1　この章の問い</h2>
+<p>現実の電圧は連続量なのに、回路を0と1だけで設計できるのはなぜか。第24章では、nMOSのpull-downとpMOSのpull-upから<a class="term" href="index.html#term-cmos_inverter">CMOSインバータ</a>を作り、入力電圧<code>V_in</code>と出力電圧<code>V_out</code>の関係を電圧伝達特性（VTC: voltage transfer characteristic）として求めた。</p>
+<p>しかし、実際の入力には電源の揺れ、隣の配線との結合、熱雑音、測定器の影響が重なる。入力が少し揺れただけで、0が1になったり、1が0になったりするなら、インバータを何段つないでも計算は続かない。</p>
+<p>本章では、連続な電圧を論理値として安全に受け渡すための範囲を定める。最初に、入力と出力の保証範囲を区別する。次に、その差として<a class="term" href="index.html#term-noise_margin">雑音余裕</a>（noise margin）を定義する。最後に、VTCの傾き、複数段の信号再生、過渡応答、解析・SPICE・測定の出所を分けて扱う。</p>
+<p>本章の数値は、実測結果ではなく、指定した模型から得る解析予測または予定入力である。実測と呼べる結果は、実際の装置、条件、取得時刻、校正、波形ファイルがそろい、artifactに記録されたものだけである。</p>
+<h2 id="section-2-0-1">2　0と1は電圧の範囲である</h2>
+<h3 id="section-2-1">2.1　出力側の保証</h3>
+<p>「高い出力」を一つの電圧値で表すと、負荷や温度が少し変わったときに契約が壊れる。そこで、出力側は保証範囲で表す。</p>
+<ul><li><code>V_OH</code> は、出力を高い論理値として保証できる最小の電圧である。</li><li><code>V_OL</code> は、出力を低い論理値として保証できる最大の電圧である。</li></ul>
+<p>したがって、出力の契約は次のように書く。</p>
+<p>高い出力：V_out &gt;= <a class="term" href="index.html#term-concept_25_v_oh_46be3089">V_OH</a> 低い出力：V_out &lt;= V_OL</p>
+<p>ここで<code>V_OH</code>は「実際の高出力がいつもこの値になる」という意味ではない。保証したい条件の下で、それより下がらないという下限である。同様に<code>V_OL</code>は、実際の出力の代表値ではなく、それより上がらないという上限である。</p>
+<p>理想的なCMOSインバータの静的な極限では、高出力は<code>V_DD</code>に近く、低出力は0 Vに近い。しかし、漏れ<a class="term" href="index.html#term-current">電流</a>、負荷電流、有限の抵抗、電源の変動、測定器の入力抵抗などで、出力は電源の端まで届かないことがある。そのため、<code>V_OH=V_DD</code>、<code>V_OL=0</code>を一般の実装の事実として扱わない。第24章のrail付近の解析結果も、選んだ理想模型の予測として保存する。</p>
+<h3 id="section-2-2">2.2　入力側の保証</h3>
+<p>入力側にも、受け取ってよい範囲がある。</p>
+<ul><li><code>V_IL</code> は、入力を低い論理値として受け取ることを保証できる最大の電圧である。</li><li><code>V_IH</code> は、入力を高い論理値として受け取ることを保証できる最小の電圧である。</li></ul>
+<p>入力の契約は次のようになる。</p>
+<p>V_in &lt;= <a class="term" href="index.html#term-concept_25_v_il_bec13f3c">V_IL</a> なら、低い入力として扱う V_in &gt;= V_IH なら、高い入力として扱う</p>
+<p><code>V_IL</code>より高く、<code>V_IH</code>より低い入力は、ここでは保証しない。そこを「0.5だから0と1の中間」と決めてはいけない。後段のゲートがその領域をどう扱うかは、回路方式、素子、温度、時間、判定条件に依存する。</p>
+<p>正常な論理契約では、少なくとも</p>
+<p><a class="term" href="index.html#term-concept_25_v_ol_417fb1d6">V_OL</a> &lt; V_OH V_IL &lt; V_IH</p>
+<p>が必要である。さらに、前段が出す低出力を後段が低入力として受け取れ、前段の高出力を後段が高入力として受け取れることが必要になる。この「出力の範囲」と「入力の範囲」を別の記号で持つことが、後の雑音余裕につながる。</p>
+<h3 id="section-2-3">2.3　保証値、典型値、観測値</h3>
+<p>データシートや実験記録にある電圧には、同じ<code>V_OH</code>という文字を使っても異なる意味があり得る。</p>
+<ul><li>保証最小値・最大値は、指定条件の全範囲で守る契約の境界である。</li><li>典型値は、ある模型、代表条件、代表個体に対する見積もりである。</li><li>観測値は、特定の装置と手順で一回または複数回得た値である。</li></ul>
+<p>本章のartifactでは、<code>value_kind</code>を<code>guaranteed_limit</code>、<code>analytic_prediction</code>、<code>spice_prediction</code>、<code>measurement</code>に分ける。解析式から得た<code>V_OH</code>を、測定器で読んだ値と同じ欄へ入れない。保証範囲が資料から得られない場合も、空欄を0や典型値で埋めない。</p>
+<h2 id="section-3">3　雑音余裕を差で表す</h2>
+<h3 id="section-3-1">3.1　<a class="term" href="index.html#term-low_noise_margin">低い信号の雑音余裕</a></h3>
+<p>前段が低い信号を出したとき、前段の出力は理想的な0 Vではなく、最悪の場合<code>V_OL</code>まで上がるとする。そこへ正の雑音<code>n_L</code>が加わったとしても、後段の入力が<code>V_IL</code>以下なら、低い入力として受け取れる。</p>
+<p>V_OL + n_L &lt;= V_IL</p>
+<p>したがって、低い信号の雑音余裕（<a class="term" href="index.html#term-low_noise_margin">low noise margin</a>）は</p>
+<p><a class="term" href="index.html#term-concept_25_nml_d4656cd7">NML</a> = V_IL - V_OL                                      (25.1)</p>
+<p>である。<code>NML</code>が正なら、前段の最悪低出力から、後段が低入力と認める境界までの幅がある。単位はVである。</p>
+<h3 id="section-3-2">3.2　<a class="term" href="index.html#term-high_noise_margin">高い信号の雑音余裕</a></h3>
+<p>前段が高い信号を出したとき、前段の出力は理想的な<code>V_DD</code>ではなく、最悪の場合<code>V_OH</code>まで下がるとする。そこへ負の雑音が加わっても、高い入力として受け取るには</p>
+<p>V_OH - n_H &gt;= <a class="term" href="index.html#term-concept_25_v_ih_6194670d">V_IH</a></p>
+<p>が必要である。高い信号の雑音余裕（<a class="term" href="index.html#term-high_noise_margin">high noise margin</a>）は</p>
+<p><a class="term" href="index.html#term-concept_25_nmh_bac2a23c">NMH</a> = V_OH - V_IH                                      (25.2)</p>
+<p>となる。<code>NMH</code>もVであり、<code>V_OH</code>と<code>V_IH</code>の単純な差である。</p>
+<h3 id="section-3-3">3.3　符号と最悪方向</h3>
+<p>低い信号に対する危険な雑音は、電圧を上へ押す雑音である。高い信号に対する危険な雑音は、電圧を下へ押す雑音である。このため、低い信号と高い信号で式の引き算の向きが逆になる。</p>
+<p>雑音の符号を最初から一つに固定し、「常に<code>V_OH-V_IH</code>を使う」とすると、低い信号の故障を見落とす。負の振幅を含む波形を扱うときは、雑音の符号付き値、または正方向・負方向の最大偏位を別の欄へ保存する。</p>
+<p><code>NML</code>または<code>NMH</code>が負なら、その条件では前段の保証出力範囲が後段の保証入力範囲へ入っていない。これは「少し余裕が少ない」という意味ではなく、同じ契約のままでは段間接続を保証できないという失敗である。</p>
+<h3 id="section-3-4">3.4　同じインバータの入力と出力を混同しない</h3>
+<p>一つのCMOSインバータについて、出力の低い範囲<code>V_OL</code>と、入力の低い範囲<code>V_IL</code>は別の端子の条件である。同様に、<code>V_OH</code>と<code>V_IH</code>も別である。</p>
+<p>インバータを二段つなぐ場合、1段目の<code>V_OL</code>が2段目の<code>V_IL</code>へ、1段目の<code>V_OH</code>が2段目の<code>V_IH</code>へ接続される。そこで、雑音余裕は「同じゲートの二つの出力値の差」ではなく、送り手の出力保証と受け手の入力保証の差として読む。</p>
+<h2 id="section-4-vtc">4　VTCの傾きから入力範囲を読む</h2>
+<h3 id="section-4-1">4.1　傾きと反転利得</h3>
+<p>第24章のVTCは、入力電圧を横軸、出力電圧を縦軸にした曲線である。CMOSインバータでは、通常、入力が上がると出力が下がるので、曲線の傾きは負になる。</p>
+<p>局所的な反転利得の大きさを</p>
+<p>A_v = -dV_out/dV_in                              (25.3)</p>
+<p>と定義する。<code>A_v</code>は、入力の小さな変化に対して出力がどれだけ反対向きに変化するかの大きさであり、V/Vなので無次元である。符号付きの傾きそのものは<code>dV_out/dV_in</code>であり、<code>A_v</code>と同じものではない。</p>
+<p>rail付近では出力がほぼ一定になるため、<code>A_v</code>は小さい。切替の中心では、入力の小さな変化が出力の大きな変化へ写るため、<code>A_v</code>は大きくなりやすい。この急な部分が、入力の曖昧な電圧を、出力の低い範囲または高い範囲へ押し出す働きに関係する。</p>
+<h3 id="section-4-2-v-il-v-ih">4.2　<code>V_IL</code>と<code>V_IH</code>を決める規約</h3>
+<p>VTCから<code>V_IL</code>と<code>V_IH</code>を読み取る方法の一つは、曲線の傾きが<code>-1</code>になる二つの点を選ぶことである。すなわち、単調減少するVTCについて</p>
+<p>dV_out/dV_in = -1                              (25.4)</p>
+<p>を満たす低入力側の点を<code>V_IL</code>、高入力側の点を<code>V_IH</code>とする。この規約なら、勾配が小さい低入力・高入力の保証領域と、勾配が大きく変化する遷移領域を同じ図から得られる。</p>
+<p>ただし、<code>-1</code>は物理法則が一意に決めた境界ではない。標準、データシート、設計者の判定規約が異なる場合は、その規約を<code>threshold_rule</code>として記録する。測定曲線に雑音がある場合、点ごとの微分は不安定なので、平滑化方法、差分幅、フィルタの帯域を出所とともに保存する。</p>
+<p>第24章の対称平方則caseに<code>threshold_rule: slope_minus_one</code>を適用した解析予測では、低入力側が<code>V_IL=0.45 V</code>、その点の出力を<code>V_OH=0.95 V</code>、高入力側が<code>V_IH=0.55 V</code>、その点の出力を<code>V_OL=0.05 V</code>と記録する。この4値は保証値ではなく、指定した模型・負荷なし・温度一定の<code>analytic_prediction</code>であり、実装のデータシート値や測定値へ置き換えない。</p>
+<p><code>V_M</code>は第24章で扱った<a class="term" href="index.html#term-switching_point">切替点</a>であり、通常はVTCの中央付近にある。一方、<code>V_IL</code>と<code>V_IH</code>は判定境界である。対称なインバータでも、<code>V_M</code>と<code>V_IL</code>、<code>V_IH</code>を同一視しない。</p>
+<h3 id="section-4-3">4.3　電流釣り合いから微分する</h3>
+<p>第24章の静的VTCは、出力ノードの電流釣り合い</p>
+<p>F(V_in, V_out) = I_n(V_in,V_out) - I_p(V_in,V_out) = 0       (25.5)</p>
+<p>で定義した。<code>F</code>が滑らかで、<code>∂F/∂V_out</code>が0でない領域では、両辺を<code>V_in</code>で微分して</p>
+<p>dV_out/dV_in = - (∂F/∂V_in) / (∂F/∂V_out)                 (25.6)</p>
+<p>を得る。この式は、VTCの傾きを曲線の見た目ではなく、nMOSとpMOSの電流模型から計算する道を与える。</p>
+<p>領域の境界では、<a class="term" href="index.html#term-linear_region">線形領域</a>の式と飽和領域の式を切り替えるため、微分が連続とは限らない。<code>∂F/∂V_out=0</code>に近い場所では、式(25.6)をそのまま割り算してはいけない。根の収束、rail制約、領域ラベル、残差を同時に保存する。</p>
+<h3 id="section-4-4">4.4　解析微分と数値微分</h3>
+<p>解析微分は、選んだ平方則や補正模型を記号的に微分する。数値微分は、二つの入力を少しずつ変えて</p>
+<p>dV_out/dV_in ≈ [V_out(V_in+h) - V_out(V_in-h)]/(2h)        (25.7)</p>
+<p>と評価する。<code>h</code>には電圧の単位があり、値を小さくしすぎると丸め誤差、大きくしすぎると曲線の非線形性が混ざる。解析微分と数値微分は同じ欄へ上書きせず、<code>derivative_kind</code>と<code>step_V</code>を保存する。</p>
+<p>SPICEの波形から傾きを求めるときも、それはSPICE模型の出力である。シリコン素子の測定曲線から求めた傾きなら、測定器の帯域、入力源、負荷、温度、プローブ、校正の情報が必要になる。曲線の形が似ているだけで、三つの出所を同じと呼ばない。</p>
+<h2 id="section-5">5　<a class="term" href="index.html#term-signal_regeneration">信号再生</a>は「何でも元通り」ではない</h2>
+<h3 id="section-5-1">5.1　一段の静的な写像</h3>
+<p>インバータは、連続電圧を次のように写す。</p>
+<p>V_in &lt;= V_IL なら、V_out &gt;= V_OH を目標にする V_in &gt;= V_IH なら、V_out &lt;= V_OL を目標にする</p>
+<p>低い入力が高い出力へ、高い入力が低い出力へ写るので、インバータは論理を反転する。このとき出力は入力の小さな揺れをそのままコピーせず、VTCのrail側へ近づく。これを信号再生（<a class="term" href="index.html#term-signal_regeneration">signal regeneration</a>）と呼ぶ。</p>
+<p>信号再生の核心は、アナログ波形のすべての値を元に戻すことではない。後段が読む論理契約を満たす範囲へ、出力を押し戻すことである。入力が<code>V_IL</code>と<code>V_IH</code>の間にある場合、出力の論理値は保証しない。入力がrailの近くにある場合でも、負荷と時間が指定されていなければ、静的な範囲だけから過渡の成功を断定できない。</p>
+<h3 id="section-5-2">5.2　段を重ねたときの雑音</h3>
+<p>二段のインバータを考える。1段目の低出力が<code>V_OL</code>以下で、そこへ加わった正の雑音が<code>NML</code>以下なら、2段目は低入力として扱える。その結果、2段目は高出力側へ向かう。同じように、高い信号の負の雑音が<code>NMH</code>以下なら、2段目は高入力として扱い、低出力側へ向かう。</p>
+<p>この意味で、雑音が毎段無条件に小さくなるという言い方は正しくない。段間の契約を満たす雑音に限り、次段で論理範囲が再び確立される。入力が未定義領域へ入る、パルスが短すぎる、電源や温度が条件外になる、負荷で<code>V_OH</code>や<code>V_OL</code>が変わる、といった場合は再生を保証しない。</p>
+<h3 id="section-5-3">5.3　振幅利得と論理再生の違い</h3>
+<p>VTCの傾きが大きい切替領域では、微小信号の振幅が大きく変わる。これは局所的な電圧利得の話である。一方、論理再生は、出力が<code>V_OH</code>以上または<code>V_OL</code>以下という保証範囲へ入る話である。</p>
+<p>小信号利得が大きくても、電源電圧が不足していれば十分な<code>V_OH</code>を作れない。静的な雑音余裕が正でも、出力容量が大きくてサンプリング時刻までに到達しなければ、受け手の入力範囲を満たせない。この二つを、図とartifactの別列にする。</p>
+<h2 id="section-6">6　静的な雑音余裕と過渡応答をつなぐ</h2>
+<h3 id="section-6-1-kcl">6.1　出力容量を含む<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a></h3>
+<p>第24章の静的VTCでは、出力容量の電流を0とした。過渡では、出力容量<code>C_load</code>を含め、出力ノードの収支を</p>
+<p>C_load dV_out/dt = I_p(V_in,V_out) - I_n(V_in,V_out)       (25.8)</p>
+<p>と書く。<code>I_p</code>が出力へ流れ込む向き、<code>I_n</code>が出力からGNDへ流れる向きである。この式から、同じ静的VTCでも、入力の変化速度、<a class="term" href="index.html#term-load_capacitance">負荷容量</a>、駆動電流で出力の到着時刻が変わる。</p>
+<h3 id="section-6-2">6.2　雑音パルスの幅</h3>
+<p>静的な雑音余裕は、入力がある電圧範囲に留まるという条件を含む。短い雑音パルスでは、出力容量が電圧をすぐ変えないため、入力のピーク値だけでは結果を決められないことがある。反対に、長いパルスでは、出力が遷移領域を越えて次段の判定を変える可能性がある。</p>
+<p>そこで、過渡artifactには、雑音の振幅だけでなく、パルス幅、入力の立上り・立下り、<code>C_load</code>、電源、初期出力、判定時刻を保存する。<code>NML</code>と<code>NMH</code>が正であることは、これらの過渡条件を省略してよいという意味ではない。</p>
+<h3 id="section-6-3">6.3　遅延・短絡電流・<a class="term" href="index.html#term-static_power">静的電力</a></h3>
+<p>出力容量の充放電には時間がかかる。入力が遷移している途中では、nMOSとpMOSが同時に導通し、電源からGNDへ一時的な短絡電流が流れることもある。第24章から受け取った静的電力と<code>C_load</code>の負荷<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>は、雑音パルスの過渡電力と別のartifactへ保存する。</p>
+<p>本章の目的は、遅延式を一つの定数で決めることではない。静的な電圧範囲、VTCの傾き、過渡電圧、電力の出所を分離し、どの条件が失敗したかを追えるようにすることである。</p>
+<h2 id="section-7-spice">7　解析、SPICE、測定を同じ曲線にしない</h2>
+<h3 id="section-7-1">7.1　解析模型</h3>
+<p>解析経路では、第24章の長チャネル平方則、しきい値、<code>beta_n</code>、<code>beta_p</code>、<code>V_DD</code>、body境界を入力とし、静的KCLからVTCを求める。そこから、選んだ傾き規約で<code>V_IL</code>、<code>V_IH</code>を取り、式(25.1)と式(25.2)で雑音余裕を計算する。</p>
+<p>この経路の<code>source_kind</code>は<code>analytic_prediction</code>、<code>status</code>は<code>planned</code>、<code>measured</code>は<code>false</code>である。解析模型は、選んだ仮定の範囲での予測であり、製造ばらつきや実際の配線を含む測定結果ではない。</p>
+<h3 id="section-7-2-spice">7.2　SPICE模型</h3>
+<p>SPICE経路では、netlist、model card、tool version、温度、電源、入力掃引、負荷、収束条件を保存する。SPICEのVTCや過渡波形は、指定した素子模型を数値的に解いた結果である。</p>
+<p>SPICEが解析曲線と一致しなくても、ただちにSPICEが間違いとは言えない。平方則が省いた短チャネル、漏れ、<a class="term" href="index.html#term-parasitic_capacitance">寄生容量</a>、接触、ボディ効果をSPICE模型が含んでいる可能性がある。比較では、入力条件と<code>source_kind</code>を並べ、残差、領域、rail、収束状態を記録する。</p>
+<h3 id="section-7-3">7.3　測定</h3>
+<p>測定経路では、実際のインバータまたは基準board、電源、入力源、負荷、温度、プローブ、オシロスコープ、帯域、サンプリング、校正、取得ファイルを保存する。測定曲線に対しては、<code>source_kind: measurement</code>、<code>measured: true</code>を設定できるが、これらの証拠がない状態でラベルだけを先に付けてはいけない。</p>
+<p>現在の本章の測定artifactは未取得である。したがって、解析とSPICEの予定出力を「測定で確認した」とは書かない。測定を後で追加する場合も、解析・SPICEの既存出力を上書きせず、同じ入力caseに対する別の観測として保存する。</p>
+<h3 id="section-7-4">7.4　比較の表</h3>
+<table><thead><tr><th>経路</th><th>主な入力</th><th>出力の意味</th><th>本章での状態</th></tr></thead>
+<tbody><tr><td>解析</td><td>第24章の電流式、<code>V_DD</code>、しきい値、<code>beta</code></td><td>仮定した模型のVTCと雑音余裕</td><td><code>analytic_prediction</code>、未測定</td></tr><tr><td>SPICE</td><td>netlist、model card、版、温度、負荷</td><td>SPICE素子模型の数値解</td><td><code>spice_prediction</code>、未測定</td></tr><tr><td>測定</td><td>装置、試料、電源、入力、負荷、校正</td><td>その条件で取得した波形</td><td>未取得、測定値なし</td></tr></tbody>
+</table>
+<p>「同じ形の曲線」は「同じ証拠」ではない。三つの経路を一枚の図へ重ねるときも、凡例、値の状態、条件、出所を消さない。</p>
+<h2 id="section-8">8　予定する実験と負のテスト</h2>
+<p>実験の共通入口は<code>book run 25 &lt;experiment-id&gt;</code>とする。入力由来の解析・契約再生は固定runnerで実行済みで、対応するartifactに実行状態を保存している。一方、SPICEと実測は未実行で、measurementは<code>not_run</code>のままである。以下の設計欄で<code>planned</code>と書く場合は、SPICEまたは測定の追加経路を指す。どの経路でも<code>measured: false</code>と<code>accessed_for_this_draft: false</code>を維持する。</p>
+<h3 id="section-8-1-vtc">8.1　VTCから入力境界を抽出する</h3>
+<p><code>book run 25 1</code>では、<code>V_in</code>を掃引し、第24章のVTCと残差から<code>dV_out/dV_in=-1</code>の候補を抽出する。低入力側と高入力側を取り違えず、<code>V_IL &lt; V_IH</code>の判定、出力rail、領域ラベル、差分幅または解析微分の種類を保存する。曲線が単調でない、候補が一つしかない、<code>∂F/∂V_out</code>が0に近い場合は、境界を捏造せず<code>unsupported_threshold_rule</code>として失敗にする。</p>
+<h3 id="section-8-2">8.2　雑音余裕を計算する</h3>
+<p><code>book run 25 2</code>では、同じinput caseの<code>V_OH</code>、<code>V_OL</code>、<code>V_IH</code>、<code>V_IL</code>から式(25.1)と式(25.2)を計算する。低出力の上限と高出力の下限を逆に使わない。<code>V_IL - V_OL</code>と<code>V_OH - V_IH</code>の単位をVとして保存し、どちらかが負なら、段間契約が成立しないと診断する。</p>
+<h3 id="section-8-3">8.3　雑音を加えた一段の過渡</h3>
+<p><code>book run 25 3</code>では、入力へ指定した正負の雑音波形を加え、式(25.8)の過渡応答を解く。基準入力0 Vでは初期出力1 V・正雑音、基準入力1 Vでは初期出力0 V・負雑音を一つのcaseとして対応させ、雑音を0〜<code>V_DD</code>へclampする。<code>C_load</code>、初期出力、雑音振幅、雑音パルス幅、入力の立上り・立下り、判定時刻を入力caseへ保存する。観測時刻は開始前、短いパルス中、長いパルス中、長いパルス終了後、十分に時間が経った後を含める。静的NML/NMHだけで成功と判定せず、各時刻の出力が<code>V_OH</code>または<code>V_OL</code>のどちらへ入ったかを別に記録する。</p>
+<h3 id="section-8-4">8.4　複数段の信号再生</h3>
+<p><code>book run 25 4</code>では、同じインバータを1段、2段、3段、または指定した段数で接続する。入力1 Vから始めるため、初期出力は段ごとに<code>[0, 1, 0]</code>となり、実際の段数の分だけ先頭から使う。各段の入力・出力、雑音、判定、<code>V_OH</code>、<code>V_OL</code>、<code>V_IH</code>、<code>V_IL</code>を、雑音開始前・パルス中・終了後・整定後の時刻に残す。段数を増やすと必ず改善するとは仮定せず、負荷と遅延による失敗を含める。段数0、負の容量、出力範囲外の初期値は、正常な再生結果と混ぜずに拒否する。</p>
+<h3 id="section-8-5-vtc">8.5　<a class="term" href="index.html#term-vtc_slope">VTC勾配</a>の解析と数値比較</h3>
+<p><code>book run 25 5</code>では、式(25.6)の暗黙微分、式(25.7)の中心差分、VTCからの傾き抽出を比較する。各結果へ<code>derivative_kind</code>、<code>step_V</code>、領域、根の残差を付ける。境界をまたぐ差分、<code>h=0</code>、入力gridの順序逆転、収束していない根は、傾きとして採用しない。</p>
+<h3 id="section-8-6-spice">8.6　解析とSPICEの出所比較</h3>
+<p><code>book run 25 6</code>では、解析模型とSPICE模型のVTC、<code>V_IL</code>、<code>V_IH</code>、NML、NMHを同じ入力条件で比較する。解析値をSPICE値へ置き換えず、<code>source_kind</code>、tool version、model card、温度、負荷、残差を別の列に保存する。SPICEが実行できない場合も、未実測の予定状態を「一致」と記録しない。</p>
+<p>DCのVTCは定数入力を用いるnetlist、過渡は<code>PULSE</code>入力・<code>CLOAD</code>・<code>.tran</code>を持つ別netlistで実行する。対称な理想模型では<code>V_in=0.5 V</code>が区間根またはsolver依存の特異点になるため、状態を記録したうえで、通常のVTC数値比較からは除外する。過渡波形には<code>time_s</code>、<code>V_out_t</code>、<code>transient_status</code>を付け、静的な一つの<code>V_out</code>で代用しない。</p>
+<h3 id="section-8-7-artifact">8.7　測定artifactの受け入れ境界</h3>
+<p><code>book run 25 7</code>は、測定データを受け取る場合のschemaを検査する。試料またはboard、電源、入力源、負荷、温度、プローブ、帯域、サンプリング、校正、取得ファイル、取得時刻がそろわない入力は<code>measurement</code>として受け付けない。現在は測定データがないため、この実験はschemaと失敗分類を予定するだけである。</p>
+<h3 id="section-8-8">8.8　負のテスト</h3>
+<p><code>book run 25 8</code>では、次の失敗を一つずつ生成し、正常な予測と区別する。</p>
+<ul><li><code>V_OH</code>と<code>V_OL</code>を逆にし、出力保証の向きを壊す。</li><li><code>V_IH</code>と<code>V_IL</code>を逆にし、入力の未定義領域を負にする。</li><li>NMLとNMHの式を交換し、雑音の危険方向を誤る。</li><li>VTCの傾きの符号を落とし、<code>+1</code>を境界として採用する。</li><li><code>V_IL &gt;= V_IH</code>、<code>V_OL &gt;= V_OH</code>、またはrail外の値を入力する。</li><li>VTCの中央の<code>V_M</code>を<code>V_IL</code>または<code>V_IH</code>と同一視する。</li><li><code>C_load</code>や雑音振幅の単位をpF、mVからF、Vへ変換せずに計算する。</li><li>静的なNML/NMHだけで、過渡の短いパルスが確実に再生されたと主張する。</li><li>SPICEの予定出力を<code>measurement</code>、未取得の測定欄を<code>measured: true</code>と表示する。</li><li>解析・SPICE・測定の曲線を、条件や<code>source_kind</code>なしで一つの値へ平均する。</li></ul>
+<p>すべての負のテストは、エラーコード、入力、出所、失敗した契約、復旧可能な案内を保存する。エラーを黙って0 Vや典型値へ置き換えない。</p>
+<h2 id="section-9">9　モデルの限界</h2>
+<p>本章の定義と模型には、次の境界がある。</p>
+<ul><li><code>V_OH</code>、<code>V_OL</code>、<code>V_IH</code>、<code>V_IL</code>は、電源、温度、負荷、入力波形、素子ばらつき、判定規約を伴う保証境界であり、普遍的な物理定数ではない。</li><li><code>NML=V_IL-V_OL</code>、<code>NMH=V_OH-V_IH</code>は、指定した静的または選択した動作条件での電圧差である。周波数、パルス幅、測定器帯域を含む動的雑音を完全には表さない。</li><li><code>dV_out/dV_in=-1</code>は、<code>V_IL</code>と<code>V_IH</code>をVTCから読むための一つの規約であり、すべての規格や測定方法を置き換えない。</li><li>式(25.6)は、静的KCLの根が滑らかで、分母が0でない範囲に限る。領域境界、複数根、ヒステリシス、非単調VTCは別に診断する。</li><li>式(25.8)は、<code>C_load</code>を一つの集中容量とする過渡模型である。配線の分布定数、誘導性、電源インピーダンス、測定器の帯域、短絡電流の詳細を自動的には含まない。</li><li>信号再生は、任意のアナログ波形を入力波形と完全に同じ形へ戻すことではない。論理契約を満たす範囲へ写すことを指す。</li><li>解析結果とSPICE結果は、シリコン試料の測定結果ではない。測定データがない本章では、<code>measurement</code>を主張しない。</li><li><code>V_OH=V_DD</code>、<code>V_OL=0</code>、雑音が各段で必ず消える、という理想化を一般の回路の保証としない。</li></ul>
+<h2 id="section-10">10　次章への橋渡し</h2>
+<p>本章から次へ渡すのは、0と1を電圧の点ではなく範囲で表す見方である。第26章では、CMOSインバータのpull-upとpull-downの考え方を複数入力へ広げ、NAND、NOR、<a class="term" href="index.html#term-transmission_gate">伝送ゲート</a>を作る。</p>
+<p>引き渡す状態は、<code>VTC</code>、<code>V_M</code>、<code>V_DD</code>、<code>V_tn</code>、<code>V_tp</code>、<code>beta_n</code>、<code>beta_p</code>、<code>C_load</code>に加え、<code>V_IL</code>、<code>V_IH</code>、<code>V_OL</code>、<code>V_OH</code>、<code>NML</code>、<code>NMH</code>、VTCの傾き規約、過渡条件、<code>model</code>、<code>source_kind</code>、<code>status</code>、<code>measured</code>、残差である。</p>
+<p>第26章は、NANDやNORの静的な論理関数が正しいことだけでなく、入力の組合せごとに出力保証範囲と雑音余裕が変わることを引き継ぐ。どの入力を高くしたか、どのnetworkが出力を引き上げまたは引き下げたか、どの負荷と模型を使ったかを、インバータの場合と同じ形式で記録する。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-25-2">25.補助演習　手を動かす導出帳</h2>
+<p>論理電圧、雑音余裕、信号再生の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-vtc-v-il-v-ih">例題1　VTCからV_IL/V_IHを抽出</h3>
+<p>固定するcaseは<code>si_symmetric_cmos_inverter</code>、入口は<code>book run 25 1</code>である。入力は<code>{"V_DD_V": 1.0, "V_in_grid_V": [0.0, 0.1, 0.2, 0.3, 0.4, 0.45, 0.5, 0.55, 0.6, 0.7, 0.8, 0.9, 1.0], "V_tn_V": 0.3, "abs_V_tp_V": 0.3, "beta_n_A_per_V2": 0.001, "beta_p_A_per_V2": 0.001, "derivative_kind": "implicit_and_central_difference", "derivative_step_V": 0.0001, "output_domain_V": [0.0, 1.0], "root_policy": "branchwise_with_multivalued_interval", "threshold_rule": "slope_minus_one"}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"V_IH_V": 0.55, "V_IL_V": 0.45, "V_OH_V": 0.95, "V_OL_V": 0.05, "slope_at_VIH": -1.0, "slope_at_VIL": -1.0, "threshold_rule": "slope_minus_one", "value_kind": "analytic_prediction"}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-2-nml-nmh">例題2　NML/NMHの計算</h3>
+<p>固定するcaseは<code>si_symmetric_cmos_inverter</code>、入口は<code>book run 25 2</code>である。入力は<code>{"V_IH_V": 0.55, "V_IL_V": 0.45, "V_OH_V": 0.95, "V_OL_V": 0.05, "high_noise_direction": "negative", "low_noise_direction": "positive"}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"NMH_V": 0.4, "NML_V": 0.4, "positive_margin": true}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-3-5">例題3　雑音を加えた一段の過渡</h3>
+<p>固定するcaseは<code>si_symmetric_cmos_inverter</code>、入口は<code>book run 25 3</code>である。入力は<code>{"C_load_F": 1e-15, "V_DD_V": 1.0, "V_OH_V": 0.95, "V_OL_V": 0.05, "case_pairing": [{"clamp_V": [0.0, 1.0], "initial_output_V": 1.0, "input_baseline_V": 0.0, "noise_polarity": "positive"}, {"clamp_V": [0.0, 1.0], "initial_output_V": 0.0, "input_baseline_V": 1.0, "noise_polarity": "negative"}], "initial_output_V": [0.0, 1.0], "input_baseline_V": [0.0, 1.0], "input_fall_time_s": 1e-10, "input_rise_time_s": 1e-10, "noise_amplitude_V": [0.1, 0.4], "noise_polarity": ["positive", "negative"], "noise_pulse_width_s": [1e-12, 1e-09], "noise_start_s": 1e-09, "noise_waveform": "rectangular", "sample_time_labels": ["before_noise", "during_short_pulse", "during_long_pulse", "after_long_pulse", "settled"], "sample_time_s": [9e-10, 1.0005e-09, 1.5e-09, 2.001e-09, 3e-09], "time_step_s": 1e-12}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・<a class="term" href="index.html#term-frame">frame</a>・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>static_margin_separate_from_sample_time_result</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-4">例題4　複数段の信号再生</h3>
+<p>固定するcaseは<code>si_symmetric_cmos_inverter</code>、入口は<code>book run 25 4</code>である。入力は<code>{"cascade_count": [1, 2, 3], "initial_output_V_by_stage": [0.0, 1.0, 0.0], "initial_output_rule": "truncate_to_cascade_count_from_alternating_inverter_of_baseline", "injected_input_transition": "high_to_low", "injected_stage": 1, "input_baseline_V": 1.0, "input_fall_time_s": 1e-10, "input_rise_time_s": 1e-10, "noise_amplitude_V": 0.1, "noise_polarity": ["positive", "negative"], "noise_pulse_width_s": 1e-09, "noise_start_s": 1e-09, "per_stage_C_load_F": 1e-15, "per_stage_threshold_rule": "slope_minus_one", "sample_time_labels": ["before_noise", "during_noise", "after_noise", "settled"], "sample_time_s": [9e-10, 1.5e-09, 2.1e-09, 3e-09], "time_step_s": 1e-12}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>per_stage_logic_and_transient_status_recorded</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、<a class="term" href="index.html#term-trace_id">trace ID</a>以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-5-vtc">例題5　VTC勾配の解析・数値比較</h3>
+<p>固定するcaseは<code>si_symmetric_cmos_inverter</code>、入口は<code>book run 25 5</code>である。入力は<code>{"V_DD_V": 1.0, "V_in_grid_V": [0.4, 0.45, 0.55, 0.6], "V_tn_V": 0.3, "abs_V_tp_V": 0.3, "beta_n_A_per_V2": 0.001, "beta_p_A_per_V2": 0.001, "derivative_kind": ["implicit", "central_difference", "vtc_curve"], "derivative_step_V": 0.0001, "excluded_points": [{"V_in_V": 0.5, "status": "undefined_at_multivalued_point_and_excluded"}], "root_policy": "branchwise_with_multivalued_interval", "root_tolerance": 1e-10}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>derivative_kind_step_and_residual_retained</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻や<a class="term" href="index.html#term-host">host</a>名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-6-spice">例題6　解析とSPICEの出所比較</h3>
+<p>固定するcaseは<code>si_symmetric_cmos_inverter</code>、入口は<code>book run 25 6</code>である。入力は<code>{"C_load_F": 1e-15, "V_DD_V": 1.0, "V_in_sweep_V": [0.0, 0.2, 0.45, 0.55, 0.8, 1.0], "V_tn_V": 0.3, "V_tp_V": -0.3, "beta_n_A_per_V2": 0.001, "beta_p_A_per_V2": 0.001, "body_bias_V": 0.0, "temperature_K": 300.0, "transient_input": "PULSE(0,1,0,1e-10,1e-10,1e-9,2e-9)", "transient_time_s": 5e-09, "transient_time_step_s": 1e-12}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"Vin_0_5_status": "singular_or_solver_dependent_excluded", "analytic_and_spice_are_unmeasured_separate_outputs": true, "transient_netlist_has_CLOAD_and_tran": true}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-7-artifact-schema">例題7　測定<a class="term" href="index.html#term-concept_4_artifact_schema_ab9728a9">artifact schema</a></h3>
+<p>固定するcaseは<code>measurement_schema_missing_fields</code>、入口は<code>book run 25 7</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>incomplete_measurement_input_rejected</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-8-5">例題8　論理電圧・雑音・出所の負のテスト</h3>
+<p>固定するcaseは<code>negative_logic_contract_cases</code>、入口は<code>book run 25 8</code>である。入力は<code>{"negative_test_ids": ["invalid_output_order", "invalid_input_order", "nonpositive_noise_margin", "noise_margin_polarity_error", "vtc_slope_sign_error", "unsupported_threshold_rule", "rail_out_of_range", "transient_parameter_unit_mismatch", "invalid_cascade_count", "static_to_transient_overclaim", "source_kind_mismatch"]}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>each_negative_case_fails_closed</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・trace ID</td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>V_OH</code>は、出力高の保証最小電圧。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>V_OH</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>V_OL</code>は、出力低の保証最大電圧。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>V_OL</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>V_IH</code>は、入力高として保証できる最小電圧。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>V_IH</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>V_IL</code>は、入力低として保証できる最大電圧。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>V_IL</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>NML</code>は、低い信号の雑音余裕。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>NML</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>NMH</code>は、高い信号の雑音余裕。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>NMH</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>雑音余裕</code>は、前段の出力保証範囲と後段の入力保証範囲の差。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>雑音余裕</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>VTC勾配</code>は、入力変化に対する出力変化の局所的な傾き。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>VTC勾配</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>信号再生</code>は、入力を論理保証範囲へ写し直す働き。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>信号再生</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>入力未定義領域</code>は、V_ILとV_IHの間で論理値を保証しない範囲。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>入力未定義領域</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-6">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、host/<a class="term" href="index.html#term-target">target</a>、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-2">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（VTCの傾き）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（-1境界の規約）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（暗黙微分）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（静的再生と過渡再生）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（多段接続）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（出所の違い）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（負のテストを診断する）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（次章への引き渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-4">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-25-3">25.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>論理電圧、雑音余裕、信号再生</strong>の中心問題「現実の電圧が連続量なのに、回路を0と1だけで設計できるのはなぜか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>si_symmetric_cmos_inverter</code></p>
+<p>このcaseは <code>VTC_boundary_extraction_and_margin_calculation</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>V_DD_V</code> = <code>1.0</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_tn_V</code> = <code>0.3</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>abs_V_tp_V</code> = <code>0.3</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>beta_n_A_per_V2</code> = <code>0.001</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>beta_p_A_per_V2</code> = <code>0.001</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>body_bias_V</code> = <code>0.0</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>C_load_F</code> = <code>1e-15</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>threshold_rule</code> = <code>slope_minus_one</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース2: <code>noise_pulse_schema</code></p>
+<p>このcaseは <code>transient_inputs_require_explicit_units_and_sample_time</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>noise_amplitude_unit</code> = <code>V</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>pulse_width_unit</code> = <code>s</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>sample_time_unit</code> = <code>s</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>cascade_count</code> = <code>positive_integer</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=numeric_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース3: <code>noise_margin_numeric_example</code></p>
+<p>このcaseは <code>{"NMH_V": 0.15, "NML_V": 0.15}</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>V_OL_V</code> = <code>0.2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_IL_V</code> = <code>0.35</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_IH_V</code> = <code>0.65</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_OH_V</code> = <code>0.8</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-4">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-25-logic-contract</code></p>
+<p>到達する結果は「入力・出力の保証範囲と未定義領域」で、参照する式IDまたは検証項目は <code>["logic_input_output_guarantee"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-25-noise-margin</code></p>
+<p>到達する結果は「低信号と高信号の雑音余裕」で、参照する式IDまたは検証項目は <code>["noise_margin_low", "noise_margin_high"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-25-vtc-slope</code></p>
+<p>到達する結果は「VTC勾配、反転利得、暗黙微分、-1境界」で、参照する式IDまたは検証項目は <code>["vtc_inverter_gain", "vtc_implicit_slope", "vtc_minus_one_boundary"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-25-transient-regeneration</code></p>
+<p>到達する結果は「C_loadを含む過渡出力と多段信号再生」で、参照する式IDまたは検証項目は <code>["cmos_transient_output_kcl", "cascade_logic_contract"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-7">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: VTCからV_IL/V_IHを抽出</p>
+<p>入口は <code>book run 25 1</code>、caseは <code>si_symmetric_cmos_inverter</code>、required artifactは <code>["chapter-25-vtc-boundaries", "chapter-25-slope-output", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"V_IH_V": 0.55, "V_IL_V": 0.45, "V_OH_V": 0.95, "V_OL_V": 0.05, "slope_at_VIH": -1.0, "slope_at_VIL": -1.0, "threshold_rule": "slope_minus_one", "value_kind": "analytic_predictio…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験2: NML/NMHの計算</p>
+<p>入口は <code>book run 25 2</code>、caseは <code>si_symmetric_cmos_inverter</code>、required artifactは <code>["chapter-25-vtc-boundaries", "chapter-25-noise-margin-output", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"NMH_V": 0.4, "NML_V": 0.4, "positive_margin": true}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験3: 雑音を加えた一段の過渡</p>
+<p>入口は <code>book run 25 3</code>、caseは <code>si_symmetric_cmos_inverter</code>、required artifactは <code>["chapter-25-transient-output", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>static_margin_separate_from_sample_time_result</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験4: 複数段の信号再生</p>
+<p>入口は <code>book run 25 4</code>、caseは <code>si_symmetric_cmos_inverter</code>、required artifactは <code>["chapter-25-cascade-output", "chapter-25-transient-output", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>per_stage_logic_and_transient_status_recorded</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験5: VTC勾配の解析・数値比較</p>
+<p>入口は <code>book run 25 5</code>、caseは <code>si_symmetric_cmos_inverter</code>、required artifactは <code>["chapter-25-slope-output", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>derivative_kind_step_and_residual_retained</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験6: 解析とSPICEの出所比較</p>
+<p>入口は <code>book run 25 6</code>、caseは <code>si_symmetric_cmos_inverter</code>、required artifactは <code>["chapter-25-vtc-boundaries", "chapter-25-transient-output", "chapter-25-spice-output", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Vin_0_5_status": "singular_or_solver_dependent_excluded", "analytic_and_spice_are_unmeasured_separate_outputs": true, "transient_netlist_has_CLOAD_and_tran": true}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験7: 測定artifact schema</p>
+<p>入口は <code>book run 25 7</code>、caseは <code>measurement_schema_missing_fields</code>、required artifactは <code>["chapter-25-measurement-schema", "chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>incomplete_measurement_input_rejected</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験8: 論理電圧・雑音・出所の負のテスト</p>
+<p>入口は <code>book run 25 8</code>、caseは <code>negative_logic_contract_cases</code>、required artifactは <code>["chapter-25-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>each_negative_case_fails_closed</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>#### 反例1: <code>invalid_output_order</code></p>
+<p>入力は <code>V_OH &lt;= V_OL</code>、期待する診断は <code>invalid_output_order</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例2: <code>invalid_input_order</code></p>
+<p>入力は <code>V_IH &lt;= V_IL</code>、期待する診断は <code>invalid_input_order</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例3: <code>nonpositive_noise_margin</code></p>
+<p>入力は <code>V_IL &lt;= V_OL or V_OH &lt;= V_IH</code>、期待する診断は <code>nonpositive_noise_margin</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例4: <code>noise_margin_polarity_error</code></p>
+<p>入力は <code>NMLとNMHの式を交換</code>、期待する診断は <code>noise_margin_polarity_error</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例5: <code>vtc_slope_sign_error</code></p>
+<p>入力は <code>dV_out/dV_in=+1を境界に採用</code>、期待する診断は <code>vtc_slope_sign_error</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例6: <code>unsupported_threshold_rule</code></p>
+<p>入力は <code>VTCが非単調または-1候補なし</code>、期待する診断は <code>unsupported_threshold_rule</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例7: <code>rail_out_of_range</code></p>
+<p>入力は <code>V_OH&gt;V_DDまたはV_OL&lt;0を保証値として登録</code>、期待する診断は <code>rail_out_of_range</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例8: <code>transient_parameter_unit_mismatch</code></p>
+<p>入力は <code>C_loadやnoiseをpF/mVのままSI計算</code>、期待する診断は <code>transient_parameter_unit_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例9: <code>invalid_cascade_count</code></p>
+<p>入力は <code>cascade_count&lt;=0または負のC_load</code>、期待する診断は <code>invalid_cascade_count</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例10: <code>static_to_transient_overclaim</code></p>
+<p>入力は <code>NML/NMHだけで短いパルスの再生成功を主張</code>、期待する診断は <code>static_to_transient_overclaim</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例11: <code>source_kind_mismatch</code></p>
+<p>入力は <code>未取得SPICEまたは測定をmeasurementと表示</code>、期待する診断は <code>source_kind_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>V_OH/V_OL/V_IH/V_ILは指定条件下の保証境界であり、普遍的な物理定数や常に実現する端子電圧ではない。</li><li>NML/NMHは静的または選択した動作条件の電圧差であり、パルス幅、帯域、判定時刻を自動的には含まない。</li><li>dV_out/dV_in=-1はV_IL/V_IHを読むための一つの規約であり、すべての規格・データシート・測定方法を置き換えない。</li><li>VTCの暗黙微分は滑らかな単一根と非零の偏微分を仮定し、領域境界、複数根、ヒステリシス、非単調曲線では別診断が必要である。</li><li>C_load dV_out/dt=I_p-I_nは集中容量の過渡模型であり、分布配線、誘導性、電源インピーダンス、詳細な短絡電流を含まない。</li><li>信号再生はアナログ波形の完全な複製ではなく、論理保証範囲への写像である。</li><li>解析値とSPICE値は測定値ではない。測定値には試料、装置、条件、校正、取得ファイルが必要である。</li><li><code>V_OH=V_DD</code>、<code>V_OL=0</code>、雑音が各段で必ず消えるという理想化を一般回路の保証として扱わない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第</li><li>2</li><li>4</li><li>章</li><li>の</li><li>V</li><li>T</li><li>C</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第</li><li>2</li><li>6</li><li>章</li><li>へ</li><li>V</li><li>_</li><li>O</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-5">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A25-01</code> — <a class="term" href="index.html#term-voltage">voltage</a>_contract。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A25-02</code> — noise_margin_definitions。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A25-03</code> — vtc_slope_and_threshold_rule。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A25-04</code> — <a class="term" href="index.html#term-signal">signal</a>_regeneration_boundary。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A25-05</code> — analytic_spice_measurement_<a class="term" href="index.html#term-provenance">provenance</a>。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A25-06</code> — negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A25-07</code> — chapter24_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: VTCからV_IL/V_IHを抽出</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 1</code></td></tr><tr><td>case</td><td><code>si_symmetric_cmos_inverter</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"V_IH_V": 0.55, "V_IL_V": 0.45, "V_OH_V": 0.95, "V_OL_V": 0.05, "slope_at_VIH": -1.0, "slope_at_VIL": -1.0, "threshold_rule": "slope_minus_one", "value_kind": "analytic_predictio…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表2: NML/NMHの計算</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 2</code></td></tr><tr><td>case</td><td><code>si_symmetric_cmos_inverter</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"NMH_V": 0.4, "NML_V": 0.4, "positive_margin": true}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表3: 雑音を加えた一段の過渡</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 3</code></td></tr><tr><td>case</td><td><code>si_symmetric_cmos_inverter</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>static_margin_separate_from_sample_time_result</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表4: 複数段の信号再生</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 4</code></td></tr><tr><td>case</td><td><code>si_symmetric_cmos_inverter</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>per_stage_logic_and_transient_status_recorded</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表5: VTC勾配の解析・数値比較</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 5</code></td></tr><tr><td>case</td><td><code>si_symmetric_cmos_inverter</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>derivative_kind_step_and_residual_retained</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表6: 解析とSPICEの出所比較</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 6</code></td></tr><tr><td>case</td><td><code>si_symmetric_cmos_inverter</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Vin_0_5_status": "singular_or_solver_dependent_excluded", "analytic_and_spice_are_unmeasured_separate_outputs": true, "transient_netlist_has_CLOAD_and_tran": true}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表7: 測定artifact schema</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 7</code></td></tr><tr><td>case</td><td><code>measurement_schema_missing_fields</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>incomplete_measurement_input_rejected</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表8: 論理電圧・雑音・出所の負のテスト</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 25 8</code></td></tr><tr><td>case</td><td><code>negative_logic_contract_cases</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>each_negative_case_fails_closed</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-6">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-2">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

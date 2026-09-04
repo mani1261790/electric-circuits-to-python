@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第6章　電位、電圧、エネルギー　演習</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-6">第6章 演習　<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>、電圧、エネルギー</h1>
+<h2 id="section-238dc70441">取り組み方</h2>
+<p>各問では、基準、経路、符号、単位、模型の成立条件を先に書く。計算機を使った場合は、入力値、式、丸め、予測か実行結果かを記録する。完全解答を読んだ後は、必ず「再挑戦」の条件を変えて、自分の説明と計算をやり直す。</p>
+<h2 id="section-e1">E1　仕事と<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>の単位</h2>
+<p>一様<a class="term" href="index.html#term-electric_field">電場</a><code>E=200 N/C</code>の中で、正電荷<code>q=3.0 μC</code>を電場と同じ向きへ<code>d=0.40 m</code>ゆっくり移動させた。電場がした仕事<code>W_field</code>、位置エネルギーの変化<code>ΔU</code>、電位差<code>V(b)-V(a)</code>を求め、三つの単位を示せ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>力は<code>F=qE</code>、電場と移動が同じ向きなら内積は正である。</li><li><code>W_field=qEd</code>、<code>ΔU=-W_field</code>を使う。</li><li>電位差は<code>ΔU/q</code>、または<code>-Ed</code>で計算し、<code>J/C=V</code>を確認する。</li></ol>
+</div></details>
+<h2 id="section-e2">E2　一様電場の積分と経路の向き</h2>
+<p><code>z</code>方向の一様電場<code>E=(0,0,1.5×10^3) V/m</code>を考える。<code>z=0.20 m</code>から<code>z=0.80 m</code>へ進むときの電位差を求めよ。次に同じ二点を逆向きに積分した結果を書き、電場の向きと電位の高低を説明せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>ΔV=-∫E·dℓ</code>で、<code>dℓ=(0,0,dz)</code>とする。</li><li>一様場なので積分は<code>-E_z(z_b-z_a)</code>になる。</li><li>始点と終点を交換すると、電位差の符号だけが反転する。</li></ol>
+</div></details>
+<h2 id="section-e3">E3　点<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>の電位と基準</h2>
+<p>原点に<code>Q=-2.0 nC</code>の点電荷がある。無限遠を<code>0 V</code>としたとき、<code>r=0.25 m</code>の点の電位を求めよ。さらに、基準を一律に<code>+10 V</code>移した場合の新しい二点の電位と、電位差がどうなるか説明せよ。<code>k=8.9875517923×10^9 N m²/C²</code>を使う。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>点電荷の電位は<code>V=kQ/r</code>である。</li><li><code>Q</code>が負なので電位も負になる。</li><li>基準移動はすべての点へ同じ定数を足す操作で、差には残らない。</li></ol>
+</div></details>
+<h2 id="section-e4">E4　電位・電場・位置エネルギーを区別する</h2>
+<p>ある点での電位が<code>V=12 V</code>、電場が<code>E=(0,-300,0) N/C</code>である。その点に<code>q_1=+2.0 μC</code>、<code>q_2=-2.0 μC</code>を置いたとき、各電荷の位置エネルギーと受ける電気力を求める。電位と電場が同じ種類の量でない理由も書け。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>位置エネルギーは<code>U=qV</code>、力は<code>F=qE</code>で別々に計算する。</li><li><code>q</code>の符号は<code>U</code>と<code>F</code>の両方へ残る。</li><li>電位はスカラー、電場はベクトルで、電位の基準依存性も違う。</li></ol>
+</div></details>
+<h2 id="section-e5">E5　<a class="term" href="index.html#term-concept_6_term_0375b56d41_0375b56d">等電位面</a>を読む</h2>
+<p>二次元の電位が<code>V(x,y)=4.0x-3.0y V</code>（<code>x,y</code>は<code>m</code>）で与えられる。(a)電場ベクトル、(b)<code>V=6.0 V</code>の等電位線の式、(c)等電位線に沿って動く電荷の電場による仕事を求めよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>E=-∇V</code>を成分ごとに使う。</li><li>等電位線は<code>4x-3y=6</code>である。</li><li>始点と終点が同じ電位なら、静電場の仕事は0である。</li></ol>
+</div></details>
+<h2 id="section-e6">E6　導体表面の境界条件</h2>
+<p>静電平衡にある理想導体の表面で、外向き法線方向の表面<a class="term" href="index.html#term-charge_density">電荷密度</a>が<code>σ=5.0 nC/m²</code>である。導体内部と表面直外の電場の法線成分を求め、導体全体が等電位になる理由を説明せよ。真空中で<code>ε0=8.8541878188×10^-12 F/m</code>（CODATA 2022）とする。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>静電平衡の理想導体では内部電場が0である。</li><li>境界条件は<code>E_out,n-E_in,n=σ/ε0</code>。</li><li><code>E=-∇V</code>から、内部で電位が空間的に変化しないことを説明する。</li></ol>
+</div></details>
+<h2 id="section-e7">E7　平行板の<a class="term" href="index.html#term-concept_6_term_86ad554dac_86ad554d">静電容量</a>と適用範囲</h2>
+<p>面積<code>A=2.0×10^-2 m²</code>、板間隔<code>d=0.50 mm</code>の平行板を真空で作る。端効果を無視した静電容量を求める。<code>ΔV=10 V</code>を加えたときの極板電荷の大きさも求め、どの条件で式<code>C=ε0A/d</code>が破綻し得るか二つ以上挙げよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>d=0.50 mm</code>を<code>5.0×10^-4 m</code>へ直す。</li><li><code>C=ε0A/d</code>、<code>Q=CΔV</code>を順番に使う。</li><li>有限板の端、非一様な誘電体、漏れ、絶縁破壊、非線形性を模型の境界として考える。</li></ol>
+</div></details>
+<h2 id="section-e8">E8　充電仕事と三つのエネルギー式</h2>
+<p>線形コンデンサ<code>C=4.0 μF</code>を0 Vから<code>V=6.0 V</code>まで充電した。(a)<code>Q</code>、(b)<code>U=∫_0^Q V(q)dq</code>、(c)<code>1/2CV²</code>を求めよ。最後に、<code>QV</code>を使うと二倍になる理由を説明せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>Q=CV</code>、充電途中の<a class="term" href="index.html#term-voltage">電圧</a>は<code>V(q)=q/C</code>である。</li><li>積分は<code>∫_0^Q(q/C)dq=Q²/(2C)</code>。</li><li><code>QV</code>は最終電圧を充電中ずっと使った値で、途中の電圧上昇を無視している。</li></ol>
+</div></details>
+<h2 id="section-e9">E9　電圧計の基準端子と負荷</h2>
+<p>理想電圧源<code>V_s=5.0 V</code>に、出力抵抗<code>R_s=100 kΩ</code>が直列にある。電圧計の入力抵抗が<code>R_in=1.0 MΩ</code>で、入力容量はこの直流計算では無視できるとする。電圧計をつなぐ前後の出力端子電圧を求め、黒リードを出力側、赤リードを基準側へ逆接続した場合の表示符号を答えよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>接続前は開放端子なので、<code>R_s</code>に<a class="term" href="index.html#term-current">電流</a>は流れない。</li><li>接続後は<code>R_s</code>と<code>R_in</code>の分圧になる。</li><li>表示は<code>V_red-V_black</code>で、リードを逆にすると符号が反転する。</li></ol>
+</div></details>
+<h2 id="section-e10">E10　平行板の数値差分を実装する</h2>
+<p>次の関数は、下板<code>z=0</code>の電位<code>V_bottom</code>と上板<code>z=d</code>の電位<code>V_top</code>を直線補間し、内部点の中心差分から<code>E_z</code>を返すつもりである。空欄を埋め、<code>N=10,100,1000</code>で内部電場が解析値へ一致することを検査する。<code>N</code>は区間数とする。</p>
+<pre><code class="language-python">def parallel_plate(N, d, V_bottom, V_top):
+    dz = d / N
+    z = [i * dz for i in range(N + 1)]
+    V = [V_bottom + (V_top - V_bottom) * zi / d for zi in z]
+    Ez = [-(V[i + 1] - V[i - 1]) / (2 * dz)
+          for i in range(1, N)]
+    return z, V, Ez</code></pre>
+<p>解析値と数値値の差、端点を中心差分から除いた理由を記録せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>dz</code>は<code>m</code>、電位は<code>V</code>なので差分の単位は<code>V/m</code>になる。</li><li>解析値は<code>-(V_top-V_bottom)/d</code>である。</li><li>上の関数にはすでに必要な式が入っている。値を表示し、最大絶対誤差を計算する検査を追加する。</li></ol>
+</div></details>
+<h2 id="section-e11">E11　符号反転の故障を診断する</h2>
+<p>平行板の設定で、<code>V_bottom=0 V</code>、<code>V_top=5 V</code>、<code>d=1 mm</code>なのに、プログラムが<code>E_z=+5000 V/m</code>、<code>Q_top=-4.43×10^-10 C</code>と出した。理想模型の予測と比べ、可能性の高い故障を二つ以上挙げ、各故障を切り分ける負のテストを設計せよ。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>E=-dV/dz</code>で、上へ行くほど電位が増えると電場は下向きになる。</li><li>上板の外向き法線と、板間電場の向きを混同していないか確認する。</li><li><code>V_top</code>と<code>V_bottom</code>の入れ替え、法線反転、<code>Q=εA E_n</code>の符号を個別にテストする。</li></ol>
+</div></details>
+<h2 id="section-e12-artifact">E12　エネルギー計算のartifactを設計する</h2>
+<p>平行板実験で、(a)<code>1/2CV²</code>、(b)<code>∫_0^Q V(q)dq</code>、(c)<code>∫u_E d^3r</code>を比較するためのCSVまたはJSONの最小項目を設計せよ。入力、単位、式、模型、予測・実行状態、誤差、版を含めること。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li><code>A,d,ε,V_bottom,V_top,N</code>を入力欄に置く。</li><li>各経路の値と単位を別列にし、どの値を基準に誤差を計算したか書く。</li><li>domain adapter未導入、予測のみ、実行済み、失敗を状態として区別する。</li></ol>
+</div></details>
+<h2 id="section-e13">E13　電圧から電流へ橋をかける</h2>
+<p>「電池の5 Vが導線の中を流れて電球を動かす」という説明を、電位差、電場、電荷の移動、電流の言葉で書き直せ。第7章へ渡すため、まだ導出していない量を二つ明記し、集中定数近似が成立する条件も一つ書け。</p>
+<details class="hint"><summary>段階ヒント</summary><div class="hint-body">
+<ol><li>5 Vは二端子間の単位電荷あたりのエネルギー差である。</li><li>電場が導体中の電荷へ力を及ぼし、電荷の流れを電流として数える。</li><li><code>I</code>や<code>J</code>の局所的な保存は次章の対象であり、寸法と時間変化を指定して回路近似を使う。</li></ol>
+</div></details></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第21章　MOSキャパシタ</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-021-exercises.html">この章の演習</a>　<a href="chapter-021-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-21-1"><code>book run 21 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-01.json">成果物</a></li><li><a href="runner.html#run-21-2"><code>book run 21 2</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-02.json">成果物</a></li><li><a href="runner.html#run-21-3"><code>book run 21 3</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-03.json">成果物</a></li><li><a href="runner.html#run-21-4"><code>book run 21 4</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-04.json">成果物</a></li><li><a href="runner.html#run-21-5"><code>book run 21 5</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-05.json">成果物</a></li><li><a href="runner.html#run-21-6"><code>book run 21 6</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-06.json">成果物</a></li><li><a href="runner.html#run-21-7"><code>book run 21 7</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-07.json">成果物</a></li><li><a href="runner.html#run-21-8"><code>book run 21 8</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-021/experiment-08.json">成果物</a></li></ul></section><h1 id="section-21-mos">第21章　<a class="term" href="index.html#term-mos_capacitor">MOSキャパシタ</a></h1>
+<h2 id="section-1">1　この章の問い</h2>
+<p>絶縁膜越しの<a class="term" href="index.html#term-voltage">電圧</a>だけで、半導体表面をp型からn型相当に変えられるのはなぜか。本章では、第20章のPoisson方程式と空乏層を、金属–酸化膜–半導体（MOS: metal–oxide–semiconductor）構造の境界値問題へ広げる。</p>
+<p>対象はp型基板の理想MOSキャパシタである。ゲートを正にすると、p型基板の<a class="term" href="index.html#term-hole">正孔</a>が表面から遠ざかり、負のアクセプタイオンが残る。さらに正にすると、熱平衡の少数電子が表面へ集まり、反転層を作る。ゲート電圧は半導体へ直接流れ込むのではなく、酸化膜の電場と半導体の空間電荷を介して表面電位を決める。</p>
+<h2 id="section-2">2　構造と符号規約</h2>
+<h3 id="section-2-1">2.1　三つの領域</h3>
+<p>金属ゲート、厚さ<code>t_ox</code>の絶縁膜、p型<a class="term" href="index.html#term-semiconductor">半導体</a>を積層する。酸化膜には理想的には自由キャリアがなく、電束密度<code>D_ox=epsilon_ox E_ox</code>を通じて両面の電荷を結ぶ。半導体側には可動正孔・電子、イオン化アクセプタ、界面電荷があり、総表面電荷を<code>Q_s</code>と書く。</p>
+<p><code>x</code>はゲートから半導体内部へ向けて正、半導体バルクの<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>を0とする。表面電位を<code>psi_s=phi(surface)-phi(bulk)</code>と定義する。この章のp型基板では、正のゲート電圧に対応する空乏・反転で<code>psi_s&gt;0</code>、半導体の表面電荷は負になる。</p>
+<h3 id="section-2-2">2.2　<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>と電圧の関係</h3>
+<p><a class="term" href="index.html#term-oxide_capacitance">酸化膜容量</a>の単位面積値は</p>
+<p><code>C_ox = epsilon_ox/t_ox</code>　　　　　　　　　　　　　　(21.1)</p>
+<p>である。ゲート電荷<code>Q_G</code>と半導体電荷<code>Q_s</code>は、漏れがない理想構造なら<code>Q_G+Q_s+Q_ox=0</code>（<code>Q_ox</code>は酸化膜・界面に固定された電荷）を満たす。金属と半導体の仕事関数差を<code>phi_ms</code>とすれば、<a class="term" href="index.html#term-flatband_voltage">平坦帯電圧</a>は</p>
+<p><code>V_FB = phi_ms - Q_ox/C_ox</code>　　　　　　　　　　　　　(21.2)</p>
+<p>である。ゲート電圧は</p>
+<p><code>V_G = V_FB + psi_s - Q_s/C_ox</code>　　　　　　　　　　　(21.3)</p>
+<p>と書く。p型基板の空乏・反転では<code>Q_s&lt;0</code>なので、容量電圧降下の項は正に寄与する。式(21.3)を使うときは、<code>Q_s</code>を符号付きで保存し、絶対値を先に入れて符号を失わない。</p>
+<h2 id="section-3">3　蓄積、空乏、反転</h2>
+<h3 id="section-3-1">3.1　表面キャリア</h3>
+<p>非<a class="term" href="index.html#term-degeneracy">縮退</a>・熱平衡で、バルクの正孔濃度を<code>p_0≈N_A</code>、真性濃度を<code>n_i</code>とする。表面電位に対するBoltzmann近似は</p>
+<p><code>p_s = p_0 exp(-psi_s/V_T)</code>、<code>n_s = (n_i^2/p_0) exp(psi_s/V_T)</code>、<code>V_T=k_B T/q</code>　(21.4)</p>
+<p>である。<code>psi_s&lt;0</code>なら正孔が増える蓄積、<code>0&lt;psi_s&lt;2phi_F</code>なら正孔が減って<a class="term" href="index.html#term-acceptor">アクセプタ</a>電荷が残る空乏、<code>psi_s≈2phi_F</code>なら電子がバルク正孔濃度に匹敵する強反転の境目である。ここで</p>
+<p><code>phi_F=V_T ln(N_A/n_i)</code>　　　　　　　　　　　　　　(21.5)</p>
+<p>はp型基板のFermi電位の大きさである。縮退した基板ではBoltzmann近似をFermi–Dirac積分へ置き換える。</p>
+<h3 id="section-3-2">3.2　空乏近似</h3>
+<p><a class="term" href="index.html#term-depletion_region">空乏領域</a>で可動キャリアを無視し、負のアクセプタだけを残すと、半導体の空乏幅と電荷は</p>
+<p><code>W_d = sqrt(2 epsilon_s psi_s/(q N_A))</code>、</p>
+<p><code>Q_dep = -q N_A W_d = -sqrt(2 epsilon_s q N_A psi_s)</code>　(21.6)</p>
+<p>となる。<code>epsilon_s</code>は半導体誘電率である。空乏近似は<code>psi_s&gt;=0</code>、一様な<code>N_A</code>、一次元という範囲で使い、蓄積を同じ平方根式へ外挿しない。</p>
+<h3 id="section-3-3">3.3　反転としきい値</h3>
+<p>強反転の簡単な境目を<code>psi_s=2phi_F</code>と定義する。このときの最大空乏幅と空乏電荷を<code>W_{d,max}</code>、<code>Q_{dep,max}</code>とし、弱い反転電荷を無視する基準しきい値は</p>
+<p><code>V_T,th = V_FB + 2 phi_F + |Q_{dep,max}|/C_ox</code>　　　　(21.7)</p>
+<p>である。記号<code>V_T</code>（熱電圧）と<code>V_T,th</code>（しきい値電圧）を混同しない。実際の<a class="term" href="index.html#term-mosfet">MOSFET</a>では、界面準位、短チャネル、基板バイアス、量子閉じ込め、移動度低下がしきい値を変える。</p>
+<h3 id="section-3-4-case">3.4　代表case</h3>
+<p>300 KのSi p型基板に、<code>N_A=1.0e22 m^-3</code>、<code>n_i=1.0e16 m^-3</code>、<code>epsilon_s=11.7 epsilon_0</code>、酸化膜に<code>epsilon_ox=3.9 epsilon_0</code>、<code>t_ox=1.0e-8 m</code>を置く。ゲート仕事関数<code>phi_m=4.70 eV</code>、電子親和力<code>chi=4.05 eV</code>、<code>E_g=1.12 eV</code>、<code>Q_ox=0</code>とした理想予測は次の通りである。</p>
+<table><thead><tr><th>量</th><th>未丸め予測</th></tr></thead>
+<tbody><tr><td><code>V_T=k_BT/q</code></td><td><code>0.025851999786435535 V</code></td></tr><tr><td><code>phi_F</code></td><td><code>0.35715857599399026 V</code></td></tr><tr><td><code>C_ox</code></td><td><code>0.0034531332493319996 F/m^2</code></td></tr><tr><td><code>V_FB</code></td><td><code>-0.2671585759939896 V</code></td></tr><tr><td><code>W_{d,max}</code></td><td><code>3.039293464048913e-7 m</code></td></tr><tr><td>`</td><td>Q_{dep,max}</td><td>`</td><td><code>0.0004869484971968087 C/m^2</code></td></tr><tr><td><code>V_T,th</code></td><td><code>0.5881749985302475 V</code></td></tr></tbody>
+</table>
+<p>仕事関数差を再現するには、まずp型のFermi電位を<code>phi_F=V_T ln(N_A/n_i)</code>と置く。<a class="term" href="index.html#term-nondegenerate_approximation">非縮退近似</a>では半導体仕事関数を<code>phi_s=chi+E_g/2+phi_F</code>（eV）と書き、<code>phi_ms=phi_m-phi_s</code>とする。このcaseでは<code>phi_s=4.967158575993990 eV</code>、<code>phi_ms=-0.2671585759939896 eV</code>である。eVを電圧差へ使うときは<code>1 eV=q×1 V</code>の対応を一度だけ適用するので、数値上は<code>-0.2671585759939896 V</code>となる。これで<code>V_FB=phi_ms-Q_ox/C_ox</code>を入力から再現できる。</p>
+<p><code>V_G=0</code>では<code>psi_s</code>を式(21.3)の非線形方程式から解く必要がある。表のしきい値は、<code>psi_s=2phi_F</code>を代入した予測であり、runnerや測定値ではない。</p>
+<h2 id="section-4-poisson">4　Poisson方程式と<a class="term" href="index.html#term-surface_potential">表面電位</a></h2>
+<p>半導体内部では</p>
+<p><code>d^2 phi/dx^2 = -rho_s(x)/epsilon_s</code>　　　　　　　　　(21.8)</p>
+<p>である。完全なBoltzmann–Poisson solverでは、局所の<code>n(x),p(x),N_A^-(x)</code>から<code>rho_s=q(p-n-N_A^-)</code>を更新し、表面電位または<a class="term" href="index.html#term-concept_5_term_b12f6ea0fb_b12f6ea0">電束</a>を境界にする。空乏近似solverでは(21.6)を使い、<code>W_d</code>の外で電場0という境界を置く。二つのsolverの出力を同一artifactの「実測値」として混ぜず、<code>model=boltzmann_poisson</code>または<code>model=depletion_approximation</code>を保存する。</p>
+<p>ゲート電圧から表面電位を求める場合は、(21.3)へ<code>Q_s(psi_s)</code>を入れて根を解く。<a class="term" href="index.html#term-accumulation_depletion_inversion">蓄積・空乏・反転</a>を一つの非縮退Boltzmann模型で連続に扱う場合は、<code>u=psi_s/V_T</code>として</p>
+<p><code>Q_s=-sign(psi_s)sqrt(2 epsilon_s q N_A V_T [exp(-u)+u-1+(n_i^2/N_A^2)(exp(u)-u-1)])</code>　(21.10)</p>
+<p>を使う。これは半導体の可動正孔・電子と固定アクセプタを積分した単位面積電荷であり、<code>psi_s=0</code>では連続極限として<code>Q_s=0</code>、<code>psi_s&gt;0</code>では負になる。<code>u</code>が小さいときに<code>exp(±u)-1</code>を直接引き算すると桁落ちするため、実装では<code>exp(-u)+u-1=expm1(-u)+u</code>、<code>exp(u)-u-1=expm1(u)-u</code>を使い、さらに小さな<code>|u|</code>では<code>u^2/2</code>から始まる級数で評価する。丸めだけで平方根内が微小な負値になった場合はその大きさを診断へ保存して0へ丸め、物理的に負の値は失敗にする。空乏近似の<code>Q_dep</code>はこの式の空乏側を簡略化したものと位置づける。</p>
+<p>低周波C–Vでは、表面電荷の微分</p>
+<p><code>C_s = -dQ_s/dpsi_s</code>、<code>C_MOS=(1/C_ox+1/C_s)^(-1)</code>　　　　　　　　　(21.11)</p>
+<p>を使う。解析微分が実装されていない段階は、<code>psi_s</code>を<code>Delta_psi</code>だけずらして<code>C_s≈-[Q_s(psi_s+Delta_psi)-Q_s(psi_s-Delta_psi)]/(2 Delta_psi)</code>とする。根を<code>V_G(psi_s)</code>から求めた場合は、さらに<code>C_MOS=dQ_G/dV_G</code>を<a class="term" href="index.html#term-finite_difference">有限差分</a>で照合する。どの領域の近似を使ったか、根の探索範囲、収束残差、負の密度や無限値の検査をartifactへ残す。</p>
+<h2 id="section-5">5　容量–電圧特性</h2>
+<p>MOSの小信号容量は、ゲート酸化膜容量と半導体側の微分容量の直列結合で決まる。空乏領域だけなら</p>
+<p><code>C_dep = epsilon_s/W_d</code>、<code>1/C_MOS = 1/C_ox+1/C_dep</code>　　　　　　　　(21.9)</p>
+<p>ここで<code>C_dep</code>と<code>C_ox</code>は単位面積容量、<code>C_MOS</code>は単位面積容量として定義する（素子全体の容量は全てに面積を掛ける）。低周波測定では反転キャリアが交流へ応答し、高周波では応答できず容量が小さく見える。したがって周波数、交流振幅、掃引方向、直列抵抗を保存しないC–V曲線は、単独で表面電位の証拠にならない。</p>
+<h2 id="section-6">6　数値実験の設計</h2>
+<p>予定commandは<code>book run 21 1</code>から<code>book run 21 8</code>である。実験1は<code>C_ox</code>と<code>V_FB</code>、実験2は<code>W_d,Q_dep</code>、実験3は表面電位の根、実験4は蓄積・空乏・反転の走査、実験5はしきい値、実験6はC–V、実験7はPoissonの格子収束、実験8は単位・境界・モデル選択の失敗テストを扱う。固定runnerの入力由来契約モデルは実行済みだが、図・出典の意味確認、外部domain tool、実測は未完了で、すべて<code>measured=false</code>かつ測定欄は<code>not_run</code>である。</p>
+<h2 id="section-7">7　単位と限界</h2>
+<p><code>epsilon</code>はF/m、<code>t_ox,W_d</code>はm、<code>C_ox,C_dep,C_MOS</code>はF/m²、<code>Q_s,Q_ox</code>はC/m²、濃度はm⁻³、<code>psi_s,V_G,V_FB,V_T,th</code>はVで統一する。仕事関数をeVで保存する場合、電圧差へ変換する際に<code>1 eV=q×1 V</code>の対応を明示する。eVをJとして指数へ入れるときは<code>E_J=E_eV×q_C</code>を一度だけ適用する。</p>
+<p>理想MOSは、界面準位、酸化膜<a class="term" href="index.html#term-trap">トラップ</a>、固定電荷の分布、量子反転層、縮退統計、リーク、周波数分散、短チャネル効果を含まない。しきい値は「反転層が突然できる電圧」ではなく、選んだ基準（ここでは<code>psi_s=2phi_F</code>）を数値化したものだと理解する。</p>
+<h2 id="section-8">8　次章への橋渡し</h2>
+<p>第21章はゲート電圧から表面電荷を制御した。第22章では、同じ反転層をソースとドレインの間へ延ばし、横方向の<a class="term" href="index.html#term-electric_field">電場</a>と境界条件を加えてMOSFETの電流を求める。渡す入力は<code>C_ox,V_FB,psi_s,Q_s,W_d,N_A,T</code>、周波数とモデルラベルであり、次章ではソース・ドレイン接触、チャネル長、移動度、ドレイン電圧を追加する。</p>
+<p>&lt;!-- expanded-study-notes --&gt;</p>
+<h2 id="section-21">21.補助線　式を状態へ戻す</h2>
+<p>MOSキャパシタで最初に固定する問いは、絶縁膜越しの電圧だけで、半導体表面をp型からn型相当に変えられるのはなぜか。 この問いへ答えるときは、いきなり結果の数値を覚えず、入力、状態変化、出力、成立条件の順に書く。入力の単位や符号が一つでも抜けると、同じ数値が出ても別の模型を計算している可能性がある。そこで以下の節では、manifestに宣言した代表入力を一つずつ、手計算と小さなプログラムの両方で追う。</p>
+<h3 id="section-56fb0056e2">具体例の読み方</h3>
+<p>各例では、まず『何を固定したか』を一行で書く。次に、途中の状態を表にし、最後に期待値と照合する。期待値は解析予測であり、測定値ではない。実験装置や外部toolを使わない例でも、予測、実行記録、測定欄を混ぜないことがこの教材の重要な練習になる。</p>
+<h3 id="section-1-2">実験1　酸化膜容量と平坦帯電圧</h3>
+<p>実行入口は<code>book run 21 1</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>{"Cox_F_per_m2": 0.0034531332493319996, "VFB_V": -0.2671585759939896}</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-2-3">実験2　空乏幅と空乏電荷</h3>
+<p>実行入口は<code>book run 21 2</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>{"Qdep_abs_C_per_m2": 0.0004869484971968087, "Wd_at_2phiF_m": 3.039293464048913e-07}</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-3-4">実験3　表面電位の非線形根</h3>
+<p>実行入口は<code>book run 21 3</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>{"Q_s_C_per_m2": -0.0004869484971968087, "psi_s_V": 0.7143171519879805, "root_residual": 0.0}</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-4">実験4　蓄積・空乏・反転の走査</h3>
+<p>実行入口は<code>book run 21 4</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>regimes_and_signs_match_with_out_of_scope_guard</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-5-2">実験5　しきい値予測</h3>
+<p>実行入口は<code>book run 21 5</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>{"Vth_V": 0.5881749985302475, "phiF_V": 0.35715857599399026}</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-6-c-v">実験6　C–Vモデル比較</h3>
+<p>実行入口は<code>book run 21 6</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_frequency_Cmos_points": [{"C_MOS_F_per_m2": 0.0014614472306232306, "V_G_V": -0.2671585759939896}, {"C_MOS_F_per_m2": 0.0005779189796210082, "V_G_V": 0.0}, {"C_MOS_F_per_m2": 0.0004302687719343606, "V_G_V": 0.2}, {"C_MOS_F_per_m2": 0.0005693088258630739, "V_G_V": 0.5881749985302475}, {"C_MOS_F_per_m2": 0.0030207718184900294, "V_G_V": 1.0}], "low_frequency_model": "full_boltzmann_surface_charge_with_finite_difference_derivative"}</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-7-poisson">実験7　Poisson格子収束</h3>
+<p>実行入口は<code>book run 21 7</code>である。caseは<code>si_p_substrate_ideal_mos</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>{"record_each_N": true, "refinement": "error_nonincreasing_toward_Wd_max", "residual_target": "1e-10"}</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-8-2">実験8　単位・統計・モデルの失敗テスト</h3>
+<p>実行入口は<code>book run 21 8</code>である。caseは<code>（指定なし）</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>each_negative_case_fails_closed</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-550beb6ff0">状態表を自分で作る</h3>
+<p>本文を読み終える前に、次の五列を紙またはテキストへ写す。『層』『入力』『内部状態』『上位の契約』『破綻条件』である。層には物理量、数値模型、回路、命令、OS、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のどれかを入れ、同じ名前の量を別層で使うときは型と単位を併記する。</p>
+<p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続電圧を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタや<a class="term" href="index.html#term-stack_pointer">stack pointer</a>を隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
+<p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
+<h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
+<ul><li>MOSの金属、酸化膜、半導体と電荷の符号を図示できる</li><li>C_ox、V_FB、psi_s、Q_sの関係を式と単位で扱える</li><li>蓄積、空乏、反転を表面キャリアの変化で説明できる</li><li>空乏近似からW_dとQ_depを導ける</li><li>psi_s=2phi_Fを基準にしきい値を計算できる</li><li>Poisson境界、Boltzmann近似、モデル限界を分離できる</li><li>高周波・低周波C–Vの違いを測定条件とともに記録できる</li><li>第22章へ静電・材料・接触・検証入力を渡せる</li></ul>
+<p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
+<h3 id="section-86aa35e5e4">故障診断の手順</h3>
+<p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>
+<ul><li><code>zero_oxide_thickness</code>: 入力はt_ox &lt;= 0。期待する診断は<code>zero_oxide_thickness</code>で、正常値として続行しない。</li><li><code>negative_doping_density</code>: 入力はN_A &lt; 0。期待する診断は<code>negative_doping_density</code>で、正常値として続行しない。</li><li><code>permittivity_unit_mismatch</code>: 入力はepsilon_ox in F/cm treated as F/m。期待する診断は<code>permittivity_unit_mismatch</code>で、正常値として続行しない。</li><li><code>measurement_provenance_missing</code>: 入力はmeasured=true without frequency。期待する診断は<code>measurement_provenance_missing</code>で、正常値として続行しない。</li><li><code>statistics_model_out_of_scope</code>: 入力はdegenerate substrate with Boltzmann flag。期待する診断は<code>statistics_model_out_of_scope</code>で、正常値として続行しない。</li><li><code>missing_surface_boundary</code>: 入力はno <a class="term" href="index.html#term-surface_potential">surface potential</a> or oxide charge boundary。期待する診断は<code>missing_surface_boundary</code>で、正常値として続行しない。</li></ul>
+<p>失敗を再現するときは、一度に一条件だけを変える。二つ以上を同時に変えると、どの境界が効いたか分からなくなる。エラーメッセージだけでなく、入力hash、章・実験ID、上流artifactの状態も保存する。</p>
+<h3 id="section-03f956a059">条件を一つ変えて再挑戦する</h3>
+<p>最初の成功例をそのまま複製するだけでは、契約の意味は分からない。値の符号、刻み幅、負荷、命令、型、アドレス、実行順のうち一つを変え、どの出力が変わり、どの<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a>が残るかを記録する。変えてはいけない条件も明記する。</p>
+<ul><li>再挑戦候補 <code>E8</code>: MOSのPoisson源。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E9</code>: 固定酸化膜電荷。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E10</code>: しきい値の意味。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E11</code>: 失敗分類。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E12</code>: 次章への入力。成功条件と失敗時の診断を先に書く。</li><li>予測値を変えるときは、変更前後の入力を同じ表に置き、差分を一つの列にする。</li><li>実行環境を変えるときは、<a class="term" href="index.html#term-host">host</a>、target、tool versionを別欄にし、結果の差を環境差として記録する。</li><li>境界を越えた場合は、成功したように見える値を残さず、未対応または範囲外として止める。</li></ul>
+<h3 id="section-75b995748a">前後の章へ渡すもの</h3>
+<p>この章は独立した計算帳ではない。前から受け取った量を、次の層が読める契約へ変換する。</p>
+<ul><li>受け取る: 前章で定義した入力を受け取る</li><li>渡す: 次章へ検証済みの状態を渡す</li></ul>
+<p>渡す値には、値だけでなく単位、版、source kind、status、measuredフラグを付ける。後章で同じ記号が現れたとき、初出の定義と再利用の条件を辿れるようにする。</p>
+<h3 id="section-c5ca5f88d4">模型の境界を言葉にする</h3>
+<ul><li>p型一様基板</li><li>一次元</li><li>非縮退Boltzmann統計</li><li>理想酸化膜</li><li>界面準位なしを基本とする</li><li>量子反転層・周波数分散・短チャネルは別モデル</li><li>runner・図・測定未完了の値は予測</li></ul>
+<p>境界を知ることは、式を弱めることではない。式が成立する条件を明示すれば、次により詳しい模型や測定へ進む理由を説明できる。逆に、条件を隠したまま桁の多い数値を出すと、精度ではなく誤解だけが増える。</p>
+<h3 id="section-5ebd79a6a2">章末の自己確認</h3>
+<p>最後に、代表実験を見ずに三つの文を書く。第一文は入力と単位、第二文は内部状態から出力までの一つの変化、第三文は最も近い破綻条件である。三文が書けたら、対応するartifactとrunnerの行を開き、本文の説明と同じ<a class="term" href="index.html#term-trace_id">trace ID</a>・statusになっているか照合する。</p>
+<p>この確認を通過しても、外部toolや実測器を使ったとは限らない。実行可能モデル、解析予測、実測、独立レビューは別の欄で管理する。その区別を保ったまま次章へ進むことが、この章の最後の成果物である。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-21-2">21.補助演習　手を動かす導出帳</h2>
+<p>MOSキャパシタの計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、処理系のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-3">例題1　酸化膜容量と平坦帯電圧</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 1</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"Cox_F_per_m2": 0.0034531332493319996, "VFB_V": -0.2671585759939896}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-2-4">例題2　空乏幅と空乏電荷</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 2</code>である。入力は<code>{"model": "depletion_approximation", "psi_s_V": 0.7143171519879805}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・<a class="term" href="index.html#term-frame">frame</a>・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"Qdep_abs_C_per_m2": 0.0004869484971968087, "Wd_at_2phiF_m": 3.039293464048913e-07}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-3-5">例題3　表面電位の非線形根</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 3</code>である。入力は<code>{"Q_ox_C_per_m2": 0.0, "Q_s_model": "depletion_approximation", "V_G_V": 0.5881749985302475, "psi_s_range_V": [0.0, 0.7143171519879805], "root_residual_target": "1e-10"}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"Q_s_C_per_m2": -0.0004869484971968087, "psi_s_V": 0.7143171519879805, "root_residual": 0.0}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-4-2">例題4　蓄積・空乏・反転の走査</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 4</code>である。入力は<code>{"psi_s_V": [-0.05, 0.0, 0.05, 0.1, 0.2, 0.4, 0.7143171519879805], "statistics_guard": "reject_if_surface_density_exceeds_effective_DOS"}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>regimes_and_signs_match_with_out_of_scope_guard</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-5-3">例題5　しきい値予測</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 5</code>である。入力は<code>{"threshold_definition": "psi_s_equals_2phi_F"}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"Vth_V": 0.5881749985302475, "phiF_V": 0.35715857599399026}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-6-c-v-2">例題6　C–Vモデル比較</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 6</code>である。入力は<code>{"N_c_m-3": "2.8e25", "N_v_m-3": "1.04e25", "V_G_V": [-0.2671585759939896, 0.0, 0.2, 0.5881749985302475, 1.0], "ac_amplitude_V": 0.01, "finite_difference_Delta_psi_V": 0.0001, "frequency_Hz": ["1.0e3", "1.0e6"], "high_frequency_model": "depletion_only", "inversion_response_cutoff_Hz": "1.0e5", "low_frequency_model": "full_boltzmann_surface_charge_with_finite_difference_derivative", "series_resistance_ohm": 0.0, "small_u_evaluation": "expm1_then_series", "sweep_direction": "increasing", "zero_potential_rule": "Q_s_equals_0_by_continuous_limit"}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_frequency_Cmos_points": [{"C_MOS_F_per_m2": 0.0014614472306232306, "V_G_V": -0.2671585759939896}, {"C_MOS_F_per_m2": 0.0005779189796210082, "V_G_V": 0.0}, {"C_MOS_F_per_m2": 0.0004302687719343606, "V_G_V": 0.2}, {"C_MOS_F_per_m2": 0.0005693088258630739, "V_G_V": 0.5881749985302475}, {"C_MOS_F_per_m2": 0.0030207718184900294, "V_G_V": 1.0}], "low_frequency_model": "full_boltzmann_surface_charge_with_finite_difference_derivative"}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-7-poisson-2">例題7　Poisson格子収束</h3>
+<p>固定するcaseは<code>si_p_substrate_ideal_mos</code>、入口は<code>book run 21 7</code>である。入力は<code>{"N": [101, 201, 401, 801], "boundary_kind": "dirichlet_neumann", "bulk_field_V_per_m": 0.0, "domain_m": [0.0, 2e-06], "residual_norm": "normalized_max_abs_poisson_residual", "rho_model": "depletion_approximation", "surface_psi_V": 0.7143171519879805}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>{"record_each_N": true, "refinement": "error_nonincreasing_toward_Wd_max", "residual_target": "1e-10"}</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-8-3">例題8　単位・統計・モデルの失敗テスト</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 21 8</code>である。入力は<code>{"negative_test_ids": ["zero_oxide_thickness", "negative_doping_density", "permittivity_unit_mismatch", "measurement_provenance_missing", "statistics_model_out_of_scope", "missing_surface_boundary"]}</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>each_negative_case_fails_closed</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-4">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・不変条件</th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・trace ID</td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-5">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>MOSキャパシタ</code>は、金属・絶縁膜・半導体の積層で表面電荷を電圧制御する構造。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>MOSキャパシタ</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>酸化膜容量</code>は、絶縁膜の単位面積容量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>酸化膜容量</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>表面電位</code>は、半導体表面とバルクの<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>表面電位</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>蓄積・空乏・反転</code>は、ゲート電圧で変化する表面キャリア状態。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>蓄積・空乏・反転</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>平坦帯電圧</code>は、半導体バンド曲がりがない基準ゲート電圧。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>平坦帯電圧</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-6">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、host/<a class="term" href="index.html#term-target">target</a>、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（蓄積・空乏・反転）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（しきい値電圧）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（C–V周波数）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（MOSのPoisson源）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（固定酸化膜電荷）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（しきい値の意味）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（失敗分類）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（次章への入力）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-21-3">21.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>MOSキャパシタ</strong>の中心問題「絶縁膜越しの電圧だけで、半導体表面をp型からn型相当に変えられるのはなぜか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-5">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>si_p_substrate_ideal_mos</code></p>
+<p>このcaseは <code>{"C_ox_F_per_m2": 0.0034531332493319996, "Cdep_max_F_per_m2": 0.0003408489463269968, "Cmos_min_F_per_m2": 0.000310227293872973, "Qdep_max_abs_C_per_m2": 0.0004869484971968087, "V…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>T_K</code> = <code>300.0</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>q_C</code> = <code>1.602176634e-19</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>k_B_J_per_K</code> = <code>1.380649e-23</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>epsilon_0_F_per_m</code> = <code>8.8541878188e-12</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>epsilon_s_r</code> = <code>11.7</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>epsilon_ox_r</code> = <code>3.9</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>t_ox_m</code> = <code>1e-08</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>N_A_m-3</code> = <code>1.0e22</code>。単位・幅・符号を本文の定義と照合する。</li><li>残りの入力 7項目は、同じcase記録へ戻って確認する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-6">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-21-mos-voltage</code></p>
+<p>到達する結果は「酸化膜容量、平坦帯電圧、ゲート電圧と表面電荷」で、参照する式IDまたは検証項目は <code>["mos_oxide_capacitance", "mos_flatband_voltage", "mos_gate_voltage"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-21-depletion</code></p>
+<p>到達する結果は「表面キャリア、空乏幅、空乏電荷、しきい値」で、参照する式IDまたは検証項目は <code>["mos_surface_carrier", "mos_fermi_potential", "mos_depletion_width", "mos_depletion_charge", "mos_threshold_voltage"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-21-cv</code></p>
+<p>到達する結果は「酸化膜と半導体空乏容量の直列容量」で、参照する式IDまたは検証項目は <code>["mos_depletion_capacitance", "mos_series_capacitance"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-7">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 酸化膜容量と平坦帯電圧</p>
+<p>入口は <code>book run 21 1</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-input-case", "chapter-21-electrostatics-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Cox_F_per_m2": 0.0034531332493319996, "VFB_V": -0.2671585759939896}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験2: 空乏幅と空乏電荷</p>
+<p>入口は <code>book run 21 2</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-input-case", "chapter-21-electrostatics-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Qdep_abs_C_per_m2": 0.0004869484971968087, "Wd_at_2phiF_m": 3.039293464048913e-07}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験3: 表面電位の非線形根</p>
+<p>入口は <code>book run 21 3</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-electrostatics-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Q_s_C_per_m2": -0.0004869484971968087, "psi_s_V": 0.7143171519879805, "root_residual": 0.0}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験4: 蓄積・空乏・反転の走査</p>
+<p>入口は <code>book run 21 4</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-electrostatics-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>regimes_and_signs_match_with_out_of_scope_guard</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験5: しきい値予測</p>
+<p>入口は <code>book run 21 5</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-threshold-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Vth_V": 0.5881749985302475, "phiF_V": 0.35715857599399026}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験6: C–Vモデル比較</p>
+<p>入口は <code>book run 21 6</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-cv-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_freque…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験7: Poisson格子収束</p>
+<p>入口は <code>book run 21 7</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-electrostatics-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"record_each_N": true, "refinement": "error_nonincreasing_toward_Wd_max", "residual_target": "1e-10"}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験8: 単位・統計・モデルの失敗テスト</p>
+<p>入口は <code>book run 21 8</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>each_negative_case_fails_closed</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>#### 反例1: <code>zero_oxide_thickness</code></p>
+<p>入力は <code>t_ox &lt;= 0</code>、期待する診断は <code>zero_oxide_thickness</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例2: <code>negative_doping_density</code></p>
+<p>入力は <code>N_A &lt; 0</code>、期待する診断は <code>negative_doping_density</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例3: <code>permittivity_unit_mismatch</code></p>
+<p>入力は <code>epsilon_ox in F/cm treated as F/m</code>、期待する診断は <code>permittivity_unit_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例4: <code>measurement_provenance_missing</code></p>
+<p>入力は <code>measured=true without frequency</code>、期待する診断は <code>measurement_provenance_missing</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例5: <code>statistics_model_out_of_scope</code></p>
+<p>入力は <code>degenerate substrate with Boltzmann flag</code>、期待する診断は <code>statistics_model_out_of_scope</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例6: <code>missing_surface_boundary</code></p>
+<p>入力は <code>no surface potential or oxide charge boundary</code>、期待する診断は <code>missing_surface_boundary</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>p型一様基板</li><li>一次元</li><li>非縮退Boltzmann統計</li><li>理想酸化膜</li><li>界面準位なしを基本とする</li><li>量子反転層・周波数分散・短チャネルは別モデル</li><li>runner・図・測定未完了の値は予測</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第</li><li>2</li><li>0</li><li>章</li><li>の</li><li>P</li><li>o</li><li>i</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第</li><li>2</li><li>2</li><li>章</li><li>へ</li><li>C</li><li>_</li><li>o</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-3">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A21-01</code> — C_ox。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A21-02</code> — 空乏幅・電荷・しきい値。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A21-03</code> — 蓄積・空乏・反転の領域ラベル。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A21-04</code> — C–Vの周波数・測定出所。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A21-05</code> — negative tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-2">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 酸化膜容量と平坦帯電圧</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 1</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Cox_F_per_m2": 0.0034531332493319996, "VFB_V": -0.2671585759939896}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表2: 空乏幅と空乏電荷</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 2</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Qdep_abs_C_per_m2": 0.0004869484971968087, "Wd_at_2phiF_m": 3.039293464048913e-07}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表3: 表面電位の非線形根</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 3</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Q_s_C_per_m2": -0.0004869484971968087, "psi_s_V": 0.7143171519879805, "root_residual": 0.0}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表4: 蓄積・空乏・反転の走査</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 4</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>regimes_and_signs_match_with_out_of_scope_guard</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表5: しきい値予測</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 5</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Vth_V": 0.5881749985302475, "phiF_V": 0.35715857599399026}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表6: C–Vモデル比較</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 6</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_freque…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表7: Poisson格子収束</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 7</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"record_each_N": true, "refinement": "error_nonincreasing_toward_Wd_max", "residual_target": "1e-10"}</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表8: 単位・統計・モデルの失敗テスト</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 21 8</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>each_negative_case_fails_closed</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-4">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

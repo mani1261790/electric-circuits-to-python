@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第4章　観測、測定、数値計算</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-004-exercises.html">この章の演習</a>　<a href="chapter-004-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-4-1"><code>book run 4 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-004/experiment-01.json">成果物</a></li></ul></section><h1 id="section-4">第4章　観測、測定、数値計算</h1>
+<h2 id="section-2e093ca68d">この章の中心問題</h2>
+<p>同じRC回路の<a class="term" href="index.html#term-voltage">電圧</a>を描いたグラフが三つあるとする。一つは式から計算した線、一つはSPICEが計算した線、もう一つはオシロスコープで観測した点である。見た目がよく重なっていても、三つは同じものではない。</p>
+<ul><li>解析解は、仮定した方程式を連続時間で解いた結果である。</li><li>数値解は、その方程式を有限個の時刻と有限精度の数で近似した結果である。</li><li>SPICEの波形は、回路素子のモデル、数値解法、収束判定、刻み幅の選択を含むシミュレータの結果である。</li><li>測定値は、対象回路、プローブ、入力抵抗、帯域、サンプリング、量子化、環境ノイズを通った観測結果である。</li></ul>
+<p>この違いを曖昧にすると、「線が一致したからモデルは正しい」「刻み幅を半分にしたから誤差は半分」「シミュレーションが動いたから実機も動く」という誤った結論に進む。本章では、同じ理想RC過渡応答を題材に、観測、測定、解析、数値計算、回路シミュレーションを分けて記録する。</p>
+<p>本章で作るものは、後の章でも利用できる比較の型である。入力条件、初期条件、モデル、計算方法、観測方法、単位、誤差、版、成果物を一つの記録へまとめる。値が一致するかだけではなく、何が一致し、何が比較できないかを説明できることが到達点である。</p>
+<h2 id="section-1">1　前提と今回の到達点</h2>
+<p>第3章で、物理量には数値と単位があり、微分方程式には初期値と区間が必要であることを確認した。本章では、それをRC回路の時間応答へ適用する。高校数学の指数関数、微分、積分、Pythonの関数・配列・ファイル操作を使う。Cのポインタや動的メモリは、測定バッファを扱う後続章で必要になるが、本章の理想RC計算には必須ではない。</p>
+<p>章末までに、次をできるようにする。</p>
+<ol><li>同じ現象について、解析解、数値解、シミュレーション、測定を別の層として説明する。</li><li>理想RC回路の<a class="term" href="index.html#term-concept_11_term_8a294c0490_8a294c04">時定数</a>とステップ応答を導出し、入力と初期値を記録する。</li><li><a class="term" href="index.html#term-concept_4_euler_168fab74">Euler法</a>と4次Runge--Kutta法を同じ時刻軸で計算し、刻み幅、打切り誤差、丸め誤差、安定性を区別する。</li><li>測定器の入力抵抗と帯域が、測定対象そのものを変える仕組みを説明する。</li><li><a class="term" href="index.html#term-concept_4_term_3ea3e45833_3ea3e458">サンプリングと量子化</a>が、連続時間・連続振幅の信号をどのようなデータへ変えるかを説明する。</li><li><a class="term" href="index.html#term-concept_4_spice_3215522d">解析解・数値解・SPICE・測定</a>の結果を、予測値、実測値、環境情報付きの成果物として保存する。</li><li><code>book run 4 1</code> のような共通入口を使い、解析・契約の再生済み、domain未実行、外部測定未実施を混同しない。</li></ol>
+<h2 id="section-2">2　四つの「結果」を分ける</h2>
+<h3 id="section-2-1">2.1　解析解は仮定を解いたもの</h3>
+<p>理想的な直列RC回路へ、時刻<code>0</code>で<code>V_s</code>のステップ電圧を加える。抵抗<code>R</code>とコンデンサ容量<code>C</code>は一定、配線は理想導線、測定器は接続しない、と仮定する。コンデンサの電圧を<code>V_C(t)</code>と書く。</p>
+<p>抵抗を流れる<a class="term" href="index.html#term-current">電流</a>とコンデンサへ流れ込む電流を同じと置くと、</p>
+<pre><code class="language-text">(V_s - V_C)/R = C dV_C/dt</code></pre>
+<p>である。整理して、</p>
+<pre><code class="language-text">dV_C/dt = (V_s - V_C)/(R C)                    (4.1)</code></pre>
+<p>を得る。<code>R C</code>は秒の単位を持つので、</p>
+<pre><code class="language-text">τ = R C                                           (4.2)</code></pre>
+<p>を時定数と呼ぶ。初期値を<code>V_C(0)=V_0</code>、入力を時刻<code>0</code>以降一定の<code>V_s</code>とすると、解は</p>
+<pre><code class="language-text">V_C(t) = V_s + (V_0 - V_s) exp(-t/τ)              (4.3)</code></pre>
+<p>である。<code>V_0=0</code>なら<code>V_C(t)=V_s(1-exp(-t/τ))</code>となる。</p>
+<p>この式の数値を計算できることと、現実の回路がこの式どおりに振る舞うことは別である。解析解が保証するのは、明示した理想化と初期条件の範囲で式が微分方程式を満たすことである。部品の許容差、コンデンサの漏れ、信号源の出力抵抗、プローブの負荷、有限の立上り時間は式の外にある。</p>
+<h3 id="section-2-2">2.2　数値解は連続方程式の近似</h3>
+<p>解析解を使えない、または後で同じ更新器を非線形モデルへ適用したい場合、時刻を<code>Δt</code>刻みに区切る。Euler法は、時刻<code>t_n</code>での傾きを次の区間全体に使う。</p>
+<pre><code class="language-text">V_(n+1) = V_n + Δt f(t_n,V_n)
+f(t,V)   = (V_s - V)/(R C)                       (4.4)</code></pre>
+<p><code>Δt</code>は秒、<code>f</code>はV/sなので、増分<code>Δt f</code>はVである。単位が合っていることは必要だが、近似誤差が小さいことを示さない。Euler法の局所誤差は一般に<code>O(Δt^2)</code>、区間全体での大域誤差は<code>O(Δt)</code>である。ただし、実際の誤差には浮動小数点の丸め、入力値の誤差、モデル化誤差も重なる。</p>
+<p>4次<a class="term" href="index.html#term-concept_4_runge_kutta_556d0861">Runge--Kutta法</a>（RK4）は、一つの区間の始点、中点、終点で傾きを評価して重み付けする。</p>
+<pre><code class="language-text">k1 = f(t_n,         V_n)
+k2 = f(t_n+Δt/2,    V_n+Δt k1/2)
+k3 = f(t_n+Δt/2,    V_n+Δt k2/2)
+k4 = f(t_n+Δt,      V_n+Δt k3)
+V_(n+1) = V_n + Δt (k1 + 2k2 + 2k3 + k4)/6          (4.5)</code></pre>
+<p>理想RCのような滑らかな線形問題では、同じ刻み幅ならRK4の打切り誤差はEuler法より急速に小さくなる。しかし、刻み幅を大きくしてよいという意味ではない。入力が急に変わる点、非線形素子の境界、測定ノイズ、桁落ちが支配的なら、方法の次数だけでは結果を保証できない。</p>
+<h3 id="section-2-3">2.3　数値安定性と精度</h3>
+<p><code>e_n=V_n-V_s</code>と置くと、Euler法のRC更新は</p>
+<pre><code class="language-text">e_(n+1) = (1 - Δt/τ) e_n                            (4.6)</code></pre>
+<p>になる。誤差が発散しないための目安は<code>|1-Δt/τ|&lt;1</code>、すなわち<code>0&lt;Δt/τ&lt;2</code>である。<code>Δt/τ</code>が<code>1</code>を超えると符号が交互に変わる振動的な近似になり得る。<code>2</code>以上では理想解が単調に近づく場合でもEulerの値が発散し得る。</p>
+<p>これは「刻み幅が小さいほど常に良い」という単純な話ではない。非常に小さい<code>Δt</code>では、隣り合う値の差が浮動小数点の分解能や測定ノイズより小さくなり、計算量だけが増えることがある。刻み幅を変えるときは、次の三つを別々に記録する。</p>
+<ul><li>安定性: 更新が発散または非物理的振動を起こさないか。</li><li>打切り誤差: 連続方程式を離散化したことによる誤差。</li><li>丸め誤差: 有限桁の数で演算したことによる誤差。</li></ul>
+<h3 id="section-2-4-spice">2.4　SPICEは別の計算経路</h3>
+<p>SPICEは回路図をそのまま「現実」にする装置ではない。抵抗、コンデンサ、電圧源などのモデルから方程式を作り、時間刻みを選んで数値的に解く。解析の設定、初期条件、相対・絶対許容誤差、素子モデル、収束のための処理が結果へ影響する。</p>
+<p>同じ<code>R=1 kΩ</code>、<code>C=1 μF</code>、<code>V_s=5 V</code>を書いても、理想部品のSPICE結果と、寄生抵抗・漏れを持つ部品モデルの結果は別である。SPICEの波形が解析解と一致したときに言えるのは、選んだモデルと条件の範囲で数値解がその解に近いということまでだ。実測値との一致には、部品値、信号源、プローブ、配線、温度などの別の検証が必要である。</p>
+<h2 id="section-3">3　測定は信号を写すだけではない</h2>
+<h3 id="section-3-1">3.1　測定のブロック図</h3>
+<p>観測対象の電圧<code>x(t)</code>が、次の過程を通って記録値<code>y[n]</code>になると考える。</p>
+<pre><code class="language-text">対象 x(t)
+  → 接続（プローブ、入力抵抗、容量）
+  → アナログ帯域（増幅器、フィルタ）
+  → サンプラー（時刻 nT_s）
+  → 量子化器（有限ビット）
+  → ファイル y[n]</code></pre>
+<p>このブロックのどこかを省略して「測った電圧は<code>x(t)</code>そのもの」と扱うと、誤差の原因を診断できない。記録には、測定位置、<a class="term" href="index.html#term-concept_6_term_bc3281ce43_bc3281ce">基準電位</a>、プローブ設定、入力抵抗、入力容量、帯域、サンプリング周波数、分解能、レンジ、時刻の基準を含める。</p>
+<h3 id="section-3-2">3.2　入力抵抗は回路を変える</h3>
+<p>理想電圧計は入力抵抗が無限大で、回路から電流を取らない。しかし現実の測定器には有限の入力抵抗<code>R_in</code>がある。ここでは、信号源、出力抵抗<code>R_s</code>、回路の抵抗<code>R</code>、コンデンサの上端という順に直列接続し、コンデンサの上端から<code>R_in</code>を基準電位へ接続するトポロジーを固定する。すると、信号源を零にしたときにコンデンサから見える簡略模型の抵抗は</p>
+<pre><code class="language-text">R_eff = (R + R_s) || R_in                           (4.7)</code></pre>
+<p>となり、時定数は<code>τ_eff=R_eff C</code>になる。充電時の最終電圧は<code>R_in</code>による分圧でも変わるため、時定数だけを比べてはいけない。これは接続点と回路構成を固定した模型であり、プローブ容量を無視している。プローブ容量<code>C_in</code>も無視できない場合は、負荷の極を追加する必要がある。</p>
+<p>入力抵抗が十分大きいかは、抵抗値だけで決めない。<code>R_in/R</code>の比、許容する時定数変化、プローブ容量と信号の立上り時間を比較する。測定器を接続する前後で波形が変わったら、測定器が「見るだけの窓」ではなく回路の一部になった可能性がある。</p>
+<h3 id="section-3-3">3.3　帯域と立上り時間</h3>
+<p>測定器の帯域が有限なら、急なステップはそのまま記録されない。一次遅れの測定系を時定数<code>τ_m</code>のローパスとして近似すれば、対象の波形と測定器の応答が重なった二次の応答になる。測定器の立上り時間と対象の立上り時間が同程度なら、観測波形から対象の時定数を直接読んではいけない。</p>
+<p>「帯域が高いほど正しい」とも限らない。高帯域ではノイズを多く通す場合がある。測定目的に応じて、対象の最短時間尺度、必要な振幅精度、許容ノイズを先に決める。</p>
+<h3 id="section-3-4">3.4　サンプリングと量子化</h3>
+<p>サンプリング周期を<code>T_s</code>、サンプリング周波数を<code>f_s=1/T_s</code>とする。信号が有限帯域で、最高周波数<code>f_max</code>を持ち、理想的な帯域制限フィルタがあるとき、<code>f_s&gt;2f_max</code>が元の連続信号を再構成する条件の入口になる。条件を満たさない信号成分はaliasingとして別の周波数に見える。RCのステップは理想的には無限の高周波成分を含むため、有限サンプリングだけで「完全なステップ」を記録できない。</p>
+<p>量子化では、振幅を有限個の段階へ丸める。<code>N</code>ビット、測定レンジ幅<code>V_range</code>なら、量子化幅の目安は<code>ΔV=V_range/2^N</code>である。量子化誤差を一様に独立なノイズとして扱えるのは、信号が十分に変化し、飽和やコード境界の偏りがないなどの条件付きである。測定データを解析解へ合わせる前に、サンプリング間隔、量子化幅、飽和の有無を確認する。</p>
+<h2 id="section-4-2">4　誤差と不確かさを別の欄へ書く</h2>
+<h3 id="section-4-1">4.1　誤差という言葉の分解</h3>
+<p>基準となる値<code>x_ref</code>と計算または観測値<code>x</code>について、差<code>x-x_ref</code>を誤差と呼べる。しかし、何を基準にした差かを記録しなければ意味がない。次の欄を分ける。</p>
+<ul><li>解析解との差: 同じ理想モデル内での数値近似の誤差。</li><li>SPICEとの差: 回路モデル、ソルバ設定、収束許容誤差の差。</li><li>測定値との差: 部品、接続、測定器、環境、モデルの差を含む。</li><li>不確かさ: 値がどの範囲にあると考えるか。既知の真値との差を断定するとは限らない。</li></ul>
+<p>相対誤差は基準値が0でない場合に</p>
+<pre><code class="language-text">relative_error = |x - x_ref| / |x_ref|              (4.8)</code></pre>
+<p>と書ける。<code>x_ref</code>が小さい箇所や波形の開始点では、相対誤差が不安定になるため、絶対誤差、フルスケールに対する誤差、時定数推定値の誤差など、目的に合う指標を選ぶ。</p>
+<h3 id="section-4-2-2">4.2　パラメータの不確かさ</h3>
+<p><code>τ=RC</code>では、抵抗と容量の許容差が時定数へ伝わる。小さな相対変化なら、独立な不確かさ<code>u_R</code>、<code>u_C</code>に対して</p>
+<pre><code class="language-text">u_τ/τ ≈ sqrt((u_R/R)^2 + (u_C/C)^2)                 (4.9)</code></pre>
+<p>と近似できる。これは線形化した近似であり、許容差の分布、温度係数、相関を無視している。部品のデータシート値を測定値の代わりに書かず、「仕様上の不確かさ」と「今回の個体を測った結果」を別に保存する。</p>
+<h3 id="section-4-3">4.3　収束を見る方法</h3>
+<p>刻み幅を<code>Δt</code>、<code>Δt/2</code>、<code>Δt/4</code>と減らし、同じ評価時刻で数値解を比較する。値の変化が許容幅内へ入ることは収束の証拠になるが、解析解が正しいことやモデルが現実を表すことの証明ではない。評価時刻が刻みの端にない場合は、補間方法も記録する。</p>
+<p>測定値には同じ意味の「刻み幅半減」はない。サンプリング周波数を上げても入力抵抗、帯域、ノイズ、部品のばらつきは自動的に消えない。計算の収束と実験の再現性を混同しない。</p>
+<h2 id="section-5-rc">5　同じRCを四つの方法で記録する</h2>
+<h3 id="section-5-1">5.1　固定する入力</h3>
+<p>比較の基準例を次のように固定する。</p>
+<pre><code class="language-text">R   = 1_000 ohm
+C   = 1e-6 farad
+V_s = 5 V
+V_0 = 0 V
+τ   = 1e-3 s</code></pre>
+<p>ここで使うのは教育用の理想値である。<code>book run 4 1</code>の実験が実装されるまでは、以下の数値を実測結果として扱わない。計算例の期待値と、実行して得られたログは別ファイルにする。</p>
+<h3 id="section-5-2">5.2　共通の時刻軸</h3>
+<p>四つの結果を比較するには、入力の定義と時刻軸をそろえる。</p>
+<table><thead><tr><th>方法</th><th>入力</th><th>時間</th><th>出力</th><th>隠れているもの</th></tr></thead>
+<tbody><tr><td>解析解</td><td>理想ステップ</td><td>連続<code>t</code></td><td>式(4.3)</td><td>解法の仮定、理想部品</td></tr><tr><td>Euler/RK4</td><td>同じステップ</td><td><code>nΔt</code></td><td>離散配列</td><td>刻み幅、丸め、更新式</td></tr><tr><td>SPICE</td><td>電圧源モデル</td><td>適応刻みを含む</td><td>節点電圧</td><td>素子モデル、ソルバ設定</td></tr><tr><td>測定</td><td>実際の源波形</td><td>サンプル時刻</td><td>ADC/オシロ値</td><td>負荷、帯域、ノイズ、量子化</td></tr></tbody>
+</table>
+<p>SPICEが自動的に選んだ時刻を比較に使うなら、解析解をその時刻へ評価する。測定波形を比較するなら、実際に測定した入力波形を使ったシミュレーションも別に行う。理想ステップで計算した線を、有限立上りの実測入力へそのまま重ねない。</p>
+<h3 id="section-5-3-artifact-schema">5.3　保存する<a class="term" href="index.html#term-concept_4_artifact_schema_ab9728a9">artifact schema</a></h3>
+<p>本章では、一つの実験を次の記録へ分解する。<code>artifact</code>は、結果そのものだけでなく、後から同じ条件を再現するための記録である。</p>
+<pre><code class="language-yaml">schema: rc-comparison/v1
+run:
+  chapter: 4
+  experiment: 1
+  status: planned       # measured / reproduced / failed へ更新する
+  runner: book
+  environment: pinned-linux
+input:
+  source: step
+  R_ohm: 1000
+  C_farad: 1.0e-6
+  Vs_volt: 5.0
+  V0_volt: 0.0
+time:
+  start_s: 0.0
+  stop_s: 0.005
+  sample_step_s: 0.0001
+methods:
+  - analytic
+  - euler
+  - rk4
+  - spice
+outputs:
+  analytic: artifacts/chapter-04/analytic.csv
+  euler: artifacts/chapter-04/euler.csv
+  rk4: artifacts/chapter-04/rk4.csv
+  spice: artifacts/chapter-04/spice.csv
+checks:
+  - name: time_constant
+    tolerance: 0.01
+  - name: convergence
+    tolerance: 0.001
+provenance:
+  command: book run 4 1
+  versions: artifacts/chapter-04/versions.txt</code></pre>
+<p>この例の<code>status: planned</code>は、まだ実験を走らせていないことを表す。実行できない環境で空のCSVを作って「成功」と記録してはいけない。失敗なら、コマンド、終了コード、入力、エラーメッセージ、次に試すことを失敗ログへ保存する。</p>
+<h3 id="section-5-4-runner">5.4　共通runnerの契約</h3>
+<p>HTMLの実験欄からは、次のコマンドへ移動する。</p>
+<pre><code class="language-text">book run 4 1</code></pre>
+<p>runnerは固定Linux環境を選び、章4実験1の入力を検証し、解析解の契約と成果物の場所・版情報を返す。現在の解析adapterは実行済みだが、Euler法・RK4・SPICEのdomain処理は未導入である。したがって、本文では「解析検証済み」「domain未実行」「実測なし」を別の状態として表示する。<code>tools/book</code>が実験を受け付けることと、SPICE波形が再現済みであることは別の状態である。</p>
+<h2 id="section-6-1-rc">6　実験1：RC過渡応答の比較</h2>
+<h3 id="section-6-1">6.1　実験の問い</h3>
+<p>同じ理想RCの条件について、解析解、Euler法、RK4、SPICEがどの程度一致するか。刻み幅を変えたときの差は数値誤差か、測定器の入力抵抗を加えたときの差はモデル変更か。これらを一つの<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>で隠さず、表とログへ分けて記録する。</p>
+<h3 id="section-6-2">6.2　手順</h3>
+<ol><li><code>R</code>、<code>C</code>、<code>V_s</code>、<code>V_0</code>、計算区間、単位を入力manifestへ保存する。</li><li>式(4.3)を共通時刻軸で評価し、解析解の列を作る。</li><li><code>Δt/τ=0.2</code>、<code>0.05</code>など複数のEuler条件で更新し、同じ時刻の解析解との差を計算する。</li><li>RK4を同じ刻み幅で実行し、Eulerとの差だけでなく解析解との差を計算する。</li><li>同じ部品値と入力定義のSPICE netlistを実行する。ソルバが採用した時間点と設定を保存する。</li><li>測定を行える場合だけ、実際の入力波形、プローブ設定、計器情報、校正状態を記録する。物理測定ができない場合は、その列を「未測定」とする。</li><li>時定数、<code>t=τ</code>での電圧、最大絶対誤差、最大相対誤差、収束表を方法ごとに保存する。</li><li>解析解、数値解、SPICE、測定の凡例と状態をHTMLへ表示する。実測していない系列を測定色で描かない。</li></ol>
+<h3 id="section-6-3">6.3　期待値と観測値の境界</h3>
+<p>固定値から、<code>τ=0.001 s</code>、理想ステップの<code>t=τ</code>で<code>V_C≈3.16 V</code>という期待値は計算できる。これはこの本文から導いた予測値であり、現在のワークスペースで<code>book run 4 1</code>を実行して得た観測値ではない。SPICEや実機で異なる値が出たときは、まず単位、入力波形、初期値、部品値、ソルバ設定、測定負荷を確認する。</p>
+<h2 id="section-7">7　変更課題と故障診断</h2>
+<h3 id="section-7-1">7.1　変更課題：測定器を接続する</h3>
+<p>理想RCに<code>R_in=10 MΩ</code>、<code>C_in=10 pF</code>のプローブを追加する。<code>R_in</code>を並列抵抗、<code>C_in</code>を入力容量とする簡略模型で、どの極が追加されるかを図と式で記録する。抵抗値の比だけを見て「影響なし」と結論せず、対象の<code>τ</code>と測定器の時間尺度を比較する。</p>
+<h3 id="section-7-2">7.2　故障診断：単位は合うが波形が壊れる</h3>
+<p>次の更新は、単位を秒へ換算せずに<code>dt_ms</code>を使っている。</p>
+<pre><code class="language-python">tau_s = R_ohm * C_farad
+dt_ms = 0.2
+v = v + dt_ms * (Vs - v) / tau_s</code></pre>
+<p><code>dt_ms</code>がミリ秒の数値、<code>tau_s</code>が秒の数値なので、数式に書かれた物理単位は一致していない。<code>dt_s=dt_ms*1e-3</code>とするか、すべてを秒で入力する必要がある。修正後も、<code>dt_s/tau_s</code>が安定性の範囲にあること、<code>Vs</code>と<code>v</code>が同じ電圧単位であることを確認する。</p>
+<h3 id="section-7-3">7.3　故障診断：解析解へ測定値を無理に合わせる</h3>
+<p>有限立上りの入力、出力抵抗、プローブ負荷を持つ実測波形を、理想ステップの式へ直接フィットしている場合、ずれを「ノイズ」とだけ呼んではいけない。入力波形を記録し、回路と測定器を含むモデルを作る。フィットしない理由が部品値の誤差なのか、モデルの不足なのか、測定器の帯域なのかを別の仮説として試す。</p>
+<h2 id="section-8">8　次章への引き渡し</h2>
+<p>次章では、RCという回路素子をいったん離れ、<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>と電荷の周囲にある電場を定義する。本章から次を引き渡す。</p>
+<ul><li>観測値は、対象そのものではなく測定経路を通った記録である。</li><li>解析解、数値解、SPICE、測定は、同じグラフへ描いても出所と仮定が異なる。</li><li><code>R</code>、<code>C</code>、<code>V</code>、<code>t</code>には単位を付け、入力、初期条件、時間軸を保存する。</li><li>収束、丸め、測定ノイズ、パラメータ不確かさ、モデル不足は別の欄で診断する。</li><li><code>book run 4 1</code>の実行結果を得るまでは、artifactの予測欄を実測欄へ移さない。</li></ul>
+<p><a class="term" href="index.html#term-electric_field">電場</a>はベクトルであり、プローブの先端が測る電圧は基準との差である。後の章では、向き、境界、基準、積分面を明示しながら、観測と模型の境界をさらに押し広げる。</p>
+<h2 id="section-2ffda49ea4">用語の短いまとめ</h2>
+<ul><li>解析解: 仮定した連続方程式を、式として解いた結果。</li><li>数値解: 方程式を有限刻み・有限精度で近似した結果。</li><li>測定: 対象と計器の相互作用を含む観測結果。</li><li>サンプリング: 連続時間の信号を一定または選択した時刻で取り出すこと。</li><li>量子化: 連続振幅を有限個の数値へ丸めること。</li><li>打切り誤差: 近似式で有限の項・刻みを使ったことによる誤差。</li><li>丸め誤差: 有限桁の表現と演算による誤差。</li><li>不確かさ: 値のばらつきや知識の限界を、根拠と範囲付きで表すもの。</li><li>artifact: 入力、方法、出力、版、状態を再現可能な形で保存した成果物。</li></ul>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-4-4">4.補助演習　手を動かす導出帳</h2>
+<p>観測、測定、数値計算の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-rc-euler-rk4-spice">例題1　RC過渡応答を解析解、Euler法、RK4、SPICEで比較する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 4 1</code>である。入力は<code>["R=1000 ohm、C=1e-6 farad、Vs=5 V、V0=0 V", "共通時刻軸0から0.005 s、標準刻み0.0001 s", "Euler法とRK4の複数刻み幅", "理想部品のSPICE netlist", "任意の測定列はプローブ・帯域・サンプリング情報付きで記録する"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>解析解・数値解・SPICE・測定</code>は、同じ波形を異なる生成経路と仮定を持つ結果として区別する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>解析解・数値解・SPICE・測定</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Euler法</code>は、<a class="term" href="index.html#term-concept_3_term_5bae8298d2_5bae8298">常微分方程式</a>を有限刻みで更新する最小の数値解法。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Euler法</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Runge--Kutta法</code>は、複数時点の傾きを重み付けして<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>する方法。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Runge--Kutta法</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>測定器負荷</code>は、入力抵抗・容量や帯域が対象回路の応答を変えること。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>測定器負荷</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>サンプリングと量子化</code>は、連続信号を有限時刻・有限振幅のデータへ変換する境界。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>サンプリングと量子化</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>不確かさと収束</code>は、計算差、測定差、パラメータばらつき、数値収束を別々に評価する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>不確かさと収束</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>artifact schema</code>は、入力、方法、出力、状態、版、失敗を再現可能に保存する形式。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>artifact schema</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-5">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-5">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（Euler法の安定性と丸め誤差）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（入力抵抗による<a class="term" href="index.html#term-concept_4_term_f45c8e51fa_f45c8e51">測定器負荷</a>）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（帯域、立上り時間、サンプリング）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（量子化誤差と飽和）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（パラメータ不確かさ）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（RC比較artifact schema）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（入力波形を理想ステップと誤認する故障）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（解析、数値、SPICE、測定の統合判断）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-4-6">4.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>観測、測定、数値計算</strong>の中心問題「現実の回路とシミュレータの波形が同じに見えても、何が異なるのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["τは0.001 s、理想ステップのt=τでは約3.16 Vという予測値を得る", "RK4の解析解との差は同じ刻み幅のEuler法より小さい傾向になる", "Euler法はdt/τが大きい条件で振動または発散し得る", "SPICEの時間点、素子モデル、ソルバ設定がログに残る", "測定器負荷を加えると、入力抵抗と容量に応じて時定数または波形が変わる"…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>R=1000 ohm、C=1e-6 farad、Vs=5 V、V0=0 V</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>共通時刻軸0から0.005 s、標準刻み0.0001 s</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>Euler法とRK4の複数刻み幅</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>理想部品のSPICE netlist</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>任意の測定列はプローブ・帯域・サンプリング情報付きで記録する</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「C dV_C/dt=(V_s-V_C)/R と初期値 V_C(0)=V_0 から式(4.3)を得る。」で、参照する式IDまたは検証項目は <code>解析解、Euler法、RK4、SPICEを同じ時刻軸で比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「e_(n+1)=(1-Δt/τ)e_n から、理想RCのEuler更新の安定性目安を得る。」で、参照する式IDまたは検証項目は <code>Δt/τを変えた収束・発散ログを保存する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「信号源抵抗R_sと回路抵抗Rが直列で、入力抵抗R_inがコンデンサ接点から基準へ並列接続されると、R_eff=(R+R_s)||R_inとなり時定数が変わる。」で、参照する式IDまたは検証項目は <code>負荷なし・負荷ありのSPICEまたは数値模型を比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「τ=RCを線形化し、独立な小さな相対不確かさを式(4.9)で近似する。」で、参照する式IDまたは検証項目は <code>パラメータを振った感度表と式の近似を比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-6">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: RC過渡応答を解析解、Euler法、RK4、SPICEで比較する</p>
+<p>入口は <code>book run 4 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-04-rc-comparison-manifest", "chapter-04-rc-comparison-output", "chapter-04-convergence-log", "chapter-04-failure-log"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["τは0.001 s、理想ステップのt=τでは約3.16 Vという予測値を得る", "RK4の解析解との差は同じ刻み幅のEuler法より小さい傾向になる", "Euler法はdt/τが大きい条件で振動または発散し得る", "SPICEの時間点、素子モデル、ソルバ設定がログに残る", "測定器負荷を加えると、入力抵抗と容量に応じて時定数または波形が変わる"…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-7">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-3">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>解析解は理想部品、線形性、集中定数、入力、初期値の仮定に限る。</li><li>Euler法やRK4の次数は、丸め、ノイズ、モデル誤差、急変入力を消さない。</li><li>Eulerの安定性条件は、この一次線形RC更新の目安であり、任意の回路や非線形系へそのまま適用しない。</li><li>SPICEの波形は選んだ素子モデルとソルバ設定の結果であり、実測の代替ではない。</li><li>有限帯域、入力抵抗、入力容量、サンプリング、量子化を無視した値は、観測対象そのものと同一視しない。</li><li>ナイキスト条件は帯域制限などの前提を含み、急峻なステップや非帯域信号を無条件に復元しない。</li><li>パラメータ不確かさの線形伝播式は、相関、非線形、温度変化、分布の裾を含まない。</li><li>解析adapterのRC契約出力は生成済みだが、SPICE比較と実測は未実行であり、本文の期待値を観測値として扱わない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第3章の<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>、微分積分、常微分方程式、数値近似</li><li>第3章のRC関係と、式の単位だけでは係数・境界条件を保証しないという境界</li><li>第2章の<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>・モデル・契約・実装の抽象化台帳</li><li>固定Linux環境と共通実行入口 book run &lt;chapter-id&gt; &lt;experiment-id&gt;</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第5章で電荷、力、電場をベクトルと場として定義する</li><li>第6章で<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>、電圧、コンデンサのエネルギーを測定基準付きで扱う</li><li>第9章以降で集中定数近似、節点方程式、SPICE、<a class="term" href="index.html#term-concept_12_term_78a1430d5d_78a1430d">周波数応答</a>を再利用する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-4">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — source_and_figure_registries_are_linked。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — four_rc_paths_are_separated。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — measurement_loading_is_explicit。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — convergence_and_uncertainty_are_distinct。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — runner_analytic_replay_is_not_external_measurement。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — exercise_count_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — independent_review_pending。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-4">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: RC過渡応答を解析解、Euler法、RK4、SPICEで比較する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 4 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["τは0.001 s、理想ステップのt=τでは約3.16 Vという予測値を得る", "RK4の解析解との差は同じ刻み幅のEuler法より小さい傾向になる", "Euler法はdt/τが大きい条件で振動または発散し得る", "SPICEの時間点、素子モデル、ソルバ設定がログに残る", "測定器負荷を加えると、入力抵抗と容量に応じて時定数または波形が変わる"…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

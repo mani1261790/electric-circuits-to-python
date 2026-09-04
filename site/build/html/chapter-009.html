@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第9章　回路という近似</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-009-exercises.html">この章の演習</a>　<a href="chapter-009-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-9-1"><code>book run 9 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-009/experiment-01.json">成果物</a></li></ul></section><h1 id="section-9">第9章　回路という近似</h1>
+<h2 id="section-1">1　同じ配線を二つの模型で見る</h2>
+<p>1 mの配線に、立上り時間<code>1 ns</code>の<a class="term" href="index.html#term-voltage">電圧</a>変化を加える場面を考える。配線中の電磁場が伝わる速さを、計算用に<code>v_p=2.0×10^8 m/s</code>と置くと、端から端までの伝搬時間は</p>
+<pre><code class="language-text">t_prop = ℓ/v_p = (1 m)/(2.0×10^8 m/s) = 5.0 ns</code></pre>
+<p>となる。この<code>5.0 ns</code>は、入力の<code>1 ns</code>より長い。配線の全点が同じ瞬間に同じ電圧になると仮定する<a class="term" href="index.html#term-concept_9_term_522077f2de_522077f2">集中定数模型</a>は、この設定では慎重に使わなければならない。</p>
+<p>一方、長さを<code>1 cm</code>にすれば<code>t_prop=50 ps</code>であり、<code>1 ns</code>に比べて十分短い。配線を同じ一本の線として描いても、線の長さと信号の時間尺度が変わると、隠してよい空間の情報が変わる。</p>
+<p>ここで示した数値は、章の予定計算に使う入力から得た解析予測であり、実際の配線を測った結果ではない。目的は「何nsなら必ず集中定数」と暗記することではない。空間に分布した<a class="term" href="index.html#term-electric_field">電場</a>・磁場・電荷を、抵抗<code>R</code>、コンデンサ<code>C</code>などの少数の値へ置き換える前に、隠す情報が応答時間へ影響するかを検査することである。</p>
+<p>本章の中心問題は次である。</p>
+<blockquote>空間に広がる電磁場を、回路図の線と素子へ置き換えてよいのはいつか。</blockquote>
+<p>第8章では、局所の<a class="term" href="index.html#term-conductivity">導電率</a><code>σ</code>と電場<code>E</code>から<code>J=σE</code>を作り、均一な線材を<code>R=L/(σA)</code>へ縮約した。本章では、その縮約を時間変化する信号へ広げる。短い配線を一つの抵抗・容量へまとめる場合と、配線を多数の小区間に分ける分布定数線路（distributed-parameter line）を比較し、長さまたは立上り時間を変えたときの差を予測する。</p>
+<h3 id="section-cf43a9e77c">今回の到達点</h3>
+<p>読み終えた時点で、次をできるようにする。</p>
+<ul><li>集中定数模型と分布定数模型で、空間の変数をどこまで残すか説明する。</li><li>単位長さあたりの<code>R'</code>、<code>L'</code>、<code>G'</code>、<code>C'</code>を、電圧・<a class="term" href="index.html#term-current">電流</a>の局所収支へつなぐ。</li><li><a class="term" href="index.html#term-concept_9_term_c4bb369c5d_c4bb369c">伝搬時間</a>と立上り時間の比から、集中定数近似を疑う条件を作る。</li><li>同じ入力を集中RCと分布線路へ与えたとき、出力の遅れ・丸まり・反射を「予測」として比較する。</li><li>測定器、終端、境界条件、配線の寄生要素を、物性値や回路素子と別の原因として診断する。</li></ul>
+<p>数式の値は、解析値、数値予測、測定値を混ぜない。runnerの解析・契約結果が実測でないことも、実験結果の一部として記録する。</p>
+<h2 id="section-2">2　線を消す模型、線を残す模型</h2>
+<h3 id="section-2-1">2.1　電磁場を回路図へ要約する</h3>
+<p>本当の配線には、各位置<code>x</code>と時刻<code>t</code>で異なる電場<code>E(x,t)</code>、磁場<code>B(x,t)</code>、<a class="term" href="index.html#term-charge_density">電荷密度</a>、電流密度がある。第6章の</p>
+<pre><code class="language-text">E = -grad(phi)</code></pre>
+<p>という関係は、<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>を空間の関数として読む入口だった。第7章の電流密度<code>J</code>も、断面や位置によって変わり得る。配線を回路図の一本の線へ描くときは、この空間依存性を省略し、端子の電圧<code>V(t)</code>と電流<code>I(t)</code>の関係へ要約する。</p>
+<p>この要約には少なくとも二つの段階がある。</p>
+<table><thead><tr><th>模型</th><th>状態として残すもの</th><th>隠すもの</th><th>使う場面</th></tr></thead>
+<tbody><tr><td>集中定数</td><td>端子電圧、枝電流、素子の<code>R</code>,<code>C</code>,<code>L</code></td><td>素子内部と配線上の位置依存</td><td>伝搬時間が応答時間より十分短いとき</td></tr><tr><td>分布定数</td><td><code>V(x,t)</code>,<code>I(x,t)</code>、<a class="term" href="index.html#term-concept_9_term_5ea20be8e7_5ea20be8">単位長さ定数</a></td><td>原子スケールの細部、三次元場の一部</td><td>配線の場所ごとの遅れ・反射が効くとき</td></tr></tbody>
+</table>
+<p>集中定数という言葉は、電磁場が存在しないという意味ではない。回路の選んだ<a class="term" href="index.html#term-concept_11_term_ebe20fe073_ebe20fe0">状態変数</a>へ、場の効果を積分して集めたという意味である。逆に、分布定数線路を使えばすべての電磁現象を説明できるわけでもない。断面形状、誘電体、損失、放射、モードの情報を、線路の係数へさらに平均している。</p>
+<h3 id="section-2-2-rc">2.2　集中定数のRC模型</h3>
+<p>入力電圧<code>V_s(t)</code>、抵抗<code>R</code>、コンデンサ<code>C</code>を直列につないだRC回路では、集中定数の仮定により、抵抗の端子電圧とコンデンサの端子電圧を同じ時刻の少数の値で表す。抵抗の電流とコンデンサの電流が等しいと置けば、第6章・第7章の関係から</p>
+<pre><code class="language-text">I_R = (V_s - V_C)/R
+I_C = C dV_C/dt
+I_R = I_C</code></pre>
+<p>となる。ステップ入力、一定の<code>R</code>と<code>C</code>、指定した初期値のもとでは、<a class="term" href="index.html#term-concept_11_term_8a294c0490_8a294c04">時定数</a><code>τ=RC</code>と、レジストリの<code>rc_response</code>で管理する解</p>
+<pre><code class="language-text">V_C(t) = V_final + (V_initial - V_final) exp(-t/(R C))</code></pre>
+<p>を使える。<code>R</code>の単位は<code>Ω</code>、<code>C</code>の単位は<code>F</code>なので、<code>RC</code>は秒である。<code>C dV/dt</code>は、レジストリの<code>capacitor_current</code>に対応し、単位は<code>A</code>になる。</p>
+<p>この式は、信号が配線のすべての場所へ瞬時に届くという規則ではない。入力とコンデンサの端子が一つの状態変数で表せるほど、配線の伝搬・反射・<a class="term" href="index.html#term-parasitic_capacitance">寄生容量</a>を無視できる場合の模型である。<code>R</code>へ配線抵抗を含めるのか、別の素子として残すのかも、回路の契約で決める。</p>
+<h3 id="section-2-3">2.3　集中定数近似の判定を先に置く</h3>
+<p>配線の長さを<code>ℓ</code>、信号の変化が進む速さを<code>v_p</code>、入力の立上り時間を<code>t_rise</code>とする。伝搬時間の定義は</p>
+<pre><code class="language-text">t_prop = ℓ/v_p                                      (9.1)</code></pre>
+<p>である。判定に使う比を</p>
+<pre><code class="language-text">κ = t_prop/t_rise                                   (9.2)</code></pre>
+<p>と置く。<code>κ</code>が十分小さいなら、線の端から端までの遅れを一つの回路状態へまとめる候補になる。<code>κ</code>が<code>1</code>に近い、またはそれより大きいなら、線の途中の電圧・電流を残した分布模型を試す。</p>
+<p>ここで「十分小さい」を普遍的な定数としない。許容する時間誤差、出力の場所、反射の大きさ、測定帯域によって境界は変わる。教育用の予定実験では、<code>κ≤0.1</code>を集中定数候補、<code>κ=0.5</code>を境界、<code>κ≥1</code>を分布効果を明示する条件としてラベル付けする。このラベルは設計契約であって、<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>そのものではない。</p>
+<h2 id="section-3">3　<a class="term" href="index.html#term-concept_9_term_ec2bd2fa41_ec2bd2fa">分布定数線路</a>の局所収支</h2>
+<h3 id="section-3-1">3.1　単位長さあたりの四つの係数</h3>
+<p>均一な二導体線路の小区間<code>dx</code>を考え、次の値を単位長さあたりで置く。</p>
+<table><thead><tr><th>記号</th><th>意味</th><th>単位</th><th>小区間<code>dx</code>での量</th></tr></thead>
+<tbody><tr><td><code>R'</code></td><td>直列抵抗</td><td><code>Ω/m</code></td><td><code>R'dx</code></td></tr><tr><td><code>L'</code></td><td>直列インダクタンス</td><td><code>H/m</code></td><td><code>L'dx</code></td></tr><tr><td><code>G'</code></td><td>並列漏れコンダクタンス</td><td><code>S/m</code></td><td><code>G'dx</code></td></tr><tr><td><code>C'</code></td><td>並列容量</td><td><code>F/m</code></td><td><code>C'dx</code></td></tr></tbody>
+</table>
+<p><code>R'</code>と<code>L'</code>は、線路の長さ方向に電流が進むときの電圧降下へ寄与する。<code>G'</code>と<code>C'</code>は、二導体間の電圧に応じて横方向へ流れる電流、または<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>を蓄える効果を表す。この四つは物質や形状から求める係数であり、任意の配線に同じ値を当てはめてよい定数ではない。</p>
+<p>本章で用いる線形・一様な模型では、電圧<code>V(x,t)</code>と電流<code>I(x,t)</code>を、正の<code>x</code>向きを基準に定義する。電圧の正端子、電流の正方向、線路の始点と終点を先に固定しないと、式の符号を比較できない。</p>
+<h3 id="section-3-2">3.2　小区間の電圧収支</h3>
+<p><code>x</code>から<code>x+dx</code>までの区間で、正方向の電流を<code>I(x,t)</code>とする。直列抵抗による電圧降下は<code>R'dx I</code>、インダクタンスに蓄積される磁気エネルギーの変化による降下は<code>L'dx ∂I/∂t</code>である。したがって、区間の両端電圧の差を一次の<code>dx</code>まで残すと、</p>
+<pre><code class="language-text">V(x,t) - V(x+dx,t)
+  = R&#x27; dx I(x,t) + L&#x27; dx ∂I(x,t)/∂t</code></pre>
+<p>となる。左辺を<code>dx</code>で割って<code>dx→0</code>の極限を取ると、</p>
+<pre><code class="language-text">∂V/∂x = -R&#x27; I - L&#x27; ∂I/∂t                 (9.3)</code></pre>
+<p>を得る。これは電圧を一つの数へ「消した」式ではない。各位置の電圧の変化率を、局所の直列損失と磁気的な蓄積へ結び付けている。</p>
+<h3 id="section-3-3">3.3　小区間の電流収支</h3>
+<p>同じ区間で、<code>x</code>から入る電流と<code>x+dx</code>から出る電流の差は、並列漏れとコンデンサへ流れる電流になる。二導体間の電圧を<code>V</code>とすると、漏れ電流は<code>G'dx V</code>、蓄積電流は<code>C'dx ∂V/∂t</code>である。第7章の電荷保存をこの小区間へ適用して、</p>
+<pre><code class="language-text">I(x,t) - I(x+dx,t)
+  = G&#x27; dx V(x,t) + C&#x27; dx ∂V(x,t)/∂t</code></pre>
+<p>と書く。極限を取ると、</p>
+<pre><code class="language-text">∂I/∂x = -G&#x27; V - C&#x27; ∂V/∂t                  (9.4)</code></pre>
+<p>となる。式(9.3)と式(9.4)をまとめてテレ<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>方程式（telegrapher's equations）と呼ぶ。レジストリの<code>continuity_equation</code>と<code>capacitor_current</code>を、線路の単位長さへ展開したものと読める。</p>
+<p><code>R'</code>、<code>L'</code>、<code>G'</code>、<code>C'</code>をすべて0にすることは、線路が何も伝えないという意味ではない。損失を無視する理想化になり、電圧・電流の波が伝わる別の式が残る。</p>
+<h3 id="section-3-4">3.4　損失を無視した波の速さと<a class="term" href="index.html#term-concept_9_term_fe6e2bae21_fe6e2bae">特性インピーダンス</a></h3>
+<p><code>R'=0</code>、<code>G'=0</code>で、<code>L'</code>と<code>C'</code>が正の一定値だとする。式(9.3)を<code>x</code>で微分し、式(9.4)を使うと、</p>
+<pre><code class="language-text">∂²V/∂x² = L&#x27; C&#x27; ∂²V/∂t²                  (9.5)</code></pre>
+<p>が得られる。同じ形の式は<code>I</code>にも現れる。この模型の伝搬速度を</p>
+<pre><code class="language-text">v_p = 1/sqrt(L&#x27; C&#x27;)                         (9.6)</code></pre>
+<p>と置く。単位は、<code>L'C'</code>が<code>(H/m)(F/m)=s²/m²</code>なので、<code>v_p</code>は<code>m/s</code>である。</p>
+<p>進行波の電圧と電流の比を特性インピーダンス（characteristic impedance）<code>Z_0</code>と呼び、損失のない線路では</p>
+<pre><code class="language-text">Z_0 = sqrt(L&#x27;/C&#x27;)                            (9.7)</code></pre>
+<p>となる。<code>Z_0</code>の単位は<code>Ω</code>である。これは「線路の両端に置く抵抗が常に<code>Z_0</code>」という意味ではない。負荷が<code>Z_0</code>に一致する場合に、理想化した進行波が端で反射しないという境界条件へ使う値である。</p>
+<p>式(9.5)〜(9.7)は本章で新たに使う式であり、<code>book-spec/equation-registry.yml</code> の <code>lossless_wave_equation</code>、<code>lossless_line_wave</code>、<code>characteristic_impedance</code> に対応する。本文では、単位、損失を捨てた仮定、始端・終端の条件を必ず式と一緒に保存する。</p>
+<h2 id="section-4-rc">4　集中RCと分布線路を同じ入力で比べる</h2>
+<h3 id="section-4-1">4.1　比較用の計算模型</h3>
+<p>二導体線路の長さを<code>ℓ=1.0 m</code>とし、次の値を「計算用の模型パラメータ」として置く。</p>
+<pre><code class="language-text">R&#x27; = 50 Ω/m       L&#x27; = 250 nH/m
+G&#x27; = 0 S/m        C&#x27; = 100 pF/m</code></pre>
+<p><code>G'=0</code>は漏れを無視する仮定であり、絶縁が完全という測定事実ではない。このとき全長を一つへまとめる集中模型は、</p>
+<pre><code class="language-text">R_lumped = R&#x27;ℓ = 50 Ω
+C_lumped = C&#x27;ℓ = 100 pF</code></pre>
+<p>と置ける。<code>L'</code>も残すなら集中RLCだが、ここでは「抵抗と容量が支配的な遅い応答」と「線路としての伝搬」を比較するため、集中RCを基準にする。集中RCの時定数は</p>
+<pre><code class="language-text">τ_lumped = R_lumped C_lumped = 5.0 ns</code></pre>
+<p>である。</p>
+<p>同じ<code>L'</code>と<code>C'</code>から、損失なしの計算上の伝搬速度と特性インピーダンスは</p>
+<pre><code class="language-text">v_p = 1/sqrt((250×10^-9)(100×10^-12)) = 2.0×10^8 m/s
+Z_0 = sqrt((250×10^-9)/(100×10^-12)) = 50 Ω</code></pre>
+<p>となる。これは入力値からの予測であり、実際の基板やケーブルの測定値ではない。</p>
+<h3 id="section-4-2">4.2　長さを変えた予測</h3>
+<p>立上り時間を<code>t_rise=1.0 ns</code>に固定し、長さを変える。<code>v_p</code>を一定とする単純模型では、</p>
+<table><thead><tr><th><code>ℓ</code></th><th><code>t_prop=ℓ/v_p</code>の予測</th><th><code>κ=t_prop/t_rise</code></th><th>判断ラベル</th></tr></thead>
+<tbody><tr><td><code>0.010 m</code></td><td><code>0.050 ns</code></td><td><code>0.050</code></td><td>集中定数候補</td></tr><tr><td><code>0.10 m</code></td><td><code>0.50 ns</code></td><td><code>0.50</code></td><td>境界・両方を比較</td></tr><tr><td><code>1.0 m</code></td><td><code>5.0 ns</code></td><td><code>5.0</code></td><td>分布効果を明示</td></tr></tbody>
+</table>
+<p>と予測する。短い線では、端子のRC波形だけを見れば一つの指数関数に近いと期待できる。長い線では、入力端と負荷端が異なる時刻に変化し、途中の反射や線路損失を無視したRCの波形からずれる可能性がある。</p>
+<h3 id="section-4-3">4.3　立上り時間を変えた予測</h3>
+<p>長さ<code>ℓ=1.0 m</code>を固定し、立上り時間を変える。</p>
+<table><thead><tr><th><code>t_rise</code></th><th><code>t_prop</code></th><th><code>κ</code></th><th>判断ラベル</th></tr></thead>
+<tbody><tr><td><code>100 ns</code></td><td><code>5.0 ns</code></td><td><code>0.050</code></td><td>集中定数候補</td></tr><tr><td><code>10 ns</code></td><td><code>5.0 ns</code></td><td><code>0.50</code></td><td>境界・比較が必要</td></tr><tr><td><code>1.0 ns</code></td><td><code>5.0 ns</code></td><td><code>5.0</code></td><td>分布効果を明示</td></tr></tbody>
+</table>
+<p>同じ線でも、ゆっくり変わる信号なら空間の遅れが応答全体に対して小さくなり、集中模型が使いやすくなる。線の性質だけで近似が決まるのではなく、線と入力の組で決まる。</p>
+<h3 id="section-4-4">4.4　終端と反射を別の原因として残す</h3>
+<p>線路の終端抵抗<code>R_L</code>が<code>Z_0</code>と一致しないとき、端で電圧・電流の境界条件が変わる。終端が開放なら電流はその端で流れにくくなり、短絡なら電圧差が小さくなる。どちらも、抵抗<code>R</code>と容量<code>C</code>だけの一つの指数応答へ無条件に押し込める現象ではない。</p>
+<p>同じ<code>κ</code>でも、終端、入力源の抵抗、測定器の入力容量が異なれば波形は変わる。反射を見つけたら、まず「長さの分布効果」と「終端・測定器の境界条件」を分けてログへ書く。波形が滑らかだから集中定数、波形に段差があるから分布定数、と見た目だけで分類しない。</p>
+<h2 id="section-5">5　予定実験: 同じ配線を二つの模型で計算する</h2>
+<h3 id="section-5-1-runner">5.1　runnerと状態</h3>
+<p>共通入口は次である。</p>
+<pre><code class="language-text">book run 9 1</code></pre>
+<p>現行runnerは実装済みで、<code>book run 9 1</code> の実行ログとartifactを保存している。ただし、以下の数値、表、図の系列は入力と式から作った解析予測であり、外部tool・実測ではない。<code>command_status: implemented</code>、<code>expected_output_status: analytic_prediction_recorded_measurement_not_run</code>をartifactへ保存し、解析結果を測定済みと呼ばない。</p>
+<p>runnerは、同じ<code>R'</code>,<code>L'</code>,<code>G'</code>,<code>C'</code>、長さ、入力立上り、終端条件について、少なくとも次を計算する。</p>
+<ol><li>集中RCの<code>R=R'ℓ</code>、<code>C=C'ℓ</code>、<code>τ=RC</code>、負荷端の解析予測。</li><li>分布線路を<code>N</code>区間へ分けた梯子模型。各区間に<code>R'dx</code>、<code>L'dx</code>、<code>G'dx</code>、<code>C'dx</code>を置き、時刻ごとの<code>V_i</code>,<code>I_i</code>を数値更新する。</li><li>伝搬時間<code>t_prop</code>、比<code>κ</code>、境界条件、刻み幅、数値安定性。</li><li>集中RCと分布線路の同じ時刻の出力差、および長さ・立上り時間を変えた差。</li></ol>
+<p>分布線路の各区間を数値化するとき、<code>dx</code>を半分にして結果が近づくかを確認する。区間を増やすだけで「実物に近い」とは言えない。<code>dt</code>が小さすぎる、または大きすぎる場合の数値誤差と、線路模型そのものの近似誤差を状態欄で分ける。</p>
+<h3 id="section-5-2">5.2　入力、期待観測、成果物</h3>
+<p>計算用の基本入力は次である。</p>
+<pre><code class="language-text">ℓ = 1.0 m
+R&#x27; = 50 Ω/m, L&#x27; = 250 nH/m, G&#x27; = 0 S/m, C&#x27; = 100 pF/m
+入力の最終値 = 1.0 V
+立上り時間 = 1.0 ns
+終端抵抗 R_L = 50 Ω, 1.0 kΩ, open の三条件
+区間数 N = 10, 100, 1000 の比較</code></pre>
+<p>期待するのは実測結果ではなく、次の解析・数値予測である。</p>
+<ul><li><code>R_lumped=50 Ω</code>、<code>C_lumped=100 pF</code>、<code>τ_lumped=5.0 ns</code>となる。</li><li><code>v_p=2.0×10^8 m/s</code>、<code>t_prop=5.0 ns</code>、<code>κ=5.0</code>となり、1 ns入力では分布効果を明示する条件になる。</li><li><code>R_L=50 Ω</code>は計算上の<code>Z_0</code>と一致するため、理想損失なし線路の反射を小さくする境界条件になると予測する。</li><li><code>R_L=1.0 kΩ</code>と開放終端では、負荷端の電圧・電流の時間波形が一致終端と変わると予測する。</li><li><code>ℓ=0.010 m</code>または<code>t_rise=100 ns</code>では<code>κ=0.050</code>となり、集中RCとの比較差が相対的に小さくなると予測する。</li><li><code>N</code>を増やしたとき、同じ分布方程式を適切な刻み幅で解ければ、出力波形の離散化差を評価できる。</li></ul>
+<p>必要なartifactは、入力と式の台帳、集中RCと分布線路の時系列、比較図、負のテストログである。各行へ<code>source_kind: analytic_prediction</code>または<code>source_kind: runner_result</code>、<code>measured: false</code>、<code>environment</code>、<code>model</code>、<code>length_m</code>、<code>rise_time_s</code>を保存する。実際に測ったオシロスコープ波形を追加する段階では、<code>source_kind: measurement</code>を別行または別ファイルへ置く。</p>
+<h3 id="section-5-3">5.3　実装の骨格と負のテスト</h3>
+<p>本文の次のコードは、入力の意味と状態を確認するための実装骨格である。執筆時点の実行ログではない。</p>
+<pre><code class="language-python">from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class LineModel:
+    length_m: float
+    r_per_m_ohm: float
+    l_per_m_h: float
+    g_per_m_s: float
+    c_per_m_f: float
+    rise_time_s: float
+
+    def check(self) -&gt; None:
+        if self.length_m &lt;= 0:
+            raise ValueError(&quot;length_m must be positive&quot;)
+        if self.rise_time_s &lt;= 0:
+            raise ValueError(&quot;rise_time_s must be positive&quot;)
+        if min(self.r_per_m_ohm, self.l_per_m_h,
+               self.g_per_m_s, self.c_per_m_f) &lt; 0:
+            raise ValueError(&quot;per-length parameters must not be negative&quot;)
+        if self.l_per_m_h == 0 or self.c_per_m_f == 0:
+            raise ValueError(&quot;lossless wave estimate needs L&#x27; and C&#x27; &gt; 0&quot;)
+
+    def prediction(self) -&gt; dict[str, float]:
+        self.check()
+        vp = 1.0 / (self.l_per_m_h * self.c_per_m_f) ** 0.5
+        t_prop = self.length_m / vp
+        return {
+            &quot;r_lumped_ohm&quot;: self.r_per_m_ohm * self.length_m,
+            &quot;c_lumped_f&quot;: self.c_per_m_f * self.length_m,
+            &quot;t_prop_s&quot;: t_prop,
+            &quot;kappa&quot;: t_prop / self.rise_time_s,
+            &quot;status&quot;: &quot;analytic_prediction_recorded_measurement_not_run&quot;,
+        }</code></pre>
+<p>負のテストは、物理的な条件変更と入力エラーを混ぜない。</p>
+<ul><li><code>length_m=0</code>、<code>rise_time_s=0</code>、負の<code>R'</code>や<code>C'</code>は入力エラーとして拒否する。</li><li><code>L'=0</code>または<code>C'=0</code>で式(9.6)だけから速度を出そうとするのは、適用範囲外として拒否する。</li><li><code>C_per_m_f=100</code>のように<code>pF/m</code>を<code>F/m</code>へ直さない場合は、単位故障として記録する。</li><li><code>N</code>を増やしても<code>dx=ℓ/N</code>を更新しない場合は、区間ごとの<code>R'dx</code>,<code>C'dx</code>が変わらない故障である。</li><li>終端を<code>50 Ω</code>から<code>1 kΩ</code>へ変えることは正常な条件変更であり、失敗とは呼ばない。</li><li><code>source_kind</code>を<code>measurement</code>へ書き換えて実測のない波形を通すことは、値の計算とは別の<a class="term" href="index.html#term-provenance">provenance</a>故障である。</li></ul>
+<h2 id="section-6">6　結果の読み方と模型の境界</h2>
+<h3 id="section-6-1">6.1　集中定数の成功は、場がない証拠ではない</h3>
+<p>集中RCの曲線と分布線路の曲線が、ある条件でよく重なったとする。それは、選んだ出力、帯域、誤差許容幅の範囲で、分布した情報を一つの状態へ隠しても契約を満たせたという意味である。電磁場が存在しない、または配線上のどの点も同じ電圧だという証明ではない。</p>
+<p>逆に、曲線がずれたときも、すぐに式の間違いと決めない。次の順で原因を切り分ける。</p>
+<ol><li><code>ℓ</code>、<code>v_p</code>、<code>t_rise</code>の単位と、<code>κ</code>の計算を確認する。</li><li><code>R'</code>,<code>L'</code>,<code>G'</code>,<code>C'</code>から区間値を作るとき、<code>dx</code>を一度だけ掛けたか調べる。</li><li>入力源の抵抗、負荷、測定器の容量と、始端・終端の境界条件をログで確認する。</li><li><code>N</code>と<code>dt</code>を変え、離散化誤差・数値安定性・模型差を分離する。</li><li>最後に、そもそもの線路係数が対象の配線を表しているかを問う。</li></ol>
+<h3 id="section-6-2-vi">6.2　<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>の行き先を一つの<code>VI</code>へ閉じない</h3>
+<p>第7章の端子電力<code>P=VI</code>は、指定した端子極性と電流方向で素子が吸収・供給するエネルギーを表す。分布線路では、電力は場所ごとの<code>V(x,t)</code>と<code>I(x,t)</code>、導体損失、誘電体損失、電磁場のエネルギーとして移動・蓄積する。場のエネルギー流束は、レジストリの<code>poynting_theorem</code>で扱う</p>
+<pre><code class="language-text">∂u_em/∂t + div(S) = -J·E</code></pre>
+<p>のような収支に残る。ここでも、集中回路の<code>VI</code>と分布場の<code>S</code>を同じ単位の量として扱わない。集中模型にまとめた後でも、どの領域のエネルギーを数えたかを明示する。</p>
+<h3 id="section-6-3">6.3　この章で捨てたもの</h3>
+<p>本章の線路模型は、次を仮定または省略している。</p>
+<ul><li>断面形状と媒質が一様で、単位長さ定数を位置に依存しないとした。</li><li>線路をTEMに近い二導体系として扱い、放射・高次モード・複雑な三次元境界を係数へ押し込めた。</li></ul>
+<p>*<code>R'</code>,<code>L'</code>,<code>G'</code>,<code>C'</code>を線形で、指定範囲の周波数に対して一定とした。表皮効果・誘電損失・分散があれば周波数依存を残す必要がある。</p>
+<ul><li>式(9.5)〜(9.7)では<code>R'=G'=0</code>という損失なし近似を使った。実線路の減衰を説明する式ではない。</li><li>集中RCでは、配線上の遅れ、反射、配線インダクタンス、分布容量、<a class="term" href="index.html#term-concept_4_term_f45c8e51fa_f45c8e51">測定器負荷</a>を、選んだ<code>R</code>,<code>C</code>へまとめた。</li></ul>
+<p>*<code>κ≤0.1</code>などのラベルは、許容誤差と観測箇所を指定して初めて意味を持つ設計上の目安である。</p>
+<ul><li>外部tool・実機測定を伴わない表・図・期待値は、数値予測であって、実物の測定・校正・検証済みのモデルではない。</li></ul>
+<h3 id="section-6-4">6.4　<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a></h3>
+<table><thead><tr><th>項目</th><th>本章での内容</th></tr></thead>
+<tbody><tr><td>下位表現</td><td>位置ごとの<code>E</code>,<code>B</code>,<code>V(x,t)</code>,<code>I(x,t)</code>、電荷、磁気・電気エネルギー、線路係数</td></tr><tr><td>上位契約</td><td>集中素子の<code>R</code>,<code>C</code>と端子波形、または分布線路の<code>V(x,t)</code>,<code>I(x,t)</code></td></tr><tr><td>隠される変数</td><td>断面内の三次元場、個々の担体、原子配置、測定器内部、放射・モード詳細</td></tr><tr><td>成立条件</td><td>指定帯域、線形性、境界条件、線路係数の妥当性、<code>κ</code>が許容範囲内</td></tr><tr><td>破綻条件</td><td><a class="term" href="index.html#term-propagation_delay">伝搬遅延</a>が大きい、反射が支配的、終端不明、分散・損失・放射・非線形が無視できない</td></tr><tr><td>検証方法</td><td>単位、極限、<code>N</code>と<code>dt</code>の収束、長さ・立上り時間掃引、終端変更、実測との状態付き比較</td></tr></tbody>
+</table>
+<p>回路図の線は「電磁場のない場所」ではない。設計上必要な情報を、許容誤差の範囲で省略した境界である。線を消せるかどうかは、図の見た目ではなく、時空間の尺度と観測契約で決まる。</p>
+<h2 id="section-7">7　次章への引き渡し</h2>
+<p>本章では、局所の導電率から抵抗を得た第8章の縮約を、時間変化する配線へ進めた。集中定数模型では端子の少数の状態へまとめ、分布定数模型では<code>V(x,t)</code>と<code>I(x,t)</code>を残す。伝搬時間と立上り時間の比<code>κ</code>、線路の四つの単位長さ定数、始端・終端を、近似の成立条件として保存した。</p>
+<p>第10章では、集中定数へまとめた回路で、節点の電流収支と閉路の電圧収支を方程式へする。そこで<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>とKVLを暗記規則とせず、第7章の電荷保存、第6章の電位差、そして本章の境界条件付き縮約から導く。集中定数の式を使うときも、どの分布情報を捨てたかを忘れない。</p>
+<p>さらに後の第11章では<code>R</code>,<code>C</code>,<code>L</code>に時間発展を持たせ、第12章では周波数、反射、雑音、伝送線路をより詳しく扱う。本章の予定実験が実行され、runnerの出力が独立確認されるまでは、<code>κ</code>の分類も、集中RCとの差も、計算模型に対する予測として扱う。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-9-2">9.補助演習　手を動かす導出帳</h2>
+<p>回路という近似の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-rc">例題1　同じ配線を集中RCと分布定数線路で計算し、長さ・立上り時間・終端の影響を比較する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 9 1</code>である。入力は<code>["ℓ=1.0 m、R'=50 Ω/m、L'=250 nH/m、G'=0 S/m、C'=100 pF/m", "入力最終値1.0 V、立上り時間1.0 ns、100 ns", "長さ0.010 m、0.10 m、1.0 mの比較", "終端R_L=50 Ω、1.0 kΩ、openの比較", "分布線路の区間数N=10、100、1000と時間刻みの比較", "単位・長さ・L'=0/C'=0・区間値二重適用・状態混同の負のテスト"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>集中定数模型</code>は、配線上の空間依存を端子と少数の素子値へ縮約する模型。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>集中定数模型</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>分布定数線路</code>は、電圧と電流を位置と時間の関数として残す線路模型。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>分布定数線路</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>単位長さ定数</code>は、線路の抵抗、インダクタンス、漏れ、容量を単位長さで表す係数。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>単位長さ定数</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>伝搬時間</code>は、信号が線路の長さを進む時間尺度。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>伝搬時間</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>特性インピーダンス</code>は、線路の進行波における電圧と電流の比、および終端条件の基準。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>特性インピーダンス</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>集中定数判定比</code>は、伝搬時間と信号立上り時間の比で近似を疑う目安。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>集中定数判定比</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-5">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（長さ掃引と集中定数近似の境界）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（集中RCの解析予測と実測状態）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（分布線路の容量電流と局所収支）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（終端抵抗と反射）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（単位・零値・適用範囲の入力検査）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（区間長の二重適用と離散化収束）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（測定器負荷、分布効果、離散化誤差の切り分け）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（<a class="term" href="index.html#term-continuity_equation">連続の式</a>から集中定数KCLへの引き渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-9-3">9.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>回路という近似</strong>の中心問題「空間に広がる電磁場を、回路図の線と素子へ置き換えてよいのはいつか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["R_lumped=50 Ω、C_lumped=100 pF、τ=5.0 nsの解析予測", "v_p=2.0e8 m/s、Z_0=50 Ω、ℓ=1.0 mでt_prop=5.0 nsの解析予測", "1 ns入力ではκ=5.0、100 ns入力ではκ=0.050の解析予測", "0.010 m線ではκ=0.050、0.10 m線ではκ=0.50の解析予…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>ℓ=1.0 m、R'=50 Ω/m、L'=250 nH/m、G'=0 S/m、C'=100 pF/m</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>入力最終値1.0 V、立上り時間1.0 ns、100 ns</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>長さ0.010 m、0.10 m、1.0 mの比較</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>終端R_L=50 Ω、1.0 kΩ、openの比較</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>分布線路の区間数N=10、100、1000と時間刻みの比較</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>単位・長さ・L'=0/C'=0・区間値二重適用・状態混同の負のテスト</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-4">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「線路長と伝搬速度からt_prop=ℓ/v_pを得て、信号立上り時間との比κ=t_prop/t_riseで集中定数近似を検査する。」で、参照する式IDまたは検証項目は <code>長さ・立上り時間の掃引、単位検査、境界条件変更</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「小区間の直列抵抗とインダクタンスの電圧降下から∂V/∂x=-R'I-L'∂I/∂tを得る。」で、参照する式IDまたは検証項目は <code>小区間の符号収支、dx収束、抵抗・インダクタンス極限</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「小区間の漏れ・容量電流と電荷収支から∂I/∂x=-G'V-C'∂V/∂tを得る。」で、参照する式IDまたは検証項目は <code>容量電流の単位、G'=0極限、節点収支</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「R'=G'=0のテレグラフ方程式から波動方程式、v_p=1/sqrt(L'C')、Z_0=sqrt(L'/C')を得る。」で、参照する式IDまたは検証項目は <code>単位解析、L'またはC'の極限、終端一致条件</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「線路全長を集中RCへまとめるとR=R'ell、C=C'ell、tau=RCとなる。」で、参照する式IDまたは検証項目は <code>長さ比例、単位検査、分布線路との波形比較</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-6">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 同じ配線を集中RCと分布定数線路で計算し、長さ・立上り時間・終端の影響を比較する</p>
+<p>入口は <code>book run 9 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-09-line-model-source", "chapter-09-comparison-output", "chapter-09-comparison-plot", "chapter-09-failure-log"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["R_lumped=50 Ω、C_lumped=100 pF、τ=5.0 nsの解析予測", "v_p=2.0e8 m/s、Z_0=50 Ω、ℓ=1.0 mでt_prop=5.0 nsの解析予測", "1 ns入力ではκ=5.0、100 ns入力ではκ=0.050の解析予測", "0.010 m線ではκ=0.050、0.10 m線ではκ=0.50の解析予…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>集中定数模型は電磁場がないという意味ではなく、選んだ端子契約へ空間情報を積分した近似である。</li><li>分布定数線路も三次元電磁場の完全解ではなく、断面・媒質・モード・放射を単位長さ係数へ縮約している。</li><li><code>t_prop/t_rise</code>の閾値は許容誤差、観測位置、終端、測定帯域を含む設計上の目安で、普遍的な境界ではない。</li><li>テレグラフ方程式は一様・線形・指定周波数範囲のR'、L'、G'、C'を前提とし、表皮効果、分散、非線形、放射を自動的に含まない。</li><li><code>v_p=1/sqrt(L'C')</code>と<code>Z_0=sqrt(L'/C')</code>はR'=G'=0の損失なし近似であり、実線路の減衰や複素特性インピーダンスを表さない。</li><li>終端抵抗、入力源抵抗、測定器の入力容量は線路係数とは別の境界・負荷であり、同じRやCへ黙って混ぜない。</li><li>区間数を増やした分布数値計算の収束は、係数・境界条件・時間刻みが正しいことを単独では保証しない。</li><li><code>R=R'ell</code>、<code>C=C'ell</code>の集中化は、線路長、帯域、過渡、配置、寄生素子の条件を分離して初めて使える。</li><li>本章のrunnerは固定環境で契約を再生済みだが、図・表の外部tool・実測は未実行であり、本文の数値は計算用入力からの予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第6章の電位、電圧、電場、コンデンサ、電場エネルギー</li><li>第7章の電流、<a class="term" href="index.html#term-current_density">電流密度</a>、連続の式、電力、Poyntingベクトル</li><li>第8章の導電率、<a class="term" href="index.html#term-resistivity">抵抗率</a>、均一線材のR=L/(σA)</li><li>第3章の<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>、微分方程式、数値近似、時定数</li><li>第4章の解析予測・数値予測・測定値・未実装状態の分離</li><li>第2章の抽象化台帳と固定Linux環境</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第10章で集中定数回路の節点と閉路へKCL・<a class="term" href="index.html#term-concept_10_kirchhoff_205c0d1f">KVL</a>を適用する</li><li>第11章で抵抗、コンデンサ、インダクタの時間発展を解く</li><li>第12章で周波数、反射、雑音、伝送線路を詳しく扱う</li><li>第20章以降で信号伝搬、配線、電磁場の限界を論理・CPUへ接続する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-5">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — central_question_and_concrete_observation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — lumped_and_distributed_boundary。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — per_length_units。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — telegrapher_derivation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — lossless_wave_units_and_limits。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — lumped_validity_ratio。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — same_input_model_comparison。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — boundary_and_measurement_separation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — negative_tests_and_units。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — artifact_figure_source_registry_links。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — exercise_solution_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — bridge_to_kcl。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-2">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 同じ配線を集中RCと分布定数線路で計算し、長さ・立上り時間・終端の影響を比較する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 9 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["R_lumped=50 Ω、C_lumped=100 pF、τ=5.0 nsの解析予測", "v_p=2.0e8 m/s、Z_0=50 Ω、ℓ=1.0 mでt_prop=5.0 nsの解析予測", "1 ns入力ではκ=5.0、100 ns入力ではκ=0.050の解析予測", "0.010 m線ではκ=0.050、0.10 m線ではκ=0.50の解析予…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-4">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

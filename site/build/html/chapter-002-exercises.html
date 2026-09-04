@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第2章　法則、モデル、契約、実装　演習</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-2">第2章　演習</h1>
+<p>この章の演習は、計算量を競うものではない。各問で「何を観測し、どの契約を使い、何を隠しているか」を書く。<code>book run</code> は共通runnerの実行入口で、固定Linux環境の入力由来契約を再生する。外部domain toolや実機が未接続でも、runnerの契約結果、解析予測、測定欄 <code>not_run</code> を分けて台帳を作る。</p>
+<h2 id="section-e1">E1　四つの言葉を分類する</h2>
+<p>次の文を、主な分類「<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>」「理想化モデル」「設計上の契約」「特定実装」のいずれかへ分類する。分類しにくい文は、二つの主張へ分けてから答える。</p>
+<ol><li><a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>は消滅せず、閉じた系全体の電荷量は保存される。</li><li>この1 kΩ抵抗器は、室温・直流・定格内なら <code>I=V/R</code> で近似できる。</li><li><a class="term" href="index.html#term-rv32i">RV32I</a>の<code>ADD</code>は32ビットの和を<code>rd</code>へ書く。</li><li><code>rv32edu</code>の<a class="term" href="index.html#term-concept_67_uart_3c85ca67">UART</a>データレジスタは<code>0x10000000</code>にある。</li><li>CPython 3.14.7では整数オブジェクトを複数の内部桁で表す。</li><li>二入力NANDは、入力が有効範囲なら<code>Y=NOT(A AND B)</code>として読める。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 「この部品」「このCPU」「この版」のような限定がある文は実装に近い。</li><li>ヒント2: 他の作り方でも守るべき結果を定める文は契約に近い。</li><li>ヒント3: 条件を省いて式を使いやすくしている文はモデルである。自然法則と同じ名前の式でも、適用範囲を確認する。</li></ul>
+</div></details>
+<h2 id="section-e2">E2　抵抗器の台帳を一行作る</h2>
+<p>1 kΩの抵抗器に5 Vを加える。<code>I=V/R</code>から5 mAを予測した。この予測について、次の欄を一つずつ埋める。</p>
+<ul><li>下位表現</li><li>上位契約または予測</li><li>隠される変数を二つ以上</li><li>成立条件を二つ以上</li><li>破綻条件を二つ以上</li><li>予測を確かめる最小の検証</li></ul>
+<p>最後に、「5 mA」は観測値か、モデルからの予測かを明記する。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 下位表現には<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>と電荷の流れを含める。</li><li>ヒント2: 隠される変数には温度、寄生要素、許容差などがある。</li><li>ヒント3: まず<a class="term" href="index.html#term-voltage">電圧</a>と電流を測り、<code>V/R</code>との差を誤差と条件に照らして比べる。</li></ul>
+</div></details>
+<h2 id="section-e3">E3　抵抗器の自己発熱を診断する</h2>
+<p>同じ抵抗器へ5 Vを加え続けたところ、最初は5.0 mA、数分後は6.2 mAになった。電源電圧は測定中ほぼ5 Vだった。</p>
+<ol><li>観測事実を二つ書く。</li><li>「自然法則が破綻した」と言う前に、台帳のどの欄を見直すべきか。</li><li>追加すべき観測を二つ挙げる。</li><li><code>I=V/R</code>を使い続けてよい条件を一つ、外れている可能性のある条件を一つ書く。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: <a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>は<code>P=VI</code>であり、抵抗器は発熱し得る。</li><li>ヒント2: 温度で実効抵抗が変わる、または接続・計器が変わる可能性がある。</li><li>ヒント3: 抵抗器の温度、実際の端子電圧、抵抗値を時間とともに測る。</li></ul>
+</div></details>
+<h2 id="section-e4-nand">E4　NANDの契約を確認する</h2>
+<p>二入力NANDについて、真理値表の空欄を埋める。</p>
+<table><thead><tr><th>A</th><th>B</th><th>Y</th></tr></thead>
+<tbody><tr><td>0</td><td>0</td><td></td></tr><tr><td>0</td><td>1</td><td></td></tr><tr><td>1</td><td>0</td><td></td></tr><tr><td>1</td><td>1</td><td></td></tr></tbody>
+</table>
+<p>次に、次の二つの文を分類する。</p>
+<ul><li>「A=1、B=1ならYを論理0として読める」</li><li>「A=1、B=1にした0.5 ns後、出力は必ず0.1 Vである」</li></ul>
+<p>後者を契約にするには、何の条件を追加しなければならないか。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: NANDはANDの結果を反転する。</li><li>ヒント2: 真理値表は電圧の具体値ではなく、論理値の結果を表す。</li><li>ヒント3: 電源、負荷、入力閾値、<a class="term" href="index.html#term-propagation_delay">伝搬遅延</a>、温度を考える。</li></ul>
+</div></details>
+<h2 id="section-e5-nand">E5　NANDの浮いた入力を診断する</h2>
+<p>NANDの入力Aをスイッチで切り離したところ、スイッチを開いたときに出力が0と1の間で不規則に変化した。Bは論理1へ固定されている。</p>
+<ol><li>真理値表だけでは、なぜこの観測を予測できないか。</li><li>台帳の成立条件のうち、どれが破られた可能性が高いか。</li><li>次の観測または修正を二つ提案する。</li><li>「NANDの契約が常に誤り」と結論してはいけない理由を書く。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: スイッチを開いた入力は、論理0とも論理1とも限らない。</li><li>ヒント2: 入力の電圧を測り、論理閾値と比較する。</li><li>ヒント3: 規定のプルアップまたはプルダウンを加え、安定してから出力を読む。</li></ul>
+</div></details>
+<h2 id="section-e6-rv32i-add">E6　RV32I <code>ADD</code>を手計算する</h2>
+<p>32ビットのRV32I <code>ADD</code>について、次の結果を16進数で書く。</p>
+<ol><li><code>0x00000001 + 0x00000002</code></li><li><code>0xffffffff + 0x00000001</code></li><li><code>0x80000000 + 0x80000000</code></li></ol>
+<p>さらに、<code>ADD x0, x5, x6</code>を実行した後のx0の値を答え、なぜそのような契約が必要かを一文で説明する。</p>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: 結果は<code>(rs1+rs2) mod 2^32</code>である。</li><li>ヒント2: 33ビット目は32ビット結果へ残らない。</li><li>ヒント3: x0は読み出すと常に0で、書き込み先にしても効果を持たない。</li></ul>
+</div></details>
+<h2 id="section-e7-add">E7　<code>ADD</code>実装の故障を切り分ける</h2>
+<p><code>rv32edu</code>のトレースに次が記録された。</p>
+<pre><code class="language-text">instruction: ADD x7, x5, x6
+before:      x5=1 x6=2 x7=0
+after:       x5=1 x6=2 x7=4</code></pre>
+<ol><li>RV32Iの契約から予測される<code>x7</code>を書き、どの<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a>が壊れたか説明する。</li><li><a class="term" href="index.html#term-concept_35_alu_5bfc1981">ALU</a>が<code>SUB</code>を選んだ、レジスタ番号を取り違えた、トレースを一命令早く読んだ、の三つを区別する追加観測を挙げる。</li><li><code>x5=0xffffffff,x6=1</code>のケースを追加したとき、何を確認できるか。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: <code>1+2</code>は3であり、4ではない。</li><li>ヒント2: 命令ビット列、デコード結果、ALUの入力・演算種別・出力を分けて記録する。</li><li>ヒント3: 境界値は、加算と別演算、レジスタ幅の誤りを見つけやすい。</li></ul>
+</div></details>
+<h2 id="section-e8-python">E8　Python整数と有限幅整数を比較する</h2>
+<p>次の値を比較する。</p>
+<pre><code class="language-python">print(2**32 + 1)
+print(2**100 + 1)</code></pre>
+<ol><li>Pythonの言語上の整数結果を、それぞれ十進数または<code>2^n+1</code>の形で書く。</li><li>同じ入力を32ビット<code>ADD</code>の結果として扱った場合、どこで意味が変わるか説明する。</li><li>「Python整数は無限」と「CPythonは無限メモリを持つ」は、なぜ同じ文ではないか。</li><li>2つの<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>の内部表現を比較するとき、版情報と資源について何を記録するか。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: Pythonの上位契約では固定32ビットのラップを利用者へ見せない。</li><li>ヒント2: Python整数も有限のメモリと時間で実行される。</li><li>ヒント3: 内部の桁の基数や割当方法は実装依存なので、対象版を固定して観測する。</li></ul>
+</div></details>
+<h2 id="section-e9">E9　同じ出力から実装を一意に決めない</h2>
+<p>次の二つのプログラムは、どちらも画面に<code>3</code>を表示した。</p>
+<pre><code class="language-python">print(1 + 2)</code></pre>
+<pre><code class="language-python">a = 1
+b = 2
+print(a + b)</code></pre>
+<ol><li>出力という上位の契約が同じでも、隠れている可能性のある下位表現を三つ挙げる。</li><li><code>print(1 + 2)</code>が定数3へ前計算されても、Pythonの意味を保てる条件を一つ以上書く。</li><li>二つのプログラムが同じCPU命令列だと、出力だけから断定できない理由を書く。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: AST、<a class="term" href="index.html#term-bytecode">バイトコード</a>、名前の読み出し、加算の時刻は別々に観測できる。</li><li>ヒント2: 観測結果が同じことと、内部経路が同じことは別である。</li><li>ヒント3: 計算を前倒しできるのは、値と副作用と<a class="term" href="index.html#term-exception">例外</a>などの観測結果を変えない場合だけである。</li></ul>
+</div></details>
+<h2 id="section-e10">E10　自分の<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a>を完成させ、故障条件を分類する</h2>
+<p>次の空の台帳を、抵抗器、NAND、RV32I <code>ADD</code>、Python整数の四行について完成させる。</p>
+<table><thead><tr><th>対象</th><th>分類</th><th>下位表現</th><th>上位契約</th><th>隠される変数</th><th>成立条件</th><th>破綻条件</th><th>検証方法</th></tr></thead>
+<tbody><tr><td>抵抗器</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>NAND</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>RV32I <code>ADD</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Python整数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+</table>
+<p>次の故障を台帳のどの行・どの欄に記録するか分類し、最初に行う観測を一つずつ書く。</p>
+<ol><li>抵抗器の温度が上がり、<a class="term" href="index.html#term-current">電流</a>が時間とともに変わった。</li><li>NANDの入力が閾値付近に浮き、出力が揺れた。</li><li><code>ADD</code>の結果が境界値でだけ一致しない。</li><li><code>2**100</code>の計算がメモリ不足で停止した。</li></ol>
+<details class="hint"><summary>ヒント</summary><div class="hint-body">
+<ul><li>ヒント1: まず観測事実、次に期待、最後に条件を分ける。</li><li>ヒント2: 「契約違反」と「契約を適用できない条件」は同じとは限らない。</li><li>ヒント3: 追加観測は、仮説を最も小さく分けるものを選ぶ。温度、入力電圧、命令ビット列とALU、メモリ使用量などである。</li></ul>
+</div></details>
+<h2 id="section-f3daf6614b">合格の記録</h2>
+<p>次の全項目を、自分の言葉で記録する。</p>
+<ul><li>四つの例に、下位表現、上位契約、隠される変数、成立条件、破綻条件、検証方法を入れた。</li><li><code>I=V/R</code>を抵抗器の条件付きモデルとして説明した。</li><li><a class="term" href="index.html#term-concept_2_nand_a8e83472">NANDの真理値表</a>と電圧波形・遅延を別に説明した。</li><li>RV32I <code>ADD</code>の有限幅とPython整数の違いを、境界値で説明した。</li><li>一つの故障について、観測、期待、条件、分類、次の観測を分けて書いた。</li></ul>
+<p>解答を読んだ後は、同じ問を写すのではなく、<code>solutions.txt</code>の再挑戦問題へ進む。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

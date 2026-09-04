@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第17章　真性半導体とキャリア</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-017-exercises.html">この章の演習</a>　<a href="chapter-017-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-17-1"><code>book run 17 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-017/experiment-01.json">成果物</a></li></ul></section><h1 id="section-17">第17章　真性<a class="term" href="index.html#term-semiconductor">半導体</a>とキャリア</h1>
+<h2 id="section-1">1　バンドの中の電子と、空いた場所</h2>
+<p>第16章では、結晶の一粒子エネルギーがバンドに広がることを見た。上側の伝導帯の底を<code>E_c</code>、下側の価電子帯の頂上を<code>E_v</code>と書き、</p>
+<pre><code class="language-text">E_g = E_c - E_v &gt; 0                              (17.1)</code></pre>
+<p>を<a class="term" href="index.html#term-band_gap">バンドギャップ</a>と呼ぶ。真性半導体では、外から不純物を足していない理想化された結晶を考える。温度が0 Kに近いと価電子帯はほぼ満たされ、伝導帯はほぼ空である。温度が上がると、価電子帯から伝導帯へ電子が熱励起される。</p>
+<p>伝導帯へ移った電子を<a class="term" href="index.html#term-electron_carrier">電子キャリア</a>と呼び、個数密度を<code>n</code>と書く。電子が抜けた価電子帯の空席を正孔と呼び、個数密度を<code>p</code>と書く。正孔は「電子がない」という記述だが、電場に対して正電荷<code>+e</code>を持つ粒子のように数えられる。電子の電荷は<code>q_e=-e</code>、正孔の電荷は<code>q_h=+e</code>である。<code>n</code>と<code>p</code>は電荷そのものではなく、単位体積あたりの個数で、単位は<code>m^-3</code>または<code>cm^-3</code>である。</p>
+<p>まず、シリコンに似た数値を使った教材用の解析予測を考える。<code>E_g=1.12 eV</code>、<code>T=300 K</code>、<a class="term" href="index.html#term-effective_density_of_states">有効状態密度</a>を<code>N_c=2.8×10^19 cm^-3</code>、<code>N_v=1.0×10^19 cm^-3</code>と与えると、</p>
+<pre><code class="language-text">k_B T ≈ 0.02585 eV
+n_i = p_i = sqrt(N_c N_v) exp[-E_g/(2 k_B T)]
+    ≈ 6.5×10^9 cm^-3                         (17.2)</code></pre>
+<p>となる。これは採用した有効質量・ギャップ・<a class="term" href="index.html#term-nondegenerate_approximation">非縮退近似</a>からの予測であり、装置で測ったシリコンの値ではない。<code>book run 17 1</code>は固定runnerの入力由来契約モデルまで実行済みで、外部domain tool・実測は未実行（<code>measurement.status=not_run</code>）である。</p>
+<p>この章の中心問題は次である。</p>
+<blockquote>バンドの状態数とFermi–Dirac占有から、真性半導体の電子と<a class="term" href="index.html#term-hole">正孔</a>をどう数えるか。</blockquote>
+<p>第16章からは、バンド端<code>E_c,E_v</code>、ギャップ<code>E_g</code>、<a class="term" href="index.html#term-density_of_states">状態密度</a><code>D(E)</code>、化学ポテンシャル<code>μ</code>、温度<code>T</code>を受け取る。第18章では、ここで求めた真性状態へドナー・アクセプタと電荷中性条件を加え、Fermi準位を動かす。</p>
+<h2 id="section-2">2　電子、正孔、<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>の符号</h2>
+<h3 id="section-2-1">2.1　正孔は「空席」を数える</h3>
+<p>伝導帯の電子は、伝導帯の状態を占有する粒子である。価電子帯の正孔は、価電子帯の一粒子状態が空いている割合を数える。エネルギー<code>E</code>の電子占有率を第15章の<code>f(E)</code>とすると、同じ状態の空席の割合は、</p>
+<pre><code class="language-text">h(E) = 1 - f(E)                              (17.3)</code></pre>
+<p>である。価電子帯をほぼ満たす低温では、<code>f≈1</code>なので空席<code>h</code>は小さい。伝導帯では<code>f</code>が小さく、電子数を<code>f</code>で数える。</p>
+<p>正孔の「正」は、抜けた電子の電荷をそのまま正に反転したという帳簿上の表現である。電子が<a class="term" href="index.html#term-electric_field">電場</a>と逆向きに動いても、正孔の電流への寄与は正電荷が電場方向へ動く形で書ける。<code>p</code>を負にしたり、正孔に電子の符号<code>-e</code>をもう一度掛けたりしてはいけない。</p>
+<p>結晶全体の<a class="term" href="index.html#term-charge_density">電荷密度</a>を簡単化して書くと、自由キャリアだけなら</p>
+<pre><code class="language-text">rho_free = (-e)n + (+e)p = e(p-n)          (17.4)</code></pre>
+<p>である。真性で熱平衡なら、電子と正孔は対になって生成されるので<code>n=p</code>となり、自由キャリアの正味電荷は0になる。これは電子と正孔が同じ位置にいるという意味ではなく、個数密度が等しいという意味である。</p>
+<h3 id="section-2-2">2.2　真性、熱平衡、非<a class="term" href="index.html#term-degeneracy">縮退</a>を分ける</h3>
+<p>「真性」は<a class="term" href="index.html#term-donor">ドナー</a>やアクセプタを指定しない物質の条件、「熱平衡」は一つの<code>T</code>と<code>μ</code>で占有を記述する条件、「非縮退」はバンド端の占有が十分小さい近似条件である。これらは同じ言葉ではない。固定した正の<code>E_g</code>を持つ真性模型では、温度を下げるほど両バンド端から<code>μ</code>までの距離を<code>k_BT</code>で割った値が大きくなり、Boltzmann近似はむしろ改善する。高温や高密度では非縮退近似が壊れることがあり、ドープした半導体でも熱平衡ならFermi–Dirac式自体は使える。</p>
+<p>本章の<a class="term" href="index.html#term-mass_action_law">質量作用則</a>は、放物線バンド、熱平衡、非縮退、一定の<code>E_g</code>という条件で導く。既定の相対誤差1%を目標にする場合、<code>(E_c-μ)/(k_BT)</code>と<code>(μ-E_v)/(k_BT)</code>をそれぞれ少なくとも<code>ln(100)≈4.6</code>、実装上は5以上と記録する。許容誤差を<code>δ</code>へ変えるなら、対応する目安は<code>ln(1/δ)</code>である。高密度で<code>μ</code>がバンド内へ入る、またはこの閾値を満たさないときは、Fermi–Dirac積分を数値的に評価し、Maxwell–Boltzmann近似を結果として採用しない。</p>
+<h2 id="section-3">3　バンド端の状態密度</h2>
+<h3 id="section-3-1">3.1　伝導帯の三次元放物線</h3>
+<p>伝導帯の底の近くを、等方的な有効質量<code>m_n^*</code>で近似する。</p>
+<pre><code class="language-text">E_c(k) = E_c + hbar^2 k^2/(2 m_n^*)       (17.5)</code></pre>
+<p><code>m_n^*</code>はkg、<code>k</code>は<code>m^-1</code>、エネルギーはJでそろえる。波数状態を球殻として数えると、単位体積・単位エネルギーあたりの伝導帯DOSは、</p>
+<pre><code class="language-text">D_c(E) = g_c/(4 pi^2) (2 m_n^*/hbar^2)^(3/2) sqrt(E-E_c)
+          for E &gt;= E_c                       (17.6)</code></pre>
+<p>となる。<code>g_c</code>にはスピンや谷の縮退を含める。スピン2だけを含む一つの谷なら<code>g_c=2</code>で、よく見る係数<code>1/(2 pi^2)</code>になる。<code>E&lt;E_c</code>ではこの放物線模型の状態はないので<code>D_c=0</code>である。</p>
+<h3 id="section-3-2-dos">3.2　価電子帯と正孔のDOS</h3>
+<p>価電子帯の頂上近くは、電子のエネルギーを</p>
+<pre><code class="language-text">E_v(k) = E_v - hbar^2 k^2/(2 m_p^*)       (17.7)</code></pre>
+<p>と書く。<code>m_p^*</code>は正孔に対する有効質量として正値で定義する。価電子帯の電子DOSは<code>E≤E_v</code>で、正孔のDOSは同じ状態を<code>E_v-E</code>の距離で数える。</p>
+<pre><code class="language-text">D_v,h(E) = g_v/(4 pi^2) (2 m_p^*/hbar^2)^(3/2) sqrt(E_v-E)
+            for E &lt;= E_v                      (17.8)</code></pre>
+<p><code>D_v,h</code>の添字hは正孔を数えるDOSだという意味で、負のDOSではない。DOSの単位は、SIで式を計算すれば<code>states/(m^3 J)</code>。エネルギー軸をeVへ変えるときは、<code>dE_J=e dE_eV</code>を忘れず、DOSの単位も<code>states/(m^3 eV)</code>へ変換する。</p>
+<h3 id="section-3-3">3.3　有効状態密度</h3>
+<p>非縮退近似で伝導帯の電子数を積分すると、DOSの係数を一つの数へまとめられる。</p>
+<pre><code class="language-text">n = ∫[E_c,∞] D_c(E) f(E) dE
+  ≈ N_c exp[-(E_c-mu)/(k_B T)]                 (17.9)
+N_c = g_c (m_n^* k_B T/(2 pi hbar^2))^(3/2)   (17.10)</code></pre>
+<p>同様に、価電子帯の空席を数えると、</p>
+<pre><code class="language-text">p = ∫[-∞,E_v] D_v,h(E) [1-f(E)] dE
+  ≈ N_v exp[-(mu-E_v)/(k_B T)]                 (17.11)
+N_v = g_v (m_p^* k_B T/(2 pi hbar^2))^(3/2)   (17.12)</code></pre>
+<p>となる。<code>N_c,N_v</code>はDOSそのものではなく、温度で変わる「有効状態密度」で、単位は個数密度である。<code>g_c,g_v</code>を式(17.6)ですでに含めたなら、式(17.10)でさらに同じ縮退を掛けない。</p>
+<p>式(17.9)から、電子数は<code>E_c</code>から<code>μ</code>までの距離が大きいほど指数関数的に小さくなる。式(17.11)から、正孔数は<code>μ</code>から<code>E_v</code>までの距離が大きいほど小さい。<code>f</code>は無次元だが、積分の結果<code>n,p</code>は体積あたりの個数になる。</p>
+<h2 id="section-4">4　質量作用則と真性キャリア</h2>
+<h3 id="section-4-1">4.1　電子数と正孔数を掛ける</h3>
+<p>式(17.9)と(17.11)を掛けると、<a class="term" href="index.html#term-chemical_potential">化学ポテンシャル</a>が消えて、</p>
+<pre><code class="language-text">np = N_c N_v exp[-(E_c-E_v)/(k_B T)]
+   = N_c N_v exp[-E_g/(k_B T)]             (17.13)</code></pre>
+<p>を得る。これを質量作用則と呼ぶ。熱平衡・非縮退・同じ温度・指定したバンド模型の範囲で成り立つ。化学反応の質量作用則と名前は同じでも、ここでは電子と正孔の状態数え上げから出ている。</p>
+<p>真性なら電荷中性から<code>n=p=n_i</code>なので、</p>
+<pre><code class="language-text">n_i = p_i = sqrt(N_c N_v) exp[-E_g/(2 k_B T)]  (17.14)</code></pre>
+<p>となる。<code>E_g</code>が大きいほど、また温度が低いほど、熱励起で作られる対は少ない。<code>N_c,N_v</code>が個数密度であるため、<code>sqrt(N_c N_v)</code>も個数密度であり、指数は無次元である。</p>
+<h3 id="section-4-2">4.2　<a class="term" href="index.html#term-intrinsic_chemical_potential">真性化学ポテンシャル</a></h3>
+<p><code>n=p</code>を式(17.9)と(17.11)へ入れて解くと、非縮退近似で</p>
+<pre><code class="language-text">mu_i = (E_c+E_v)/2 + (k_B T/2) ln(N_v/N_c)  (17.15)</code></pre>
+<p>となる。<code>N_c=N_v</code>ならμはギャップの中央、<code>N_c&gt;N_v</code>なら中央より少し価電子帯側へずれる。これは有限温度のμを単に「ギャップの真ん中」と決めつけないための補正である。式(17.15)は放物線・非縮退・熱平衡の近似値であり、測定から直接得た値ではない。</p>
+<h3 id="section-4-3">4.3　<a class="term" href="index.html#term-doping">ドーピング</a>をまだ入れない理由</h3>
+<p>ドナー濃度<code>N_D^+</code>と<a class="term" href="index.html#term-acceptor">アクセプタ</a>濃度<code>N_A^-</code>を入れる一般の電荷中性条件は、符号を明記すれば、</p>
+<pre><code class="language-text">p + N_D^+ = n + N_A^-                    (17.16)</code></pre>
+<p>である。本章の真性条件は<code>N_D^+=N_A^-=0</code>で、この式から<code>p=n</code>を得る。ドナーがあると<code>n</code>と<code>p</code>は同じでなくなり、μも変わる。それでも式(17.9)から(17.13)を使えるかは、熱平衡・非縮退の条件を再確認する必要がある。ドーピングの詳細や接合の空間電荷は後の章へ残す。</p>
+<h2 id="section-5">5　温度依存を<a class="term" href="index.html#term-concept_3_term_8d8794d7de_8d8794d7">対数</a>で読む</h2>
+<h3 id="section-5-1-t-3-2">5.1　指数とTの3/2乗</h3>
+<p>有効状態密度は、式(17.10),(17.12)から<code>T^(3/2)</code>に比例する。<code>E_g</code>を温度に依存しない近似なら、</p>
+<pre><code class="language-text">n_i ∝ T^(3/2) exp[-E_g/(2 k_B T)]            (17.17)</code></pre>
+<p>である。温度上昇で<code>T^(3/2)</code>も増えるが、半導体では通常、指数因子の変化が大きい。現実の材料では<code>E_g(T)</code>も変わるため、広い温度範囲の直線を無条件に外挿しない。</p>
+<p>自然対数を取ると、対数の引数を無次元にするため基準密度<code>n_ref</code>と基準温度<code>T_ref</code>を置いて、</p>
+<pre><code class="language-text">ln[(n_i/n_ref)/(T/T_ref)^(3/2)] = constant - E_g/(2 k_B) (1/T)  (17.18)</code></pre>
+<p>となる。実装で固定単位の数値<code>ln(n_i/T^(3/2))</code>を表示する場合も、<code>n_ref</code>と<code>T_ref</code>をメタデータへ保存する。縦軸をこの無次元化した対数、横軸を<code>1/T</code>にすれば、一定ギャップの模型では傾き<code>-E_g/(2 k_B)</code>の直線になる。<code>log10</code>を使う場合は傾きに<code>log(10)</code>の換算が必要なので、自然対数か常用対数かを図のメタデータへ保存する。</p>
+<h3 id="section-5-2">5.2　教材用数値予測</h3>
+<p>先の<code>E_g=1.12 eV</code>、<code>N_c=2.8×10^19 cm^-3</code>、<code>N_v=1.0×10^19 cm^-3</code>を300 Kの基準値として使うと、<code>n_i≈6.5×10^9 cm^-3</code>。有効質量を固定する温度掃引では、<code>N_c(T)=N_c(300)(T/300)^(3/2)</code>、<code>N_v(T)=N_v(300)(T/300)^(3/2)</code>とスケールする。このとき式(17.15)のμはギャップ中央より、</p>
+<pre><code class="language-text">(k_B T/2) ln(N_v/N_c) ≈ -0.0133 eV</code></pre>
+<p>だけ低い。300 K、400 K、500 Kと温度を上げた表では、<code>N_c,N_v</code>の<code>T^(3/2)</code>変化と指数因子が同じcaseへ反映され、<code>n_i</code>が急に増える予測になる。ここで使った<code>N_c,N_v,E_g</code>は教材入力で、特定ロットの測定値ではない。</p>
+<h3 id="section-5-3">5.3　対数<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>の単位</h3>
+<p>縦軸へ<code>n_i</code>を<code>cm^-3</code>で載せるなら、全温度で同じ単位にする。<code>m^-3</code>から<code>cm^-3</code>へは<code>1 m^-3=10^-6 cm^-3</code>である。基準単位を変えると無次元化前の切片は移動するが、混在させると傾きや比較を誤る。横軸<code>1/T</code>の単位は<code>K^-1</code>で、セルシウス温度をそのまま逆数にしない。</p>
+<h2 id="section-6">6　数値ノートと負のテスト</h2>
+<h3 id="section-6-1">6.1　解析積分と<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a></h3>
+<p>予定ノートは二つの経路を持つ。一つ目は式(17.14)の有効状態密度による解析予測、二つ目はDOSをエネルギーbinへ置いて、</p>
+<pre><code class="language-text">n_num = sum(Dc_bin(E) * f(E) * Delta_E)
+p_num = sum(Dv_h_bin(E) * (1-f(E)) * Delta_E)  (17.19)</code></pre>
+<p>を計算する数値予測である。<code>n_num,p_num</code>の単位を揃え、伝導帯・価電子帯の積分範囲、bin幅、打ち切りを保存する。非縮退近似と数値Fermi–Dirac積分を比較し、差が許容範囲を超えたら近似を使い続けない。</p>
+<h3 id="section-6-2">6.2　数値安定性</h3>
+<p><code>E_g/(2 k_B T)</code>が大きいと、式(17.14)の指数がunderflowして<code>n_i=0</code>と表示されることがある。対数で</p>
+<pre><code class="language-text">ln n_i = 0.5(ln N_c + ln N_v) - E_g/(2 k_B T)  (17.20)</code></pre>
+<p>を計算し、必要なときだけ最後に指数へ戻す。<code>N_c,N_v</code>の単位はlogへ入れる前に基準単位を固定する。Fermi–Dirac積分では<code>f</code>を0から1へ無条件にclipして成功扱いにせず、指数の安定評価と入力診断を分ける。</p>
+<h3 id="section-6-3">6.3　負のテストと符号</h3>
+<p>次の入力は、物理的に意味の違う失敗として記録する。</p>
+<pre><code class="language-text">E_g &lt; 0、E_c &lt; E_v、T &lt; 0、m_n^* &lt;= 0、m_p^* &lt;= 0
+n,p,N_c,N_vが負、NaN、非有限、体積が0以下
+DOSをstates/(m^3 J)のままエネルギーをeVで積分
+cm^-3とm^-3の混在、1/Tへ摂氏を入力
+電子へ+e、正孔へ-eを割り当てる符号反転
+非平衡なのに質量作用則を平衡の証拠として使う
+高密度でmuがバンド内、または両バンド端から5 kBT未満なのに非縮退式を使う
+equilibrium_modelがthermal_equilibriumでない（準Fermi準位を含む非平衡は本章の範囲外）
+解析予測をmeasured=trueとして保存する</code></pre>
+<p><code>T=0 K</code>は指数式へ直接代入せず、<code>E_g&gt;0</code>なら<code>status="zero_temperature_limit"</code>、励起キャリア<code>n=p=0</code>、化学ポテンシャルはギャップ内で一意でない<code>mu_status="nonunique_in_gap"</code>として扱う。ギャップ中央を便宜的に返す場合は<code>mu_policy="midgap_representative"</code>と明記し、物理的な一意解と混同しない。<code>E_g=0</code>は<code>status="gapless_model"</code>の専用caseとし、本章の半導体用<code>n_i</code>式・質量作用則を適用しない。<code>E_g&lt;0</code>は<code>invalid_band_gap</code>として拒否する。</p>
+<h2 id="section-7">7　出力と次章への橋渡し</h2>
+<p>runnerの予定コマンドは<code>book run 17 1</code>。入力には<code>E_c,E_v,E_g</code>、<code>m_n^*,m_p^*</code>、<code>g_c,g_v</code>、<code>T</code>の配列、エネルギー単位、体積単位、<code>μ</code>または真性中性条件、<code>equilibrium_model="thermal_equilibrium"</code>を含める。本章は熱平衡の単一<code>μ</code>だけを扱い、<code>non_equilibrium</code>（<a class="term" href="index.html#term-quasi_fermi_level">準Fermi準位</a>を含む）は<code>unsupported_non_equilibrium_model</code>として拒否する。出力には、</p>
+<pre><code class="language-text">temperature_K, Ec, Ev, Eg, Nc, Nv, equilibrium_model, mu,
+n, p, ni, mass_action_residual,
+dos_integral_residual, source_kind, status, measured</code></pre>
+<p>を保存する。解析式の値は<code>source_kind="analytic_prediction"</code>、bin積分は<code>"numeric_prediction"</code>、runnerの実行結果は<code>"runner_output"</code>とし、実測を追加する場合だけ測定条件とともに<code>"measurement"</code>を使う。<code>T=0 K</code>、<code>E_g&gt;0</code>の境界は<code>status="zero_temperature_limit"</code>、<code>n=p=0</code>、<code>mu_status="nonunique_in_gap"</code>とし、必要ならギャップ中央を<code>mu_policy="midgap_representative"</code>として別フィールドへ保存する。固定runnerは契約artifactを再生済みであり、外部domain・測定は未実行のため<code>measurement.status=not_run</code>を維持する。</p>
+<p>第18章では、<code>n</code>と<code>p</code>へドナー・アクセプタ、電荷中性、<a class="term" href="index.html#term-fermi_level">Fermi準位</a>の移動を追加する。バンドギャップ、DOS、μ、温度だけでは抵抗は決まらない。第16章のバンドは状態の器を与え、本章は真性平衡で何個入るかを与え、第18章が外部不純物でその数をどう変えるかを扱う。</p>
+<h2 id="section-8">8　次章へ渡す設計判断</h2>
+<p>第18章へは、次の設計判断を固定した入力として渡す。</p>
+<ul><li>伝導帯の電子数<code>n</code>は占有率<code>f</code>、価電子帯の正孔数<code>p</code>は空席率<code>1-f</code>で数える。電荷は電子を<code>-e</code>、正孔を<code>+e</code>とし、個数密度と電荷密度を別フィールドにする。</li><li>DOSは三次元<a class="term" href="index.html#term-parabolic_band">放物線バンド</a>の最小模型として扱い、スピン・谷の縮退を一度だけ含める。<code>n,p</code>はDOSと占有の積分から得る個数密度である。</li><li>熱平衡・非縮退のcaseでは質量作用則と<code>n=p=n_i</code>を使う。高密度、非平衡、ドーピングのcaseでは、Fermi積分と<a class="term" href="index.html#term-charge_neutrality">電荷中性条件</a>を再設定する。</li><li><code>n_i</code>の温度掃引は<code>T</code>をK、密度を固定単位、横軸を<code>1/T</code>とし、<code>T^(3/2)</code>を除いた対数表示を基準にする。Egの温度依存を入れる場合は別モデルとして記録する。</li><li>解析予測、DOSの数値積分、runner出力、測定値を上書きせず、<code>source_kind</code>、<code>status</code>、<code>measured</code>で分離する。</li><li>第18章では、真性の<code>n=p</code>を基準にドナー・アクセプタと電荷中性を追加する。抵抗や<a class="term" href="index.html#term-current">電流</a>はさらに後続章で散乱時間、移動度、電場、拡散、境界条件を追加して決める。</li></ul>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-17-2">17.補助演習　手を動かす導出帳</h2>
+<p>真性半導体とキャリアの計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-dos">例題1　真性半導体のDOS、電子・正孔密度、質量作用則、温度依存を計算する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 17 1</code>である。入力は<code>[{"教材case": "Eg=1.12 eV、T=300 K、Nc=2.8e19 cm^-3、Nv=1.0e19 cm^-3の解析予測"}, {"DOS case": "Ec、Ev、有効質量mn_starとmp_star、gcとgv、エネルギーbin、JまたはeV単位"}, {"温度掃引": "200 Kから600 K、300 K基準のNc,NvをT^(3/2)で更新し、ni、n、p、mu_i、基準密度n_ref・基準温度T_refで無次元化したlog表示、1/Tを計算"}, "Fermi積分と非縮退Boltzmann近似を別caseで比較し、質量作用則の残差を保存。既定の非縮退閾値は各端から5 kBT（相対誤差約1%）", "真性中性n=p、電子電荷-e、正孔電荷+e、rho=e(p-n)を検査するcase", "Eg&lt;0、Ec&lt;Ev、T&lt;0、m_star&lt;=0、負密度、NaN、J/eV混同、cm^-3/m^-3混同、摂氏逆数、underflow、5 kBT未満の非縮退条件違反、thermal_equilibrium以外の非平衡入力（準Fermi準位の有無を問わず本章ではunsupported）、未測定measured=trueを負のテストとする", "T=0 K、Eg&gt;0はzero_temperature_limitとしてn=p=0、mu_status=nonunique_in_gapを返し、必要ならmidgap_representativeを別フィールドへ保存", "Eg=0はgapless_modelとして受理する専用caseだが、本章のni式・質量作用則は適用しない"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-3">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>半導体</code>は、バンドギャップと温度・状態密度によってキャリア数が変わる物質模型。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>半導体</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電子キャリアと正孔</code>は、伝導帯の電子と価電子帯の空席を個数密度として数える記述。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電子キャリアと正孔</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>有効状態密度</code>は、バンド端DOSの積分を温度依存の状態数NcとNvへまとめた量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>有効状態密度</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>質量作用則</code>は、熱平衡・非縮退の電子数と正孔数の積を結ぶ関係。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>質量作用則</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>真性キャリア密度</code>は、不純物のない熱平衡半導体で電子と正孔が等しくなる個数密度。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>真性キャリア密度</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>非縮退近似</code>は、バンド端の占有が小さくFermi–Dirac式をBoltzmann型へ近似する条件。既定の相対誤差1%では各端から5 kBT以上を目安にする。。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>非縮退近似</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>真性化学ポテンシャル</code>は、真性中性条件とNc,Nvを満たす平衡の化学ポテンシャル。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>真性化学ポテンシャル</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-2">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-4">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（有効状態密度NcとNv、縮退）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（質量作用則と<a class="term" href="index.html#term-intrinsic_carrier_density">真性キャリア密度</a>）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（真性化学ポテンシャルとDOS非対称）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（温度依存、Tの3/2乗因子、対数グラフ）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（DOSとFermi占有の数値積分、近似比較）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（J/eV、cm^-3/m^-3、電荷符号、極限、入力拒否）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（解析・数値・runner・測定の出所分離）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第18章のドーピング、電荷中性、Fermi準位への橋渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-4">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-17-3">17.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>真性半導体とキャリア</strong>の中心問題「満たされた価電子帯と空の伝導帯を持つ固体に、なぜ有限温度で電流担体が生まれるのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["非縮退・熱平衡の解析予測でn=p=ni=sqrt(NcNv) exp(-Eg/(2kBT))となる", "有効質量を固定した温度掃引ではNcとNvはT^(3/2)に増え、niは指数因子も重なって大きく増える予測", "Nc=Nvならmu_iはギャップ中央、NcとNvが異なれば式(17.15)の方向へずれる予測", "DOS bin積分は状態数の単位と縮…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"教材case": "Eg=1.12 eV、T=300 K、Nc=2.8e19 cm^-3、Nv=1.0e19 cm^-3の解析予測"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"DOS case": "Ec、Ev、有効質量mn_starとmp_star、gcとgv、エネルギーbin、JまたはeV単位"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>{"温度掃引": "200 Kから600 K、300 K基準のNc,NvをT^(3/2)で更新し、ni、n、p、mu_i、基準密度n_ref・基準温度T_refで無次元化したlog表示、1/Tを計算"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>Fermi積分と非縮退Boltzmann近似を別caseで比較し、質量作用則の残差を保存。既定の非縮退閾値は各端から5 kBT（相対誤差約1%）</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>真性中性n=p、電子電荷-e、正孔電荷+e、rho=e(p-n)を検査するcase</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>Eg&lt;0、Ec&lt;Ev、T&lt;0、m_star&lt;=0、負密度、NaN、J/eV混同、cm^-3/m^-3混同、摂氏逆数、underflow、5 kBT未満の非縮退条件違反、thermal_equilibrium以外の非平衡入力（準Fermi準位の有無を問わず本章ではunsupported）、未測定measured=trueを負のテストとする</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目7: <code>T=0 K、Eg&gt;0はzero_temperature_limitとしてn=p=0、mu_status=nonunique_in_gapを返し、必要ならmidgap_representativeを別フィールドへ保存</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目8: <code>Eg=0はgapless_modelとして受理する専用caseだが、本章のni式・質量作用則は適用しない</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-4">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「三次元放物線バンドのk空間状態数を数え、伝導帯電子DOSと価電子帯正孔DOSを有効質量・縮退付きで導く。」で、参照する式IDまたは検証項目は <code>k-space-count, band-edge-support, degeneracy-scaling, unit-check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「DOSとFermi–Dirac占有の積分を、非縮退条件でNc exp(-(Ec-mu)/(kBT))とNv exp(-(mu-Ev)/(kBT))へ近似する。」で、参照する式IDまたは検証項目は <code>fd-integral-vs-boltzmann, temperature-limit, degeneracy-check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「電子数と正孔数を掛けて化学ポテンシャルを消去し、質量作用則と真性キャリア密度を得る。」で、参照する式IDまたは検証項目は <code>chemical-potential-cancellation, neutrality, positive-density-limit</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「n=pの条件からmu_i=(Ec+Ev)/2+(kBT/2)ln(Nv/Nc)を導き、DOS非対称による中間からのずれを確認する。」で、参照する式IDまたは検証項目は <code>Nc-equals-Nv-midgap-limit, neutrality, unit-check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「niがT^(3/2) exp(-Eg/(2kBT))に比例することを使い、基準単位で無次元化したln[(ni/n_ref)/(T/T_ref)^(3/2)]と1/Tの直線化を導く。」で、参照する式IDまたは検証項目は <code>temperature-sweep, transformed-linearity, axis-unit-check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「電子電荷-e、正孔電荷+e、rho=e(p-n)の符号を固定し、解析・数値・runner・測定の出所を分けて保存する。」で、参照する式IDまたは検証項目は <code>sign-test, unit-conversion, source-kind-status-check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-4">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 真性半導体のDOS、電子・正孔密度、質量作用則、温度依存を計算する</p>
+<p>入口は <code>book run 17 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-17-carrier-source", "chapter-17-dos-source", "chapter-17-carrier-output", "chapter-17-diagnostic-output", "chapter-17-carrier-plot"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["非縮退・熱平衡の解析予測でn=p=ni=sqrt(NcNv) exp(-Eg/(2kBT))となる", "有効質量を固定した温度掃引ではNcとNvはT^(3/2)に増え、niは指数因子も重なって大きく増える予測", "Nc=Nvならmu_iはギャップ中央、NcとNvが異なれば式(17.15)の方向へずれる予測", "DOS bin積分は状態数の単位と縮…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>真性は不純物を指定しない理想条件であり、現実の試料の欠陥やドーピングがないことを保証しない。</li><li>有効質量DOSは三次元・放物線・等方的なバンド端の最小模型で、強い非放物性や全バンドを含まない。</li><li>質量作用則とniの式は熱平衡・非縮退・一定Egの近似であり、高密度や非平衡ではFermi積分や別のモデルが必要になる。本章runnerはthermal_equilibrium以外をunsupportedとして拒否する。</li><li>正孔は空席の有効記述であり、電子と同じ局所的な粒子軌道を実在する正電荷粒子として主張するものではない。</li><li>DOSをeVあたりで表示するときは、JあたりのDOSとの変換を含め、密度単位も固定する。</li><li><code>log(n_i)</code>の直線性は温度範囲、Egの温度依存、測定誤差、近似の妥当性を別に検査して初めて解釈できる。対数は固定した基準単位で無次元化して保存する。</li><li>バンドギャップとキャリア数だけでは<a class="term" href="index.html#term-conductivity">導電率</a>、抵抗、移動度、散乱、接合の空間電荷は決まらない。</li><li>本章の固定runnerは契約を再生済みだが、図・対数曲線の外部tool実行は未実行で、具体値は解析または数値予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第16章のバンド端、バンドギャップ、状態密度、k状態数、Fermi占有</li><li>第15章のPauli原理、縮退、化学ポテンシャル、温度、<a class="term" href="index.html#term-concept_15_term_1571aba314_1571aba3">古典極限</a></li><li>第14章の<a class="term" href="index.html#term-wavefunction">波動関数</a>、固有状態、エネルギー、確率</li><li>第12章の温度、熱雑音、対数表示と信号の区別</li><li>第8章のキャリア、導電率、物質模型の限界</li><li>第5章の電子電荷、Coulomb力、<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>エネルギー、符号規約</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第18章へ真性の電子・正孔密度、電荷符号、バンド占有、温度依存を渡す</li><li>第18章へドナー・アクセプタを追加する前の基準状態と、非縮退判定の入力を渡す</li><li>第19章へ、ドーピング後のn・pを輸送へ渡す課題を残す</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-5">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — electron_<a class="term" href="index.html#term-hole">hole</a>_definition_and_sign。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — intrinsic_equilibrium_non_degenerate_<a class="term" href="index.html#term-scope">scope</a>。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — conduction_valence_density_of_states。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — <a class="term" href="index.html#term-degeneracy">degeneracy</a>_and_effective_density。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — fermi_integral_and_boltzmann_limit。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — mass_action_and_intrinsic_density。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — intrinsic_chemical_potential。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — temperature_and_log_plot。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — numerical_integration_and_stability。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — units_limits_and_negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — <a class="term" href="index.html#term-provenance">provenance</a>_and_artifact_registry。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — exercise_solution_and_transport_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-2">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 真性半導体のDOS、電子・正孔密度、質量作用則、温度依存を計算する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 17 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["非縮退・熱平衡の解析予測でn=p=ni=sqrt(NcNv) exp(-Eg/(2kBT))となる", "有効質量を固定した温度掃引ではNcとNvはT^(3/2)に増え、niは指数因子も重なって大きく増える予測", "Nc=Nvならmu_iはギャップ中央、NcとNvが異なれば式(17.15)の方向へずれる予測", "DOS bin積分は状態数の単位と縮…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、<a class="term" href="index.html#term-voltage">電圧</a>、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

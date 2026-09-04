@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第13章　古典論が破綻する場所　解答</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-13">第13章 演習解答</h1>
+<h2 id="section-e1-coulomb">E1　Coulomb力と古典軌道</h2>
+<h3 id="section-a24d107040">完全解答</h3>
+<p><code>r=0.10 nm=1.0×10^-10 m</code>とする。<code>e=1.602176634×10^-19 C</code>なので、</p>
+<pre><code class="language-text">F_C=k e^2/r^2
+    ≈(8.9875517923×10^9)(1.602176634×10^-19)^2/(1.0×10^-10)^2
+    ≈2.307×10^-8 N</code></pre>
+<p>円軌道の力の釣り合いから、</p>
+<pre><code class="language-text">v=sqrt(k e^2/(m_e r))≈1.59×10^6 m/s</code></pre>
+<p>である。全エネルギーは、</p>
+<pre><code class="language-text">E=-k e^2/(2r)≈-1.153×10^-18 J
+  ≈-7.20 eV</code></pre>
+<p>となる。負号は束縛状態を表す。この式の<code>r</code>を連続に変えれば、エネルギーも連続に変わる。値は指定した古典模型の<code>analytic_prediction</code>である。</p>
+<h3 id="section-c56d07e28c">再挑戦</h3>
+<p><code>r</code>を2倍にすると、<code>F_C</code>は1/4、円軌道速度は<code>1/sqrt(2)</code>、束縛エネルギーの絶対値は1/2になる。古典式のスケーリング検査であり、実原子の準位式ではない。</p>
+<h2 id="section-e2">E2　古典模型の二つの破綻</h2>
+<h3 id="section-a24d107040-2">完全解答</h3>
+<p>加速する古典<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>は放射電力<code>P_rad&gt;0</code>を持つので、軌道エネルギーを失う。半径が縮むと式<code>E=-k e^2/(2r)</code>のエネルギーはさらに低くなり、古典模型には放射を止める安定な最小軌道がない。これが原子の安定性の破綻である。</p>
+<p>また、古典では半径・速度・エネルギーを連続に選べるので、放射周波数やエネルギー差を特定の離散列へ制限する仕組みがない。実際の原子スペクトルが線状になることを説明できない。第12章のRLC減衰は、抵抗へエネルギーが流れる古典回路の初期値問題であり、安定な量子基底状態や原子の離散準位を作る理論ではない。</p>
+<h3 id="section-c56d07e28c-2">再挑戦</h3>
+<p>古典電磁気へ放射反作用を追加しても、軌道が安定する最小エネルギーと離散準位が自動的に生まれるわけではない。失敗の原因は<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>の粗さではなく、状態の定義と許容値の構造にある。</p>
+<h2 id="section-e3">E3　古典井戸内粒子の連続エネルギー</h2>
+<h3 id="section-a24d107040-3">完全解答</h3>
+<p><code>E=1.00×10^-20 J</code>、<code>m_e=9.1093837×10^-31 kg</code>なので、</p>
+<pre><code class="language-text">v=sqrt(2E/m_e)
+ ≈sqrt(2.00×10^-20/9.1093837×10^-31)
+ ≈1.48×10^5 m/s</code></pre>
+<p>である。<code>v∝sqrt(E)</code>なので、<code>δE/E=0.01</code>なら</p>
+<pre><code class="language-text">δv/v≈(1/2)(δE/E)=0.005</code></pre>
+<p>、すなわち速度の変化は約0.5%、約<code>7.4×10^2 m/s</code>である。古典模型では初期速度を任意の連続実数に選べるため、任意の正の運動エネルギーを指定できる。<code>L</code>は壁までの領域を決めるが、エネルギーを整数列へ制限しない。</p>
+<h3 id="section-c56d07e28c-3">再挑戦</h3>
+<p><code>E=4.00×10^-20 J</code>なら速度は元の2倍になる。<code>E</code>を4倍にして速度を4倍とするのは誤りで、運動エネルギーは速度の二乗に比例する。</p>
+<h2 id="section-e4">E4　無限井戸の境界と波数</h2>
+<h3 id="section-a24d107040-4">完全解答</h3>
+<p><code>ψ(L)=0</code>から<code>sin(kL)=0</code>である。非零解には、</p>
+<pre><code class="language-text">kL=nπ,
+k_n=nπ/L,
+n=1,2,3,...</code></pre>
+<p>が必要になる。<code>n=0</code>では<a class="term" href="index.html#term-wavefunction">波動関数</a>全体が0になり、状態にならない。規格化条件</p>
+<pre><code class="language-text">∫_0^L |A sin(nπx/L)|^2 dx=1</code></pre>
+<p>を使うと、<code>A=sqrt(2/L)</code>で、</p>
+<pre><code class="language-text">ψ_n(x)=sqrt(2/L)sin(nπx/L)</code></pre>
+<p>となる。<code>n=1</code>は内部に節を持たず、<code>n=2</code>は内部に1個、一般に<code>n</code>が増えると内部の節は<code>n−1</code>個になる。整数性は記号の都合でなく、二つの境界を同時に満たす条件から出る。</p>
+<h3 id="section-c56d07e28c-4">再挑戦</h3>
+<p>周期境界<code>ψ(0)=ψ(L)</code>へ変更すると許される波数の条件が変わる。無限井戸の<code>ψ=0</code>の式をそのまま再利用せず、境界条件ごとに<a class="term" href="index.html#term-eigenvalue">固有値</a>問題を作り直す。</p>
+<h2 id="section-e5-1-nm">E5　1 nm量子井戸の準位</h2>
+<h3 id="section-a24d107040-5">完全解答</h3>
+<pre><code class="language-text">E_1=π^2ℏ^2/(2m_eL^2)
+   ≈6.02×10^-20 J</code></pre>
+<p><code>1 eV=1.602176634×10^-19 J</code>で割ると、</p>
+<pre><code class="language-text">E_1≈0.3760 eV
+E_2=4E_1≈1.504 eV
+E_3=9E_1≈3.384 eV</code></pre>
+<p>となる。したがって<code>E_n=n^2E_1</code>を確認できる。<code>L</code>をm、<code>m_e</code>をkg、<code>ℏ</code>をJ sで入れた解析予測で、実在原子の測定値ではない。</p>
+<h3 id="section-c56d07e28c-5">再挑戦</h3>
+<p>井戸幅を<code>2 nm</code>へ2倍にすると、<code>E_n∝1/L^2</code>なので各準位は1/4になる。幅の単位をnmのまま内部式へ入れると、<code>10^18</code>級の誤差を作るため、入力境界でmへ直す。</p>
+<h2 id="section-e6-energy-grid">E6　古典energy gridと量子準位</h2>
+<h3 id="section-a24d107040-6">完全解答</h3>
+<p>古典gridは<code>0,0.1,0.2,...,2.0 eV</code>という初期エネルギーの選択肢である。従って<code>0.5 eV</code>、<code>1.0 eV</code>、<code>1.504 eV</code>のいずれも古典模型では選べる。一方、量子無限井戸では<code>E_1≈0.3760 eV</code>、<code>E_2≈1.504 eV</code>なので、<code>1.504 eV</code>はほぼ<code>n=2</code>の固有値だが、<code>0.5 eV</code>や<code>1.0 eV</code>はこの模型の固有エネルギーではない。</p>
+<p>gridを<code>0.01 eV</code>へ細かくしても、古典側の表示分解能が上がるだけで、量子井戸の境界条件・微分方程式・整数<code>n</code>は変わらない。従って、量子準位間の空白をgridの粗さと解釈してはいけない。古典gridと量子levelを<code>model</code>の違う別レコードとして保存する。</p>
+<h3 id="section-c56d07e28c-6">再挑戦</h3>
+<p><a class="term" href="index.html#term-quantum_state">量子状態</a>の重ね合わせではエネルギーの期待値が<code>E_1</code>と<code>E_2</code>の間になることがある。しかしエネルギー測定の固有値候補が連続になるわけではない。期待値と一回の測定値を区別する。</p>
+<h2 id="section-e7">E7　<a class="term" href="index.html#term-finite_difference">有限差分</a>行列</h2>
+<h3 id="section-a24d107040-7">完全解答</h3>
+<p>中心差分は、</p>
+<pre><code class="language-text">d²ψ_j/dx²≈(ψ_{j+1}-2ψ_j+ψ_{j-1})/(Δx)^2</code></pre>
+<p>である。<code>a=ℏ^2/(2m(Δx)^2)</code>と置くと、内部3点のHamiltonianは、端点を固定した場合、</p>
+<pre><code class="language-text">H = [ 2a  -a   0 ]
+    [ -a  2a  -a ]
+    [  0  -a  2a ]</code></pre>
+<p>となる。対角の<code>2a</code>はJ、隣接の<code>−a</code>もJである。内部点の両隣にある境界値は0なので、境界の寄与はこの行列へ既に含まれている。固有値もJで、固有ベクトルはさらに<code>Σ|ψ_j|^2 Δx≈1</code>となるよう規格化する。<code>Δx</code>を長さとして扱わない、または<code>ℏ^2/(2m)</code>を掛けない行列は単位契約に違反する。</p>
+<h3 id="section-c56d07e28c-7">再挑戦</h3>
+<p>内部点を5点へ増やすと5×5の同じ三重対角構造になる。格子を増やすだけで境界条件を自由に変えてはいけない。端点を未知数へ含める場合は、端点の行へ<code>ψ=0</code>という制約を明示する別設計が必要である。</p>
+<h2 id="section-e8">E8　格子収束と境界の負のテスト</h2>
+<h3 id="section-a24d107040-8">完全解答</h3>
+<p>解析値を<code>E1_a</code>、有限差分の最低固有値を<code>E1_fd(N)</code>とすると、相対誤差は、</p>
+<pre><code class="language-text">error_N=|E1_fd(N)-E1_a|/E1_a</code></pre>
+<p>で定義できる。<code>N=20,50,100,200</code>と増やしたとき、同じ境界・単位・質量で誤差が減り、固有ベクトルの規格化残差と境界残差が許容値内になることを収束条件にする。中心差分の滑らかな問題なら、十分細かい範囲で誤差はおよそ<code>(Δx)^2</code>に比例して減る。</p>
+<p>端点を自由にして<code>ψ(0)=ψ(L)=0</code>を課さない行列は、無限井戸とは異なる境界模型である。入力契約違反なら<code>invalid_boundary_input</code>、別模型として試すなら<code>model_variant</code>と記録する。固有ベクトルを規格化しない出力は<code>normalization_check_failed</code>、格子を増やしても誤差が減らない出力は<code>numeric_not_converged</code>とする。どちらも解析値へ丸めて成功扱いにしない。</p>
+<h3 id="section-c56d07e28c-8">再挑戦</h3>
+<p><code>N=20</code>で誤差1%、<code>N=100</code>で誤差0.04%なら、誤差比は約1/25である。これは格子幅の比<code>(20/100)^2=1/25</code>と整合する候補だが、二つの点だけで次数を断定せず、境界残差と複数の格子を確認する。</p>
+<h2 id="section-e9">E9　単位・質量・長さの診断</h2>
+<h3 id="section-a24d107040-9">完全解答</h3>
+<p><code>E1=0.376</code>という数値だけでは、単位が不明である。<code>L=1</code>をmとして入れたなら、実際には幅1 mであり、式<code>E1∝1/L^2</code>によって1 nmの場合より<code>10^-18</code>倍に小さくなる。期待値0.376 eVが出たなら、<code>L=1e-9 m</code>を内部へ渡したか、runnerが表示値だけを保存して入力を落としていないかを調べる。</p>
+<p>内部正本は、</p>
+<pre><code class="language-text">length_m: 1.0e-9
+mass_kg: 9.1093837e-31
+energy_j: 6.02e-20
+energy_ev: 0.376</code></pre>
+<p>のように単位付きキーで保存する。陽子質量<code>m_p≈1.6726×10^-27 kg</code>へ変えると、<code>E1∝1/m</code>なので比は</p>
+<pre><code class="language-text">E1_proton/E1_electron=m_e/m_p≈5.45×10^-4</code></pre>
+<p>で、約<code>0.000205 eV</code>になる。質量を変えたら同じ電子準位と呼ばず、別caseにする。</p>
+<h3 id="section-c56d07e28c-9">再挑戦</h3>
+<p><code>L=1.0</code>、単位<code>nm</code>を入力境界で解釈してから<code>length_m=1e-9</code>へ変換する設計もよい。単位の文字列を保存せずに数値だけ渡す設計は、<code>1</code> mと<code>1</code> nmを区別できない。</p>
+<h2 id="section-e10-runner-artifact">E10　解析・数値・runner・測定のartifact</h2>
+<h3 id="section-a24d107040-10">完全解答</h3>
+<p>例えば一行を次のようにする。</p>
+<pre><code class="language-json">{&quot;case_id&quot;:&quot;well-1nm-n1&quot;,&quot;model&quot;:&quot;quantum_infinite_well&quot;,&quot;boundary&quot;:&quot;psi(0)=psi(L)=0&quot;,&quot;length_m&quot;:1e-9,&quot;mass_kg&quot;:9.1093837e-31,&quot;energy_j&quot;:6.02e-20,&quot;energy_ev&quot;:0.376,&quot;method&quot;:&quot;analytic&quot;,&quot;source_kind&quot;:&quot;analytic_prediction&quot;,&quot;status&quot;:&quot;analytic_prediction_recorded_measurement_not_run&quot;,&quot;error_vs_analytic&quot;:0.0,&quot;units&quot;:{&quot;length&quot;:&quot;m&quot;,&quot;mass&quot;:&quot;kg&quot;,&quot;energy&quot;:&quot;J&quot;,&quot;display_energy&quot;:&quot;eV&quot;}}</code></pre>
+<p>古典gridは<code>model=classical_continuum</code>、<code>method=energy_grid</code>、量子解析は<code>method=analytic</code>、有限差分は<code>method=finite_difference</code>、runner出力は<code>source_kind=runner_prediction</code>、分光器は<code>source_kind=measurement</code>とする。<code>boundary</code>、<code>temperature</code>、<code>sample</code>、<code>instrument_resolution</code>も測定レコードへ必要である。解析値を測定値へ改名してはいけない。解析式に実在試料の有限障壁、他粒子、温度、装置分解能がなく、出典と測定条件の証拠が別に必要だからである。</p>
+<h3 id="section-c56d07e28c-10">再挑戦</h3>
+<p>解析値と有限差分値を同じ<code>energy_ev</code>列へ保存しても、<code>model</code>、<code>method</code>、<code>source_kind</code>があれば比較できる。しかし片方を後から上書きすると、どの計算経路が出した値か失われるため、immutableな行として追加する。</p>
+<h2 id="section-e11">E11　負のテストを設計する</h2>
+<h3 id="section-a24d107040-11">完全解答</h3>
+<table><thead><tr><th>入力</th><th>期待状態</th><th>止める段階</th></tr></thead>
+<tbody><tr><td>(a) <code>L=0</code></td><td><code>invalid_input</code></td><td>入力検査。長さの除算が定義できない</td></tr><tr><td>(b) <code>m=NaN</code></td><td><code>invalid_input</code></td><td>入力検査。有限の質量でない</td></tr><tr><td>(c) <code>n=0</code></td><td><code>invalid_quantum_number</code></td><td>入力検査。零関数になり状態でない</td></tr><tr><td>(d) 境界条件なし</td><td><code>singular_boundary_system</code>または<code>invalid_boundary_input</code></td><td>行列構築前または固有値検査</td></tr><tr><td>(e) 解析値へ収束しない</td><td><code>numeric_not_converged</code></td><td>格子・solver検査</td></tr><tr><td>(f) 古典軌道へstable_ground_state</td><td><code>model_limit</code>または<code>invalid_model_claim</code></td><td>模型契約検査</td></tr></tbody>
+</table>
+<p><code>n=1.5</code>も、無限井戸の固有状態の量子数としては拒否する。<code>L</code>、<code>m</code>、<code>ℏ</code>、energyの有限値と単位タグを入力で確認し、境界を固定した行列にする。未収束の固有値を解析値へ置換せず、格子、solver、残差、境界、単位のログを残す。(f)は数学的に計算できるかではなく、古典模型が安定基底状態を保証しないというモデル限界を記録する。</p>
+<h3 id="section-c56d07e28c-11">再挑戦</h3>
+<p>有限障壁模型を追加するなら、(d)の境界欠落ではなく<code>model=finite_well</code>として新しいポテンシャル、外側の境界、収束条件を定義する。同じ無限井戸の解析値を期待値へ使い回さない。</p>
+<h2 id="section-e12-12-14">E12　第12章から第14章へ</h2>
+<h3 id="section-a24d107040-12">完全解答</h3>
+<p>似ている数学は、正弦関数、周波数、固有値、境界条件、フーリエまたは固有関数展開である。しかし物理は異なる。第12章のFFTは<a class="term" href="index.html#term-voltage">電圧</a>・電流という測定信号を周波数成分へ分解する計算で、量子井戸の<code>ψ</code>は粒子状態を記述し、<code>|ψ|^2</code>が位置確率密度へつながる。</p>
+<p>状態間のエネルギー差は、導入結果として、</p>
+<pre><code class="language-text">ΔE=h f</code></pre>
+<p>で光の周波数へ対応する。<code>ΔE</code>がJ、<code>h</code>がJ sなら<code>f</code>は1/s=Hzになる。どの遷移が起きるか、線幅、寿命は次章以降へ残す。</p>
+<p>第14章へ渡すのは、<code>length_m</code>、質量<code>mass_kg</code>、ポテンシャル<code>potential_j</code>、境界条件、波動関数の規格化、格子<code>dx_m</code>、時間初期値（時間依存なら）、温度・試料条件、<code>source_kind</code>、<code>status</code>、解析・数値誤差である。<code>analytic_prediction</code>、<code>numeric_prediction</code>、<code>runner_prediction</code>、<code>measurement</code>を混ぜずに渡す。</p>
+<h3 id="section-c56d07e28c-12">再挑戦</h3>
+<p>回路の<code>f=1.0 kHz</code>をそのまま量子井戸のエネルギー準位と呼ぶことはできない。<code>ΔE=hf</code>で換算したエネルギー差を考える場合も、何の状態間遷移か、単位、温度、装置分解能、模型の境界を追加で指定する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

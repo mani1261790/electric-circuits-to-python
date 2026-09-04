@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第8章　物質の導電性と古典モデル　解答</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-8">第8章 演習解答　物質の導電性と古典モデル</h1>
+<h2 id="section-e1">E1　<a class="term" href="index.html#term-current_density">電流密度</a>と面積</h2>
+<h3 id="section-a24d107040">完全解答</h3>
+<p>面に垂直なら、面積ベクトルと<code>J</code>の内積は<code>JA</code>なので、</p>
+<pre><code class="language-text">I = JA
+  = (3.0×10^4 A/m²)(2.0×10^-6 m²)
+  = 6.0×10^-2 A</code></pre>
+<p>である。単位は<code>(A/m²)m²=A</code>となる。法線との角度が<code>60°</code>なら、</p>
+<pre><code class="language-text">I = JA cos 60° = (6.0×10^-2)(0.5) = 3.0×10^-2 A</code></pre>
+<p>となる。面を反対向きに指定すれば面積ベクトルが反転し、<a class="term" href="index.html#term-current">電流</a>の符号も反転する。電流の大きさだけを求める場合でも、法線の向きは記録する。</p>
+<h3 id="section-c56d07e28c">再挑戦</h3>
+<p><code>J=8.0×10^3 A/m²</code>、<code>A=5.0×10^-6 m²</code>、角度<code>120°</code>へ変える。<code>I=8.0×10^3×5.0×10^-6×cos120°=-2.0×10^-2 A</code>。負号は、指定した法線に対して流れが反対向きであることを表す。</p>
+<h2 id="section-e2">E2　電子の向きと慣用電流</h2>
+<h3 id="section-a24d107040-2">完全解答</h3>
+<p>電子の<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>は<code>-e</code>なので、正の電場<code>+x</code>に対するドリフト速度は</p>
+<pre><code class="language-text">v_d,e = -μ_e E</code></pre>
+<p>であり、<code>-x</code>方向である。電子による電流密度は</p>
+<pre><code class="language-text">J_e = n_e(-e)v_d,e = n_e e μ_e E</code></pre>
+<p>となるので、<code>+x</code>方向である。負電荷が負方向へ運ばれるため、慣用電流は正方向へ流れる。<a class="term" href="index.html#term-electric_field">電場</a>を<code>-x</code>へ反転すると、電子の速度は<code>+x</code>、電流密度は<code>-x</code>へ反転する。この結果は、正の導電率を使う<code>J=σE</code>とも一致する。電子の矢印と電流の矢印を同じ向きに描くのが故障の典型である。</p>
+<h3 id="section-c56d07e28c-2">再挑戦</h3>
+<p><a class="term" href="index.html#term-hole">正孔</a>だけを担体とする模型へ変更する。正孔では<code>v_d,h=+μ_hE</code>、<code>J_h=p e μ_hE</code>なので、速度も電流も電場と同じ向きになる。電子の場合と同じ<code>J</code>の向きでも、担体速度の説明は反対になる。</p>
+<h2 id="section-e3">E3　二種類の担体から<a class="term" href="index.html#term-conductivity">導電率</a>を計算する</h2>
+<h3 id="section-a24d107040-3">完全解答</h3>
+<p>電子項と正孔項を分けると、</p>
+<pre><code class="language-text">n_e μ_e = (2.0×10^25)(4.0×10^-3) = 8.0×10^22
+p μ_h   = (1.0×10^21)(2.0×10^-4) = 2.0×10^17</code></pre>
+<p>である。したがって、</p>
+<pre><code class="language-text">σ = e(n_e μ_e+p μ_h)
+  = (1.602176634×10^-19)(8.00002×10^22)
+  ≈ 1.2817×10^4 S/m</code></pre>
+<p>となる。<code>E=0.50 V/m</code>では、</p>
+<pre><code class="language-text">J = σE ≈ (1.2817×10^4)(0.50)
+  ≈ 6.4087×10^3 A/m²</code></pre>
+<p>である。電子項は正孔項の<code>8.0×10^22/(2.0×10^17)=4.0×10^5</code>倍なので、この指定値では電子が支配的である。支配的という判断は、密度と<a class="term" href="index.html#term-mobility">移動度</a>を指定したこの状態に限る。</p>
+<h3 id="section-c56d07e28c-3">再挑戦</h3>
+<p><code>n_e=1.0×10^20 m^-3</code>、<code>p=2.0×10^22 m^-3</code>へ変える。電子項は<code>4.0×10^17</code>、正孔項は<code>4.0×10^18</code>なので、正孔項が10倍大きい。<code>σ=e(4.4×10^18)≈0.705 S/m</code>、<code>E=0.50 V/m</code>では<code>J≈0.353 A/m²</code>となる。</p>
+<h2 id="section-e4">E4　緩和時間と移動度</h2>
+<h3 id="section-a24d107040-4">完全解答</h3>
+<p>移動度の大きさは、</p>
+<pre><code class="language-text">μ = eτ/m*
+  = (1.602176634×10^-19 C)(2.0×10^-14 s)/(9.11×10^-31 kg)
+  ≈ 3.52×10^-3 m²/(V s)</code></pre>
+<p>である。電子は電場と逆向きへ動くので、<code>E=100 V/m</code>では、</p>
+<pre><code class="language-text">v_d,e = -μE ≈ -(3.52×10^-3)(100)
+       ≈ -0.352 m/s</code></pre>
+<p>（<code>-x</code>方向）となる。緩和時間以外を固定して<code>τ</code>を2倍にすれば、<code>μ</code>と<a class="term" href="index.html#term-drift_velocity">ドリフト速度</a>の大きさが2倍になり、式(8.7)の導電率も2倍になる。実材料では散乱機構や分布が変わるため、<code>τ</code>を独立に2倍できるとは限らない。</p>
+<h3 id="section-c56d07e28c-4">再挑戦</h3>
+<p><code>m*</code>を2倍、<code>τ</code>を半分にする。<code>τ/m*</code>は元の<code>1/4</code>なので、移動度、速度の大きさ、単一担体の導電率は元の<code>1/4</code>になる。数値だけでなく比を先に見ると、計算ミスを検出できる。</p>
+<h2 id="section-e5">E5　同じ電場で材料を比べる</h2>
+<h3 id="section-a24d107040-5">完全解答</h3>
+<p><code>J=σE</code>、<code>I=JA</code>を各行へ適用する。</p>
+<table><thead><tr><th>試料</th><th><code>J</code></th><th><code>I</code></th></tr></thead>
+<tbody><tr><td>銅</td><td><code>(5.8×10^7)(2.0)=1.16×10^8 A/m²</code></td><td><code>1.16×10^8×5.0×10^-9=5.8×10^-1 A</code></td></tr><tr><td>ガラス模型</td><td><code>2.0×10^-12 A/m²</code></td><td><code>1.0×10^-20 A</code></td></tr><tr><td>シリコン模型</td><td><code>5.8×10^-4 A/m²</code></td><td><code>2.9×10^-12 A</code></td></tr></tbody>
+</table>
+<p>銅とガラス模型の比は<code>5.8×10^7/1.0×10^-12=5.8×10^19</code>、シリコン模型とガラス模型の比は<code>2.9×10^-4/1.0×10^-12=2.9×10^8</code>である。同じ電場、同じ断面積だから、電流の比は導電率の比に等しい。三つの<code>σ</code>はこの問で指定された代表値・計算用模型であり、runnerや装置で測った値ではない。ガラスとシリコンは条件を明記しない一つの普遍値にできない。</p>
+<h3 id="section-c56d07e28c-5">再挑戦</h3>
+<p>電場を<code>-2.0 V/m</code>へ反転する。三つの<code>J</code>と<code>I</code>はすべて符号反転し、大きさは同じである。試料内部の抵抗を<code>R_bulk=L/(σA)</code>で定義するなら、正の<code>σ</code>に対する<code>R_bulk</code>は正のまま変わらない。</p>
+<h2 id="section-e6">E6　導電率から線材抵抗へ</h2>
+<h3 id="section-a24d107040-6">完全解答</h3>
+<p>電場は、</p>
+<pre><code class="language-text">E = ΔV/L = 0.020/0.20 = 0.10 V/m</code></pre>
+<p>である。抵抗は、</p>
+<pre><code class="language-text">R_bulk = L/(σA)
+  = 0.20 / ((5.0×10^6)(2.0×10^-6))
+  = 0.020 Ω</code></pre>
+<p>となる。したがって、</p>
+<pre><code class="language-text">I = ΔV/R_bulk = 0.020/0.020 = 1.0 A</code></pre>
+<p>である。<code>L'=2L</code>、<code>A'=A/2</code>では、</p>
+<pre><code class="language-text">R&#x27;_bulk = (2L)/(σ(A/2)) = 4R_bulk = 0.080 Ω</code></pre>
+<p>となる。長さの効果で2倍、断面積を半分にした効果でさらに2倍である。<code>σA</code>の単位を単独で<code>S/m</code>と決めず、<code>R</code>全体の単位が<code>Ω</code>になることを確認する。</p>
+<h3 id="section-c56d07e28c-6">再挑戦</h3>
+<p><code>L=0.10 m</code>、<code>A=4.0×10^-6 m²</code>、<code>σ=5.0×10^6 S/m</code>へ変える。<code>R=0.005 Ω</code>、<code>ΔV=0.020 V</code>なら<code>I=4.0 A</code>。元の線材と比べて長さ半分、面積2倍なので抵抗は<code>1/4</code>である。</p>
+<h2 id="section-e7">E7　<a class="term" href="index.html#term-resistivity">抵抗率</a>、電力、温度</h2>
+<h3 id="section-a24d107040-7">完全解答</h3>
+<p>まず、</p>
+<pre><code class="language-text">R_bulk = ρL/A
+  = (2.0×10^-8)(0.50)/(1.0×10^-6)
+  = 1.0×10^-2 Ω</code></pre>
+<p>である。よって、</p>
+<pre><code class="language-text">I = ΔV/R_bulk = 0.10/0.010 = 10 A
+P = ΔV I = 0.10×10 = 1.0 W</code></pre>
+<p>となる。抵抗率が20%増えて<code>ρ'=1.2ρ</code>になり、寸法を固定するなら<code>R'_bulk=1.2R_bulk=0.012 Ω</code>。<a class="term" href="index.html#term-voltage">電圧</a>を固定したとき、</p>
+<pre><code class="language-text">I&#x27; = 0.10/0.012 ≈ 8.33 A
+P&#x27; = (0.10)^2/0.012 ≈ 0.833 W</code></pre>
+<p>である。これは温度を外から指定し、温度上昇によるさらなる変化を無視した比較である。実際には発熱<code>P</code>が温度を変え、その温度が<code>ρ</code>を変えるため、熱の方程式を加える必要がある。</p>
+<h3 id="section-c56d07e28c-7">再挑戦</h3>
+<p>電流を<code>10 A</code>に固定する条件へ変える。<code>R'_bulk=0.012 Ω</code>なら電圧は<code>V'=I R'_bulk=0.12 V</code>、<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>は<code>P'=I²R'_bulk=1.2 W</code>となる。電圧固定と電流固定では、抵抗変化に対する電力の変化が異なる。</p>
+<h2 id="section-e8">E8　金属・絶縁体・<a class="term" href="index.html#term-semiconductor">半導体</a>を条件付きで説明する</h2>
+<h3 id="section-a24d107040-8">完全解答</h3>
+<p>銅は金属なので、主な担体を移動可能な電子として扱う。担体密度が大きく、移動度は格子振動、欠陥、温度で変わる。通常の範囲では<code>J=σE</code>が便利だが、発熱による温度上昇、強電場、高周波、接触支配を含めると一定<code>σ</code>は崩れ得る。</p>
+<p>乾燥したガラスは、指定した直流・温度・時間では自由に試料を通過する担体が少ない絶縁体の模型である。組成、アルカリイオン、水分、表面汚染、温度、印加時間、周波数で見かけの導電率は変わる。したがって「ガラスには電荷がない」は誤りで、電荷は存在し、分極やイオン移動も起こり得るが、金属と同じ担体模型を使えないという意味である。</p>
+<p>ドープしたシリコンでは、電子と正孔の密度、移動度、温度、不純物濃度、光を指定する。少量の不純物でも担体密度が大きく変わるため、シリコンの導電率は広い範囲を取り得る。「シリコンは常に銅より低い」も条件なしには正しくない。強くドープしたシリコン、薄膜、温度や周波数を変えた測定では、比較の結果が変わり得る。</p>
+<h3 id="section-c56d07e28c-8">再挑戦</h3>
+<p>湿ったガラス表面を電極で測るケースを追加する。バルクの乾燥ガラスの<code>σ</code>だけでなく、表面の薄い水分層、電極接触、時間依存のイオン移動を別の経路として記録する。単一の<code>R_bulk=L/(σA)</code>へすぐ縮約できない理由を三つ挙げられればよい。</p>
+<h2 id="section-e9">E9　予定コードへ入力検査を追加する</h2>
+<h3 id="section-a24d107040-9">完全解答</h3>
+<p>仕様は、<code>length_m&gt;0</code>、<code>area_m2&gt;0</code>、<code>conductivity_s_per_m&gt;=0</code>を受理条件とする。<code>σ=0</code>では<code>J=0</code>、<code>I=0</code>、抵抗は無限大という状態にし、有限値の計算結果と分ける。例えば次の表を作る。</p>
+<table><thead><tr><th>ケース</th><th>入力</th><th>期待状態</th><th>理由</th></tr></thead>
+<tbody><tr><td>正常</td><td><code>L=.1,A=1e-8,V=.1,σ=1e6</code></td><td><code>ok</code>、<code>E=1</code>、<code>J=1e6</code></td><td>単位と正値が成立</td></tr><tr><td>長さゼロ</td><td><code>L=0</code></td><td><code>error</code></td><td>電場と抵抗の分母が0</td></tr><tr><td>面積ゼロ</td><td><code>A=0</code></td><td><code>error</code></td><td>電流断面が定義できず、抵抗式の分母が0</td></tr><tr><td>負の導電率</td><td><code>σ=-1</code></td><td><code>error</code></td><td>受動的な今回の導電率の範囲外</td></tr><tr><td>絶縁極限</td><td><code>σ=0</code></td><td><code>ok</code>だが<code>resistance=inf</code></td><td>有限浮動小数点の抵抗と区別</td></tr><tr><td>単位故障</td><td><code>A=2</code>（<code>cm²</code>のつもり）</td><td><code>unit_error</code>または警告</td><td><code>m²</code>へ変換されていない</td></tr></tbody>
+</table>
+<p>コードでは、長さと面積を最初に検査し、導電率の負値を拒否する。0の場合は通常の<code>L/(σA)</code>を評価せず、状態を<code>infinite_resistance</code>などと記録する。入力を黙って絶対値へ直すと、符号や入力ミスを隠すので避ける。</p>
+<h3 id="section-c56d07e28c-9">再挑戦</h3>
+<p>移動度から<code>σ=e(n_eμ_e+pμ_h)</code>を計算する経路を追加する。<code>n_e</code>、<code>p</code>、<code>μ_e</code>、<code>μ_h</code>が負ならエラー、全て0なら<code>σ=0</code>、<code>E</code>の負値は正常な極性変更とする。導電率計算のエラーと電圧極性の変更を同じエラーコードにしない。</p>
+<h2 id="section-e10">E10　単位混同と符号の故障を診断する</h2>
+<h3 id="section-a24d107040-10">完全解答</h3>
+<p>面積は、</p>
+<pre><code class="language-text">2.0 cm² = 2.0×10^-4 m²</code></pre>
+<p>である。<code>E=ΔV/L=1.0 V/m</code>、<code>J=σE=1.0×10^6 A/m²</code>なので、正しい電流は</p>
+<pre><code class="language-text">I_correct = (1.0×10^6)(2.0×10^-4) = 2.0×10^2 A</code></pre>
+<p>である。コードが<code>2.0 m²</code>と解釈すると、</p>
+<pre><code class="language-text">I_bug = (1.0×10^6)(2.0) = 2.0×10^6 A</code></pre>
+<p>となり、正しい値の<code>10^4</code>倍である。<code>cm²</code>から<code>m²</code>へは長さの換算を二乗する必要があるため、<code>10^2</code>倍ではなく<code>10^4</code>倍の差になる。</p>
+<p><code>ΔV=-0.10 V</code>なら<code>E=-1.0 V/m</code>、<code>J=-1.0×10^6 A/m²</code>、<code>I=-2.0×10^2 A</code>となる。一方、抵抗は</p>
+<pre><code class="language-text">R_bulk = 0.10 / ((1.0×10^6)(2.0×10^-4)) = 5.0×10^-4 Ω</code></pre>
+<p>であり、導電率と寸法を変えない限り正のままである。ここでは<code>V=RI</code>も<code>(-0.10)=(5.0×10^-4)(-200)</code>として成立する。</p>
+<h3 id="section-c56d07e28c-10">再挑戦</h3>
+<p>バグが<code>A=2.0×10^-8 m²</code>（<code>2.0 mm²</code>を<code>cm²</code>と誤認）だった場合を調べる。正しい<code>2.0 cm²</code>に対して面積が<code>10^-4</code>倍なので、計算電流は正しい値の<code>10^-4</code>倍、すなわち<code>0.020 A</code>になる。単位名だけでなく、変換後の数値と基準面積をartifactへ保存する。</p>
+<h2 id="section-e11-artifact">E11　予測・資料値・実測値を分けるartifact</h2>
+<h3 id="section-a24d107040-11">完全解答</h3>
+<p>最小のCSVなら、例えば次の列を置く。</p>
+<pre><code class="language-text">material,source_kind,sigma_S_per_m,L_m,A_m2,deltaV_V,E_V_per_m,J_A_per_m2,I_A,R_ohm,status,measured,environment,equation_ids</code></pre>
+<p>銅の計算用代表値の行は、</p>
+<pre><code class="language-text">copper,calculation_assumption,5.8e7,0.10,1.0e-8,0.10,1.0,5.8e7,5.8e-1,1.724e-1,predicted,false,fixed-linux-planned,&quot;conductivity_constitutive;resistance_geometry;ohms_law&quot;</code></pre>
+<p>のようになる。実測を追加する場合は、<code>source_kind=measurement</code>、<code>status=measured</code>、計器、温度、校正、日時、許容誤差などを追加し、予測行を上書きしない。資料値、モデルの仮定、runnerが算出した予測、装置の実測は、不確かさと再現手順が違うからである。一つの値欄を更新すると、後から「表の値はいつ、どの経路で得たか」を判別できなくなる。</p>
+<p>図のデータにも<code>measured:false</code>と<code>status:predicted</code>を付け、domain adapter未導入の空欄を0と解釈しない。<code>equation_ids</code>は式レジストリとの機械的な照合に使う。</p>
+<h3 id="section-c56d07e28c-11">再挑戦</h3>
+<p>JSONLへ変更するなら、数値単位をキーに埋め込むか、<code>values</code>と<code>units</code>を分離する。例えば<code>{"material":"copper","values":{"sigma":5.8e7,"L":0.1},"units":{"sigma":"S/m","L":"m"},"status":"predicted","measured":false}</code>のようにし、温度を未指定のまま「室温」と書かない。条件がない値は<code>missing</code>として扱う。</p>
+<h2 id="section-e12">E12　次章へ引き渡す条件を説明する</h2>
+<h3 id="section-a24d107040-12">完全解答</h3>
+<p><code>R_bulk=L/(σA)</code>を回路図の抵抗へ置く条件として、次を挙げられる。</p>
+<ol><li>物質と温度が区間内でほぼ一様で、<code>σ</code>を一つの値にできる。</li><li>断面積が電流方向に急変せず、断面内の<code>J</code>を一様と近似できる。</li><li>端面・接点の電場の乱れと接触抵抗を、別の抵抗または誤差として分離できる。</li><li>定常または準静的で、容量性電流や誘導を今回の抵抗電流から分けられる。</li><li>電場が線材全体でほぼ同時に定まるほど、寸法と波形の時間尺度が小さい。</li><li>発熱、担体の<a class="term" href="index.html#term-concept_19_term_0ccc09a111_0ccc09a1">生成・再結合</a>、強電場による非線形性が無視できる。</li></ol>
+<p>(a)では、信号の立上り時間が長さ方向の電磁的な<a class="term" href="index.html#term-concept_9_term_c4bb369c5d_c4bb369c">伝搬時間</a>と同程度なら、線材を一つの<code>R</code>だけへ置けない。分布したインダクタンス・容量、反射、伝送を第9章で調べる。(b)では、細い部分と接続部で<code>J</code>と電場が偏るため、区間別の抵抗や二次元・三次元の場を検討する。(c)では、<code>P=I²R</code>が温度を上げ、<code>σ(T)</code>と抵抗が変わるので、電気と熱を連成させる。(d)では、ガラスの表面水分、イオン移動、電極接触、周波数依存、容量性応答を疑い、乾燥バルクの<code>σ</code>をそのまま使わない。</p>
+<p>したがって、抵抗近似の可否は名前ではなく、隠した変数が観測へ影響しないかで判断する。まず<code>L</code>、<code>A</code>、<code>σ</code>、温度、周波数、接触、波形を記録し、次に一つの集中定数で許容誤差に収まるかを検査する。</p>
+<h3 id="section-c56d07e28c-12">再挑戦</h3>
+<p>長さ<code>L=1 cm</code>の銅線に、立上り時間<code>1 ns</code>の信号を加えるケースを追加する。自由空間の光速だけで断定せず、伝搬速度、線材の誘電環境、立上り時間、許容誤差を指定する。<a class="term" href="index.html#term-propagation_delay">伝搬遅延</a>が許容誤差に対して無視できないなら、第9章の分布定数模型へ引き渡す。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

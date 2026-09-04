@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>先行一周　電気からPythonまでの地図</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-python">電気からPythonまでの地図</h1>
+<p>このページは、全106章を読む前に、教材全体の地図を一度だけ眺めるための先行一周である。ここでは操作をしない。環境も作らない。確認問題も出さない。知らない言葉を覚えることも求めない。</p>
+<p>ただ、次の一行を中心にする。</p>
+<p>print(1 + 2)</p>
+<p>この一行が「3」と表示されるという出来事を、上から下へ、Pythonの文から電磁場まで見下ろしていく。途中に出てくる語は、いったん箱の名前だと思えばよい。箱の中身は、第1章以降で順番に開く。</p>
+<p>この一周で覚えて帰ることは一つだけである。コンピュータは、Pythonの文をいきなり<a class="term" href="index.html#term-voltage">電圧</a>へ変えるのではない。各層が下の層を隠し、上の層へ小さな約束を渡す。その約束を、別の表現へ変換する層が何段も重なっている。</p>
+<h2 id="section-1-3">1. まず、表示された「3」を分解する</h2>
+<p>端末の画面に見えるのは、文字の列である。読者が見ている「3」は、電磁場そのものでも、CPUの内部状態そのものでもない。画面へ届いた出力を、端末が字形として描いた結果である。</p>
+<p><code>print(1 + 2)</code> には、少なくとも次の二つの意味が重なっている。</p>
+<ul><li><code>1 + 2</code> という計算をして、値 <code>3</code> を得る。</li><li>得られた値を、人間が読める形で<a class="term" href="index.html#term-concept_prelude_term_3a3196aa65_3a3196aa">標準出力</a>へ送る。</li></ul>
+<p>この二つは、Pythonという言語が利用者へ示す意味の側にある。どのCPUを使うか、どのOSを使うか、どの画面を使うかが変わっても、通常はこの意味を保つことが期待される。これは「この文は何を意味するか」という契約であって、特定の内部命令を約束しているわけではない。</p>
+<p>一方、<code>1 + 2</code> の計算がいつ行われるかは、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>の作り方によって変わる。処理系が実行前に計算してしまうこともある。実行時まで計算を残すこともある。したがって、画面に <code>3</code> が出たという観察だけから、内部でどの命令が実行されたかを断定してはいけない。</p>
+<p>この教材では、表示例と実行時の加算例を分ける。表示例は <code>print(1 + 2)</code> とする。実行時の加算器まで追いたい場合は、次のように値を変数へ分ける。</p>
+<p>a = 1 b = 2 print(a + b)</p>
+<p>後者でも、処理系の最適化を含めて実際の表現を確認する。二つの例は同じ <a class="term" href="index.html#term-concept_prelude_trace_a_6f64d010">trace-A</a> という道標を持つが、同じ内部経路になるとは限らない。この違いそのものが、言語の意味と処理系の実装を分けて考える入口になる。</p>
+<h2 id="section-2">2. 全層を一枚に置く</h2>
+<p>この一行を説明するための一つの見取り図を、上から下へ読む。矢印は「上の層の要求を、下の層が実現する」ことを表す。実際のコンピュータには分岐、キャッシュ、バッファ、別<a class="term" href="index.html#term-process">プロセス</a>、別デバイスなどがあるため、これはすべての機械の唯一の経路ではない。全体の位置関係を見るための説明用の経路である。</p>
+<p>Pythonの文 ↓ 字句・構文木・処理系 ↓ 実行時の値・標準出力 ↓ <a class="term" href="index.html#term-system_call">システムコール</a>とプロセス ↓ 命令セットと機械語 ↓ CPUのデータ経路と制御 ↓ 論理ゲートとビット ↓ CMOS回路とMOSFET ↓ 半導体中の電荷・電流 ↓ 電場・電位・電磁場</p>
+<p>この列を、<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>、模型、契約、実装という四つの見方で眺める。</p>
+<ul><li>自然法則は、物質や<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>や場がどのように振る舞うかという、コンピュータの外側にもある事柄である。</li><li>模型は、複雑な自然現象から目的に必要な部分を取り出す説明である。回路の電圧、論理値の0と1、CPUの一命令などは、異なる範囲の模型として使われる。</li><li>契約は、ある層が上の層へ保証する約束である。Pythonの <code>+</code> の意味、OSがシステムコールを受け付ける規則、命令の結果などがこれに当たる。</li><li>実装は、その契約を実際に実現する一つの作り方である。CPython、MiniPy、rv32edu、<a class="term" href="index.html#term-concept_90_minios_bcd375eb">minios</a>、CMOS NANDは、それぞれ教材で扱う具体的な実装である。</li></ul>
+<p>同じ対象について、四つの見方を混ぜないことが大切である。たとえば「0」は、言語上の整数値かもしれないし、命令中のビット列かもしれないし、回路で定めた低い電圧範囲かもしれない。数字が同じでも、層が変われば意味と根拠が変わる。</p>
+<h2 id="section-3-python">3. Pythonの文から処理系まで</h2>
+<p>最上段は、読者が書いた<a class="term" href="index.html#term-concept_1_term_204f4a94ff_204f4a94">ソース文字列</a>である。</p>
+<p>print(1 + 2)</p>
+<p>これは人間に読める文字であって、CPUがそのまま読む命令ではない。処理系はまず文字の並びを読み、<code>print</code>、<code>1</code>、<code>+</code>、<code>2</code>、括弧などのまとまりを見分ける。次に、どのまとまりがどのまとまりに含まれるかを木の形で表す。ここで扱っているのは、文字の意味を構造へ写す作業である。</p>
+<p>この木を、すぐ実行できる形、あるいは別の中間的な形へ変換する。CPythonでは、言語の構文や意味を実装する仕組みと、実行時に値を扱う仕組みが連携する。教材の小さな処理系MiniPyでは、学ぶために必要な範囲を選び、同じ意味をより小さな仕組みで実現する。</p>
+<p>ここで「Pythonが機械語へ直接翻訳される」と考えると、後で混乱する。実際には、処理系は複数の表現を使う。ソース文字列、構文木、<a class="term" href="index.html#term-bytecode">バイトコード</a>、実行時の値、呼び出し規約などは、同じプログラムを異なる目的で表したものだ。どれが正しいというのではなく、各表現が何を隠し、何を見せるかが違う。</p>
+<p><code>print(1 + 2)</code> の場合、処理系が守るべき上位の契約は、計算結果を表示可能な形で標準出力へ送ることにある。その契約を守るなら、計算のタイミングや中間表現は変えられる。これが「意味は同じでも実装は複数ある」ということだ。</p>
+<h2 id="section-4">4. 実行時の値と標準出力</h2>
+<p>処理系が計算結果を扱う段階では、<code>3</code> は単なる画面の字形ではない。実行時に使われる値である。処理系はその値を、文字列へ変換する仕事と、出力先へ渡す仕事を分担する。</p>
+<p><code>print</code> は画面を直接描く命令だと考えない方がよい。通常の経路では、処理系は標準出力という出力先へ文字列を渡す。多くの環境では改行も加わるので、観察される出力は概念的には <code>3</code> と行末の組になる。ただし、画面への到着は、処理系のバッファ、端末、リダイレクトの有無などに左右される。</p>
+<p>この段階で区別することが二つある。</p>
+<ol><li>Pythonの文が要求する出力の内容。</li><li>その内容が、いつ、どのデバイスへ、どんな手段で渡るか。</li></ol>
+<p>前者は言語と処理系の契約に近い。後者は実装と環境に依存する。ファイルへリダイレクトすれば画面は変わるが、標準出力へ渡された内容という上位の経路は保たれる。ネットワーク越しの端末なら、その先にさらに通信の層が増える。</p>
+<h2 id="section-5-os">5. システムコール、OS、プロセス</h2>
+<p>処理系がOSのサービスを使うとき、処理系は「文字をこの出力先へ渡したい」と依頼する。OSとの境界にある依頼の形式を、システムコールと呼ぶ。ここで重要なのは名前ではなく境界である。アプリケーションが、すべての装置の電気的な操作を自分で行うのではなく、OSが提供する決まった入口へ依頼する。</p>
+<p>POSIX系のOSでは、ファイル記述子を通じた書込みがこの説明に現れることがある。しかし、すべての環境で同じ名前のシステムコールが使われるとは限らない。バッファに一時保存され、後でまとめて渡される場合もある。したがって、先行一周で約束するのは「出力がOSの管理する出力経路へ渡される」という関係までである。特定の呼出し番号や、必ず一回だけ呼ばれることは約束しない。</p>
+<p>OSは、実行中のプログラムをプロセスとして管理する。プロセスには、プログラムの命令、実行時のデータ、実行位置、利用できる資源などが結び付いている。OSはアプリケーションへ、あたかも自分専用の記憶領域や出力先があるように見せる。その裏で、複数のプロセスや装置を調停し、権限を確認し、失敗を結果として返す。</p>
+<p>この「専用に見える」という性質が、仮想記憶の役割を直感的に示す。プログラムが使うアドレスは、RAM上の物理的な場所と一対一に固定されているとは限らない。OSとCPUの仕組みが、プログラムから見えるアドレス空間と、実際の記憶装置の配置を対応付ける。</p>
+<p>教材では、一般的な<a class="term" href="index.html#term-host">host</a> OSの経路だけでなく、学習用のminiosと、比較対象のxv6も扱う。miniosはrv32edu上で必要な小さなOSの契約を見せるための実装であり、現代のすべてのOSを代表するものではない。xv6はOSの原理を追う別の基準実装である。この二つと、読者のhost OSを混同しない。</p>
+<h2 id="section-6-cpu">6. <a class="term" href="index.html#term-concept_prelude_cpu_6fa2d6ef">命令セットとCPU</a></h2>
+<p>OSや処理系の仕事は、最終的にはCPUが理解できる命令の列として実行される。ここで、命令セットとCPUを分ける。</p>
+<p>命令セットは、CPUがどんな命令を受け取り、どんなレジスタや記憶への操作を行い、どんな結果を保証するかという契約である。教材の中心では<a class="term" href="index.html#term-rv32i">RV32I</a>を基本に、必要な範囲の拡張を固定する。命令セットは、命令を実際に何段の回路で処理するかまでは決めない。</p>
+<p>CPUは、その命令セットを実現する実装である。命令を取り出し、意味を読み取り、演算し、記憶へアクセスし、結果を書き戻す。その内部に、算術論理演算器、レジスタ、制御信号、データを運ぶ経路がある。単純なCPUなら一つの段階で順に処理するかもしれない。高性能なCPUなら、複数の命令を重ね、順序を変えて進めることもある。それでも、上から見た命令セットの契約を壊してはいけない。</p>
+<p>この教材で作る <code>rv32edu</code> は、その契約と実装の対応を読者が追える大きさにした学習用CPUである。Verilatorによるシミュレーションが必修の確認経路になる。<a class="term" href="index.html#term-fpga">FPGA</a>は任意経路だが、単に名前を紹介して終わらない。回路記述から合成、配置配線、タイミング確認、bitstreamの書込みまでを、決めた基準ボードと道具の版で扱う。ただし、先行一周ではボードの購入や書込み操作は要求しない。</p>
+<h2 id="section-7-cmos">7. ビット、<a class="term" href="index.html#term-logic_gate">論理ゲート</a>、CMOS</h2>
+<p>CPUが扱うビット列は、数学の記号としては0と1で書ける。論理ゲートは、その0と1の組合せに対して、どの出力を返すかを表す模型である。NAND、NOR、NOT、AND、ORなどを組み合わせれば、算術や制御に必要な論理を組み立てられる。</p>
+<p>しかし、現実の回路に浮いている「0」や「1」という物質があるわけではない。回路では、電圧や<a class="term" href="index.html#term-current">電流</a>を一定の範囲へ対応付け、その範囲を論理値として読む。入力が曖昧な範囲にあれば、論理値として安全に解釈できない。遅延、負荷、雑音、電力もある。</p>
+<p><a class="term" href="index.html#term-cmos">CMOS</a>は、論理ゲートを作る代表的な回路方式である。MOSFETの組を使い、入力に応じて出力を電源側または接地側へつなぐ。論理ゲートの真理値表は、回路の振る舞いを抽象化した模型であり、MOSFETの電荷の動きや電圧の時間変化をすべて書いたものではない。</p>
+<p>ここにも四つの見方がある。</p>
+<ul><li>自然法則：電荷、<a class="term" href="index.html#term-electric_field">電場</a>、電流、物質の性質が、実際の素子で成り立つ。</li><li>模型：<a class="term" href="index.html#term-mosfet">MOSFET</a>やCMOS回路を、必要な範囲の式やスイッチとして近似する。</li><li>契約：ある電圧範囲を0または1として読み、出力が次段で安全に読める範囲へ入ることを保証する。</li><li>実装：特定のトランジスタ寸法、配線、電源、製造規則でNANDやCPUを作る。</li></ul>
+<p>「NANDが0を出した」という文は、論理模型の話かもしれない。「出力ノードが何ボルトだったか」は、回路実装や物理模型の話になる。同じ出来事を説明していても、質問が違う。</p>
+<h2 id="section-8">8. <a class="term" href="index.html#term-concept_prelude_term_7a88de9105_7a88de91">半導体と電磁場</a>へ戻る</h2>
+<p>MOSFETをスイッチとして描くと、論理ゲートはとても簡単に見える。そのスイッチがなぜ動くのかを問うと、<a class="term" href="index.html#term-semiconductor">半導体</a>中の電荷担体、材料中のエネルギー状態、接合、電場、電位へ降りていくことになる。</p>
+<p>半導体では、電荷を運ぶ担体の数や動きが、材料への不純物、温度、電場などで変わる。MOSFETでは、ゲートへ加えた<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>が、半導体表面の電荷の分布を変え、ソースとドレインの間の電流を制御する。先行一周では、この説明を数量式へ進めない。どの物理量が下にあり、どの回路上の性質へつながるかだけを置く。</p>
+<p>さらに下へ行くと、電圧は<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>、電流は電荷の流れとして捉えられる。電位や電場は、空間の各点に関わる量であり、回路図で一本の線として描いた接続だけでは表しきれない。回路模型は、電磁場の問題を目的に応じて小さくしたものだ。</p>
+<p>ここで「すべてを電磁場から導出した」と早合点しないことも重要である。教材は、物理の層を学んだ後に、回路、論理、CPU、OS、言語処理系をそれぞれの契約として組み立てる。上位層の設計上の規則は、下位層の自然法則から自動的に一意に決まるわけではない。自然法則に反しない範囲で、人間が便利な契約と実装を選ぶ。</p>
+<h2 id="section-9">9. 一行の状態変化を並べる</h2>
+<p><code>print(1 + 2)</code> を一つの説明用の状態列として置く。これは測定結果の一覧ではなく、各章で後から精密化するための骨組みである。</p>
+<p>A0  ソース：print(1 + 2) 人間が読める文字の並びとしてプログラムがある。</p>
+<p>A1  言語の意味：値3を得て、標準出力へ表示可能な形で送る これはPythonの文が上位へ示す意味の契約である。</p>
+<p>A2  処理系の表現：字句、構文木、バイトコード、実行時の値 どの表現を使うか、いつ計算するかは処理系の実装で変わる。</p>
+<p>A3  出力の内容：概念的には「3」と行末 文字列化、バッファ、リダイレクトによって下位の経路は変わりうる。</p>
+<p>A4  OSとの境界：標準出力への書込みを依頼する システムコールやファイル記述子は、環境に依存する境界の実装である。</p>
+<p>A5  実行環境：プロセス、アドレス空間、命令の実行 OSは資源と権限を管理し、CPUは命令セットの契約に従って動く。</p>
+<p>A6  回路：ビットの組合せ、論理ゲート、CMOSの信号 0と1は、電圧範囲を読むための論理模型である。</p>
+<p>A7  物理：MOSFET、半導体中の電荷、電場と電位 回路の信号は、物質と電磁場の振る舞いの上に実現される。</p>
+<p>A0からA1は、言語の意味を読む段階である。A1からA3は、処理系が意味を実装上の表現へ移す段階である。A3からA5は、OSへサービスを依頼し、CPUの実行へ至る段階である。A5からA7は、命令を回路と物理へ降ろす段階である。</p>
+<p>ただし、A4からA5が必ず一回の書込み呼出しだけになるとは限らない。A2で加算が消えることもある。A5でキャッシュやパイプラインが入り、A6で同じ命令列を別の回路構成が実行することもある。状態列は、特定の版や機械のログを捏造するためではなく、何を確定し、何を後で測るかを区別するためにある。</p>
+<h2 id="section-10">10. ほかの例は、同じ地図の別の道</h2>
+<p>算術だけでは、コンピュータの全体は見えない。以後の章では、同じ縦断図を別の例にも適用する。</p>
+<ul><li>リスト生成では、複数の値が一つの実行時オブジェクトへまとまり、記憶領域の管理が前面に出る。</li><li>関数呼出しでは、引数、戻り先、実行時の枠が現れ、制御の流れを追う必要がある。</li><li>ファイル読出しでは、処理系の入出力、OSのファイル、記憶装置と<a class="term" href="index.html#term-controller">controller</a>までが関係する。</li><li>キー入力では、電気接点や入力装置から、OSの入力経路を通ってプログラムへ届く向きを追う。</li><li>文字表示では、標準出力から端末、<a class="term" href="index.html#term-concept_67_uart_3c85ca67">UART</a>、framebuffer、画面までの表現変換を追う。</li><li><a class="term" href="index.html#term-socket">socket</a>への送信では、bufferからsystem call、network stack、NIC、Ethernet PHYへ道が広がる。</li></ul>
+<p>ファイル、キー入力、socketは、MiniPyやminiosの必須機能として無理に実装するものではない。これらは主にCPython、xv6、host OS、実機観察の経路で扱う。逆に、算術、リスト、関数などは、MiniPy、rv32edu、minios、CPythonの対応範囲を定義して同じ道標でつなぐ。</p>
+<h2 id="section-11-106">11. 106章の読み方</h2>
+<p>先行一周の後は、既存の第1章から第106章へ進む。章番号と順序は変えない。先行一周で見た箱を、次のように少しずつ開く。</p>
+<ul><li>第1章から第8章では、Pythonの一行をもう一度入口に置き、法則と模型を区別したうえで、電荷、電場、電位、電流、導電性へ降りる。</li><li>第9章から第16章では、回路という近似の便利さと限界を確かめ、量子、結晶、<a class="term" href="index.html#term-energy_band">エネルギーバンド</a>へ進む。</li><li>第17章から第24章では、半導体、接合、MOSFET、<a class="term" href="index.html#term-cmos_inverter">CMOSインバータ</a>を、物性から回路へ組み上げる。</li><li>第25章から第32章では、論理電圧、NAND、遅延、設計、<a class="term" href="index.html#term-hdl">HDL</a>を通じて、物理状態をビットと回路へ写す。</li><li>第33章から第40章では、有限幅の算術、加算器、記憶、<a class="term" href="index.html#term-clock">clock</a>とresetを扱う。</li><li>第41章から第48章では、記憶装置、<a class="term" href="index.html#term-concept_44_stored_program_machine_93c3cd17">stored-program machine</a>、RISC-V RV32I、assembly、datapath、memory mapをつなぐ。</li><li>第49章から第56章では、<a class="term" href="index.html#term-trap">trap</a>、rv32edu、pipeline、hazard、cache、仮想addressを追う。</li><li>第57章から第64章では、複数core、memory model、<a class="term" href="index.html#term-bus">bus</a>、device、DMA、電源、boot chainを見る。</li><li>第65章から第72章では、storage、keyboard、UART、画面、network、<a class="term" href="index.html#term-concept_69_assembler_cd2e8cfa">assembler</a>、object file、linker、loaderを扱う。</li><li>第73章から第80章では、C、<a class="term" href="index.html#term-compiler">compiler</a>、ABI、kernel mode、system call、process、schedulerを組み立てる。</li><li>第81章から第90章では、仮想記憶、<a class="term" href="index.html#term-page_fault">page fault</a>、kernel memory、thread、lock、device driver、filesystem、TTY、socket、xv6、miniosをつなぐ。</li><li>第91章から第98章では、Pythonの構文と意味、parser、AST、<a class="term" href="index.html#term-bytecode">bytecode</a>、VM、object、memory管理、基本containerを開く。</li><li>第99章から第106章では、関数、import、I/O、並行性、最適化、MiniPy、RISC-V port、全層trace、現代PCへの写像へ戻ってくる。</li></ul>
+<p>この順序は、下から上へ一度進み、最後に上から下へ戻る往復になっている。最初からすべてを理解していなくてよい。先行一周で残した疑問は、後の章で一つずつ検査可能な問いになる。</p>
+<h2 id="section-12">12. このページで確定したこと、確定していないこと</h2>
+<p>確定したことは、層の順序と役割である。</p>
+<ul><li>Pythonの文は、処理系が扱う表現へ移される。</li><li>処理系は、OSのサービスを使うための境界へ到達する。</li><li>OSとCPUは、プロセス、記憶、命令の契約を提供する。</li><li>CPUの命令は、<a class="term" href="index.html#term-concept_prelude_cmos_mosfet_a7bf5a21">論理ゲート、CMOS、MOSFET</a>、半導体、電磁場の上に実装される。</li><li>上位の同じ意味を、複数の実装が実現できる。</li></ul>
+<p>まだ確定していないこともある。</p>
+<ul><li>この一行が、特定のCPythonの特定の版で、どのバイトコードになるか。</li><li>そのバイトコードが、どの<a class="term" href="index.html#term-system_call">system call</a>を何回呼ぶか。</li><li>host OSのどのCPU命令が、どの<a class="term" href="index.html#term-pipeline">pipeline</a>やcacheを通るか。</li><li><code>rv32edu</code>、<code>minios</code>、MiniPyの各実装が、どの状態をどのtraceへ記録するか。</li><li>FPGA上の基準boardで、合成後の信号とtimingがどの値になるか。</li><li>CMOSと半導体の各物理量が、採用した模型とparameterのもとでどのように計算されるか。</li></ul>
+<p>これらは、この先で一次資料、canonical artifact、再現可能な実験、自動テストによって確かめる。先行一周は、その結果を先取りして断定しない。地図に描いた線が正確な測量結果になるのは、各章で箱を開き、根拠と限界を記録した後である。</p>
+<h2 id="section-1cb31b3fb7">おわりに</h2>
+<p><code>print(1 + 2)</code> は小さな文である。しかし、意味、表現、実行時の値、OSとの境界、命令、CPU、論理回路、トランジスタ、半導体、電磁場という、異なる種類の問いを一つの道に置ける。</p>
+<p>この教材で学ぶのは、単にPythonを電気へ言い換えることではない。ある層で便利な約束が、下の層で何に支えられ、どの範囲で成り立ち、どこで破綻するかを追えるようになることである。</p>
+<p>ここから先は、第1章で一行のPythonを観察し、第2章で法則・模型・契約・実装を区別する。その後、地図の一番下にある電荷と場へ戻る。先行一周で必要なのは、全層の箱がこの順に並んでいることだけである。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

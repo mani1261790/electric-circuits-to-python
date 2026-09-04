@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第5章　電荷と電場</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-005-exercises.html">この章の演習</a>　<a href="chapter-005-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-5-1"><code>book run 5 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-005/experiment-01.json">成果物</a></li></ul></section><h1 id="section-5">第5章　<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>と電場</h1>
+<h2 id="section-2e093ca68d">この章の中心問題</h2>
+<p>離れた二つの電荷は、間に触れる糸がなくても力を及ぼし合う。この現象を、まず「二つの物体の間の力」として書き、次に空間の各点に値を割り当てる「場」として書き直す。後者が<a class="term" href="index.html#term-electric_field">電場</a>である。</p>
+<p>この章では、電荷 <code>q</code>、力 <code>F</code>、電場 <code>E</code>、<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a> <code>V</code>、電束 <code>Φ</code>を、数値だけでなく単位と向きを持つ量として扱う。第3章で使った次元解析をここでも使う。単位が合わない式を早い段階で止めることはできるが、単位が合ったからといって、符号、境界条件、点電荷近似まで正しいとは限らない。</p>
+<p>本章の必修実験は、点電荷と平行板の電場を計算して図にし、閉じた球面を横切る<a class="term" href="index.html#term-concept_5_term_b12f6ea0fb_b12f6ea0">電束</a>を数値積分することである。入口は次の形にする。</p>
+<pre><code class="language-text">book run 5 1</code></pre>
+<p><code>book run 5 1</code> は固定runnerの解析・契約adapterで再生済みである。ただしこれは式から計算した予測値であり、外部domainや実測器が生成したログではない。本文中の予測、runnerの検査結果、後で追加する外部測定ログを分けて記録する。</p>
+<h2 id="section-1">1　電荷は何を表しているか</h2>
+<h3 id="section-1-1">1.1　電荷と単位</h3>
+<p>電荷（electric charge）は、電磁気的な相互作用の強さと符号を記録する物理量である。記号を <code>q</code>、SI単位をクーロン（coulomb、<code>C</code>）とする。</p>
+<p>電荷には正と負の符号がある。同符号の電荷は反発し、異符号の電荷は引き合う。符号は「電荷の量が多いか少ないか」ではなく、相互作用の向きを決める情報である。</p>
+<p>電子の電荷は</p>
+<pre><code class="language-text">q_e = -e = -1.602176634 × 10^-19 C</code></pre>
+<p>である。<code>e</code>の数値は、SIの定義によって正確に固定されている。実際の物体の電荷は、電子や陽子の電荷の組合せとして現れることが多い。この事実を電荷の量子化（quantization）と呼ぶ。ただし、巨視的な計算では、多数の電荷を連続的な <code>q</code> と近似することがある。どの尺度で近似したかを残す。</p>
+<p>電荷の次元は第3章の基本次元 <code>(M,L,T,I)</code> で</p>
+<pre><code class="language-text">[q] = [I][T] = (0, 0, 1, 1)</code></pre>
+<p>である。<a class="term" href="index.html#term-current">電流</a> <code>I</code> を時間 <code>t</code> で積分すると電荷になる。</p>
+<pre><code class="language-text">q(t) - q(t0) = ∫[t0,t] I(u) du</code></pre>
+<p>積分区間と初期値が必要であり、単に <code>q=I</code> と書いてはいけない。</p>
+<h3 id="section-1-2">1.2　保存するが、場所を移る</h3>
+<p>閉じた系の全電荷は保存される。電荷が導線の一端へ移れば、他の場所の電荷が変化する。電荷が突然生成された、と説明する前に、系の境界をどこに置いたかを確認する。</p>
+<p>連続体で<a class="term" href="index.html#term-charge_density">電荷密度</a> <code>ρ</code>（単位 <code>C/m^3</code>）と電流密度 <code>J</code>（単位 <code>A/m^2</code>）を使うと、電荷保存は連続の式で書ける。</p>
+<pre><code class="language-text">∂ρ/∂t + ∇·J = 0</code></pre>
+<p>左辺の第一項は体積あたりの電荷の変化、第二項は単位体積から外へ出る電流の発散である。<code>∇·J</code>の単位は <code>A/m^3 = C/(s m^3)</code>なので、二項を足せることは第3章の<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>でも確認できる。</p>
+<p>電荷保存は、どの細部まで電荷を追うかとは別の主張である。点電荷の模型は、電荷の分布を一個の位置と値へ圧縮する。保存則はその模型でも守るが、電荷の大きさや表面分布の細部は隠される。</p>
+<h3 id="section-1-3">1.3　導体と絶縁体</h3>
+<p>導体（conductor）では、ある範囲の電荷担体が移動しやすい。金属線の電子は導体内部を動けるが、結晶格子や他の電子との相互作用を無視できるわけではない。絶縁体（insulator）では、電荷担体の移動が強く制限される。</p>
+<p>これは「導体の中には電場が絶対にない」という定義ではない。静電平衡（electrostatic equilibrium）、つまり電荷の平均的な移動が止まった理想状態を仮定したとき、導体内部の電場はゼロになる。外部電場が加わった直後や、電流を流している導体では別の模型を使う。</p>
+<p>中性の物体も、内部の正負電荷の合計がゼロなだけで、電荷がまったくないとは限らない。導体では近くの電荷によって自由電荷が表面へ再分布する <strong>静電誘導（electrostatic induction）</strong> が起きる。一方、誘電体では原子・分子の束縛電荷がわずかにずれる <strong>分極（polarization）</strong> が起きる。両者は電場に対する応答という点では関連するが同義ではない。合計電荷、自由電荷の再分布、分極による束縛電荷を別々に記録する。</p>
+<h2 id="section-2">2　<a class="term" href="index.html#term-concept_5_term_74c16ea27c_74c16ea2">クーロンの法則</a>をベクトルで書く</h2>
+<h3 id="section-2-1">2.1　大きさだけの式</h3>
+<p>二つの点電荷 <code>q_1</code>、<code>q_2</code>が距離 <code>r</code>だけ離れているとき、静止した電荷の間に働く力の大きさを、クーロンの法則（Coulomb's law）で近似する。</p>
+<pre><code class="language-text">|F| = k |q_1 q_2| / r^2</code></pre>
+<p>真空中では</p>
+<pre><code class="language-text">k = 1/(4π ε0)
+ε0 = 8.8541878188 × 10^-12 F/m</code></pre>
+<p>である（この章では採用した参照値を丸めて使う）。<code>ε0</code>は真空の誘電率（permittivity）である。<code>k</code>は、距離の二乗に反比例することを単位系に合わせる係数であり、法則の向きそのものではない。厳密な不確かさや採用版は、実験artifactの<a class="term" href="index.html#term-provenance">provenance</a>へ記録する。</p>
+<p>第3章の単位を使うと、力の単位は <code>N</code>、電荷は <code>C</code>、距離は <code>m</code>である。よって</p>
+<pre><code class="language-text">[k] = N m^2 / C^2
+[|F|] = (N m^2/C^2) C^2/m^2 = N</code></pre>
+<p>となる。<code>r</code>をセンチメートルで入力するなら、<code>k</code>と一緒に単位を変換する。数値の <code>10</code>をそのまま <code>0.1</code>と置き換えるだけでは、単位が変わる。</p>
+<h3 id="section-2-2">2.2　向きを含めた式</h3>
+<p>位置ベクトルを <code>r_1</code>、<code>r_2</code>とし、電荷1から電荷2へ向かう単位ベクトルを</p>
+<pre><code class="language-text">u_12 = (r_2 - r_1) / |r_2 - r_1|</code></pre>
+<p>とする。電荷2に働く力は</p>
+<pre><code class="language-text">F_2←1 = k q_1 q_2 (r_2-r_1) / |r_2-r_1|^3
+      = k q_1 q_2 u_12 / |r_2-r_1|^2</code></pre>
+<p>である。<code>q_1 q_2</code>が正なら <code>u_12</code>の向き、負ならその反対向きになる。ここで大きさだけの式へ絶対値を付けたまま使うと、引力と斥力の区別が消える。</p>
+<p>二つの電荷が同じ位置にあると、分母がゼロになる。これは「無限に大きい現実の力が必ず現れる」という予言ではない。点電荷近似を同じ位置へ重ねたことで、模型の適用範囲を超えたという警告である。</p>
+<h3 id="section-2-3">2.3　重ね合わせ</h3>
+<p>多数の電荷から電荷 <code>q_0</code>に働く力は、各電荷が作る力をベクトルとして足す。</p>
+<pre><code class="language-text">F_0 = Σ_i k q_i q_0 (r_0-r_i) / |r_0-r_i|^3</code></pre>
+<p>この重ね合わせ（superposition）は、電磁気を線形な静電場として扱う範囲で使う。電荷の位置が変われば各ベクトルが変わり、合力の向きも変わる。大きさを先に足して最後に向きを決める方法は、一般には正しくない。</p>
+<p>クーロンの法則が直接使えるのは、点電荷または、観測距離に比べて十分小さい電荷分布を点電荷へ置き換えられる場合である。分布が広いときは、小さな要素へ分けて積分するか、対称性があるなら<a class="term" href="index.html#term-concept_5_term_2025243934_20252439">ガウスの法則</a>を使う。近距離で原子構造、物質の分極、速度の効果が重要になる場合も、静止点電荷の模型だけでは足りない。</p>
+<h2 id="section-3">3　電場は空間に置いた「力の地図」</h2>
+<h3 id="section-3-1">3.1　試験電荷を使った定義</h3>
+<p>電荷1と電荷2の組だけを見ると、力は二つの物体の関係として現れる。そこから電荷2をいったん切り離し、位置 <code>r</code>に置いた小さな正の試験電荷 <code>q_test</code>が受ける力を考える。</p>
+<p>電場 <code>E(r)</code>を</p>
+<pre><code class="language-text">E(r) = lim[q_test→0] F(r) / q_test</code></pre>
+<p>で定義する。試験電荷を十分小さくするのは、それ自身が元の電荷分布を変えないためである。電場は、試験電荷がなくても、与えられた電荷分布と位置の関数として定義される。</p>
+<p>点電荷 <code>Q</code>が位置 <code>r_Q</code>にあるなら、</p>
+<pre><code class="language-text">E(r) = k Q (r-r_Q) / |r-r_Q|^3</code></pre>
+<p>である。正の <code>Q</code>なら外向き、負の <code>Q</code>なら内向きになる。電場の単位は</p>
+<pre><code class="language-text">[E] = N/C</code></pre>
+<p>である。後の章で<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>を導入すると、同じ単位が <code>V/m</code>として現れる。<code>E</code>は位置ごとに方向を持つので、スカラー値の表だけでは全体を表せない。</p>
+<h3 id="section-3-2">3.2　電場と力を混同しない</h3>
+<p>電場と力の関係は</p>
+<pre><code class="language-text">F = q E</code></pre>
+<p>である。電場が決まっても、置く電荷 <code>q</code>が変われば力は変わる。正電荷には <code>E</code>と同じ向きの力、負電荷には反対向きの力が働く。</p>
+<p>したがって「電場が右向きだから、電子も右へ動く」という説明は間違う。電子の電荷は負なので、電気力だけを考えれば左向きの力になる。実際の速度は、磁場、衝突、拘束、初期速度などにも依存する。</p>
+<h3 id="section-3-3">3.3　電場線は計算対象ではない</h3>
+<p>電場線（field line）は、各点で接線が電場の向きを示すように描く補助線である。線の密度を電場の強さの目安にする図は便利だが、線そのものが物質やエネルギーの流路ではない。</p>
+<p>電荷から出入りする線の本数を数えてガウスの法則を証明したことにはならない。電場線はベクトル場を読むための図、電束は面を貫くベクトルの積分、と役割を分ける。</p>
+<h2 id="section-4">4　電位と電場の接続</h2>
+<h3 id="section-4-1">4.1　電位はスカラーの要約</h3>
+<p>静電場では、単位電荷あたりの位置エネルギーを電位 <code>V(r)</code>で表せる。基準点 <code>r_ref</code>を選んで</p>
+<pre><code class="language-text">V(r) - V(r_ref) = - ∫[r_ref,r] E · dl</code></pre>
+<p>とする。電場と経路が静電場の条件を満たせば、積分は経路によらず、始点と終点だけで決まる。基準点を変えると電位の数値全体は変わるが、電位差は変わらない。</p>
+<p>点電荷の基準を無限遠の <code>V=0</code>とするなら、</p>
+<pre><code class="language-text">V(r) = k Q / |r-r_Q|</code></pre>
+<p>となる。ただし、無限遠を基準にできない分布や導体では、別の基準を決める。電位はスカラーなので、複数の点電荷の電位は符号を保ったまま足せる。</p>
+<pre><code class="language-text">V(r) = Σ_i k q_i / |r-r_i|</code></pre>
+<p>力や電場を成分ごとに足すのに対し、電位は数値として足す。この違いが、対称性のある問題で計算を簡単にすることがある。</p>
+<h3 id="section-4-2">4.2　勾配と符号</h3>
+<p>電場と電位の関係は</p>
+<pre><code class="language-text">E = -∇V</code></pre>
+<p>である。<code>∇V</code>は、電位が最も増える向きと増え方を表すベクトルであり、負号は電場が電位の下がる向きを向くことを示す。</p>
+<p>一次元なら</p>
+<pre><code class="language-text">E_x = -dV/dx</code></pre>
+<p>である。電位が右へ高くなるなら、正電荷に働く力は左向きになる。<code>V</code>の単位が <code>J/C = V</code>、距離が <code>m</code>なので、<code>dV/dx</code>の単位は <code>V/m</code>であり、<code>N/C</code>と整合する。</p>
+<p>この関係は静電場の重要な接続だが、電位の基準、境界条件、時間変化する磁場の有無を確認して使う。任意の電場を一つのスカラー電位の勾配で表せると無条件に考えない。</p>
+<h2 id="section-5-2">5　電束を面で積分する</h2>
+<h3 id="section-5-1">5.1　小さな面を横切る量</h3>
+<p>面の小さなベクトル面積を <code>dA</code>と書く。大きさが面積、向きが面の法線方向である。電場が面をどれだけ貫くかを、小さな面ごとに</p>
+<pre><code class="language-text">dΦ = E · dA = |E| |dA| cos θ</code></pre>
+<p>で表す。<code>θ</code>は電場と面の法線の角度である。これを電束（electric flux）と呼び、単位は</p>
+<pre><code class="language-text">[Φ] = (N/C) m^2 = N m^2/C</code></pre>
+<p>である。</p>
+<p>電場と面が平行なら <code>cos θ=0</code>で電束はゼロ、法線と同じ向きなら正、反対向きなら負になる。面の向きを反転すると電束の符号も反転する。開いた面では法線の向きを自分で指定し、閉じた面では通常、外向き法線を使う。</p>
+<h3 id="section-5-2-2">5.2　閉じた面と包囲電荷</h3>
+<p>閉曲面 <code>S</code>を横切る全電束は</p>
+<pre><code class="language-text">Φ_E = ∮_S E · dA</code></pre>
+<p>である。面の外側に電荷があっても、電場線が面へ入る寄与と出る寄与が打ち消し合うことがある。重要なのは面の内側にある包囲電荷 <code>Q_enc</code>である。</p>
+<p>「電束が大きい」と「電場がどこでも大きい」は同じ意味ではない。面積を大きくすれば、弱い電場でも積分値が変わる。電束は場と面の組に付く量である。</p>
+<h2 id="section-6">6　ガウスの法則</h2>
+<h3 id="section-6-1">6.1　法則の形</h3>
+<p>真空中の電場について、ガウスの法則（Gauss's law）は次である。</p>
+<pre><code class="language-text">∮_S E · dA = Q_enc / ε0</code></pre>
+<p>右辺は閉曲面の内部にある全電荷だけである。左辺は面全体の電場の法線成分の積分である。外部電荷は局所的な電場を変えるが、閉曲面を横切る正味の電束には、内部と外部からの寄与が対になって現れる。</p>
+<p>次元も確認する。</p>
+<pre><code class="language-text">[Q_enc/ε0] = C/(F/m) = N m^2/C</code></pre>
+<p>これは左辺の <code>[E][面積] = (N/C)m^2</code>と同じである。次元検査は式の候補を絞るが、閉曲面か開曲面か、法線が外向きか、<code>Q_enc</code>を漏れなく数えたかまでは自動で決めない。</p>
+<h3 id="section-6-2">6.2　点電荷を包む球</h3>
+<p>点電荷 <code>Q</code>を中心とする半径 <code>r</code>の球面を選ぶ。対称性から、球面上の電場の大きさはどこでも同じで、向きは外向きまたは内向きである。外向き法線を取れば、</p>
+<pre><code class="language-text">∮ E · dA = E ∮ dA = E 4πr^2</code></pre>
+<p>である。ガウスの法則から</p>
+<pre><code class="language-text">E 4πr^2 = Q/ε0
+E = Q/(4π ε0 r^2) = kQ/r^2</code></pre>
+<p>を得る。これはクーロンの法則の大きさと一致する。ただし、この計算が短いのは球対称性を使ったからである。任意の形の面で、電場を面全体の定数として外へ出してはいけない。</p>
+<h3 id="section-6-3">6.3　無限平面と円筒</h3>
+<p>一様な面電荷密度 <code>σ</code>（単位 <code>C/m^2</code>）を持つ無限平面を考える。平面に垂直な薄い円筒、ピルボックス（pillbox）を置く。側面では電場と面の法線が直交するので電束はゼロ、上下のふたでは同じ大きさの電場が出る。</p>
+<pre><code class="language-text">2 E A = σ A / ε0
+E = σ/(2ε0)</code></pre>
+<p>ここでも「無限」という理想化が対称性を与えている。有限の板の端では電場が曲がり、端効果（fringing）が現れるので、中央付近の式を端まで延長しない。</p>
+<p>二枚の十分大きな平行板に <code>+σ</code>と <code>-σ</code>を置くと、板の間の電場は概ね <code>σ/ε0</code>、外側は相殺して概ねゼロになる。板の間と外側で電場が違うことは、電場の境界条件で改めて説明する。</p>
+<h3 id="section-6-4">6.4　ガウスの法則が便利な範囲</h3>
+<p>ガウスの法則は常に成立する基本法則だが、電場を簡単に解けるとは限らない。次のような対称性があるときに特に便利である。</p>
+<ul><li>球対称：点電荷、一様な球殻など</li><li>円筒対称：十分長い線電荷、十分長い円筒など</li><li>平面対称：十分広い一様平面など</li></ul>
+<p>対称性がない電荷分布では、法則は電束の総量を与えても、面上の各点の <code>E</code>を直接与えない。その場合はクーロン積分、数値計算、境界値問題の解法を使う。法則そのものと、法則を解くための便利な面の選択を分ける。</p>
+<h2 id="section-7">7　導体表面と境界条件</h2>
+<h3 id="section-7-1">7.1　静電平衡の導体内部</h3>
+<p>静電平衡にある導体内部で <code>E≠0</code>なら、自由電荷は力を受けて移動する。したがって、平衡後の導体内部では</p>
+<pre><code class="language-text">E_inside = 0</code></pre>
+<p>となる。導体内部の任意の経路に沿う電位差もゼロなので、導体全体は同じ電位になる。</p>
+<p>ここで「導体内部」は金属原子一個の内部ではない。導体として連続体近似を使える尺度の領域を指す。過渡状態、電流が流れている状態、周波数が高く表皮効果が重要な状態では、別の方程式と境界条件を使う。</p>
+<h3 id="section-7-2">7.2　表面電荷と法線成分</h3>
+<p>導体表面のごく薄いピルボックスにガウスの法則を適用する。内側の電場はゼロ、外側の法線成分を <code>E_out,n</code>、表面電荷密度を <code>σ</code>とすると、</p>
+<pre><code class="language-text">E_out,n - E_in,n = σ/ε0
+E_in,n = 0
+E_out,n = σ/ε0</code></pre>
+<p>となる。外向き法線で見て <code>σ&gt;0</code>なら外向き、<code>σ&lt;0</code>なら内向きである。</p>
+<p>電場の接線成分も、静電平衡の理想導体表面ではゼロである。接線方向に非ゼロの電場が残れば、表面の自由電荷が動き続けるからだ。従って表面直外の電場は、理想化した導体では表面に垂直になる。</p>
+<p>境界条件は記号の暗記だけでは足りない。「どちら側の電場か」「法線はどちら向きか」「<code>σ</code>は自由電荷か、分極を含む全電荷か」を書く。誘電体を導入すると、束縛電荷と電気変位 <code>D</code>を分ける必要がある。ここでは真空または理想導体表面の境界を中心に扱い、物質中の詳細は後の章へ送る。</p>
+<h3 id="section-7-3">7.3　空洞と遮蔽</h3>
+<p>導体が静電平衡にあれば、外部電場による自由電荷の移動で導体内部の電場を打ち消せる。閉じた空洞内に電荷がなく、空洞の壁へ外部から電場が伝わらない理想条件では、空洞内の電場をゼロとする静電遮蔽（electrostatic shielding）の模型が使える。</p>
+<p>ただし、穴、接地条件、時間変化する電磁場、有限の<a class="term" href="index.html#term-conductivity">導電率</a>、開口部があると結果は変わる。「金属箱なら何でも完全に遮蔽する」とは言わない。どの場、周波数、形状、境界を仮定したかを残す。</p>
+<h2 id="section-8">8　導線の信号を電子の速さだけで説明しない</h2>
+<p>金属導線内の電子の平均的な<a class="term" href="index.html#term-drift_velocity">ドリフト速度</a>は、信号の変化が回路全体へ伝わる速さと同じではない。電圧源を接続すると、導線の表面電荷分布と周囲の電磁場が変化し、その変化が有限の速度で伝わって回路の電流を決める。</p>
+<p>低周波で寸法が波長より十分小さい回路では、<a class="term" href="index.html#term-voltage">電圧</a>・電流を集中定数として扱う近似が便利である。しかし、その近似で「電場は考えなくてよい」となったわけではない。回路の電圧は、電荷分布と電場の効果を端子間のスカラーへまとめた量である。</p>
+<p>この章の <code>E</code>と、後の回路章での端子電圧は同じ文字列だから同じ対象、とは限らない。<code>E</code>は空間の各点のベクトル場、<code>V</code>は基準に依存するスカラー場または二点間の差である。回路モデルは場の詳細を隠し、成立条件を追加する。</p>
+<h2 id="section-9-python">9　Pythonで電場と電束を計算する</h2>
+<h3 id="section-9-1">9.1　点電荷の場を計算する</h3>
+<p>まず位置と電荷を入力し、観測点で電場ベクトルを求める。次のコードは、式の構造を確認するための最小例である。単位は <code>m</code>、<code>C</code>、<code>N/C</code>に固定する。</p>
+<pre><code class="language-python">from math import pi, sqrt
+
+EPS0 = 8.8541878188e-12  # F/m; CODATA 2022 recommended value
+K = 1.0 / (4.0 * pi * EPS0)
+
+
+def sub(a, b):
+    return tuple(x - y for x, y in zip(a, b))
+
+
+def norm(v):
+    return sqrt(sum(x * x for x in v))
+
+
+def add(a, b):
+    return tuple(x + y for x, y in zip(a, b))
+
+
+def scale(c, v):
+    return tuple(c * x for x in v)
+
+
+def field_at(point, charges):
+    &quot;&quot;&quot;charges: [(q_coulomb, (x_m, y_m, z_m)), ...]&quot;&quot;&quot;
+    total = (0.0, 0.0, 0.0)
+    for q, position in charges:
+        displacement = sub(point, position)
+        r = norm(displacement)
+        if r == 0.0:
+            raise ValueError(&quot;observation point equals point charge&quot;)
+        contribution = scale(K * q / (r ** 3), displacement)
+        total = add(total, contribution)
+    return total
+
+
+charges = [(1.0e-9, (0.0, 0.0, 0.0))]
+print(field_at((0.1, 0.0, 0.0), charges))</code></pre>
+<p>この入力の予測値は、<code>E_x = k(1.0×10^-9)/(0.1)^2 ≈ 898.755 N/C</code>、<code>E_y=E_z=0</code>である。これは式から得た予測で、runnerを実行したログではない。点電荷の位置そのものを入力すると、コードは発散を数値で隠さずに拒否する。</p>
+<p>二つの電荷を追加すると、電場ベクトルの寄与を足せる。電荷の符号を変えたときは、同じ位置で大きさだけを反転させるのではなく、ベクトル全体の向きを反転させる。</p>
+<h3 id="section-9-2">9.2　球面上の電束を<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>する</h3>
+<p>理論上は、中心に点電荷がある半径 <code>R</code>の球面で</p>
+<pre><code class="language-text">Φ_E = Q/ε0</code></pre>
+<p>である。数値実験では、球面を有限個の点へ分け、各点の外向き単位法線 <code>n</code>に面積重み <code>ΔA</code>を掛けて足す。</p>
+<pre><code class="language-python">from math import cos, pi, sin, sqrt
+
+
+def fibonacci_sphere(n):
+    &quot;&quot;&quot;球面上の点と外向き単位法線を返す。&quot;&quot;&quot;
+    golden_angle = pi * (3.0 - sqrt(5.0))
+    for i in range(n):
+        z = 1.0 - 2.0 * (i + 0.5) / n
+        radius = sqrt(max(0.0, 1.0 - z * z))
+        phi = golden_angle * i
+        normal = (radius * cos(phi), radius * sin(phi), z)
+        yield normal
+
+
+def flux_on_sphere(q, sphere_radius, samples=10000):
+    area_weight = 4.0 * pi * sphere_radius ** 2 / samples
+    total = 0.0
+    charge = [(q, (0.0, 0.0, 0.0))]
+    for normal in fibonacci_sphere(samples):
+        point = scale(sphere_radius, normal)
+        e = field_at(point, charge)
+        total += sum(x * y for x, y in zip(e, normal)) * area_weight
+    return total
+
+
+EPS0 = 8.8541878188e-12
+q = 1.0e-9
+print(&quot;predicted flux&quot;, q / EPS0)
+print(&quot;numerical flux&quot;, flux_on_sphere(q, 0.2))</code></pre>
+<p><code>q=1.0 nC</code>なら、理論値の予測は <code>q/ε0 ≈ 112.941 N m^2/C</code>である。有限個の点による値は丸めと離散化を含むため、理論値と完全に一致するとは限らない。<code>samples</code>を増やしたときの誤差を記録し、値が近いことだけでガウスの法則を証明したとは言わない。</p>
+<p>この計算は閉じた球面で外向き法線を使っている。法線を全て内向きにすると電束の符号は反転する。球の中心からずれた場所に電荷を置いても、球面が電荷を包む限り理論上の正味電束は変わらないが、球面上の電場分布は一様でなくなる。数値積分の各点で <code>E</code>を一定と置く近道を使わない。</p>
+<h3 id="section-9-3">9.3　平面の可視化</h3>
+<p>点電荷の場を格子上で計算すると、矢印図や等電位線を描ける。格子点が電荷位置に近すぎると <code>1/r^2</code>または <code>1/r^3</code>の計算が大きくなるため、発散点をマスクする。表示範囲、矢印の長さの正規化、カラーバーの単位を図の説明へ書く。</p>
+<p>平行板の可視化では、板を有限個の小さな面電荷へ分けてクーロン積分する。中央付近では一様平面の式に近づくが、端で差が出る。板の枚数、板の大きさ、分割幅を変え、端効果が数値分解能の問題なのか、有限板という模型の効果なのかを分ける。</p>
+<p>面を小さなパッチ（patch）へ分ける最小コードは次のようになる。</p>
+<pre><code class="language-python">def field_from_sheet(point, patches, sigma):
+    &quot;&quot;&quot;patches: [(center_m, area_m2), ...], sigma: C/m^2&quot;&quot;&quot;
+    total = (0.0, 0.0, 0.0)
+    for center, area in patches:
+        displacement = sub(point, center)
+        r = norm(displacement)
+        if r == 0.0:
+            raise ValueError(&quot;observation point is on a patch&quot;)
+        dq = sigma * area
+        total = add(total, scale(K * dq / (r ** 3), displacement))
+    return total</code></pre>
+<p>これは各パッチの電荷を中心に集中させる近似であり、パッチ内部の分布を厳密に積分していない。パッチを細かくしたときに値が収束するか、板の中央の値が無限平面の予測へ近づくか、端の値が中央からずれるかを別々に記録する。収束しない場合は、いきなり物理法則の失敗とせず、面の向き、<code>area</code>の単位、板の分割範囲、観測点とパッチの距離を確認する。</p>
+<h2 id="section-10">10　失敗を診断する</h2>
+<h3 id="section-10-1">10.1　符号と向きの失敗</h3>
+<p>正の点電荷の周囲で矢印が内向きなら、次を順に見る。</p>
+<ol><li><code>displacement = observation - source</code>の順を逆にしていないか。</li><li><code>q</code>の符号を描画時に絶対値へ置き換えていないか。</li><li>力 <code>F=qE</code>へ負の試験電荷を入れた結果と、電場そのものを混同していないか。</li><li>図のy軸を反転する表示規約を説明しているか。</li></ol>
+<p>単一点で直すのではなく、正負二種類の電荷、軸上の点、対称な点をテストケースとして残す。</p>
+<h3 id="section-10-2">10.2　電束の値がずれる失敗</h3>
+<p>数値積分の電束が <code>Q/ε0</code>からずれる場合、次を区別する。</p>
+<ul><li>球面を閉じていない、または面積重みを <code>4πR²/N</code>にしていない。</li><li>法線が単位ベクトルでない、あるいは内向きになっている。</li><li><code>E·n</code>ではなく <code>|E|</code>だけを足している。</li><li>電荷が球面の内側にあるつもりで、実際は外側にある。</li><li>電荷の位置で <code>r=0</code>になり、発散を有限値へ丸めている。</li><li>サンプル数が少なく、離散化誤差が大きい。</li><li><code>nm</code>や<code>cm</code>の距離を<code>m</code>として入力している。</li></ul>
+<p>まず一つの中心点電荷と球面から始める。次に電荷をずらし、外部電荷を加え、サンプル数を変える。変更ごとに入力、予測、出力、誤差、環境を保存する。</p>
+<h3 id="section-10-3">10.3　ガウスの法則を誤用した失敗</h3>
+<p>「ガウスの法則だから、どんな面でも <code>E=Q/(ε0 A)</code>」という変形は一般にはできない。<code>E</code>を面積の外へ出すには、面上で大きさと角度が一定になる対称性が必要である。</p>
+<p>また、外部電荷を <code>Q_enc</code>へ含めないというのは、外部電荷の電場を無視するという意味ではない。外部電荷は面上の各点の電場を変えるが、閉曲面の正味電束では出入りが相殺される。局所場と積分量を分けて検査する。</p>
+<h2 id="section-11">11　<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a>へ記録する</h2>
+<p>第2章の台帳へ、本章の代表的な三つの層を追加する。</p>
+<pre><code class="language-text">対象: 点電荷が作る電場 E(r)
+分類: 静電気の理想化モデル
+下位表現: 電荷Q、位置r_Q、距離、真空のε0
+上位契約: 指定した観測点で力/試験電荷を予測する
+隠される変数: 電荷の広がり、物質の分極、磁場、時間変化
+成立条件: 点電荷近似、静止、真空または指定した誘電率
+破綻条件: r=0、近距離の構造、速度効果、物質応答の無視
+検証方法: 方向テスト、単位検査、重ね合わせ、既知の対称解との比較</code></pre>
+<pre><code class="language-text">対象: 閉曲面の電束 Φ_E
+分類: 場の積分と自然法則
+下位表現: 面S、外向き法線dA、電場E、包囲電荷Q_enc
+上位契約: ∮E·dA=Q_enc/ε0を満たす総量を予測する
+隠される変数: 面上の局所分布、分極の詳細、離散積分誤差
+成立条件: 閉曲面、真空中の静電場、向きと単位の定義
+破綻条件: 開曲面への誤適用、法線の混在、数値発散の隠蔽
+検証方法: 対称解、面の変形、サンプル数変化、包囲電荷の変更</code></pre>
+<pre><code class="language-text">対象: 導体表面の電場
+分類: 静電平衡の境界値モデル
+下位表現: 自由電荷、表面電荷密度σ、内外の法線成分
+上位契約: 導体内部E=0、表面直外の法線成分E_n=σ/ε0
+隠される変数: 有限導電率、過渡、表面粗さ、開口、時間変化
+成立条件: 静電平衡、理想導体、指定した側の法線
+破綻条件: 電流、過渡、高周波、誘電体の束縛電荷を未分離
+検証方法: ピルボックス、電位一定条件、数値境界値解との比較</code></pre>
+<p>この台帳では、クーロンの法則とガウスの法則を同じ「計算方法」として並べていない。前者は点または微小要素からの局所的な寄与を足す式、後者は閉曲面全体の積分を電荷へ結ぶ法則である。ガウスの法則から局所電場を簡単に取り出せるかは、対称性という別の条件に依存する。</p>
+<h2 id="section-12">12　この章で確定した境界</h2>
+<p>本章で扱った記号と主張は、次のように分ける。</p>
+<table><thead><tr><th>もの</th><th>この章での意味</th><th>取り違えないこと</th></tr></thead>
+<tbody><tr><td><code>q</code></td><td>電荷、単位 <code>C</code></td><td>電流や電位の数値ではない</td></tr><tr><td><code>F</code></td><td>電荷に働く力、単位 <code>N</code></td><td>場そのものではない</td></tr><tr><td><code>E</code></td><td>空間の電場ベクトル、単位 <code>N/C</code>または<code>V/m</code></td><td>試験電荷の速度ではない</td></tr><tr><td><code>V</code></td><td>電位または電位差、単位 <code>V</code></td><td>電場ベクトルの成分と同じではない</td></tr><tr><td><code>Φ_E</code></td><td>面を貫く電束、単位 <code>N m²/C</code></td><td>面上の電場の平均値ではない</td></tr><tr><td><code>σ</code></td><td>面積あたりの表面電荷、単位 <code>C/m²</code></td><td>点電荷 <code>q</code>と同じ尺度ではない</td></tr></tbody>
+</table>
+<p>次の主張は、ここまでの式だけでは保証しない。</p>
+<ul><li>電子のドリフト速度だけから信号伝達時間を決められること。</li><li>有限サイズの平行板を無限平面の式で端まで正確に表せること。</li><li>単位が合った任意のベクトルを同じ電場として足せること。</li><li>数値積分が理論値に近い一回の結果から、境界条件やコードの正しさを証明できること。</li><li>導体の静電遮蔽が、時間変化する電磁場や任意の開口にそのまま適用できること。</li><li><code>E=-∇V</code>の式だけで、電位の基準、物質の応答、過渡現象まで決められること。</li></ul>
+<h2 id="section-bca4249327">次章への接続</h2>
+<p>次章では、電場を経路積分して得た電位差を、仕事とエネルギーへ接続する。平行板の <code>E</code>、表面電荷 <code>σ</code>、電位差 <code>ΔV</code>の関係を使い、コンデンサへどれだけ電荷とエネルギーが蓄積されるかを扱う。ここでの「電場はベクトル、電位はスカラー」「境界条件を明示する」という区別を保ったまま、回路図の電圧へ進む。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-5-3">5.補助演習　手を動かす導出帳</h2>
+<p>電荷と電場の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-4">例題1　点電荷、平行板、球面電束を計算する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 5 1</code>である。入力は<code>["点電荷Q=1.0 nC、観測点(0.1,0,0) m", "中心点電荷Q=1.0 nC、球半径R=0.2 m、有限サンプル", "外向きと内向きの単位法線、サンプル数の変更", "平行板の有限分割と一様無限平面の比較", "r=0、電荷符号反転、距離単位混在の負のテスト"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-5">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>電荷</code>は、電磁気的相互作用の符号と量を記録する保存量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電荷</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>クーロンの法則</code>は、点電荷間の力を距離と符号からベクトルで表す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>クーロンの法則</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電場</code>は、試験電荷あたりの力として空間の各点に置くベクトル場。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電場</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電位</code>は、静電場を単位電荷あたりの仕事で要約するスカラー。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電位</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電束</code>は、電場の面を貫く成分を面積分した量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電束</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>ガウスの法則</code>は、閉曲面の正味電束と包囲電荷を結ぶ法則。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>ガウスの法則</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>静電平衡の境界条件</code>は、導体内部の電場と表面電荷から表面直外の場を定める。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>静電平衡の境界条件</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-4">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（電位とエネルギー）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（電位の勾配）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（面の向きと電束）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（球面とガウスの法則）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（平面と導体表面）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（電場コードの故障）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（数値積分の符号と誤差）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（ドリフト速度と信号）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-5">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-5-5">5.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>電荷と電場</strong>の中心問題「離れた電荷同士が力を及ぼす現象を、局所的な場としてどう記述するか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-6">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["点電荷の場は約(898.755,0,0) N/Cで、正電荷から外向きになる", "Q=1.0 nCを包む球面の理論電束は約112.941 N m^2/C", "法線反転で数値積分の電束の符号が反転する", "サンプル数増加に伴い、適切な実装では離散化誤差を評価できる", "r=0、符号を失った計算、単位混在は失敗として記録する"]</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>点電荷Q=1.0 nC、観測点(0.1,0,0) m</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>中心点電荷Q=1.0 nC、球半径R=0.2 m、有限サンプル</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>外向きと内向きの単位法線、サンプル数の変更</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>平行板の有限分割と一様無限平面の比較</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>r=0、電荷符号反転、距離単位混在の負のテスト</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「点電荷の力をF=k q1 q2 (r2-r1)/|r2-r1|^3と書き、符号と向きを保つ。」で、参照する式IDまたは検証項目は <code>軸上の正負電荷、単位検査、重ね合わせの成分テスト</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「電場を試験電荷あたりの力E=lim(qtest-&gt;0)F/qtestで定義する。」で、参照する式IDまたは検証項目は <code>F=qE、正負試験電荷、点電荷解析値との比較</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「静電場の電位差を-∫E·dlで定義し、E=-grad(V)へ接続する。」で、参照する式IDまたは検証項目は <code>点電荷の電位、一次元の勾配、電位差の符号テスト</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「閉曲面の電束∮E·dAは包囲電荷Qenc/epsilon0に等しい。」で、参照する式IDまたは検証項目は <code>中心点電荷の球面、平面のピルボックス、数値積分の収束</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-5">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 点電荷、平行板、球面電束を計算する</p>
+<p>入口は <code>book run 5 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-05-field-source", "chapter-05-field-plot", "chapter-05-flux-source", "chapter-05-flux-output", "chapter-05-failure-log"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["点電荷の場は約(898.755,0,0) N/Cで、正電荷から外向きになる", "Q=1.0 nCを包む球面の理論電束は約112.941 N m^2/C", "法線反転で数値積分の電束の符号が反転する", "サンプル数増加に伴い、適切な実装では離散化誤差を評価できる", "r=0、符号を失った計算、単位混在は失敗として記録する"]</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-6">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>点電荷の式は、電荷分布の大きさ、物質応答、時間変化、速度効果を無条件には含まない。</li><li>次元が合っても、符号、係数、境界条件、対称性、初期状態が正しいとは限らない。</li><li>電場線は可視化の補助線であり、実体の線や電荷の流路ではない。</li><li>電束は面と場の積分であり、面上の電場の単純な平均値ではない。</li><li>ガウスの法則は一般に成立するが、対称性がなければ局所電場を一つの値へ簡約できない。</li><li>導体内部の電場ゼロと遮蔽は静電平衡・理想導体・形状・周波数の条件に依存する。</li><li>電場と電位は関連するが、ベクトルとスカラー、基準依存性、境界条件を同一視しない。</li><li>電子のドリフト速度は、電磁場の変化や回路信号の伝達時間を単独では決めない。</li><li>電束の解析adapterログは生成済みだが、実機ログは未生成であり、本文の数値は予測として扱う。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第3章の次元解析（電荷、電場、電束の単位を基本次元へ展開する）</li><li>第3章の<a class="term" href="index.html#term-concept_3_term_7fc5835483_7fc58354">スカラーとベクトル</a>、微分と積分、境界条件の記録</li><li>第2章の抽象化台帳（<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>、理想化モデル、実装、破綻条件を分ける）</li><li>第1章のtrace A（式、OS境界、CPU状態を同じ実装経路と誤認しない）</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第6章で電位、電圧、仕事、エネルギーを平行板とコンデンサへ接続する</li><li>第8章で電場を導電率、<a class="term" href="index.html#term-mobility">移動度</a>、抵抗率を含む物質の古典モデルへ広げる</li><li>第9章以降で電荷保存、電流、集中定数回路、節点方程式へ接続する</li><li>第17章以降で電磁場と量子・<a class="term" href="index.html#term-semiconductor">半導体</a>の近似を比較する</li><li>第20章以降で信号伝達、配線、電磁的な限界を扱う</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-6">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — charge_and_dimension。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — coulomb_force_and_superposition。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — field_and_potential。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — flux_and_gauss。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — conductor_boundary。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — field_and_flux_code_is_defined。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — runner_analytic_replay_is_not_external_measurement。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — exercise_count_and_coverage。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — change_and_failure_diagnosis。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — model_boundaries_and_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — independent_review_pending。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-4">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 点電荷、平行板、球面電束を計算する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 5 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["点電荷の場は約(898.755,0,0) N/Cで、正電荷から外向きになる", "Q=1.0 nCを包む球面の理論電束は約112.941 N m^2/C", "法線反転で数値積分の電束の符号が反転する", "サンプル数増加に伴い、適切な実装では離散化誤差を評価できる", "r=0、符号を失った計算、単位混在は失敗として記録する"]</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-4">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11-2">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第15章　原子、Pauli原理、Fermi–Dirac統計　解答</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><h1 id="section-15">第15章 演習解答</h1>
+<h2 id="section-e1">E1</h2>
+<h3 id="section-a24d107040">完全解答</h3>
+<p>交換反対称な状態は、規格化因子を除けば</p>
+<p><code>|a,b&gt;_A = |a&gt;_1|b&gt;_2 - |b&gt;_1|a&gt;_2</code></p>
+<p>である。a=bなら、右辺は<code>|a&gt;_1|a&gt;_2-|a&gt;_1|a&gt;_2=0</code>となる。したがって二つの<a class="term" href="index.html#term-fermion">フェルミ粒子</a>を同じ一粒子状態へ入れた状態は存在しない。これは粒子間に新しい反発力があるという意味ではなく、交換に対して反対称でなければならない波動関数のために、許される状態の数え上げが制限されるという意味である。電子では空間ラベルが同じでもスピンが違えば一粒子状態のラベルが違うため、空間軌道に↑と↓を一個ずつ置くことはできる。</p>
+<h3 id="section-c56d07e28c">再挑戦</h3>
+<p>aとbが同じ場合だけでなく、空間部分が同じでスピンも同じ場合にゼロになることを、スピンを含むラベルで書き直せ。空間部分が同じでもスピンが違う場合との差も一行で示せ。</p>
+<h2 id="section-e2">E2</h2>
+<h3 id="section-a24d107040-2">完全解答</h3>
+<p>状態は<code>(1,↑),(1,↓),(2,↑),(2,↓),(3,↑),(3,↓)</code>の6個である。電子6個なら全状態を一個ずつ占有し、空間軌道の占有数は<code>n=1:2, n=2:2, n=3:2</code>となる。n=1に3個と書くと、↑と↓の二つの状態を使い切った後に、同じスピン・同じ空間状態をもう一度使うことになるのでPauli原理に反する。<a class="term" href="index.html#term-degeneracy">縮退</a>度g=2を使う表記なら、n=1の最大平均占有数はg f=2であって3ではない。</p>
+<h3 id="section-c56d07e28c-2">再挑戦</h3>
+<p>空間軌道が4個、スピンが3種類ある仮想模型なら、ラベル付き一粒子状態は何個になるか。ただし、これは電子の実際のスピンではないと明記せよ。</p>
+<h2 id="section-e3">E3</h2>
+<h3 id="section-a24d107040-3">完全解答</h3>
+<p>E=μなので指数の引数は0であり、<code>f=1/(1+1)=0.5</code>である。E−μ=+kBTなら引数は+1で、<code>f=1/(e+1)≈0.26894</code>。E−μ=−kBTなら引数は−1で、<code>f=1/(e^-1+1)≈0.73106</code>となる。温度T=300 Kを使う場合も、kBTは約<code>0.02585 eV</code>であり、EとμをeVでそろえれば引数は無次元になる。<code>f(x)+f(-x)=1</code>が数値の検算になる。</p>
+<h3 id="section-c56d07e28c-3">再挑戦</h3>
+<p>E−μ=2kBTと−2kBTについて、それぞれのfを計算し、温度が変わっても「差をkBTで割った値」が同じなら同じfになることを確認せよ。</p>
+<h2 id="section-e4">E4</h2>
+<h3 id="section-a24d107040-4">完全解答</h3>
+<p><code>kBT=8.617333262e-5*300≈0.025852 eV</code>。E0−μ=−0.050 eV、E1−μ=+0.050 eVなので、x0≈−1.934、x1≈+1.934である。したがって</p>
+<p><code>f0=1/(exp(-1.934)+1)≈0.8737</code></p>
+<p><code>f1=1/(exp(1.934)+1)≈0.1263</code>。</p>
+<p>平均粒子数は<code>g0 f0≈1.7472</code>、<code>g1 f1≈0.2528</code>、合計は約2.0000である。x1=−x0なのでf0+f1=1、g0=g1=2より合計は<code>2(f0+f1)=2</code>となる。共通runnerでも入力由来の契約モデルを実行済みだが、これは実在試料の測定ではない。記録は<code>status="executed_analytic"</code>、<code>source_kind="runner_analytic_contract"</code>、<code>measurement.status="not_run"</code>とし、解析予測とrunner出力を区別する。</p>
+<h3 id="section-c56d07e28c-4">再挑戦</h3>
+<p>同じ準位と温度でμを0.00 eVにしたとき、全粒子数の解析予測を求めよ。指定した準位だけでN_<a class="term" href="index.html#term-target">target</a>=2を満たせるかも判定せよ。</p>
+<h2 id="section-e5">E5</h2>
+<h3 id="section-a24d107040-5">完全解答</h3>
+<p>T→0では、E&lt;μなら指数の引数が負の無限大へ行き<code>f→1</code>、E&gt;μなら正の無限大へ行き<code>f→0</code>となる。E=μは極限の取り方やT=0の定義を別に指定する必要があり、有限温度式へT=0を直接代入してはいけない。有限温度では<code>|E−μ|</code>がkBTの数倍以内でfが0.5から0または1へ移るため、μ付近がなだらかになる。Tを上げるほどkBTが広がり、同じエネルギー差でもfは0.5に近づく。</p>
+<h3 id="section-c56d07e28c-5">再挑戦</h3>
+<p>μ=0.05 eV、E=0.00 eVについてT=30 Kと300 Kの符号付き指数を比較し、低温で占有がより1に近づくことを数値で確認せよ。</p>
+<h2 id="section-e6">E6</h2>
+<h3 id="section-a24d107040-6">完全解答</h3>
+<p>x=5なら<code>e^-5≈0.00673795</code>。Fermi–Dirac値は<code>1/(e^5+1)≈0.00669285</code>、Boltzmann値は<code>e^-5≈0.00673795</code>で、相対差は約0.67%である。式を<code>f=e^-x/(1+e^-x)</code>と書けば、e^-xが小さいと分母の<code>1+e^-x</code>を1と近似できることが分かる。x=0ではFD値0.5に対してBoltzmann値1、x&lt;0ではBoltzmann値が1を超えることさえあるので、低占有率の正のxという条件が必要である。</p>
+<h3 id="section-c56d07e28c-6">再挑戦</h3>
+<p>x=8とx=2で同じ比較を行い、「何桁小さければ近似を採用するか」は目的の許容誤差で決める、という結論を数値とともに書け。</p>
+<h2 id="section-e7">E7</h2>
+<h3 id="section-a24d107040-7">完全解答</h3>
+<p>「空間軌道一つに二個」は、スピン↑とスピン↓という二つの異なる一粒子状態を合わせた最大数である。一つの空間準位を代表する占有率fだけを計算するなら<code>n_i=g_i f_i</code>としてg=2を掛ける。一方、状態を<code>(n,spin)</code>まで列挙して各状態のfを計算するなら、すでに↑↓を別々に数えているのでさらに2を掛けない。空間軌道3個ならラベル付き状態は6個、全て満たせば粒子数6である。二重にgを掛けると同じ6状態を12状態と数える誤りになる。</p>
+<h3 id="section-c56d07e28c-7">再挑戦</h3>
+<p>縮退度g=4を持つ準位を、(i)代表準位として一回計算する場合、(ii)4個のラベル付き状態を列挙する場合で、Nの式を二通り書け。</p>
+<h2 id="section-e8">E8</h2>
+<h3 id="section-a24d107040-8">完全解答</h3>
+<p>各反復で</p>
+<pre><code class="language-text">assert T &gt; 0
+G = sum(g)
+assert 0 &lt; N_target &lt; G
+N(mu) = sum(g[i] * fermi_dirac(E[i], mu, T) for i)
+lo = min(E) - 50*kB*T
+hi = max(E) + 50*kB*T
+assert N(lo) &lt;= N_target &lt;= N(hi)
+repeat up to max_iter:
+    mid = (lo + hi)/2
+    residual = N(mid) - N_target
+    if abs(residual) &lt; tol: return mid, residual
+    if residual &lt; 0: lo = mid
+    else: hi = mid
+return mid, residual, status=&quot;not_converged&quot;</code></pre>
+<p>μを増やすと各<code>f_i</code>が増えるのでNも単調増加する。したがってNが目標より小さい側をlo、大きい側をhiに置く。初期区間は準位の外側まで十分広くし、端点で目標を挟めなければ「準位打ち切りまたはN_target不可能」と診断する。<code>N_target=0</code>と<code>N_target=G</code>は有限μの解ではなく、それぞれ<code>mu_boundary_minus_infinity</code>、<code>mu_boundary_plus_infinity</code>として扱う。<code>T=0</code>で準位間にあるμは非一意なので、採用方針（区間中央など）をstatusとともに保存する。実装では単位をそろえ、探索範囲、tol、反復数、statusをartifactに保存する。</p>
+<h3 id="section-c56d07e28c-8">再挑戦</h3>
+<p>E=[0,0.1] eV、g=[2,2]、T=300 K、N_target=2で、μ=0.05 eVが解になることをN(μ)の式に代入して確認し、その周りのlo/hi更新を2回だけ手計算せよ。</p>
+<h2 id="section-e9">E9</h2>
+<h3 id="section-a24d107040-9">完全解答</h3>
+<p>(a) T=−1 Kは熱力学的な入力範囲外なので<code>invalid_temperature</code>。T=0を扱うなら専用の極限分岐にする。(b) g=0は本章の準位表では状態の縮退がないため<code>invalid_degeneracy</code>とし、空の状態は行自体を除外する。負なら必ず拒否する。(c) JとeVを混ぜると指数が次元を持ち、<code>unit_mismatch</code>。全てJまたは全てeVに換算する。(d) exp(10^6)は<a class="term" href="index.html#term-concept_33_overflow_10e80591">overflow</a>するので<code>exponent_overflow</code>。x&gt;0では<code>exp(-x)/(1+exp(-x))</code>、x&lt;0では<code>1/(1+exp(x))</code>のように小さい指数を使う。(e) N_targetが<code>sum(g)</code>を超えるなら<code>particle_count_out_of_range</code>。準位追加、粒子数修正、または模型の不足を報告する。(f) T&gt;0でN_target=0は有限μの解がなく、<code>mu_boundary_minus_infinity</code>として境界状態を保存する。N_target=sum(g)は<code>mu_boundary_plus_infinity</code>とする。NaNも<code>nonfinite_input</code>として拒否する。</p>
+<h3 id="section-c56d07e28c-9">再挑戦</h3>
+<p><code>E=1 J, μ=0 eV, T=300 K</code>をそのまま計算したとき何が壊れるかを指数の単位で説明し、1 JをeVへ換算した後の入力例を書け。</p>
+<h2 id="section-e10">E10</h2>
+<h3 id="section-a24d107040-10">完全解答</h3>
+<p>(i) |ψ(x)|²は一粒子が位置xで見つかる確率密度であり、領域積分が1になるよう規格化する。f(E)は、熱平衡でエネルギーEの一粒子状態が占有される平均で、各状態について0から1の値を取る。(ii) |ψ|²の入力は<a class="term" href="index.html#term-wavefunction">波動関数</a>と位置、fの入力はE、μ、T、kBである。(iii) |ψ|²は位置の関数で局所的には1を超えることもあり得るが、積分全体が1。fはPauli制約により一状態あたり0から1。量子井戸のn=1とn=2では、それぞれの|ψ_n(x)|²の節や形を決める固有関数と、何個の電子が各準位にいるかを決めるf_nは別物である。n=1の波動関数が大きいから電子が必ず多い、とは言えない。</p>
+<h3 id="section-c56d07e28c-10">再挑戦</h3>
+<p>同じn=1について、|ψ_1(x)|²を2倍して規格化を壊す例と、g=2を掛けて平均粒子数を計算する例を並べ、なぜ前者だけが誤りかを説明せよ。</p>
+<h2 id="section-e11">E11</h2>
+<h3 id="section-a24d107040-11">完全解答</h3>
+<p>最低限、<code>artifact_id</code>、<code>status</code>、<code>source_kind</code>、<code>measured</code>、<code>inputs</code>（E_i, g_i, T, μまたはN_target, 単位）、<code>equation_ids</code>、<code>predicted</code>（f_i, N, residual）、<code>diagnostics</code>、<code>runner_version</code>または<code>runner_commit</code>、<code>created_at</code>を持たせる。解析式から先に得た値は<code>source_kind="analytic_prediction"</code>、runnerが実行した値は<code>source_kind="runner_output"</code>とする。実測をしていない段階で<code>measured:true</code>にすると、計算予測を装置の測定値と誤認させ、誤差・校正・再現性の確認を飛ばしてしまう。共通runnerでは入力由来の契約モデルを実行済みだが、Fermi分布の完全な外部計算・実在試料の測定は行っていない。したがってレコードは<code>status="executed_analytic"</code>、<code>source_kind="runner_analytic_contract"</code>、<code>measurement.status="not_run"</code>として保存する。</p>
+<h3 id="section-c56d07e28c-11">再挑戦</h3>
+<p>同じレコードへ<code>measured</code>を追加し、(i)解析予測のみ、(ii)runner出力あり、(iii)実測あり、の3例でどの値と注記が変わるべきかを表にせよ。</p>
+<h2 id="section-e12">E12</h2>
+<h3 id="section-a24d107040-12">完全解答</h3>
+<p>第16章では、結晶の周期性によって一粒子準位が波数kで並び、離散的な準位の集まりがバンドとして扱われる。そこで各kの状態数と縮退を数え、Fermi–Dirac占有率とμから電子数を求める。本章から渡せるのは、一粒子準位、状態数、μ、占有率、そして占有が低いときの<a class="term" href="index.html#term-concept_15_term_1571aba314_1571aba3">古典極限</a>という枠組みである。第17章では伝導帯・価電子帯を電子と正孔の状態として数え、電荷中性やドーピングを含む粒子数条件を解く。ただしバンド構造、相互作用、有効質量、非平衡輸送は追加モデルであり、本章の二準位式から自動的には決まらない。</p>
+<h3 id="section-c56d07e28c-12">再挑戦</h3>
+<p>同じ橋渡しを100字以内に圧縮し、逆に「本章の結果だけでは決められないもの」を二つ含めよ。短くしても五つの重要語の関係が崩れていないか確認する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

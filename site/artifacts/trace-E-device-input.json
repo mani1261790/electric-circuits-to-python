@@ -1,0 +1,267 @@
+{
+  "checks": {
+    "boundary_is_explicit": true,
+    "device_not_claimed": true,
+    "event_ids_unique": true,
+    "event_schema_complete": true,
+    "host_operation_succeeded": true,
+    "measured_is_false": true,
+    "parent_chain_is_closed": true,
+    "physical_measurement_is_false": true,
+    "received_character_is_K": true,
+    "sequence_is_monotonic": true,
+    "source_reference_is_present": true,
+    "stdin_boundary_is_pipe_like": true,
+    "trace_id_is_consistent": true
+  },
+  "cpython": {
+    "ast": "Module(body=[Expr(value=Call(func=Name(id='input', ctx=Load())))])",
+    "bytecode": [
+      "  0           RESUME                   0",
+      "",
+      "  1           LOAD_NAME                0 (input)",
+      "              PUSH_NULL",
+      "              CALL                     0",
+      "              POP_TOP",
+      "              LOAD_CONST               0 (None)",
+      "              RETURN_VALUE"
+    ],
+    "measured": false,
+    "runtime": "CPython",
+    "source": "input()",
+    "source_kind": "external_tool_output_without_physical_measurement",
+    "tokens": [
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "value": "input"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ]
+        ],
+        "value": "("
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ]
+        ],
+        "value": ")"
+      },
+      {
+        "kind": "NEWLINE",
+        "span": [
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            8
+          ]
+        ],
+        "value": ""
+      },
+      {
+        "kind": "ENDMARKER",
+        "span": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "value": ""
+      }
+    ],
+    "version": "3.14.7"
+  },
+  "display_example": "input()",
+  "events": [
+    {
+      "artifact": "trace-atlas",
+      "event": "source_call",
+      "event_id": "trace-E-device-input:source:1",
+      "layer": "source",
+      "measured": false,
+      "parent_event_id": null,
+      "sequence": 0,
+      "source": "input()",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        7
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-E-device-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "input_call",
+      "event_id": "trace-E-device-input:ast:2",
+      "function": "input",
+      "layer": "AST",
+      "measured": false,
+      "node_type": "Call",
+      "parent_event_id": "trace-E-device-input:source:1",
+      "sequence": 1,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        7
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-E-device-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "compile_input",
+      "event_id": "trace-E-device-input:bytecode:3",
+      "instruction_count": 10,
+      "layer": "bytecode",
+      "measured": false,
+      "parent_event_id": "trace-E-device-input:ast:2",
+      "sequence": 2,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        7
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-E-device-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "decoded_value": "K",
+      "event": "input_builtin",
+      "event_id": "trace-E-device-input:runtime:4",
+      "layer": "runtime",
+      "measured": false,
+      "parent_event_id": "trace-E-device-input:bytecode:3",
+      "sequence": 3,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        7
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-E-device-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "byte_count": 2,
+      "event": "read_stdin_intent",
+      "event_id": "trace-E-device-input:syscall:5",
+      "fd": 0,
+      "layer": "syscall",
+      "measured": false,
+      "parent_event_id": "trace-E-device-input:runtime:4",
+      "sequence": 4,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "executed_model",
+      "trace_id": "trace-E-device-input",
+      "transport": "pipe_like_stdin"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "tty_not_applicable",
+      "event_id": "trace-E-device-input:tty:6",
+      "layer": "TTY",
+      "measured": false,
+      "parent_event_id": "trace-E-device-input:syscall:5",
+      "reason": "StringIO/pipe-like stdin is not a terminal device",
+      "sequence": 5,
+      "source_kind": "boundary_record",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "not_applicable",
+      "trace_id": "trace-E-device-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "keyboard_not_run",
+      "event_id": "trace-E-device-input:keyboard:7",
+      "layer": "keyboard",
+      "measured": false,
+      "parent_event_id": "trace-E-device-input:tty:6",
+      "reason": "no keyboard event capture",
+      "sequence": 6,
+      "source_kind": "boundary_record",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "not_run",
+      "trace_id": "trace-E-device-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "input_device_not_run",
+      "event_id": "trace-E-device-input:device:8",
+      "layer": "device",
+      "measured": false,
+      "parent_event_id": "trace-E-device-input:keyboard:7",
+      "reason": "no USB or physical input observation",
+      "sequence": 7,
+      "source_kind": "boundary_record",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "not_run",
+      "trace_id": "trace-E-device-input"
+    }
+  ],
+  "host_result": {
+    "received": "K",
+    "stdin_transport": "pipe_like_stdin"
+  },
+  "layer_status": {
+    "TTY": {
+      "reason": "stdin was not a terminal",
+      "status": "not_applicable"
+    },
+    "device": {
+      "reason": "no USB or physical input observation",
+      "status": "not_run"
+    },
+    "keyboard": {
+      "reason": "no keyboard event capture",
+      "status": "not_run"
+    },
+    "syscall": {
+      "reason": "CPython consumed supplied stdin",
+      "status": "observed_host_operation"
+    }
+  },
+  "measured": false,
+  "schema_version": 1,
+  "source": "input()",
+  "source_kind": "executable_host_boundary_model",
+  "trace_id": "trace-E-device-input"
+}

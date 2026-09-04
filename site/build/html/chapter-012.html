@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第12章　信号、周波数、雑音、伝送線路</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-012-exercises.html">この章の演習</a>　<a href="chapter-012-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-12-1"><code>book run 12 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-012/experiment-01.json">成果物</a></li></ul></section><h1 id="section-12">第12章　信号、周波数、雑音、伝送線路</h1>
+<h2 id="section-1-0-1">1　0と1の間にある波形</h2>
+<p>同じ<code>0 V</code>から<code>5 V</code>へ変わる信号でも、ゆっくり変われば一つの節点<a class="term" href="index.html#term-voltage">電圧</a>で扱え、速く変われば配線の長さ、終端、測定器によって波形が変わる。第11章の<code>R=1 kΩ</code>、<code>C=1 μF</code>のRC回路を考えると、時定数は<code>τ=1 ms</code>、抵抗とコンデンサの低域通過の境界は</p>
+<pre><code class="language-text">f_c = 1/(2π R C) ≈ 159 Hz</code></pre>
+<p>という解析予測になる。<code>f_c</code>は「159 Hzより上を全て消す周波数」ではない。正弦波の振幅が低周波の<code>1/sqrt(2)</code>になり、位相が<code>−45°</code>になる境界として定義した値である。</p>
+<p>一方、<code>1 m</code>の線路を伝搬速度<code>2.0×10^8 m/s</code>で進む信号の<a class="term" href="index.html#term-concept_9_term_c4bb369c5d_c4bb369c">伝搬時間</a>は<code>5 ns</code>である。立上り時間が<code>1 ns</code>なら第9章の比は<code>κ=5</code>で、線路の手前と奥を同じ瞬間の一つの節点として扱うのは危険である。<code>100 ns</code>なら<code>κ=0.05</code>で、他の条件が許せば集中定数の候補になる。</p>
+<p>本章では、時間の関数としての信号を周波数成分へ分け、抵抗・コンデンサ・インダクタが各周波数をどう変えるかを調べる。その後、熱雑音とショット雑音を「ランダムだから無視」とせず、帯域と観測時間に依存する量として扱う。最後に、伝送線路の反射を終端と<a class="term" href="index.html#term-concept_9_term_fe6e2bae21_fe6e2bae">特性インピーダンス</a>の関係から見る。</p>
+<p>第11章で示した<code>τ=1 ms</code>、<code>ω_d≈9.9875×10^3 rad/s</code>などは解析・数値の予測であり、測定値ではない。本章の<code>book run 12 1</code>は固定入力から解析モデルを実行済みだが、外部domain tool、SPICE、実測は未実行（<code>measurement.status=not_run</code>）である。解析式、数値FFT、SPICE、実測を同じ波形列へ上書きしない。</p>
+<p>中心に置く問いは次である。</p>
+<blockquote>デジタル信号が0と1にしか見えなくても、なぜ帯域、反射、雑音が問題になるのか。</blockquote>
+<h2 id="section-2">2　時間波形と周波数</h2>
+<h3 id="section-2-1">2.1　正弦波を基準にする</h3>
+<p>周期信号を、振幅、周波数、位相を持つ正弦波の和として見る。角周波数<code>ω</code>と周波数<code>f</code>は</p>
+<pre><code class="language-text">ω = 2π f,
+f = 1/T</code></pre>
+<p>で結ばれる。<code>T</code>の単位は<code>s</code>、<code>f</code>は<code>Hz=1/s</code>、<code>ω</code>は<code>rad/s</code>である。正弦波は回路へ入力したとき、線形素子なら同じ周波数で出力され、振幅と位相だけが変わる。これが<a class="term" href="index.html#term-concept_12_term_78a1430d5d_78a1430d">周波数応答</a>を使う理由である。</p>
+<p>周期<code>T_0</code>の信号<code>x(t)</code>は、フーリエ級数として</p>
+<pre><code class="language-text">x(t) = Σ_k A_k exp(i k ω_0 t),
+ω_0 = 2π/T_0                              (12.1)</code></pre>
+<p>と表せる。<code>A_k</code>は元の信号と同じ単位を持つ。<code>k=0</code>は平均値、<code>k=1,2,...</code>は基本周波数と高調波である。矩形波の立上りが急なほど、高い周波数成分まで必要になる。デジタル信号の「0と1」は、受信器が許容範囲へ量子化した結果であり、波形が二つの定数だけからできているという意味ではない。</p>
+<h3 id="section-2-2">2.2　フーリエ変換と有限データ</h3>
+<p>非周期信号または有限時間の観測には、</p>
+<pre><code class="language-text">X(f) = ∫ x(t) exp(-i 2π f t) dt
+x(t) = ∫ X(f) exp(i 2π f t) df          (12.2)</code></pre>
+<p>を使う。<code>X(f)</code>の単位は、<code>x</code>の単位に秒を掛けたものになる。離散データのFFTは、有限個のサンプルと暗黙の周期延長から周波数列を作る計算であり、連続信号を完全に復元する魔法ではない。</p>
+<p>サンプル間隔を<code>Δt</code>、サンプル数を<code>N</code>とすると、サンプリング周波数は<code>f_s=1/Δt</code>、観測時間はおよそ<code>T_obs=NΔt</code>である。周波数の刻みは<code>Δf≈1/T_obs</code>、<a class="term" href="index.html#term-concept_12_term_7493645edb_7493645e">ナイキスト周波数</a>は<code>f_s/2</code>になる。信号の最高周波数が<code>f_s/2</code>を超えると、異なる周波数が低い周波数へ折り返すエイリアシングが起きる。サンプリング前のアナログ低域通過フィルタ、十分な<code>f_s</code>、窓関数、記録時間を別々に設計する。</p>
+<h3 id="section-2-3">2.3　窓とスペクトル漏れ</h3>
+<p>観測窓の端で信号が連続につながらないと、FFTは一つの周波数成分を隣のbinへ広げる。これをスペクトル漏れという。窓関数は漏れを減らす代わりに、主ローブを広げて近接周波数の分解能を変える。ピークの高さ、幅、位置を比較する前に、サンプル間隔、観測時間、窓、正規化、片側・両側スペクトルを保存する。</p>
+<p>時間波形の解析値、数値FFT、SPICE波形、測定波形は、それぞれ異なる<code>source_kind</code>を持つ。FFTのピークが解析値と違うとき、回路の共振を疑う前に、窓、サンプル数、入力の有限立上り、FFTの正規化を確認する。</p>
+<h2 id="section-3-rc-rlc">3　RC、RLCの周波数応答</h2>
+<h3 id="section-3-1">3.1　インピーダンスを導入する</h3>
+<p>正弦波を複素数で表すと、微分は<code>iω</code>を掛ける操作になる。抵抗、コンデンサ、インダクタのインピーダンスは、</p>
+<pre><code class="language-text">Z_R = R,
+Z_C = 1/(iωC),
+Z_L = iωL                              (12.3)</code></pre>
+<p>である。インピーダンスの単位は<code>Ω</code>で、電圧と<a class="term" href="index.html#term-current">電流</a>の複素振幅に<code>V=ZI</code>を適用する。ここでの<code>i</code>は電流の記号と混同しないよう、虚数単位を<code>j</code>と書くこともある。</p>
+<p><code>Z_C</code>は周波数が高いほど小さく、<code>Z_L</code>は高いほど大きい。これはコンデンサやインダクタが「高周波を消す部品」という意味ではなく、他の素子との組み合わせで電圧・電流の比が変わるという意味である。</p>
+<h3 id="section-3-2-rc">3.2　RC低域通過</h3>
+<p>入力を抵抗、出力をコンデンサ端子から取るRC回路では、分圧から伝達関数</p>
+<pre><code class="language-text">H_RC(jω) = V_out/V_in = 1/(1+jωRC)       (12.4)
+|H_RC| = 1/sqrt(1+(ωRC)^2)
+arg H_RC = -atan(ωRC)</code></pre>
+<p>を得る。<code>ω=0</code>では<code>|H|=1</code>、<code>ω=1/(RC)</code>では<code>|H|=1/sqrt(2)</code>、高周波では振幅が約<code>1/(ωRC)</code>で減る。位相は低周波の0から高周波で<code>−90°</code>へ近づく。</p>
+<p>第11章の<code>R=1 kΩ</code>、<code>C=1 μF</code>なら<code>RC=1 ms</code>、<code>f_c≈159.15 Hz</code>である。<code>100 Hz</code>、<code>159.15 Hz</code>、<code>1 kHz</code>を入力したときの振幅比は、およそ<code>0.847</code>、<code>0.707</code>、<code>0.157</code>という解析予測になる。これらは負荷なし、理想R・C、正弦定常状態の値である。入力立上りを含む過渡波形では、第11章の時間応答と同じ初期条件を使う。</p>
+<h3 id="section-3-3-rlc">3.3　RLCと共振</h3>
+<p>直列RLCのインピーダンスは、</p>
+<pre><code class="language-text">Z_RLC(jω)=R+j(ωL-1/(ωC))              (12.5)</code></pre>
+<p>である。<code>ω_0=1/sqrt(LC)</code>でリアクタンスが相殺し、理想的な直列回路のインピーダンスの大きさは<code>R</code>に近づく。<code>R</code>が小さいほど電流のピークは高くなるが、実部品ではESR、コイル損失、電源抵抗、<a class="term" href="index.html#term-concept_4_term_f45c8e51fa_f45c8e51">測定器負荷</a>が上限を決める。</p>
+<p>第11章の<code>L=10 mH</code>、<code>C=1 μF</code>では<code>ω_0=1.0×10^4 rad/s</code>、<code>f_0≈1591.55 Hz</code>という解析予測になる。第11章で時間波形に現れた<code>ω_d</code>は抵抗による減衰を含む角周波数で、損失なしの<code>ω_0</code>と同一ではない。時間領域のピークと周波数領域のピークは、同じ回路の別の観測である。</p>
+<h3 id="section-3-4">3.4　振幅と位相をどう記録するか</h3>
+<p>周波数掃引の各点には、入力振幅・位相、出力振幅・位相、複素比<code>H=V_out/V_in</code>、負荷、測定帯域、過渡が消えるまでの時間を保存する。振幅だけでは、符号反転、遅延、位相余裕を区別できない。<code>V_out</code>が小さいときは、測定器のノイズフロアや量子化誤差も別欄へ記録する。</p>
+<h2 id="section-4">4　雑音は帯域と時間を持つ</h2>
+<h3 id="section-4-1">4.1　熱雑音</h3>
+<p>温度<code>T</code>の抵抗で、理想化した白色熱雑音の一側電圧<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>スペクトル密度を</p>
+<pre><code class="language-text">S_v(f) = 4 k_B T R                         (12.6)</code></pre>
+<p>と表す。<code>k_B</code>はボルツマン定数、<code>T</code>はK、<code>R</code>はΩである。<code>S_v</code>の単位は<code>V^2/Hz</code>である。帯域<code>B</code>を一定とする近似なら、抵抗両端の雑音実効値は</p>
+<pre><code class="language-text">v_n,rms = sqrt(4 k_B T R B)                (12.7)</code></pre>
+<p>となる。帯域を2倍にすると電圧の実効値は<code>sqrt(2)</code>倍であって2倍ではない。帯域を無限に広げた白色雑音は物理的な部品の全周波数を表すものではない。</p>
+<h3 id="section-4-2">4.2　ショット雑音と低周波雑音</h3>
+<p><a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>が離散的に通過する素子では、平均電流<code>I</code>に対して一側電流スペクトル密度を</p>
+<pre><code class="language-text">S_i(f) = 2 q |I|                              (12.8)</code></pre>
+<p>と置く簡単なショット雑音模型がある。ダイオードなどの輸送条件、温度、周波数帯域、バイアスを指定せずに普遍化してはいけない。</p>
+<p>低周波では<code>1/f</code>型の雑音や電源変動、温度変動、接触の揺らぎが問題になる。熱雑音式だけで全ての実測スペクトルを説明できない。雑音源、伝達関数、観測帯域を分け、入力換算雑音と出力雑音を同じ量として扱わない。</p>
+<h3 id="section-4-3">4.3　雑音とフィルタ</h3>
+<p>線形回路の入力<a class="term" href="index.html#term-concept_12_term_299663b3aa_299663b3">雑音スペクトル密度</a>を<code>S_in(f)</code>、伝達関数を<code>H(f)</code>とすれば、出力の一側スペクトル密度は</p>
+<pre><code class="language-text">S_out(f) = |H(f)|^2 S_in(f)              (12.9)</code></pre>
+<p>である。抵抗雑音をRC低域通過へ通すなら、<code>|H|^2</code>で高周波雑音も減るが、抵抗自身の位置、コンデンサの損失、測定器帯域を指定する必要がある。出力の実効値は、対象帯域で<code>S_out</code>を積分してから平方根を取る。電圧のスペクトルをそのまま積分してはいけない。</p>
+<h3 id="section-4-4">4.4　測定器のノイズフロア</h3>
+<p>オシロスコープの入力抵抗・容量、プローブの減衰、帯域制限、サンプルレート、内部雑音は、測定対象の一部ではないが測定結果へ影響する。信号がノイズフロア以下なら、FFTに見える線を回路の発振と断定しない。終端抵抗を変えたとき信号源の負荷も変わるので、測定器の設定と接続図を保存する。</p>
+<h2 id="section-5">5　伝送線路と反射</h2>
+<h3 id="section-5-1">5.1　位置を捨てない条件</h3>
+<p>第9章の<a class="term" href="index.html#term-concept_9_term_ec2bd2fa41_ec2bd2fa">分布定数線路</a>では、電圧と電流を<code>V(x,t)</code>、<code>I(x,t)</code>として残した。損失なし近似で</p>
+<pre><code class="language-text">v_p = 1/sqrt(L&#x27; C&#x27;),
+Z_0 = sqrt(L&#x27;/C&#x27;)                           (12.10)</code></pre>
+<p>である。<code>Z_0</code>は進行波の電圧と電流の比であり、抵抗そのものではない。<code>t_prop=ell/v_p</code>と入力立上り時間<code>t_rise</code>から<code>κ=t_prop/t_rise</code>を計算し、位置を隠してよいか検査する。</p>
+<p><code>κ</code>が小さい候補でも、終端、測定器容量、分岐、電源抵抗、周波数依存を確認する。<code>κ</code>が大きいと、信号の一部が線路を進む間に入力が変化し、線路の奥の電圧は入力と同じ波形ではない。</p>
+<h3 id="section-5-2">5.2　終端で反射が決まる</h3>
+<p>線路の負荷を<code>Z_L</code>とすると、負荷での電圧<a class="term" href="index.html#term-concept_12_term_dc7fead65a_dc7fead6">反射係数</a>は</p>
+<pre><code class="language-text">Γ_L = (Z_L - Z_0)/(Z_L + Z_0)               (12.11)</code></pre>
+<p>である。<code>Z_L=Z_0</code>なら<code>Γ_L=0</code>、openなら<code>Γ_L=+1</code>、shortなら<code>Γ_L=-1</code>という解析予測になる。反射係数は電圧波の比で、電流波の反射係数は符号が反対になる。終端で反射した波は、源側のインピーダンスによってさらに反射し得る。</p>
+<p>例えば<code>Z_0=50 Ω</code>、<code>Z_L=1 kΩ</code>なら<code>Γ_L=950/1050≈0.9048</code>、<code>Z_L=50 Ω</code>なら0である。これらは損失なし、一様、単一モードの線路の予測であり、実ケーブルの損失とコネクタを含まない。線路の長さと<code>v_p</code>が分かれば、反射が観測点へ戻る往復時間も予測できる。</p>
+<h3 id="section-5-3">5.3　段差、矩形波、帯域</h3>
+<p>理想段差は無限に高い周波数成分を含むため、どんな実線路・測定器でもそのまま通らない。有限立上りの矩形波は、立上り時間に応じて必要な帯域が決まる。線路の反射、RCの低域通過、プローブの帯域を、論理値の誤り、波形の遅延、振幅の減衰、オーバーシュートの別々の原因として記録する。</p>
+<p>伝送線路を集中RLCで近似する場合、分布容量・分布インダクタンスを一個のC・Lへまとめた結果を、<code>κ</code>、観測位置、終端、許容誤差と一緒に保存する。<code>Z_0=50 Ω</code>を単なる「50 Ωの抵抗」として回路図へ置けば、反射の往復と位置依存を失う。</p>
+<h2 id="section-6">6　予定実験を同じ状態契約で比べる</h2>
+<p><code>book run 12 1</code>では、三つの観測を一つの入力契約で行う予定である。</p>
+<ol><li>RC低域通過へ<code>10 Hz</code>から<code>10 kHz</code>の正弦波を入力し、振幅・位相・<code>f_c</code>を解析式、数値、SPICEで比較する。</li><li><code>1 kHz</code>程度の矩形波をサンプルし、時間波形、FFT、窓、サンプルレート、立上り時間を比較する。</li><li><code>Z_0=50 Ω</code>、長さ<code>1 m</code>の線路へ<code>Z_L=50 Ω、1 kΩ、open</code>を接続し、反射係数と観測点の遅延を解析・分布数値・SPICEで比較する。</li></ol>
+<p>入力のSI値の例は、RCに<code>R=1000 Ω</code>、<code>C=1e-6 F</code>、線路に<code>ell=1 m</code>、<code>L'=250e-9 H/m</code>、<code>C'=100e-12 F/m</code>、<code>v_p=2e8 m/s</code>、<code>Z_0=50 Ω</code>である。矩形波の振幅、デューティ比、立上り・立下り時間、サンプリング周波数、観測窓を記録する。雑音は温度、帯域、抵抗、平均電流、FFTの正規化を入力へ含める。</p>
+<p>出力には、<code>experiment_id</code>、<code>case_id</code>、<code>source_kind</code>、<code>status</code>、<code>units</code>、<code>input_waveform</code>、<code>sample_rate_hz</code>、<code>window</code>、<code>termination</code>、<code>measurement_bandwidth_hz</code>を保存する。解析予測、数値予測、SPICE予測、測定の列を混ぜない。</p>
+<h2 id="section-7">7　故障診断と<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a></h2>
+<h3 id="section-7-1">7.1　スペクトルのピークが違う</h3>
+<p>解析上の<code>f_c</code>や<code>f_0</code>とFFTのピークがずれたら、次の順に確認する。</p>
+<ol><li>入力波形が正弦か矩形か、定常状態へ到達したかを確認する。</li><li><code>Δt</code>、<code>N</code>、<code>Δf</code>、ナイキスト周波数、窓、FFT正規化を確認する。</li><li>SPICEでは初期条件、最大刻み、素子ESR、入力源抵抗を確認する。</li><li>実測ではプローブ、終端、帯域、接地、電源、部品公差を追加する。</li></ol>
+<p>小さい<code>error_vs_analytic</code>は、入力と解析式が一致したことの検査であり、部品が理想的であることの証明ではない。FFTのbinにピークがないことも、回路に周波数成分がないことを意味しない。</p>
+<h3 id="section-7-2">7.2　雑音と反射を混同しない</h3>
+<p>時間波形の一つの山は、RLCの過渡、線路反射、電源のリンギング、測定器の応答、雑音の偶然の揺らぎのどれでもあり得る。再現性を確認するため、入力を同じにした複数回、終端だけを変えた比較、測定器帯域だけを変えた比較を別<code>case_id</code>で保存する。雑音の平均と分散を、反射の遅延・符号・振幅と別の列へ置く。</p>
+<h3 id="section-7-3">7.3　抽象化台帳</h3>
+<table><thead><tr><th>層</th><th>下位表現</th><th>上位契約</th><th>隠す変数</th><th>成立条件</th><th>破綻条件</th></tr></thead>
+<tbody><tr><td>時間信号</td><td><code>x(t)</code>と初期条件</td><td>電圧・電流の波形</td><td>周波数成分</td><td>観測窓と帯域を指定</td><td>サンプリング不足、過渡未消去</td></tr><tr><td>周波数応答</td><td><code>H(f)</code>の複素振幅</td><td>振幅と位相の比</td><td>時間位置、窓端</td><td>線形・定常・同一周波数</td><td>非線形、過渡、時間変動</td></tr><tr><td>雑音</td><td><code>S(f)</code>、分散、帯域</td><td>RMSまたはSNR</td><td>個々の確率過程</td><td>統計、温度、帯域を指定</td><td>1/f、干渉、非定常、測定床</td></tr><tr><td>集中回路</td><td><code>R,L,C</code>の一つの端子</td><td>一つのV・Iと伝達関数</td><td>位置、反射、分布</td><td><code>κ</code>と終端が許容範囲</td><td>速い信号、長線、分岐</td></tr><tr><td>伝送線路</td><td><code>V(x,t),I(x,t)</code>と終端</td><td>進行・反射波</td><td>断面内の場・高次モード</td><td>一様・指定帯域・単一モード</td><td>放射、分散、損失、モード変換</td></tr></tbody>
+</table>
+<p>周波数応答は時間領域を捨てたのではなく、線形・定常という条件で別の座標へ写した表現である。反射を集中素子の「謎のノイズ」として処理せず、位置と終端を残すべきか判定する。</p>
+<h2 id="section-8-11-13">8　第11章と第13章以降への接続</h2>
+<p>第11章からは、次を引き継ぐ。</p>
+<ul><li>RCの<code>τ=RC</code>、RLCの<code>ω_0</code>・<code>ω_d</code>、初期条件、有限入力立上りを同じ入力契約へ保存する。</li><li>解析解、<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>、SPICE、実測を<code>source_kind</code>と<code>status</code>で分ける。</li><li><code>R</code>、<code>C</code>、<code>L</code>の単位、受動符号、損失、ESR、測定器負荷を明示する。</li></ul>
+<p>本章では時間波形を周波数応答と雑音スペクトルへ写し、さらに配線の位置と終端を復元した。第9章の<code>κ</code>が大きいとき、単一の集中RLCへ押し込めず<code>V(x,t)</code>、<code>I(x,t)</code>を残す。第13章では、古典的な抵抗・容量・雑音模型が原子・固体の安定性を説明できない場所へ戻る。温度、<a class="term" href="index.html#term-quantum_state">量子状態</a>、離散電荷を導入するときも、古典回路で隠していた量を明示する。</p>
+<h3 id="section-8-1">8.1　次章へ渡すデータ</h3>
+<pre><code class="language-text">{
+  &quot;circuit&quot;: {&quot;R_ohm&quot;: 1000.0, &quot;C_farads&quot;: 1e-6, &quot;L_henry&quot;: 0.01},
+  &quot;time_contract&quot;: {&quot;tau_s&quot;: 0.001, &quot;initial_conditions_recorded&quot;: true},
+  &quot;frequency_contract&quot;: {&quot;f_start_hz&quot;: 10.0, &quot;f_stop_hz&quot;: 10000.0, &quot;sample_rate_hz&quot;: 100000.0},
+  &quot;line_contract&quot;: {&quot;length_m&quot;: 1.0, &quot;vp_m_per_s&quot;: 2e8, &quot;z0_ohm&quot;: 50.0, &quot;load_ohm&quot;: 50.0},
+  &quot;noise_contract&quot;: {&quot;temperature_K&quot;: 300.0, &quot;bandwidth_hz&quot;: 1000.0},
+  &quot;source_kind&quot;: &quot;analytic_prediction&quot;,
+  &quot;status&quot;: &quot;analytic_prediction_recorded_measurement_not_run&quot;
+}</code></pre>
+<p><code>temperature_K</code>や<code>bandwidth_hz</code>を変えれば、雑音の値も変わる。<code>measurement</code>へ変更するには、計器・接続・部品・測定時間を持つ別artifactが必要である。0と1の論理値を安全に判定するためには、波形の帯域、雑音、反射、受信器のしきい値と時間余裕を一緒に確認しなければならない。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-12-2">12.補助演習　手を動かす導出帳</h2>
+<p>信号、周波数、雑音、伝送線路の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-rc-fft">例題1　RC周波数応答、矩形波FFT、雑音、終端反射を比較する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 12 1</code>である。入力は<code>[{"RC低域通過": "R=1000 Ω、C=1e-6 F、正弦10 Hzから10 kHz、出力はC端子"}, {"RLC参照": "R=10 Ω、L=0.01 H、C=1e-6 F、周波数掃引と第11章の時間応答"}, {"矩形波": "振幅0 Vから5 V、周波数1 kHz、デューティ比50%、複数の立上り時間"}, "サンプルレート10 kHz、100 kHz、1 MHz、観測窓、窓関数、FFT正規化の比較", {"熱雑音": "T=300 K、R=1000 Ω、帯域1 kHzと10 kHz、ショット雑音の平均電流ケース"}, {"線路": "ell=1 m、vp=2e8 m/s、Z0=50 Ω、ZL=50 Ω、1e3 Ω、open、short"}, "単位・ナイキスト・窓・終端・source_kind・測定帯域・雑音と反射の混同を負のテストとする"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>周波数応答</code>は、線形・定常な入力正弦波に対する振幅比と位相差を周波数ごとに表す契約。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>周波数応答</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>FFTとスペクトル漏れ</code>は、有限サンプルから周波数成分を計算し、窓と観測長の影響を受ける数値表現。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>FFTとスペクトル漏れ</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>雑音スペクトル密度</code>は、雑音の強さを周波数あたりの電圧または電流の二乗として表す量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>雑音スペクトル密度</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>反射係数</code>は、終端で戻る電圧波と入射電圧波の比を特性インピーダンスと負荷から表す量。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>反射係数</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>ナイキスト周波数</code>は、サンプリング周波数の半分で、折り返しを避けるための上限となる周波数。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>ナイキスト周波数</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-5">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（RC振幅・位相・低域通過）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（RLC共振、減衰、時間領域との対応）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（熱雑音、帯域、RMS、ショット雑音）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（雑音スペクトルとRCフィルタの出力）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（特性インピーダンス、終端、反射係数）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（立上り、伝搬時間、測定器帯域、終端）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（FFT・単位・窓・終端・source_kindの負のテスト）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第11章の時間応答から第13章の古典論限界への橋渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-12-3">12.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>信号、周波数、雑音、伝送線路</strong>の中心問題「デジタル信号が0と1にしか見えなくても、なぜ帯域、反射、雑音が問題になるのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-2">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["RCのτ=1 ms、fc≈159.15 Hz、100 Hzで|H|≈0.847、fcで|H|≈0.707、1 kHzで|H|≈0.157という解析予測", "RLCのω0=1.0e4 rad/s、f0≈1591.55 Hzという解析予測", "矩形波の高調波が立上り時間とサンプルレートに応じて見えるが、FFTのbinと窓で高さ・幅が変わる予測", "T…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"RC低域通過": "R=1000 Ω、C=1e-6 F、正弦10 Hzから10 kHz、出力はC端子"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"RLC参照": "R=10 Ω、L=0.01 H、C=1e-6 F、周波数掃引と第11章の時間応答"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>{"矩形波": "振幅0 Vから5 V、周波数1 kHz、デューティ比50%、複数の立上り時間"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>サンプルレート10 kHz、100 kHz、1 MHz、観測窓、窓関数、FFT正規化の比較</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>{"熱雑音": "T=300 K、R=1000 Ω、帯域1 kHzと10 kHz、ショット雑音の平均電流ケース"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>{"線路": "ell=1 m、vp=2e8 m/s、Z0=50 Ω、ZL=50 Ω、1e3 Ω、open、short"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目7: <code>単位・ナイキスト・窓・終端・source_kind・測定帯域・雑音と反射の混同を負のテストとする</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「周期信号を複素指数のフーリエ級数へ分解し、有限サンプルFFTが観測窓とサンプリング条件を伴う近似であることを示す。」で、参照する式IDまたは検証項目は <code>FFT of analytic sine and square wave, window and sampling sweep</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「RC低域通過の複素インピーダンスまたは<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>からH(jω)=1/(1+jωRC)、振幅、位相、fcを得る。」で、参照する式IDまたは検証項目は <code>low/high frequency limit, -3 dB point, phase sign</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「直列RLCのZ=R+j(omega L-1/(omega C))から、omega_0=1/sqrt(LC)でリアクタンスが相殺する条件を得る。」で、参照する式IDまたは検証項目は <code>reactance cancellation, damping comparison, parameter sweep</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「抵抗の一側熱雑音密度S_v=4 k_B T Rを帯域Bへ積分し、v_n,rms=sqrt(4 k_B T R B)を得る。」で、参照する式IDまたは検証項目は <code>bandwidth scaling, temperature scaling, one-sided convention</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「特性インピーダンスZ_0の線路を負荷Z_Lへ接続し、境界の電圧・電流連続条件からGamma_L=(Z_L-Z_0)/(Z_L+Z_0)を得る。」で、参照する式IDまたは検証項目は <code>matched, open, short and finite-load limits</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「同じ入力を解析、数値FFT、SPICE、測定へ通し、帯域・終端・雑音・測定器条件とsource_kindを別状態で保存する。」で、参照する式IDまたは検証項目は <code>cross-path comparison, termination sweep, bandwidth and window check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-2">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: RC周波数応答、矩形波FFT、雑音、終端反射を比較する</p>
+<p>入口は <code>book run 12 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-12-signal-source", "chapter-12-frequency-output", "chapter-12-noise-output", "chapter-12-line-output", "chapter-12-waveform", "chapter-12-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["RCのτ=1 ms、fc≈159.15 Hz、100 Hzで|H|≈0.847、fcで|H|≈0.707、1 kHzで|H|≈0.157という解析予測", "RLCのω0=1.0e4 rad/s、f0≈1591.55 Hzという解析予測", "矩形波の高調波が立上り時間とサンプルレートに応じて見えるが、FFTのbinと窓で高さ・幅が変わる予測", "T…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-6">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>フーリエ表現は信号を周波数成分へ写す表現で、有限FFTは窓、サンプル、正規化、周期延長の影響を受ける。</li><li>ナイキスト条件を満たしていても、アナログ帯域、窓、量子化、クロックジッタ、ノイズが消えるわけではない。</li><li>RCのH(jω)は線形・無負荷・正弦定常の理想集中模型で、入力過渡、負荷、寄生、非線形を自動的に含まない。</li><li>RLCの共振式は線形・一定係数の式で、ESR、コイル損失、電源抵抗、測定器容量を隠し得る。</li><li>熱雑音式は指定温度、帯域、白色・一側密度の近似であり、1/f雑音、干渉、非定常電源、相関雑音を含まない。</li><li>反射係数は一様・損失なし・単一モードの線路境界の式であり、損失、分散、放射、コネクタ、分岐を含まない。</li><li><code>Z_0=50 Ω</code>は線路の進行波の比であり、任意の周波数・モード・位置の抵抗部品ではない。</li><li>SPICEまたはFFTがきれいな結果を返しても、実測値との一致、入力・単位・終端の正しさは別の検査である。</li><li>本章の固定runnerは契約を再生済みだが、図・スペクトル・反射波形の外部tool実行は未実行であり、具体的な値は解析または数値予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第11章のRC<a class="term" href="index.html#term-concept_11_term_8a294c0490_8a294c04">時定数</a>、RLC減衰、初期条件、解析解、数値積分、SPICE比較</li><li>第9章の集中定数、分布定数、伝搬時間、特性インピーダンス、終端</li><li>第10章のKCL、<a class="term" href="index.html#term-concept_10_kirchhoff_205c0d1f">KVL</a>、MNA、受動符号、電力収支</li><li>第6章のコンデンサ、<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>、測定器入力</li><li>第7章の電流、熱、<a class="term" href="index.html#term-poynting_vector">Poyntingベクトル</a></li><li>第3章の複素数、フーリエ級数、<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>、サンプリング</li><li>第4章の解析・数値・測定・runner状態の分離</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第13章で古典論が原子・固体の安定性やスペクトルを説明できない場所へ戻る</li><li>第21章の<a class="term" href="index.html#term-mos_capacitor">MOSキャパシタ</a>と第22章のMOSFETで、ゲート容量、雑音、信号遅延、電源品質へ接続する</li><li>第20章以降で論理しきい値、クロック、配線、信号完全性へ接続する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-3">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — central_question_and_concrete_observation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — time_frequency_units。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — fft_window_and_aliasing。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — rc_frequency_response。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — rlc_resonance_boundary。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — noise_density_and_bandwidth。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — transmission_line_reflection。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — analytic_numeric_spice_measurement_separation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — measurement_and_diagnostic_boundary。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — artifact_figure_source_registry_links。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — exercise_solution_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — chapter_11_and_13_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-4">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: RC周波数応答、矩形波FFT、雑音、終端反射を比較する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 12 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td>`["RCのτ=1 ms、fc≈159.15 Hz、100 Hzで</td><td>H</td><td>≈0.847、fcで</td><td>H</td><td>≈0.707、1 kHzで</td><td>H</td><td>≈0.157という解析予測", "RLCのω0=1.0e4 rad/s、f0≈1591.55 Hzという解析予測", "矩形波の高調波が立上り時間とサンプルレートに応じて見えるが、FFTのbinと窓で高さ・幅が変わる予測", "T…`</td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

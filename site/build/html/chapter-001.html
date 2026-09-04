@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第1章　一行のPythonが通る全層</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-001-exercises.html">この章の演習</a>　<a href="chapter-001-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-1-1"><code>book run 1 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-001/experiment-01.json">成果物</a></li><li><a href="runner.html#run-1-2"><code>book run 1 2</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-001/experiment-02.json">成果物</a></li><li><a href="runner.html#run-1-3"><code>book run 1 3</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-001/experiment-03.json">成果物</a></li></ul></section><h1 id="section-1-python">第1章　一行のPythonが通る全層</h1>
+<h2 id="section-1-3">1　端末に現れた「3」を追う</h2>
+<p>次の二つのプログラムを用意する。</p>
+<pre><code class="language-python"># const.py
+print(1 + 2)</code></pre>
+<pre><code class="language-python"># runtime.py
+a = 1
+b = 2
+print(a + b)</code></pre>
+<p>どちらも画面には同じ <code>3</code> と改行が現れる。しかし、同じ結果だからといって、途中の仕事まで同じとは限らない。最初の問いはこれである。</p>
+<blockquote>端末で <code>python hello.py</code> を実行したとき、文字 <code>3</code> は、どの表現を通って画面へ届くのか。<code>1 + 2</code> はいつ計算され、<code>a + b</code> はいつ計算されるのか。</blockquote>
+<p>この章では、答えを一つの説明に押し込めない。まず観測できるものを並べ、次にそれぞれが何を表しているかを区別する。後の章で<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>、場、回路、半導体、論理回路を詳しく扱うが、ここではまだ導出しない。</p>
+<p>以下の実験番号は、共通実行入口へ接続した名前である。<code>book run</code> は固定Linux環境で解析契約を再生し、同じ入力から同じ種類の成果物を生成する。CPythonの版固有出力や実機の測定は別のdomain adapterとして扱い、ここで生成したtoy traceをそれらの観測値へ昇格させない。</p>
+<pre><code class="language-text">book run 1 1   # AST とバイトコードの観測
+book run 1 2   # プロセスとシステムコールの観測
+book run 1 3   # 小さなCPUトレースの観測</code></pre>
+<p>実行結果のアドレス、命令オフセット、初期化時の<a class="term" href="index.html#term-system_call">システムコール</a>は、OS、ビルド、最適化によって変わる。変わらない意味と、変わり得る詳細を分けて記録する。</p>
+<h2 id="section-2">2　五つの窓</h2>
+<p>一行のプログラムには、少なくとも次の窓がある。</p>
+<table><thead><tr><th>窓</th><th>例</th><th>その窓で見えるもの</th><th>見えないもの</th></tr></thead>
+<tbody><tr><td>ソース</td><td><code>print(1 + 2)</code></td><td>人が書いた文字列</td><td>実行順序、機械命令</td></tr><tr><td>構文木</td><td><code>Call(func=Name("print"), args=[BinOp(...)])</code></td><td>文の構造と名前</td><td>CPUのレジスタ、<a class="term" href="index.html#term-voltage">電圧</a></td></tr><tr><td><a class="term" href="index.html#term-bytecode">バイトコード</a></td><td><code>LOAD_CONST</code>、<code>CALL</code></td><td><a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>が選んだ仮想命令</td><td>実CPUの配線、カーネル内部</td></tr><tr><td>システムコール</td><td><code>write</code>、<code>exit</code></td><td><a class="term" href="index.html#term-process">プロセス</a>とOSの境界</td><td>Pythonの式の意図、<a class="term" href="index.html#term-mosfet">MOSFET</a></td></tr><tr><td>CPUトレース</td><td><code>ADD</code>、<code>SW</code>、PC</td><td>命令、レジスタ、メモリ要求</td><td>命令の意味を決める<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a></td></tr></tbody>
+</table>
+<p>さらに下には、メモリセルや<a class="term" href="index.html#term-concept_67_uart_3c85ca67">UART</a>の端子の電圧、電荷、電磁場がある。<code>3</code> という文字はそれ自体が電圧ではない。ある層では数値、別の層ではバイト列、さらに別の層では時間ごとに変化する信号である。</p>
+<p>ここで「上の表現が下の表現に変換される」とだけ覚えるのは不十分である。変換は常に一対一ではない。構文木の一部は定数にまとめられることがあり、OSは多数の内部処理を一つのシステムコールとして見せる。各窓は、下位の詳細を隠しながら、上位の利用者に一定の約束を提供している。</p>
+<h2 id="section-3">3　<a class="term" href="index.html#term-concept_1_term_204f4a94ff_204f4a94">ソース文字列</a>を構文木にする</h2>
+<p>最初に、Pythonのソースを文字として読む。<code>print(1 + 2)</code> は空白を少し変えても、通常は同じ構造を表す。</p>
+<pre><code class="language-python">import ast
+
+source = &quot;print(1 + 2)&quot;
+tree = ast.parse(source, filename=&quot;const.py&quot;, mode=&quot;exec&quot;)
+print(ast.dump(tree, indent=2))</code></pre>
+<p>AST（<a class="term" href="index.html#term-ast">抽象構文木</a>、Abstract Syntax Tree）は、文字の並びから空白や括弧の一部を取り除き、意味に関係する構造を残した木である。出力の細部はPythonの版で変わり得るが、次の関係は観察対象になる。</p>
+<p>公開APIとノードの意味は出典S1を参照し、固定runnerの解析artifactには入力と契約検査を添える。CPython固有のAST実行結果は外部domain実行として別に扱う。</p>
+<pre><code class="language-text">Module
+└── Expr
+    └── Call
+        ├── func: Name(&quot;print&quot;)
+        └── args
+            └── BinOp
+                ├── left: Constant(1)
+                ├── op: Add
+                └── right: Constant(2)</code></pre>
+<p>この木では、<code>1</code>、<code>2</code>、加算、<code>print</code> の呼び出しが別々に表されている。ASTがこの形だからといって、実行時に必ずCPUの加算命令が一回現れるとは限らない。ASTは「ソースの構造」を表すものであり、「最終的な実行手順」ではないからである。</p>
+<h3 id="section-3-1">3.1 変数を置いた場合</h3>
+<p>次のソースを同じように解析する。</p>
+<pre><code class="language-python">source = &quot;a = 1\nb = 2\nprint(a + b)&quot;
+tree = ast.parse(source, filename=&quot;runtime.py&quot;, mode=&quot;exec&quot;)
+print(ast.dump(tree, indent=2))</code></pre>
+<p>木には三つの文が現れる。</p>
+<pre><code class="language-text">Module
+├── Assign(targets=[Name(&quot;a&quot;)], value=Constant(1))
+├── Assign(targets=[Name(&quot;b&quot;)], value=Constant(2))
+└── Expr
+    └── Call
+        ├── func: Name(&quot;print&quot;)
+        └── args
+            └── BinOp
+                ├── left: Name(&quot;a&quot;)
+                ├── op: Add
+                └── right: Name(&quot;b&quot;)</code></pre>
+<p>最初の例と違い、加算の入力は定数そのものではなく名前 <code>a</code> と <code>b</code> である。名前を現在の値へ解決する仕事が必要になり、<a class="term" href="index.html#term-compiler">コンパイラ</a>が安全に加算を先に済ませられるとは限らない。値を後で変更する機能、関数呼び出し、例外などが関わると、実行時に加算を残す必要がある。</p>
+<h2 id="section-4">4　構文木からバイトコードへ</h2>
+<p>CPythonでは、ASTの後に<a class="term" href="index.html#term-code_object">コードオブジェクト</a>とバイトコードが作られる。<code>dis</code>（disassembler、逆アセンブラ）で、コードオブジェクトが持つ命令列を人が読める形へ表示できる。</p>
+<p><code>dis</code>の公開APIはS2、基準実装の確認箇所はS3に対応づける。ただし、ここで表示する命令列をPython言語全体の規格とは扱わない。</p>
+<pre><code class="language-python">import dis
+
+dis.dis(compile(&quot;print(1 + 2)\n&quot;, &quot;const.py&quot;, &quot;exec&quot;))
+print(&quot;---&quot;)
+dis.dis(compile(&quot;a = 1\nb = 2\nprint(a + b)\n&quot;, &quot;runtime.py&quot;, &quot;exec&quot;))</code></pre>
+<p>ここで重要なのは、二つの表示を同じものとして扱わないことである。バイトコードはCPUの命令ではない。CPythonの評価ループが読む、処理系内部の命令形式である。</p>
+<h3 id="section-4-1">4.1 <a class="term" href="index.html#term-concept_1_term_9d7741cd3e_9d7741cd">定数畳み込み</a>は「加算が消えた」という意味</h3>
+<p>多くのCPythonビルドでは、<code>print(1 + 2)</code> のバイトコードに、<code>1</code> と <code>2</code> を取り出して加算する命令ではなく、値 <code>3</code> を定数として読み出す形が現れる。これはコンパイラが、値が変わらない式を前もって計算したためである。この変換を定数畳み込み（<a class="term" href="index.html#term-concept_1_term_9d7741cd3e_9d7741cd">constant folding</a>）と呼ぶ。</p>
+<p>概念的には次のように見える。</p>
+<pre><code class="language-text">ソース:       print(1 + 2)
+AST:          Call(print, Add(1, 2))
+バイトコード: 定数3を積む → printを呼ぶ</code></pre>
+<p>実際の命令名、オフセット、呼び出し形式はCPythonの固定版とビルド条件で確認する。ここで確定させたいのは、<code>1 + 2</code> がASTに存在していても、実行時の加算として残るとは限らないという因果関係である。</p>
+<p>一方、次の例では、少なくともソース上は値を名前から取り出してから加算する必要がある。</p>
+<pre><code class="language-text">ソース:       a = 1; b = 2; print(a + b)
+AST:          Assign, Assign, Call(func=Name(&quot;print&quot;), args=[Add(Name(a), Name(b))])
+バイトコード: aを保存 → bを保存 → aを読む → bを読む → 加算 → printを呼ぶ</code></pre>
+<p>最適化がどこまで許されるかは、Pythonの意味を壊さない範囲で決まる。<code>a</code> と <code>b</code> の値が別の処理によって変わる可能性を無視して、常に <code>3</code> に置き換えてよいわけではない。この二例は、trace Aの中で必ず対にして扱う。</p>
+<h3 id="section-4-2">4.2 何を観測し、何を推測したか</h3>
+<p><code>ast.dump</code> と <code>dis.dis</code> の出力を表に記録する際は、次のように分ける。</p>
+<table><thead><tr><th>記録</th><th>種類</th><th>言えること</th></tr></thead>
+<tbody><tr><td><code>BinOp(Add)</code> がASTにある</td><td>観測</td><td>ソースの構文上、加算が書かれている</td></tr><tr><td>定数 <code>3</code> を読むバイトコードがある</td><td>観測</td><td>このビルドでは実行前に結果を定数化した</td></tr><tr><td>いつ最適化したか</td><td>追加観測が必要</td><td>compileのどの段階で変換したか</td></tr><tr><td>CPUの<code>ADD</code>がない</td><td>限定付きの推論</td><td>観測した実行経路ではCPU加算が見えていない</td></tr></tbody>
+</table>
+<p>最後の行から「CPUでは絶対に加算していない」と一般化してはいけない。インタプリタの内部、<a class="term" href="index.html#term-jit">JIT</a>、デバッグ計測、別の処理系を選べば、異なる形があり得る。</p>
+<h2 id="section-5">5　プロセスとシステムコールの境界</h2>
+<p>バイトコードを読む処理系も、単独で空中に存在するわけではない。OSはプログラムをプロセス（<a class="term" href="index.html#term-process">process</a>）として管理し、CPU時間、仮想アドレス空間、ファイル記述子などを割り当てる。Pythonが画面へ出力するとき、処理系は通常、OSが提供する出力経路を利用する。</p>
+<p>システムコール（<a class="term" href="index.html#term-system_call">system call</a>）は、ユーザープロセスがカーネルへ処理を依頼するための境界である。Linuxで観察する場合は、後でrunnerが固定環境内のシステムコール追跡機能を呼び出し、たとえば次の種類の行を保存する。</p>
+<p>追跡器の使い方はS4を参照する。追跡器の出力自体も観測データであり、OSの普遍的な実行順序ではない。</p>
+<pre><code class="language-text">execve(..., [&quot;python&quot;, &quot;const.py&quot;], ...) = 0
+...
+write(1, &quot;3\n&quot;, 2) = 2
+exit_group(0) = ?</code></pre>
+<p>これは説明用の短縮例であり、現在の環境でこの行がそのまま得られることを約束するものではない。起動前のローダ、共有ライブラリ、標準入出力の初期化、メモリ割り当てによって、<code>openat</code>、<code>mmap</code>、<code>read</code>、<code>close</code> などが多数加わる。OSや追跡器によって名前や引数の表示も異なる。</p>
+<p>それでも、<code>write(1, "3\n", 2)</code> のような行は、層をつなぐ大切な観測である。</p>
+<ol><li>Pythonの<code>print</code>は、文字列化と改行を含む出力要求を作る。</li><li>処理系または標準ライブラリは、ファイル記述子1へバイト列を渡す。</li><li>OSのカーネルは、その記述子が指す出力先へ2バイトを書こうとする。</li><li>端末側では、バイト列を文字の表示へ変換する別の処理が続く。</li></ol>
+<p><code>print</code>が直接画面の画素を書いているわけではない。<code>write</code>が成功したことも、利用者の目に見える画素がすでに点灯したことを意味しない。ここには、端末エミュレータ、フォント、画像合成、表示装置という別の層がある。</p>
+<h3 id="section-5-1">5.1 システムコールの行を読み違えない</h3>
+<p>システムコール追跡には、三つの注意がある。</p>
+<ul><li><strong>表示される行と、プログラムが書いた行は違う。</strong> 追跡器自身が補足情報を追加することがある。</li><li><strong>一つの<code>write</code>と一つの画面更新は違う。</strong> バッファリング、端末エミュレータ、表示更新のタイミングが間に入る。</li><li><strong>OSの契約と実装は違う。</strong> POSIXに似たインターフェースを持つOSでも、内部のスケジューラ、キャッシュ、ドライバは同じとは限らない。</li></ul>
+<p>この章で覚えるのは、システムコール名の暗記ではなく、「処理系とOSの境界を、観測可能なイベントとして切り出せる」ということだ。</p>
+<h2 id="section-6">6　仮想記憶は住所を隠す</h2>
+<p>バイトコード、文字列、スタック、ヒープは、処理系が使うメモリ上に置かれる。しかしプログラムが使うアドレスは、<a class="term" href="index.html#term-dram">DRAM</a>チップの物理的な番地そのものではない。プロセスは仮想アドレス空間（virtual address space）を持ち、CPUとOSの機構が仮想アドレスを物理メモリへ対応づける。</p>
+<p>この対応づけにより、次の性質が得られる。</p>
+<ul><li>あるプロセスのアドレス <code>0x...</code> を、別のプロセスがそのまま読むとは限らない。</li><li>実際の物理ページは、必要になったときに割り当てられる場合がある。</li><li>読み取り専用、書き込み可能、実行可能という権限をページごとに設定できる。</li></ul>
+<p>「<code>write</code>の引数にある文字列のポインタが、DRAMのどのセルか」をこの章だけで一意に特定することはできない。ページ表、<a class="term" href="index.html#term-translation_lookaside_buffer">TLB</a>、キャッシュ、メモリコントローラを観測する別の実験が必要だからである。ここでは、プロセスの見える住所と、下位の物理状態を同一視しないことが到達点になる。</p>
+<h2 id="section-7-cpu">7　小さなCPUトレースを読む</h2>
+<p>ここまでの説明は、実際のCPU命令をまだ見ていない。そこで、算術結果をUARTへ一文字ずつ送る小さな命令列を考える。これはPython処理系全体の逆アセンブルではなく、CPUと<a class="term" href="index.html#term-mmio">メモリマップドI/O</a>の境界を観察するための小さな模型である。</p>
+<p><code>rv32edu</code>では、UARTのデータレジスタを <code>0x10000000</code> に置く。以下は、数値1と2を加え、ASCIIの<code>3</code>（<code>0x33</code>）と改行（<code>0x0a</code>）をUARTへ書く処理の一例である。命令の意味は<a class="term" href="index.html#term-rv32i">RV32I</a>の範囲に限定し、<code>PUTC</code>のような架空のCPU命令は使わない。</p>
+<p>ここでは、<code>rv32edu</code>のUART機器契約が<code>sw</code>の書込みデータの下位8ビットをDATAとして受け取ると仮定する。この契約はRV32Iの命令仕様ではなく、machine specificationで固定する実装上の約束である。命令の一般的な意味はS5で確認する。</p>
+<pre><code class="language-asm">addi x5,  x0, 1       # x5 = 1
+addi x6,  x0, 2       # x6 = 2
+add  x7,  x5, x6      # x7 = 3
+addi x8,  x7, 48      # x8 = x7 + 48 = ASCII &#x27;3&#x27; (0x33)
+lui  x10, 0x10000     # x10 = 0x10000000
+sw   x8,  0(x10)      # UARTへ &#x27;3&#x27;
+addi x8,  x0, 10      # x8 = 改行
+sw   x8,  0(x10)      # UARTへ改行</code></pre>
+<p>これはMiniPyが生成する最終コードを示すものではない。Pythonの<code>print</code>には、名前の解決、整数の表現、文字列化、バッファリングなどの仕事がある。この短い列は、それらを済ませた後の「加算と出力」をCPUの観測対象へ切り出したものだ。</p>
+<p>トレースは、少なくともPC、命令、書き込み後のレジスタ、メモリまたはデバイスイベントを持つ。</p>
+<pre><code class="language-text">trace=A-runtime  pc=0x00000000  addi x5,x0,1       x5=0x00000001
+trace=A-runtime  pc=0x00000004  addi x6,x0,2       x6=0x00000002
+trace=A-runtime  pc=0x00000008  add  x7,x5,x6       x7=0x00000003
+trace=A-runtime  pc=0x0000000c  addi x8,x7,48      x8=0x00000033
+trace=A-runtime  pc=0x00000010  lui  x10,0x10000    x10=0x10000000
+trace=A-runtime  pc=0x00000014  sw   x8,0(x10)      UART[DATA]=0x33
+trace=A-runtime  pc=0x00000018  addi x8,x0,10       x8=0x0000000a
+trace=A-runtime  pc=0x0000001c  sw   x8,0(x10)      UART[DATA]=0x0a</code></pre>
+<p>このトレースから確実に言えることは、模型上、<code>ADD</code>の結果を<code>addi x8,x7,48</code>が受け取り、その値から作ったストアがUARTのデータレジスタへ届いたことである。<code>UART[DATA]=0x33</code> は文字の意味をCPUが理解したことを示さない。CPUが書いたのは8ビットの値であり、それを端末がASCIIとして解釈する約束が別にある。</p>
+<h3 id="section-7-1">7.1 <a class="term" href="index.html#term-concept_1_term_b64ead7e9a_b64ead7e">命令トレース</a>と電気現象の距離</h3>
+<p><code>add x7, x5, x6</code> は、レジスタの値を加算器へ入力し、結果を次の状態へ保存するというCPU模型上のイベントである。実際の回路では、クロック、フリップフロップ、組合せ論理、信号遅延、電源電圧、温度などが関係する。さらに下では、MOSFETの<a class="term" href="index.html#term-current">電流</a>と電荷、半導体中のキャリア、電磁場が関係する。</p>
+<p>したがって、次の三つの文は別々に正しい。</p>
+<ul><li><strong>規格として:</strong> RV32Iの<code>ADD</code>は、二つの32ビットレジスタ値の和を宛先レジスタへ書く。</li><li><strong>模型として:</strong> <code>add</code>を1行の命令トレースとして表し、レジスタの値を整数で更新する。</li><li><strong>実装として:</strong> CPU回路は複数の<a class="term" href="index.html#term-logic_gate">論理ゲート</a>と記憶素子の信号を、定められた時間内に変化させる。</li></ul>
+<p>この章では、実装の一例を自然法則そのものとして述べない。次章以降で、自然法則、<a class="term" href="index.html#term-concept_2_term_4f2e0abc53_4f2e0abc">理想化模型</a>、規格、実装の境界を明示的に調べる。</p>
+<h2 id="section-8">8　自然法則、模型、規格、実装</h2>
+<p>同じ「3が表示された」という事実を、四種類の文に分ける。</p>
+<h3 id="section-d78fe01a91">自然法則</h3>
+<p>電荷、電磁場、<a class="term" href="index.html#term-semiconductor">半導体</a>中のキャリア、導体の電流、電圧信号などは、物理法則に従う。<code>0</code>と<code>1</code>は自然界に刻印された二種類の粒子ではなく、回路が連続量の範囲を二つの論理値へ対応づけた記号である。</p>
+<h3 id="section-4f2e0abc53">理想化模型</h3>
+<p>CPUトレースでは、レジスタを整数として扱い、命令を瞬間的な状態更新として表した。これは計算しやすい模型であり、電圧の立上り時間やノイズを捨てている。仮想記憶の説明でも、アドレス変換をページ表の対応として要約し、実際のTLBミスやページフォルトの時間を省いた。</p>
+<h3 id="section-e32ca91bbd">規格・契約</h3>
+<p>Pythonの言語仕様、CPythonの<code>ast</code> API、RV32Iの命令仕様、OSのシステムコール<a class="term" href="index.html#term-abi">ABI</a>は、利用者と実装が共有する約束である。規格は「どの結果が保証されるか」を決めるが、内部でどの回路やアルゴリズムを使うかまで一つに決めるとは限らない。</p>
+<h3 id="section-ef11381880"><a class="term" href="index.html#term-concept_2_term_ef11381880_ef113818">特定実装</a></h3>
+<p>CPython 3.14.7のバイトコード、あるLinuxのシステムコール列、教材の<code>rv32edu</code>の<a class="term" href="index.html#term-memory_map">メモリマップ</a>は、特定の実装と版に依存する。別のPython処理系、OS、CPUを使えば、同じ契約を別の手順で満たせる。</p>
+<p>次の台帳を各観測に添える。</p>
+<table><thead><tr><th>対象</th><th>下位表現</th><th>上位の約束</th><th>この章で隠したもの</th><th>破綻・差が出る条件</th></tr></thead>
+<tbody><tr><td>AST</td><td>ソースの<a class="term" href="index.html#term-concept_1_term_ada876e251_ada876e2">字句と構文</a></td><td>文の構造を木で表す</td><td>バイトコード、値の格納場所</td><td>Python版、構文拡張、解析モード</td></tr><tr><td>バイトコード</td><td>コードオブジェクトの命令列</td><td>評価ループが読める手順</td><td>CPU命令、回路</td><td>CPython版、最適化、別処理系</td></tr><tr><td>システムコール</td><td>レジスタ・メモリを介した<a class="term" href="index.html#term-trap">trap</a></td><td>プロセスがOSへ依頼できる</td><td>カーネル内部、装置の波形</td><td>OS、ABI、権限、バッファリング</td></tr><tr><td>CPU命令</td><td>命令ビット、レジスタ、バス</td><td><a class="term" href="index.html#term-concept_44_isa_52ed4c0e">ISA</a>の状態遷移</td><td>ゲート、遅延、電圧</td><td>未定義命令、<a class="term" href="index.html#term-exception">例外</a>、timing違反</td></tr><tr><td>論理値</td><td>電圧・電荷・ノイズを含む信号</td><td>0または1として扱う</td><td>連続波形</td><td>閾値、雑音、電源、<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>up/hold</td></tr></tbody>
+</table>
+<h2 id="section-9">9　追跡例を同じ台帳へ置く</h2>
+<p>この先の巻では、同じ一行から出発し、観測範囲を少しずつ広げる。ここでは名前と境界だけを固定する。</p>
+<ol><li><strong>算術（trace A）</strong> — <code>print(1 + 2)</code> と <code>a = 1; b = 2; print(a + b)</code> を対にする。定数畳み込みの有無をAST、バイトコード、CPUトレースで比較する。</li><li><strong>リスト生成（trace B）</strong> — <code>x = [1, 2, 3]</code> を、リストの構造、オブジェクトの確保、メモリ階層へつなぐ。</li><li><strong>繰り返し計算（trace C）</strong> — <code>sum(range(1000))</code> を、ループ、分岐、キャッシュ、実行時間へつなぐ。</li><li><strong>ファイル読出し（trace D）</strong> — <code>with open("data.txt") as f: data = f.read()</code> を、ファイルオブジェクト、システムコール、ファイルシステム、記憶装置へつなぐ。MiniPyの必須機能として汎用ファイルAPIを実装することは要求しない。</li><li><strong>キー入力（trace E）と文字表示</strong> — <code>input()</code> を、キースイッチ、入力装置、割り込み、<a class="term" href="index.html#term-tty">TTY</a>、文字列へつなぐ。表示はUARTのバイト列から端末の字形、画素、光へ逆向きに追う。</li><li><strong>ネットワーク送信（trace F）</strong> — <code>socket.send(data)</code> を、ソケット、TCP/IP、<a class="term" href="index.html#term-concept_68_nic_088b04bf">NIC</a>、物理媒体へつなぐ。これは実CPython、xv6、ホストOSを主経路とし、MiniPyとminiosへ無理に含めない。</li></ol>
+<p>この章の観測で先取りするのはtrace Aの小さな断面だけである。リスト、ファイル、入力、表示の内部を説明したことにはしない。</p>
+<h2 id="section-10">10　この章の観測結果</h2>
+<p>二つのソースを比べた結果を、次のように短く記録できる。</p>
+<pre><code class="language-text">trace A-const
+  source: print(1 + 2)
+  AST: Add(Constant(1), Constant(2)) が残る
+  bytecode: このCPython版では定数3を読む形になり得る
+  syscall: 出力バイト列 &quot;3\n&quot; をOSへ渡す境界がある
+  CPU: もし出力用コードを追えば、文字コードをUARTへ書く命令がある
+
+trace A-runtime
+  source: a=1; b=2; print(a+b)
+  AST: Name(&quot;a&quot;) と Name(&quot;b&quot;) の加算が残る
+  bytecode: 名前を読み、加算し、printを呼ぶ形を比較対象にする
+  syscall: 同じ出力バイト列でも、そこへ至る上位処理は同一とは限らない
+  CPU: 加算結果を作るADDと、出力先へのstoreを小さな例で観測する</code></pre>
+<p><code>print(1 + 2)</code> と <code>a + b</code> が同じ結果を出したことは、二つのプログラムが同じ機械命令列であることを意味しない。逆に、同じバイトコード列になったとしても、CPUが同じ電気波形を通るとは限らない。境界ごとに、どの契約を検証したのかを明記する。</p>
+<h2 id="section-11">11　次に電荷と場へ戻る</h2>
+<p>この章で見た<code>0</code>、<code>1</code>、レジスタ、UARTバイトは、計算を説明するための上位の記号である。それらが実際の回路で使えるためには、信号がある電圧範囲に入り、ノイズや遅延の中でも受け手が同じ論理値として判断できなければならない。</p>
+<p>さらに、電圧は一点だけに貼られた不変の札ではない。電荷の分布と<a class="term" href="index.html#term-electric_field">電場</a>、エネルギー、導体や絶縁体の性質を通して、回路の状態を要約する量である。次章からは、こうした「何を隠し、何を保証し、どこで破綻するか」を台帳へ記録しながら、0と1より下の物理量を学ぶ。</p>
+<p>この章で、電荷や電場の式をまだ導出していないのは意図的である。<code>print</code>の一行から物理量までを一つの比喩で済ませず、観測した実装、採用した模型、共有された規格、成立している自然法則を別の問いとして扱うためである。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-1">1.補助演習　手を動かす導出帳</h2>
+<p>一行のPythonが通る全層の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、処理系のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-ast">例題1　ASTとバイトコードを対にして観測する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 1 1</code>である。入力は<code>["print(1 + 2)", "a = 1; b = 2; print(a + b)"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-2-2">例題2　プロセスとシステムコールを観測する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 1 2</code>である。入力は<code>["const.py", "runtime.py"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・<a class="term" href="index.html#term-frame">frame</a>・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-3-rv32i-uart">例題3　RV32I命令とUARTイベントを観測する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 1 3</code>である。入力は<code>["1と2を加算する縮約RV32I命令列"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、<a class="term" href="index.html#term-trace_id">trace ID</a>以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・trace ID</td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-3">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<h3 id="section-3-2">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E1</code>（表現の境界）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E2</code>（定数畳み込みと実行時加算）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E3</code>（システムコール、端末描画、CPU命令の分類）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E4</code>（レジスタとUARTの手計算トレース）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E5</code>（UARTへ改行を書かない故障と、変数例を定数化し過ぎる故障）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（自然法則、模型、規格、実装の記述を分ける）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（仮想アドレス、物理メモリ、UARTのアドレスを同一視しない）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（自然法則、模型、規格、実装の記述を分ける）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-2">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-1-4">1.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>一行のPythonが通る全層</strong>の中心問題「端末で python hello.py を実行し、print(1 + 2) が画面へ現れるまでに何が起きるのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-5">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["両方のASTに加算構造が現れる。", "定数例では、基準CPythonが定数3を読む形へ畳み込むことがある。", "変数例では、名前を読み出してから加算する比較対象が残る。", "命令名、オフセット、呼出し形式は版とビルド情報とともに保存される。"]</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>print(1 + 2)</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>a = 1; b = 2; print(a + b)</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース2: <code>experiment-2</code></p>
+<p>このcaseは <code>["起動、ファイル読出し、メモリ準備、標準出力、終了の境界を区別できる。", "出力イベントに3と改行のバイト列が現れる。", "具体的なシステムコールの順序と数は固定環境の観測値としてのみ記録する。", "writeの成功と画面描画を別イベントとして扱う。"]</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>const.py</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>runtime.py</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース3: <code>experiment-3</code></p>
+<p>このcaseは <code>["ADD後の宛先レジスタが3になる。", "UARTデータレジスタへのイベントに0x33と0x0aが現れる。", "CPUのstore、UARTのバイト、端末の文字を別の記録として保存する。", "実命令トレースのPCとレジスタ値はcanonical artifactから取得する。"]</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>1と2を加算する縮約RV32I命令列</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-4">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「print(1 + 2) と a = 1; b = 2; print(a + b) は、同じ出力でも加算が実行前に定数化されるか、名前解決後に実行されるかが異なる。」で、参照する式IDまたは検証項目は <code>book run 1 1 のASTおよびdis出力を比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「printの出力は、最終的にOSへ渡されるバイト列と、端末が表示する字形・画素を分けて扱う。」で、参照する式IDまたは検証項目は <code>book run 1 2 のシステムコール出力と標準出力を照合する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「小さなRV32I命令列では、1と2をADDし、ASCIIバイトと改行をUARTデータレジスタへstoreできる。」で、参照する式IDまたは検証項目は <code>book run 1 3 のレジスタ、PC、UARTイベントを期待トレースと比較する</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-3">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: ASTとバイトコードを対にして観測する</p>
+<p>入口は <code>book run 1 1</code>、caseは <code>未指定</code>、required artifactは <code>["trace-a-ast-dump", "trace-a-bytecode"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["両方のASTに加算構造が現れる。", "定数例では、基準CPythonが定数3を読む形へ畳み込むことがある。", "変数例では、名前を読み出してから加算する比較対象が残る。", "命令名、オフセット、呼出し形式は版とビルド情報とともに保存される。"]</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験2: プロセスとシステムコールを観測する</p>
+<p>入口は <code>book run 1 2</code>、caseは <code>未指定</code>、required artifactは <code>["trace-a-syscalls"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["起動、ファイル読出し、メモリ準備、標準出力、終了の境界を区別できる。", "出力イベントに3と改行のバイト列が現れる。", "具体的なシステムコールの順序と数は固定環境の観測値としてのみ記録する。", "writeの成功と画面描画を別イベントとして扱う。"]</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験3: RV32I命令とUARTイベントを観測する</p>
+<p>入口は <code>book run 1 3</code>、caseは <code>未指定</code>、required artifactは <code>["trace-a-cpu", "trace-a-cross-layer"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["ADD後の宛先レジスタが3になる。", "UARTデータレジスタへのイベントに0x33と0x0aが現れる。", "CPUのstore、UARTのバイト、端末の文字を別の記録として保存する。", "実命令トレースのPCとレジスタ値はcanonical artifactから取得する。"]</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-3">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>ASTはソース構造を表し、最終実行手順やCPU命令を表さない。</li><li>バイトコードはCPython評価ループが読む仮想命令であり、RV32I命令ではない。</li><li>定数畳み込みの有無と具体的なバイトコードはCPythonの版・ビルド・実装に依存する。</li><li>システムコール列はOS、ABI、ローダ、標準入出力のバッファリング、追跡方法に依存する。</li><li>システムコールのwrite成功は、端末エミュレータが画面へ描画したことを保証しない。</li><li>仮想アドレスをDRAMの物理番地やMOSFETの電圧と同一視しない。</li><li>CPUトレースは回路の電圧波形、遅延、電源、温度、ノイズを省略した模型である。</li><li>ASCIIの0x33をUARTへ書くことは、CPUが文字の意味を理解したことを意味しない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>先行一周で示された「Pythonから電磁場までの縦断図」を、観測可能なAST、バイトコード、システムコール、CPUトレースへ分解する。</li><li>先行一周の図を再掲せず、ここではtrace Aの二つの入力と実験成果物を新しい観測対象にする。</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>自然法則、理想化模型、規格上の契約、特定実装を混ぜずに記述する台帳を次章で定義する。</li><li>下位層の説明は0と1から始めず、電荷、電場、<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>、電流を測定可能な量として導入する。</li><li>この章のCPython、OS、rv32eduの版・実装依存部分は、各層の詳細章で再検証する。</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-3">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — chapter_text_starts_with_concrete_observation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — natural_model_spec_<a class="term" href="index.html#term-concept_2_term_ef11381880_ef113818">implementation</a>_separated。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — trace_a_constant_folding_pair_present。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — runner_analytic_replay_is_not_external_measurement。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — chapter_artifacts_declared。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — exercises_have_diagnosis。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — independent_review_pending。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: ASTとバイトコードを対にして観測する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 1 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["両方のASTに加算構造が現れる。", "定数例では、基準CPythonが定数3を読む形へ畳み込むことがある。", "変数例では、名前を読み出してから加算する比較対象が残る。", "命令名、オフセット、呼出し形式は版とビルド情報とともに保存される。"]</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表2: プロセスとシステムコールを観測する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 1 2</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["起動、ファイル読出し、メモリ準備、標準出力、終了の境界を区別できる。", "出力イベントに3と改行のバイト列が現れる。", "具体的なシステムコールの順序と数は固定環境の観測値としてのみ記録する。", "writeの成功と画面描画を別イベントとして扱う。"]</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表3: RV32I命令とUARTイベントを観測する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 1 3</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["ADD後の宛先レジスタが3になる。", "UARTデータレジスタへのイベントに0x33と0x0aが現れる。", "CPUのstore、UARTのバイト、端末の文字を別の記録として保存する。", "実命令トレースのPCとレジスタ値はcanonical artifactから取得する。"]</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-2">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11-2">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

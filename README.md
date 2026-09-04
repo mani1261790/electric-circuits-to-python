@@ -1,0 +1,27 @@
+# 電気回路で学ぶPython
+
+電磁場、半導体、CMOS、CPU、OS、言語処理系を経て、一行のPythonが実行されるまでを一続きに学ぶ日本語教材です。
+
+## 公開サイト
+
+https://mani1261790.github.io/electric-circuits-to-python/
+
+現在は「公開制作版」です。先行一周と第1〜106章を公開していますが、章別の必修実験・受入ゲートには未実行項目があり、学習者向け完成版とは表示していません。
+
+現行スナップショット:
+
+- HTML本文: 先行一周＋106章
+- 固定runner: 718/718成功（測定欄は全件 `not_run`）
+- canonical artifact: 739件（全件 `measured=false`）
+- 独立出典sign-off: 631/631、hold 0
+- MiniPy参照runtime: 20受入ケース成功
+
+このリポジトリは公開サイト用に抽出した静的ファイルだけを保持します。制作原本、取得した第三者PDF、一時ファイル、ローカル実行環境は含みません。`site/PUBLICATION-MANIFEST.json` に公開ファイルのhashを記録しています。
+
+## ライセンス
+
+- 特記のない独自の本文・図版: [CC BY 4.0](./LICENSE-CONTENT.md)
+- コード例と検査用コード: [MIT License](./LICENSE-CODE)
+- 引用・参照した第三者資料: 各権利者および各出典の条件
+
+誤りや改善案はGitHub Issuesで知らせてください。生成HTMLへの直接変更ではなく、該当章と内容が分かる報告を歓迎します。

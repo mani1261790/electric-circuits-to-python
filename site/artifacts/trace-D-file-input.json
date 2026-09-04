@@ -1,0 +1,398 @@
+{
+  "checks": {
+    "block_device_not_claimed": true,
+    "boundary_is_explicit": true,
+    "event_ids_unique": true,
+    "event_schema_complete": true,
+    "filesystem_event_has_length": true,
+    "host_operation_succeeded": true,
+    "measured_is_false": true,
+    "parent_chain_is_closed": true,
+    "physical_measurement_is_false": true,
+    "read_content_hash_matches": true,
+    "sequence_is_monotonic": true,
+    "source_reference_is_present": true,
+    "trace_id_is_consistent": true
+  },
+  "cpython": {
+    "ast": "Module(body=[Expr(value=Call(func=Attribute(value=Call(func=Name(id='open', ctx=Load()), args=[Constant(value='trace-D-input.txt')], keywords=[keyword(arg='encoding', value=Constant(value='utf-8'))]), attr='read', ctx=Load())))])",
+    "bytecode": [
+      "  0           RESUME                   0",
+      "",
+      "  1           LOAD_NAME                0 (open)",
+      "              PUSH_NULL",
+      "              LOAD_CONST               0 ('trace-D-input.txt')",
+      "              LOAD_CONST               1 ('utf-8')",
+      "              LOAD_CONST               2 (('encoding',))",
+      "              CALL_KW                  2",
+      "              LOAD_ATTR                3 (read + NULL|self)",
+      "              CALL                     0",
+      "              POP_TOP",
+      "              LOAD_CONST               3 (None)",
+      "              RETURN_VALUE"
+    ],
+    "measured": false,
+    "runtime": "CPython",
+    "source": "open('trace-D-input.txt', encoding='utf-8').read()",
+    "source_kind": "external_tool_output_without_physical_measurement",
+    "tokens": [
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            4
+          ]
+        ],
+        "value": "open"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "value": "("
+      },
+      {
+        "kind": "STRING",
+        "span": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            24
+          ]
+        ],
+        "value": "'trace-D-input.txt'"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            24
+          ],
+          [
+            1,
+            25
+          ]
+        ],
+        "value": ","
+      },
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            26
+          ],
+          [
+            1,
+            34
+          ]
+        ],
+        "value": "encoding"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            34
+          ],
+          [
+            1,
+            35
+          ]
+        ],
+        "value": "="
+      },
+      {
+        "kind": "STRING",
+        "span": [
+          [
+            1,
+            35
+          ],
+          [
+            1,
+            42
+          ]
+        ],
+        "value": "'utf-8'"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            42
+          ],
+          [
+            1,
+            43
+          ]
+        ],
+        "value": ")"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            43
+          ],
+          [
+            1,
+            44
+          ]
+        ],
+        "value": "."
+      },
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            44
+          ],
+          [
+            1,
+            48
+          ]
+        ],
+        "value": "read"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            48
+          ],
+          [
+            1,
+            49
+          ]
+        ],
+        "value": "("
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            49
+          ],
+          [
+            1,
+            50
+          ]
+        ],
+        "value": ")"
+      },
+      {
+        "kind": "NEWLINE",
+        "span": [
+          [
+            1,
+            50
+          ],
+          [
+            1,
+            51
+          ]
+        ],
+        "value": ""
+      },
+      {
+        "kind": "ENDMARKER",
+        "span": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "value": ""
+      }
+    ],
+    "version": "3.14.7"
+  },
+  "display_example": "open('x').read()",
+  "events": [
+    {
+      "artifact": "trace-atlas",
+      "event": "source_call",
+      "event_id": "trace-D-file-input:source:1",
+      "layer": "source",
+      "measured": false,
+      "parent_event_id": null,
+      "sequence": 0,
+      "source": "open('trace-D-input.txt', encoding='utf-8').read()",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        50
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "open_read_call",
+      "event_id": "trace-D-file-input:ast:2",
+      "functions": [
+        "open",
+        "read"
+      ],
+      "layer": "AST",
+      "measured": false,
+      "node_type": "Call",
+      "parent_event_id": "trace-D-file-input:source:1",
+      "sequence": 1,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        50
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "compile_open_read",
+      "event_id": "trace-D-file-input:bytecode:3",
+      "instruction_count": 27,
+      "layer": "bytecode",
+      "measured": false,
+      "parent_event_id": "trace-D-file-input:ast:2",
+      "sequence": 2,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        50
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "encoding": "utf-8",
+      "event": "open_builtin",
+      "event_id": "trace-D-file-input:runtime:4",
+      "layer": "runtime",
+      "measured": false,
+      "mode": "r",
+      "parent_event_id": "trace-D-file-input:bytecode:3",
+      "sequence": 3,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        50
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "openat_read_intent",
+      "event_id": "trace-D-file-input:syscall:5",
+      "layer": "syscall",
+      "logical_path": "trace-D-input.txt",
+      "measured": false,
+      "parent_event_id": "trace-D-file-input:runtime:4",
+      "sequence": 4,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "executed_model",
+      "syscall": "openat/read",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "descriptor": "fd:file-input",
+      "event": "file_descriptor_model",
+      "event_id": "trace-D-file-input:fd:6",
+      "file_type": "regular",
+      "layer": "fd",
+      "measured": false,
+      "parent_event_id": "trace-D-file-input:syscall:5",
+      "sequence": 5,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "executed_model",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "byte_count": 28,
+      "content_sha256": "c831cf6a6693d364b959782bddc7f0695941440405c414fb7bd953156dcaa921",
+      "event": "read_bytes",
+      "event_id": "trace-D-file-input:filesystem:7",
+      "layer": "filesystem",
+      "measured": false,
+      "parent_event_id": "trace-D-file-input:fd:6",
+      "sequence": 6,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "executed_model",
+      "trace_id": "trace-D-file-input"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "storage_read_not_run",
+      "event_id": "trace-D-file-input:block-device:8",
+      "layer": "block_device",
+      "measured": false,
+      "parent_event_id": "trace-D-file-input:filesystem:7",
+      "reason": "host filesystem API succeeded; block device/controller was not instrumented",
+      "sequence": 7,
+      "source_kind": "boundary_record",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": null,
+      "status": "not_run",
+      "trace_id": "trace-D-file-input"
+    }
+  ],
+  "host_result": {
+    "byte_count": 28,
+    "content_sha256": "c831cf6a6693d364b959782bddc7f0695941440405c414fb7bd953156dcaa921",
+    "logical_path": "trace-D-input.txt"
+  },
+  "layer_status": {
+    "block_device": {
+      "reason": "no storage-controller or block trace",
+      "status": "not_run"
+    },
+    "filesystem": {
+      "reason": "CPython opened and read a temporary regular file",
+      "status": "observed_host_operation"
+    },
+    "physical_storage": {
+      "reason": "no physical measurement",
+      "status": "not_run"
+    }
+  },
+  "measured": false,
+  "schema_version": 1,
+  "source": "open('trace-D-input.txt', encoding='utf-8').read()",
+  "source_kind": "executable_host_boundary_model",
+  "trace_id": "trace-D-file-input"
+}

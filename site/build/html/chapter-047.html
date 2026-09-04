@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第47章　単一cycle datapath</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-047-exercises.html">この章の演習</a>　<a href="chapter-047-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-47-1"><code>book run 47 1</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-01.json">成果物</a></li><li><a href="runner.html#run-47-2"><code>book run 47 2</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-02.json">成果物</a></li><li><a href="runner.html#run-47-3"><code>book run 47 3</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-03.json">成果物</a></li><li><a href="runner.html#run-47-4"><code>book run 47 4</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-04.json">成果物</a></li><li><a href="runner.html#run-47-5"><code>book run 47 5</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-05.json">成果物</a></li><li><a href="runner.html#run-47-6"><code>book run 47 6</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-06.json">成果物</a></li><li><a href="runner.html#run-47-7"><code>book run 47 7</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-07.json">成果物</a></li><li><a href="runner.html#run-47-8"><code>book run 47 8</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-047/experiment-08.json">成果物</a></li></ul></section><h1 id="section-47-cycle-datapath">第47章　単一cycle <a class="term" href="index.html#term-concept_47_datapath_f5f6ba47">datapath</a></h1>
+<p>第46章では、<a class="term" href="index.html#term-rv32i">RV32I</a>の命令をassemblyとして並べ、register、stack、memory、PCが一命令ごとにどう変わるかを追った。次に必要なのは、その一命令を実際の配線へ落とすことである。第47章では、命令fetchから結果の書戻しまでを一つのclock周期に通す単一cycle datapath（単一周期データ経路）を作る。</p>
+<p>ここでいう一周期は「すべての命令が同じ計算量である」という意味ではない。<code>ADD</code>は<a class="term" href="index.html#term-register">register</a>を読み、ALUで加え、registerへ戻す。<code>LW</code>はさらにaddressを作ってdata memoryを読み、<code>BEQ</code>は比較結果で次のPCを選ぶ。異なる経路を一つの周期へ重ね、命令ごとにcontrol signalとmuxの選択を変える。周期の終わりにだけarchitectural stateを更新するので、途中の組合せ信号を次の命令の状態と取り違えない。</p>
+<h2 id="section-47-1">47.1 一周期の入口と出口</h2>
+<p>本章の最小状態は、32-bitの<code>PC</code>、32本の32-bit register、instruction memory、data memoryである。<a class="term" href="index.html#term-clock">clock</a> edgeの直前を状態<code>S_n</code>、直後を<code>S_{n+1}</code>と書く。一周期中の組合せ論理は<code>S_n</code>とfetchした命令を入力に取り、次のPC、register write、memory writeを計算する。edgeで有効なwriteだけを状態へ反映する。</p>
+<pre><code class="language-text">       PC
+        │
+        ▼
+ instruction memory ── instruction ──┐
+                                      ▼
+                              decode / control
+                              │       │
+                 rs1 ────────┘       └──── immediate
+                  ▼                         ▼
+             register file ─────────────► ALU
+              rs2 value                     │
+                  │                         ├──► data memory
+                  │                         │       │
+                  └────────────── store ────┘       └── load data
+                                      
+                    ALU result / load data ──► write-back mux ──► register file
+        PC + 4 / branch target / jump target ──► next-PC mux ────► PC</code></pre>
+<p>この図の矢印は「信号が一周期内に通る候補経路」である。<a class="term" href="index.html#term-concept_41_register_file_8c2dd3d3">register file</a>とPCは周期境界にある記憶要素、instruction memoryとdata memoryは本章の理想化された組合せread interfaceとする。実際のBRAMが同期readなら同じ図を一周期には通せないので、wait stateまたはpipeline registerが必要になる。その変更を隠して「単一cycle」と呼ばない。</p>
+<p>命令ごとの最低限の入力と出力を表にする。</p>
+<table><thead><tr><th>命令</th><th>読むもの</th><th>組合せ計算</th><th>edgeで書くもの</th><th>次のPC</th></tr></thead>
+<tbody><tr><td><code>ADD rd,rs1,rs2</code></td><td><code>rs1</code>,<code>rs2</code></td><td><a class="term" href="index.html#term-concept_35_alu_5bfc1981">ALU</a>加算</td><td><code>rd = alu_result</code></td><td><code>PC+4</code></td></tr><tr><td><code>ADDI rd,rs1,imm</code></td><td><code>rs1</code></td><td>符号拡張immとの加算</td><td><code>rd = alu_result</code></td><td><code>PC+4</code></td></tr><tr><td><code>LW rd,off(rs1)</code></td><td><code>rs1</code></td><td><code>rs1 + signext(off)</code></td><td><code>rd = load_data</code></td><td><code>PC+4</code></td></tr><tr><td><code>SW rs2,off(rs1)</code></td><td><code>rs1</code>,<code>rs2</code></td><td>addressとstore data</td><td>memory write</td><td><code>PC+4</code></td></tr><tr><td><code>BEQ rs1,rs2,off</code></td><td><code>rs1</code>,<code>rs2</code></td><td>等値比較、<code>PC+off</code></td><td>なし</td><td>takenなら<a class="term" href="index.html#term-target">target</a>、そうでなければ<code>PC+4</code></td></tr><tr><td><code>JAL rd,off</code></td><td>なし</td><td>targetと<code>PC+4</code></td><td><code>rd = PC+4</code></td><td><code>PC+off</code></td></tr><tr><td><code>JALR rd,imm(rs1)</code></td><td><code>rs1</code></td><td><code>(rs1+imm)&amp;~1</code></td><td><code>rd = PC+4</code></td><td>bit 0を0にしたtarget</td></tr></tbody>
+</table>
+<p><code>x0</code>へのwriteはregister fileで捨てる。これはwrite enableを出さない実装でも、writeされてもreadが常に0を返す実装でも、architectural stateとして同じでなければならない。<code>PC</code>へのwrite、registerへのwrite、memoryへのwriteは、命令のcontrolが有効なときだけ発生する。</p>
+<h2 id="section-47-2-control-signal-decode">47.2 命令を<a class="term" href="index.html#term-concept_47_control_signal_0b4ec1f2">control signal</a>へdecodeする</h2>
+<p>decodeは32-bit instructionを<code>opcode</code>、<code>rd</code>、<code>rs1</code>、<code>rs2</code>、funct field、immediateへ分解し、datapathの選択信号を作る。本章のcontrol表は次のように固定する。</p>
+<table><thead><tr><th>命令</th><th><code>reg_write</code></th><th><code>mem_read</code></th><th><code>mem_write</code></th><th><code>alu_src_imm</code></th><th><code>wb_from_mem</code></th><th><code>branch</code></th><th><code>jump</code></th><th>ALU</th></tr></thead>
+<tbody><tr><td><code>ADD</code></td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>add</td></tr><tr><td><code>ADDI</code></td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>add</td></tr><tr><td><code>LW</code></td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>add</td></tr><tr><td><code>SW</code></td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>add</td></tr><tr><td><code>BEQ</code></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>compare</td></tr><tr><td><code>JAL</code></td><td>1</td><td>0</td><td>0</td><td>—</td><td>0</td><td>0</td><td>1</td><td>add target</td></tr><tr><td><code>JALR</code></td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>add target</td></tr></tbody>
+</table>
+<p><code>—</code>はその信号を使わないという意味であり、任意の値を安全に流してよいという意味ではない。未定義opcodeで<code>reg_write</code>や<code>mem_write</code>を1にしない。decodeが失敗したら<code>illegal_instruction</code>として停止するか、少なくともすべてのside effectを無効にする。後者を採る場合も、停止・faultの規則をtraceへ記録する。</p>
+<p>ALUの入力第二項は、R-typeなら<code>rs2</code>、I/S-typeなら符号拡張immediateでmux選択する。<code>BEQ</code>の比較は、<code>rs1-rs2=0</code>というALU結果のzeroを使う実装と、等値<a class="term" href="index.html#term-concept_34_term_f405f45c90_f405f45c">比較器</a>を別に置く実装がある。どちらも、比較信号がbranch controlへ届く前に次のPC muxを選べることが条件である。内部の部品数はISAが固定しないが、信号の意味とedgeで見える結果は固定する。</p>
+<h2 id="section-47-3-add">47.3 <code>ADD</code>の経路を数値で追う</h2>
+<p><code>PC=0x00001000</code>、命令が<code>ADD x5,x6,x7</code>、<code>x6=10</code>、<code>x7=3</code>とする。decodeの出力は<code>rd=5</code>、<code>rs1=6</code>、<code>rs2=7</code>、<code>reg_write=1</code>、<code>alu_src_imm=0</code>、<code>alu_op=add</code>である。register fileは二つのread dataを同じ周期に出し、ALUは13を作る。<a class="term" href="index.html#term-concept_47_write_back_843c8f9e">write-back</a> muxはALU側を選び、edgeでx5へ13を保存する。PC muxはsequential側を選び、<code>PC_next=0x00001004</code>とする。</p>
+<p>数式としては、ALU結果を式(47-1)で表す。</p>
+<pre><code class="language-text">alu_result = (rs1_value + operand2) mod 2^32                         (47-1)
+operand2 = rs2_value                    (R-type)
+         = sign_extend(immediate)       (I/S-type)</code></pre>
+<p>式(47-1)の単位は32-bit register wordで、数学的整数の無限精度の和ではない。<code>0xFFFFFFFF+1</code>なら結果は<code>0x00000000</code>となる。carryを別出力にするかどうかはこのsub<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>のarchitectural contractに含めないので、ALU内部のcarryを勝手にflag registerへ保存しない。</p>
+<p>これは単なる足し算の計算例ではない。<code>rs1</code>と<code>rs2</code>を逆に読む、<code>rd</code>を一つずらす、<code>reg_write</code>を次の命令へ遅らせると、同じ最終値に見える短いprogramでもinstruction-by-<a class="term" href="index.html#term-concept_1_term_b64ead7e9a_b64ead7e">instruction trace</a>が違う。traceには少なくとも<code>pc</code>、raw word、decoded fields、control、read values、ALU result、write-back、<code>pc_next</code>を残す。</p>
+<h2 id="section-47-4-lw-sw-data-memory">47.4 <code>LW</code>と<code>SW</code>はdata memoryを一周期へ置く</h2>
+<p><code>x6=0x00002000</code>、<code>x5=0xDEADBEEF</code>、offset=8とする。これはdatapathのアドレス計算だけを見る抽象toy memory domainで、rv32eduの物理<a class="term" href="index.html#term-memory_map">memory map</a>は第48章で導入する。<code>SW x5,8(x6)</code>では、ALUが<code>0x00002008</code>を作り、store data muxがx5を選ぶ。edgeでmemory write enableとbyte enableが有効なら、little-endianの4 byteを<code>EF BE AD DE</code>の順で保存する。register writeは0である。</p>
+<p>次の<code>LW x7,8(x6)</code>では、同じaddressから4 byteを読み、load dataをwrite-back muxへ通し、edgeでx7へ<code>0xDEADBEEF</code>を書く。<code>LW</code>のaddress生成と<code>SW</code>のaddress生成は同じALU経路を共有できるが、書く先は異なる。<code>mem_write=1</code>なのに<code>reg_write=1</code>も残すと、store命令がrd fieldの偶然の値へ書き込む。</p>
+<p>memory readを組合せとしたのは、本章で「一周期に通す配線」を観察するための仮定である。実際のmemoryがread <a class="term" href="index.html#term-latency">latency</a>を持つなら、<code>LW</code>を同じedgeで完了できない。valid-ready、wait、pipelineなどを加えた時点で、制御状態と周期数を新しい契約にする。data memoryをPython辞書で置き換えた予定traceを、FPGAのBRAM latencyや実機のbyte lane測定と呼んではならない。</p>
+<h2 id="section-47-5-branch-jump-pc">47.5 branchとjumpは次のPCを選ぶ</h2>
+<p>sequential targetは常に<code>PC+4</code>である。<code>BEQ x5,x6,+16</code>では、比較が真なら<code>PC+16</code>、偽なら<code>PC+4</code>をPC muxへ送る。<code>PC=0x1000</code>ならそれぞれ<code>0x1010</code>と<code>0x1004</code>である。比較対象とoffsetを正しく読んでいても、target加算器へ現在のPCでなく<code>PC+4</code>を入れると4 byteずれるので、traceの<code>pc_base</code>と<code>target</code>を別欄にする。</p>
+<p><code>JAL x1,+32</code>は、<code>x1=PC+4=0x1004</code>を書き、<code>PC_next=0x1020</code>を選ぶ。<code>JALR x1,0(x5)</code>でx5=<code>0x2001</code>なら、加算結果は<code>0x2001</code>でもPCへ入れるtargetはbit 0をclearした<code>0x2000</code>である。C拡張なしのRV32Iでは4-byte境界も検査するため、raw target <code>0x2002</code>はbit 0 clear後も<code>0x2002</code>に留まり、instruction-address-misalignedとして受理しない。link writeとPC selectを同じ<code>jump</code>信号だけで曖昧に制御せず、<code>link_value</code>、<code>target_value</code>、<code>rd</code>、<code>reg_write</code>をtraceへ保存する。</p>
+<p>branchとjumpのtarget選択は組合せ回路で決まるが、PCそのものの更新はclock edgeで行う。PC muxの出力が不定のままedgeを越えた場合、分岐がたまたま正しく見えたとしても合格にしない。<a class="term" href="index.html#term-alignment">alignment</a>違反、未定義opcode、reset中のPC更新はfail closedにする。</p>
+<h2 id="section-47-6">47.6 命令列を一周期ずつ比較する</h2>
+<p>単一cycleの説明を部品図だけで終わらせず、第46章の<a class="term" href="index.html#term-assembly">assembly</a> traceと対応づける。代表programを次のようにする。</p>
+<pre><code class="language-asm">    addi x6, x0, 10       # x6 = 10
+    addi x7, x0, 3        # x7 = 3
+    add  x5, x6, x7       # x5 = 13
+    sw   x5, 8(x0)        # mem[8..11] = 13
+    lw   x8, 8(x0)        # x8 = 13</code></pre>
+<p>参照模型の各stepは、(1) 実行前PC、(2) raw wordとdecode、(3) control、(4) register read、(5) immediateとALU入力、(6) ALU/memory結果、(7) registerまたはmemory write、(8) next PCを一行にする。期待されるPCは<code>0x00000000</code>、<code>0x00000004</code>、<code>0x00000008</code>、<code>0x0000000C</code>、<code>0x00000010</code>で、最後の<code>PC_next</code>は<code>0x00000014</code>である。これは手計算で定義した契約であり、共通runnerは入力由来の契約再生artifactを保存する。ただし、ここに示した列はRTL/Verilatorのcycle traceや<a class="term" href="index.html#term-fpga">FPGA</a>上の観測結果ではない。</p>
+<p>RTLを作る場合、同じ入力programをVerilatorでcycle traceへ変換し、reference JSONと命令IDごとに比較する。最終registerだけでなく、<code>reg_write</code>、<code>mem_write</code>、address、write-back選択、PC mux選択を比べる。最終値だけが一致しても、storeが別addressへ一度書いてから上書きしたバグ、branchで不要な命令を一度実行したバグを見逃す。</p>
+<h2 id="section-47-7">47.7 失敗を層に分ける</h2>
+<p><code>ADD</code>の値が違う場合は、まずraw wordとdecode field、次にregister read、ALU operand mux、ALU、write-back、最後にedge更新の順に確認する。<code>LW</code>だけ違う場合は、address、alignment、<a class="term" href="index.html#term-byte_enable">byte enable</a>、endianness、memory read latencyを分ける。<code>BEQ</code>だけ違う場合は、比較結果、immediate復元、PC base、target加算、PC muxの順に分ける。</p>
+<p>典型的な失敗は次の通りである。</p>
+<table><thead><tr><th>症状</th><th>まず見る欄</th><th>よくある原因</th></tr></thead>
+<tbody><tr><td>ADDのrdだけ違う</td><td><code>rd</code>, <code>reg_write</code>, write-back</td><td>field切出し、rd mux、edge enable</td></tr><tr><td>SW後にregisterが変わる</td><td><code>mem_write</code>, <code>reg_write</code></td><td>storeのrdをwrite-backへ流した</td></tr><tr><td>LWが一周期遅れる</td><td>memory status, edge</td><td>組合せread仮定と同期BRAMを混同した</td></tr><tr><td>branchが4 byteずれる</td><td><code>pc_base</code>, offset, target</td><td><code>PC+4</code>をbranch baseへ使った</td></tr><tr><td>JALRが奇数addressへ飛ぶ</td><td>raw target, cleared target</td><td>bit 0 clearの欠落</td></tr><tr><td>未定義命令がmemoryへ書く</td><td>decode fault, control</td><td>default controlがside effectを止めていない</td></tr></tbody>
+</table>
+<p>負のテストは、正しい入力の成功例よりも、配線の責任を明らかにする。例えば<code>LW</code>で<code>wb_from_mem=0</code>にする、<code>BEQ</code>の比較を反転する、<code>SW</code>で<code>reg_write=1</code>にする、x0へwriteを許す、PC muxのdefaultを未定義にする、といった故障を一つずつ注入する。診断結果には「どの<a class="term" href="index.html#term-concept_2_term_ed95fb9817_ed95fb98">contract</a>を破ったか」と、入力・期待error・statusを保存する。</p>
+<h2 id="section-47-8">47.8 実験・実装の境界</h2>
+<p>本文の代表値は、式と指定入力から得た解析上の期待値である。共通runnerの入口は<code>book run 47 &lt;experiment-id&gt;</code>とし、参照Python、SystemVerilog/Verilator、必要ならYosysのformal checkを別artifactへ保存する。ここで作るRTLはRV32Iのsubsetであり、<a class="term" href="index.html#term-cache">cache</a>、例外、pipeline、同期memory、MMIOは含めない。</p>
+<p>FPGAは任意経路として、合成、<a class="term" href="index.html#term-concept_50_place_and_route_fc9b2014">place-and-route</a>、timing report、bitstream、reference boardのpinとclock constraintを別々に記録する。bitstreamを作っていない段階でclock周波数やboard上の電圧を主張しない。SPICEも、単一cycleのarchitectural traceを検証する道具ではないので、本章の標準実験には含めない。<code>planned</code>、<code>measured:false</code>、<code>accessed_for_this_draft:false</code>を各成果物に残す。</p>
+<h2 id="section-47-9">47.9 次章へ</h2>
+<p>単一cycle datapathは、PC、instruction memory、decode、register file、immediate、ALU、data memory、write-back、<a class="term" href="index.html#term-concept_47_next_pc_mux_3aba4bb5">next-PC mux</a>を一周期の組合せ経路へ置き、edgeで状態を更新する。命令ごとに必要なcontrol signalが違うので、次章ではdecodeとcontrolを独立した表・論理へ切り出し、memory mapとbusの境界を加える。</p>
+<p>第48章へ渡すものは、命令ごとの<code>reg_read</code>、<code>alu_op</code>、<code>mem_read</code>、<code>mem_write</code>、<code>wb_select</code>、<code>branch/jump</code>、PC target、そして未定義命令時のside effect禁止である。この表を共通にしないまま<a class="term" href="index.html#term-control_unit">control unit</a>を作ると、単一cycle datapathの正しさを命令列ごとに再発明することになる。</p>
+<p>&lt;!-- expanded-study-notes --&gt;</p>
+<h2 id="section-47">47.補助線　式を状態へ戻す</h2>
+<p>単一cycle datapathで最初に固定する問いは、一つのclock周期の中で、命令fetchから結果書戻しまでをどう通すか。 この問いへ答えるときは、いきなり結果の数値を覚えず、入力、状態変化、出力、成立条件の順に書く。入力の単位や符号が一つでも抜けると、同じ数値が出ても別の模型を計算している可能性がある。そこで以下の節では、manifestに宣言した代表入力を一つずつ、手計算と小さなプログラムの両方で追う。</p>
+<h3 id="section-56fb0056e2">具体例の読み方</h3>
+<p>各例では、まず『何を固定したか』を一行で書く。次に、途中の状態を表にし、最後に期待値と照合する。期待値は解析予測であり、測定値ではない。実験装置や外部toolを使わない例でも、予測、実行記録、測定欄を混ぜないことがこの教材の重要な練習になる。</p>
+<h3 id="section-1-datapath-state-contract">実験1　datapath state contract</h3>
+<p>実行入口は<code>book run 47 1</code>である。caseは<code>datapath_contract</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>add_path_widths_and_edge_state_contract_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-2-add-addi-alu-and-write-back">実験2　ADD/ADDI ALU and write-back</h3>
+<p>実行入口は<code>book run 47 2</code>である。caseは<code>add_writeback</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>x5_13_and_pc_plus_4_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-3-load-store-memory-path">実験3　load/store memory path</h3>
+<p>実行入口は<code>book run 47 3</code>である。caseは<code>load_store_path</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>little_endian_store_and_load_writeback_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-4-branch-next-pc-select">実験4　branch next-PC select</h3>
+<p>実行入口は<code>book run 47 4</code>である。caseは<code>branch_select</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>taken_1010_not_taken_1004_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-5-jal-jalr-link-and-target">実験5　JAL/JALR link and target</h3>
+<p>実行入口は<code>book run 47 5</code>である。caseは<code>jump_link_path</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>link_1004_and_jalr_target_2000_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-6-instruction-by-instruction-program-trace">実験6　instruction-by-instruction program trace</h3>
+<p>実行入口は<code>book run 47 6</code>である。caseは<code>multi_instruction_trace</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>five_instruction_trace_and_final_x8_13_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-7-rtl-reference-comparison">実験7　RTL/reference comparison</h3>
+<p>実行入口は<code>book run 47 7</code>である。caseは<code>rtl_reference_compare</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>every_declared_trace_field_matches_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-8-datapath-negative-tests-and-control-bridge">実験8　datapath negative tests and control bridge</h3>
+<p>実行入口は<code>book run 47 8</code>である。caseは<code>negative_cases</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>side_effects_and_invalid_targets_fail_closed_planned</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
+<ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
+<p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
+<h3 id="section-550beb6ff0">状態表を自分で作る</h3>
+<p>本文を読み終える前に、次の五列を紙またはテキストへ写す。『層』『入力』『内部状態』『上位の契約』『破綻条件』である。層には物理量、数値模型、回路、命令、OS、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のどれかを入れ、同じ名前の量を別層で使うときは型と単位を併記する。</p>
+<p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続<a class="term" href="index.html#term-voltage">電圧</a>を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタやstack pointerを隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
+<p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
+<h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
+<ul><li>単一cycle datapathのPC、instruction memory、register file、ALU、data memory、write-back、next-PC muxを図にできる</li><li>ADD、ADDI、LW、SW、BEQ、JAL、JALRのcontrol signalと信号経路を表にできる</li><li>register read、immediate、ALU、memory、write-back、PC selectを一命令traceで追跡できる</li><li>x0、有限幅加算、little-endian、JALR bit 0 clearをdatapathの契約として保持できる</li><li>組合せmemory readの教材仮定と同期memory・<a class="term" href="index.html#term-pipeline">pipeline</a>・実機測定を区別できる</li><li>reference runner、RTL、formal、FPGA、実機の出所と未実行statusを分けられる</li></ul>
+<p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
+<h3 id="section-86aa35e5e4">故障診断の手順</h3>
+<p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>
+<ul><li><code>store_register_side_effect</code>: 入力はmem_write=1 and reg_write=1 for SW。期待する診断は<code>store_must_not_write_register</code>で、正常値として続行しない。</li><li><code>wrong_writeback_source</code>: 入力はwb_from_mem=0 for LW。期待する診断は<code>load_must_write_memory_data</code>で、正常値として続行しない。</li><li><code>branch_base_error</code>: 入力はbranch target computed from PC+4。期待する診断は<code>branch_target_uses_current_pc</code>で、正常値として続行しない。</li><li><code>jalr_bit0</code>: 入力はJALR raw target is odd and bit0 is retained。期待する診断は<code>jalr_bit0_clear_required</code>で、正常値として続行しない。</li><li><code>jalr_bit1_no_C</code>: 入力はC拡張なしでJALR target bit1が1のまま。期待する診断は<code>instruction_address_misaligned</code>で、正常値として続行しない。</li><li><code>x0_write</code>: 入力はreg_write enabled with rd=x0。期待する診断は<code>x0_remains_zero</code>で、正常値として続行しない。</li><li><code>illegal_side_effect</code>: 入力はunknown opcode with default mem_write=1。期待する診断は<code>illegal_instruction_has_no_side_effect</code>で、正常値として続行しない。</li><li><code>memory_latency_mismatch</code>: 入力はsynchronous BRAM attached to zero-latency LW path。期待する診断は<code>memory_latency_contract_mismatch</code>で、正常値として続行しない。</li><li><code>trace_as_measurement</code>: 入力はplanned reference/RTL trace <a class="term" href="index.html#term-concept_69_label_64c65374">label</a>ed as board measurement。期待する診断は<code>source_kind_mismatch</code>で、正常値として続行しない。</li></ul>
+<p>失敗を再現するときは、一度に一条件だけを変える。二つ以上を同時に変えると、どの境界が効いたか分からなくなる。エラーメッセージだけでなく、入力hash、章・実験ID、上流artifactの状態も保存する。</p>
+<h3 id="section-03f956a059">条件を一つ変えて再挑戦する</h3>
+<p>最初の成功例をそのまま複製するだけでは、契約の意味は分からない。値の符号、刻み幅、負荷、命令、型、アドレス、実行順のうち一つを変え、どの出力が変わり、どの<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a>が残るかを記録する。変えてはいけない条件も明記する。</p>
+<ul><li>再挑戦候補 <code>E6</code>: JAL/JALRのlinkとtarget。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E7</code>: instruction trace。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E8</code>: RTL/reference比較。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E9</code>: 負のテスト。成功条件と失敗時の診断を先に書く。</li><li>再挑戦候補 <code>E10</code>: controlとmemory mapへの橋。成功条件と失敗時の診断を先に書く。</li><li>予測値を変えるときは、変更前後の入力を同じ表に置き、差分を一つの列にする。</li><li>実行環境を変えるときは、<a class="term" href="index.html#term-host">host</a>、target、tool versionを別欄にし、結果の差を環境差として記録する。</li><li>境界を越えた場合は、成功したように見える値を残さず、未対応または範囲外として止める。</li></ul>
+<h3 id="section-75b995748a">前後の章へ渡すもの</h3>
+<p>この章は独立した計算帳ではない。前から受け取った量を、次の層が読める契約へ変換する。</p>
+<ul><li>受け取る: 前章で定義した入力を受け取る</li><li>渡す: 次章へ検証済みの状態を渡す</li></ul>
+<p>渡す値には、値だけでなく単位、版、source kind、status、measuredフラグを付ける。後章で同じ記号が現れたとき、初出の定義と再利用の条件を辿れるようにする。</p>
+<h3 id="section-c5ca5f88d4">模型の境界を言葉にする</h3>
+<ul><li>RV32I baseのADD、ADDI、LW、SW、BEQ、JAL、JALR subsetだけを扱い、<a class="term" href="index.html#term-exception">例外</a>、cache、pipeline、MMIOを含めない。</li><li>instruction memoryとdata memoryは一周期の組合せreadという教材仮定で、同期BRAMのlatencyを含めない。</li><li>単一cycleの結果と契約traceは固定runnerの再生artifactである。RTL・formal・FPGA・実機は未実行である。</li><li>FPGAは任意経路であり、合成、配置配線、timing、<a class="term" href="index.html#term-concept_50_bitstream_21837c3f">bitstream</a>、実機のclock・電圧を測定したとは主張しない。</li></ul>
+<p>境界を知ることは、式を弱めることではない。式が成立する条件を明示すれば、次により詳しい模型や測定へ進む理由を説明できる。逆に、条件を隠したまま桁の多い数値を出すと、精度ではなく誤解だけが増える。</p>
+<h3 id="section-5ebd79a6a2">章末の自己確認</h3>
+<p>最後に、代表実験を見ずに三つの文を書く。第一文は入力と単位、第二文は内部状態から出力までの一つの変化、第三文は最も近い破綻条件である。三文が書けたら、対応するartifactとrunnerの行を開き、本文の説明と同じ<a class="term" href="index.html#term-trace_id">trace ID</a>・statusになっているか照合する。</p>
+<p>この確認を通過しても、外部toolや実測器を使ったとは限らない。実行可能モデル、解析予測、実測、独立レビューは別の欄で管理する。その区別を保ったまま次章へ進むことが、この章の最後の成果物である。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-47-2">47.補助演習　手を動かす導出帳</h2>
+<p>単一cycle datapathの計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、処理系のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-datapath-state-contract-2">例題1　datapath state contract</h3>
+<p>固定するcaseは<code>datapath_contract</code>、入口は<code>book run 47 1</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>add_path_widths_and_edge_state_contract_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-2-add-addi-alu-and-write-back-2">例題2　ADD/ADDI ALU and write-back</h3>
+<p>固定するcaseは<code>add_writeback</code>、入口は<code>book run 47 2</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・<a class="term" href="index.html#term-frame">frame</a>・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>x5_13_and_pc_plus_4_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-3-load-store-memory-path-2">例題3　load/store memory path</h3>
+<p>固定するcaseは<code>load_store_path</code>、入口は<code>book run 47 3</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>little_endian_store_and_load_writeback_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-4-branch-next-pc-select-2">例題4　branch next-PC select</h3>
+<p>固定するcaseは<code>branch_select</code>、入口は<code>book run 47 4</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>taken_1010_not_taken_1004_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-5-jal-jalr-link-and-target-2">例題5　JAL/JALR link and target</h3>
+<p>固定するcaseは<code>jump_link_path</code>、入口は<code>book run 47 5</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>link_1004_and_jalr_target_2000_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-6-instruction-by-instruction-program-trace-2">例題6　instruction-by-instruction program trace</h3>
+<p>固定するcaseは<code>multi_instruction_trace</code>、入口は<code>book run 47 6</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>five_instruction_trace_and_final_x8_13_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-7-rtl-reference-comparison-2">例題7　RTL/reference comparison</h3>
+<p>固定するcaseは<code>rtl_reference_compare</code>、入口は<code>book run 47 7</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>every_declared_trace_field_matches_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-8-datapath-negative-tests-and-control-bridge-2">例題8　datapath negative tests and control bridge</h3>
+<p>固定するcaseは<code>negative_cases</code>、入口は<code>book run 47 8</code>である。入力は<code>（指定なし）</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>side_effects_and_invalid_targets_fail_closed_planned</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・不変条件</th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・trace ID</td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>datapath</code>は、命令の値を演算・memory・書戻しへ運ぶ信号経路。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>datapath</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>single-cycle datapath</code>は、fetchからwrite-backまでを一つのclock周期へ通す構成。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>single-cycle datapath</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>register file</code>は、registerを二つ読み一つ書く状態要素。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>register file</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>immediate generator</code>は、命令fieldを符号拡張されたoperandへ変換する部分。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>immediate generator</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>write-back</code>は、ALU結果またはload dataをregisterへ戻す経路。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>write-back</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>next-PC mux</code>は、sequential・branch・jumpの次PCを選ぶmultiplexor。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>next-PC mux</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>control signal</code>は、命令ごとにdatapathの選択と書込みを決める信号。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>control signal</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、host/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E3</code>（ADD/ADDIのALUとwrite-back）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E4</code>（LW/SWのmemory path）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E5</code>（branchのnext PC）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（JAL/JALRのlinkとtarget）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（instruction trace）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（RTL/reference比較）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（負のテスト）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（controlとmemory mapへの橋）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-47-3">47.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>単一cycle datapath</strong>の中心問題「一つのclock周期の中で、命令fetchから結果書戻しまでをどう通すか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-2">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>datapath_contract</code></p>
+<p>このcaseは <code>add_path_widths_and_edge_state_contract_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>xlen</code> = <code>32</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>register_count</code> = <code>32</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>pc</code> = <code>0x00001000</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>instruction</code> = <code>ADD x5,x6,x7</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>x6</code> = <code>10</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>x7</code> = <code>3</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_alu_result</code> = <code>13</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_pc_next</code> = <code>0x00001004</code>。単位・幅・符号を本文の定義と照合する。</li><li>残りの入力 1項目は、同じcase記録へ戻って確認する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース2: <code>add_writeback</code></p>
+<p>このcaseは <code>x5_13_and_pc_plus_4_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>program</code> = <code>["ADDI x6,x0,10", "ADDI x7,x0,3", "ADD x5,x6,x7"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>initial_pc</code> = <code>0x00001000</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>initial_registers</code> = <code>{"x0": 0, "x5": 0, "x6": 0, "x7": 0}</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_x5</code> = <code>13</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_pcs</code> = <code>["0x00001000", "0x00001004", "0x00001008"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_final_pc</code> = <code>0x0000100C</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース3: <code>load_store_path</code></p>
+<p>このcaseは <code>little_endian_store_and_load_writeback_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>store_instruction</code> = <code>SW x5,8(x6)</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>load_instruction</code> = <code>LW x7,8(x6)</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>x5</code> = <code>0xDEADBEEF</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>x6</code> = <code>0x00002000</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>offset_bytes</code> = <code>8</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>address</code> = <code>0x00002008</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>stored_bytes_little_endian</code> = <code>["EF", "BE", "AD", "DE"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_x7</code> = <code>0xDEADBEEF</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース4: <code>branch_select</code></p>
+<p>このcaseは <code>taken_1010_not_taken_1004_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>pc</code> = <code>0x00001000</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>instruction</code> = <code>BEQ x5,x6,+16</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>x5_equal_x6</code> = <code>{"taken": true, "target": "0x00001010", "x5": 7, "x6": 7}</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>x5_not_equal_x6</code> = <code>{"taken": false, "target": "0x00001004", "x5": 7, "x6": 8}</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>pc_base</code> = <code>current_pc</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース5: <code>jump_link_path</code></p>
+<p>このcaseは <code>link_1004_and_jalr_target_2000_alignment_checked_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>jal</code> = <code>{"instruction": "JAL x1,+32", "link": "0x00001004", "pc": "0x00001000", "target": "0x00001020"}</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>jalr</code> = <code>{"alignment_bytes": 4, "instruction": "JALR x1,0(x5)", "link": "0x00001004", "pc": "0x00001000", "raw_target": "0x00002001", "target_after_bit0_clear": "0x00002000", "x5": "0x0000…</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>misaligned_no_C</code> = <code>{"expected_error": "instruction_address_misaligned", "raw_target": "0x00002002"}</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース6: <code>multi_instruction_trace</code></p>
+<p>このcaseは <code>five_instruction_trace_and_final_x8_13_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>program</code> = <code>["ADDI x6,x0,10", "ADDI x7,x0,3", "ADD x5,x6,x7", "SW x5,8(x0)", "LW x8,8(x0)"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>initial_pc</code> = <code>0x00000000</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>memory_initial</code> = <code>zero</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_pcs</code> = <code>["0x00000000", "0x00000004", "0x00000008", "0x0000000C", "0x00000010"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_final_pc</code> = <code>0x00000014</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_x5</code> = <code>13</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_x8</code> = <code>13</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>trace_fields</code> = <code>["pc", "raw_word", "decoded_fields", "control", "register_read", "immediate", "alu_result", "memory_access", "write_back", "pc_next"]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース7: <code>rtl_reference_compare</code></p>
+<p>このcaseは <code>every_declared_trace_field_matches_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>program</code> = <code>["ADDI x6,x0,10", "ADDI x7,x0,3", "ADD x5,x6,x7", "SW x5,8(x0)", "LW x8,8(x0)"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>compare_keys</code> = <code>["pc", "decoded_opcode", "control", "rs1_value", "rs2_value", "immediate", "alu_result", "memory_address", "write_back", "pc_next"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>mismatch_policy</code> = <code>stop_and_report</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=runner_output</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<p>#### ケース8: <code>negative_cases</code></p>
+<p>このcaseは <code>side_effects_and_invalid_targets_fail_closed_planned</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li><code>cases</code> = <code>["store_with_reg_write", "wrong_wb_source", "branch_pc_plus_4_base", "jalr_bit0_not_cleared", "x0_write_enabled", "unknown_opcode_side_effect", "synchronous_memory_as_combination"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>expected_errors</code> = <code>["store_register_side_effect", "load_writeback_mismatch", "branch_target_offset_error", "jalr_alignment_error", "x0_contract_violation", "illegal_instruction_side_effect", "memory…</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>policy</code> = <code>fail_closed</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-2">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-47-state-boundary</code></p>
+<p>到達する結果は「一周期の組合せ経路とedgeで更新するarchitectural state」で、参照する式IDまたは検証項目は <code>["register_update", "rv32i_add_mod"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-47-control-table</code></p>
+<p>到達する結果は「RV32I subsetの命令ごとのcontrol signalとmux選択」で、参照する式IDまたは検証項目は <code>["alu_selection_equation", "fsm_transition"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-47-memory-path</code></p>
+<p>到達する結果は「LW/SWのaddress・byte order・write-back経路」で、参照する式IDまたは検証項目は <code>["affine_address", "register_update"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-47-pc-path</code></p>
+<p>到達する結果は「PC+4・branch target・jump targetからのnext-PC選択」で、参照する式IDまたは検証項目は <code>["rv32i_add_mod", "fsm_transition"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-47-trace</code></p>
+<p>到達する結果は「referenceとRTLを命令ごとの中間信号で比較するtrace」で、参照する式IDまたは検証項目は <code>["formal_equivalence_contract"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-2">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: datapath state contract</p>
+<p>入口は <code>book run 47 1</code>、caseは <code>datapath_contract</code>、required artifactは <code>["chapter-47-datapath-contract", "chapter-47-control-table"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>add_path_widths_and_edge_state_contract_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験2: ADD/ADDI ALU and write-back</p>
+<p>入口は <code>book run 47 2</code>、caseは <code>add_writeback</code>、required artifactは <code>["chapter-47-reference-trace", "chapter-47-control-table"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>x5_13_and_pc_plus_4_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験3: load/store memory path</p>
+<p>入口は <code>book run 47 3</code>、caseは <code>load_store_path</code>、required artifactは <code>["chapter-47-memory-output", "chapter-47-reference-trace"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>little_endian_store_and_load_writeback_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験4: branch next-PC select</p>
+<p>入口は <code>book run 47 4</code>、caseは <code>branch_select</code>、required artifactは <code>["chapter-47-control-flow-output", "chapter-47-reference-trace"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>taken_1010_not_taken_1004_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験5: JAL/JALR link and target</p>
+<p>入口は <code>book run 47 5</code>、caseは <code>jump_link_path</code>、required artifactは <code>["chapter-47-control-flow-output", "chapter-47-reference-trace"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>link_1004_and_jalr_target_2000_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験6: instruction-by-instruction program trace</p>
+<p>入口は <code>book run 47 6</code>、caseは <code>multi_instruction_trace</code>、required artifactは <code>["chapter-47-reference-trace", "chapter-47-memory-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>five_instruction_trace_and_final_x8_13_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験7: RTL/reference comparison</p>
+<p>入口は <code>book run 47 7</code>、caseは <code>rtl_reference_compare</code>、required artifactは <code>["chapter-47-rtl-compare", "chapter-47-reference-trace"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>every_declared_trace_field_matches_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>#### 実験8: datapath negative tests and control bridge</p>
+<p>入口は <code>book run 47 8</code>、caseは <code>negative_cases</code>、required artifactは <code>["chapter-47-diagnostic-output", "chapter-47-control-table"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>side_effects_and_invalid_targets_fail_closed_planned</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-2">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>#### 反例1: <code>store_register_side_effect</code></p>
+<p>入力は <code>mem_write=1 and reg_write=1 for SW</code>、期待する診断は <code>store_must_not_write_register</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例2: <code>wrong_writeback_source</code></p>
+<p>入力は <code>wb_from_mem=0 for LW</code>、期待する診断は <code>load_must_write_memory_data</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例3: <code>branch_base_error</code></p>
+<p>入力は <code>branch target computed from PC+4</code>、期待する診断は <code>branch_target_uses_current_pc</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例4: <code>jalr_bit0</code></p>
+<p>入力は <code>JALR raw target is odd and bit0 is retained</code>、期待する診断は <code>jalr_bit0_clear_required</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例5: <code>jalr_bit1_no_C</code></p>
+<p>入力は <code>C拡張なしでJALR target bit1が1のまま</code>、期待する診断は <code>instruction_address_misaligned</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例6: <code>x0_write</code></p>
+<p>入力は <code>reg_write enabled with rd=x0</code>、期待する診断は <code>x0_remains_zero</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例7: <code>illegal_side_effect</code></p>
+<p>入力は <code>unknown opcode with default mem_write=1</code>、期待する診断は <code>illegal_instruction_has_no_side_effect</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例8: <code>memory_latency_mismatch</code></p>
+<p>入力は <code>synchronous BRAM attached to zero-latency LW path</code>、期待する診断は <code>memory_latency_contract_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>#### 反例9: <code>trace_as_measurement</code></p>
+<p>入力は <code>planned reference/RTL trace labeled as board measurement</code>、期待する診断は <code>source_kind_mismatch</code> である。</p>
+<ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<h3 id="section-5-2">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>RV32I baseのADD、ADDI、LW、SW、BEQ、JAL、JALR subsetだけを扱い、例外、cache、pipeline、MMIOを含めない。</li><li>instruction memoryとdata memoryは一周期の組合せreadという教材仮定で、同期BRAMのlatencyを含めない。</li><li>単一cycleの結果と契約traceは固定runnerの再生artifactである。RTL・formal・FPGA・実機は未実行である。</li><li>FPGAは任意経路であり、合成、配置配線、timing、bitstream、実機のclock・電圧を測定したとは主張しない。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第</li><li>4</li><li>6</li><li>章</li><li>の</li><li>R</li><li>V</li><li>3</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第</li><li>4</li><li>8</li><li>章</li><li>へ</li><li>、</li><li>命</li><li>令</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-2">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A47-01</code> — datapath。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A47-02</code> — control。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A47-03</code> — memory。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A47-04</code> — control_flow。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A47-05</code> — trace。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A47-06</code> — negative。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: datapath state contract</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 1</code></td></tr><tr><td>case</td><td><code>datapath_contract</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>add_path_widths_and_edge_state_contract_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表2: ADD/ADDI ALU and write-back</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 2</code></td></tr><tr><td>case</td><td><code>add_writeback</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>x5_13_and_pc_plus_4_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表3: load/store memory path</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 3</code></td></tr><tr><td>case</td><td><code>load_store_path</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>little_endian_store_and_load_writeback_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表4: branch next-PC select</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 4</code></td></tr><tr><td>case</td><td><code>branch_select</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>taken_1010_not_taken_1004_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表5: JAL/JALR link and target</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 5</code></td></tr><tr><td>case</td><td><code>jump_link_path</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>link_1004_and_jalr_target_2000_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表6: instruction-by-instruction program trace</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 6</code></td></tr><tr><td>case</td><td><code>multi_instruction_trace</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>five_instruction_trace_and_final_x8_13_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表7: RTL/reference comparison</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 7</code></td></tr><tr><td>case</td><td><code>rtl_reference_compare</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>every_declared_trace_field_matches_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<p>#### 観測表8: datapath negative tests and control bridge</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 47 8</code></td></tr><tr><td>case</td><td><code>negative_cases</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>side_effects_and_invalid_targets_fail_closed_planned</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・FPGA・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

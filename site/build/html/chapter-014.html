@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第14章　Schrödinger方程式と固有状態</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-014-exercises.html">この章の演習</a>　<a href="chapter-014-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-14-1"><code>book run 14 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-014/experiment-01.json">成果物</a></li></ul></section><h1 id="section-14-schr-dinger">第14章　Schrödinger方程式と固有状態</h1>
+<h2 id="section-1">1　井戸の中の粒子は何を測定するのか</h2>
+<p>第13章で幅<code>L=1 nm</code>の<a class="term" href="index.html#term-concept_13_term_0b7b6b561a_0b7b6b56">無限量子井戸</a>を置くと、電子のエネルギーは<code>0.3760 eV、1.504 eV、3.384 eV</code>という離散値になった。本章では、その値を公式として受け取るだけでなく、状態の時間発展と境界条件から読み直す。</p>
+<p>幅<code>L=1.0 nm</code>の井戸に、基底状態<code>ψ_1(x)</code>を置いたとする。時間が経過しても確率密度<code>|ψ_1(x,t)|^2</code>が変わらないのは、<a class="term" href="index.html#term-wavefunction">波動関数</a>全体が位相だけを変えるからである。一方、<code>ψ_1</code>と<code>ψ_2</code>を重ね合わせると、確率密度に時間変化が現れる。どちらの場合も、粒子の位置を一つの古典軌道として追跡しているのではない。</p>
+<p>さらに、幅<code>a=1.0 nm</code>、高さ<code>V_0=0.50 eV</code>の有限障壁へ、エネルギー<code>E=0.20 eV</code>の電子を入射させる。障壁内では波動関数が指数的に減衰し、有限の確率で反対側へ現れる。厚い障壁の近似では透過確率が約<code>3.7×10^-3</code>、矩形障壁の式を使った解析予測では約<code>1.4×10^-2</code>になる。近似がどの範囲で許されるかも、数値計算と同時に記録する。</p>
+<p>本章の中心問題は次である。</p>
+<blockquote>粒子の位置を一つに固定せず、状態から観測確率をどう計算するか。</blockquote>
+<p>第12章のFFTは<a class="term" href="index.html#term-voltage">電圧</a>・電流という信号を周波数成分へ分けた。第13章では古典軌道の連続エネルギーが原子の安定性と離散スペクトルを説明できないことを示した。本章では、状態を波動関数で表し、Schrödinger方程式がその状態の時間変化を定める。ただし、量子力学の全公理、多粒子、相対論、量子電磁力学は扱わず、次章以降へ境界を残す。</p>
+<p>ここでの準位、透過率、固有ベクトルは解析または数値の予測である。<code>book run 14 1</code>は固定入力から契約モデルを実行済みだが、外部domain solverや分光測定は未実行（<code>measurement.status=not_run</code>）で、分光器による測定値は含まない。</p>
+<h2 id="section-2">2　波動関数と観測確率</h2>
+<h3 id="section-2-1">2.1　状態を一つの軌道で表さない</h3>
+<p>一次元の粒子の状態を複素関数<code>ψ(x,t)</code>で表す。<code>ψ</code>そのものを直接測定するのではなく、ボルンの解釈により</p>
+<pre><code class="language-text">P(x,t) dx = |ψ(x,t)|^2 dx                   (14.1)</code></pre>
+<p>を、時刻<code>t</code>に粒子を<code>x</code>から<code>x+dx</code>で見つける確率と解釈する。一次元で全空間を覆うなら、規格化条件は</p>
+<pre><code class="language-text">∫ |ψ(x,t)|^2 dx = 1                         (14.2)</code></pre>
+<p>である。<code>|ψ|^2</code>の単位は<code>1/m</code>、<code>ψ</code>の単位は<code>m^-1/2</code>になる。確率は無次元であり、波動関数を電圧や確率そのものと呼ばない。</p>
+<h3 id="section-2-2">2.2　<a class="term" href="index.html#term-concept_14_term_5a66c95358_5a66c953">期待値と測定値</a></h3>
+<p>位置の期待値は、</p>
+<pre><code class="language-text">&lt;x&gt; = ∫ ψ*(x,t) x ψ(x,t) dx                 (14.3)</code></pre>
+<p>である。<code>&lt;x&gt;</code>は多数回の同じ準備を平均した値であり、一回の位置測定が必ず<code>&lt;x&gt;</code>になるという意味ではない。エネルギーも同じで、状態が複数の固有状態の重ね合わせなら、期待値が準位の間にあっても、エネルギー測定の結果は対応する<a class="term" href="index.html#term-eigenvalue">固有値</a>のいずれかになる。</p>
+<h3 id="section-2-3">2.3　重ね合わせと位相</h3>
+<p>無限井戸の二状態を</p>
+<pre><code class="language-text">ψ(x,t)=c_1 ψ_1(x) exp(-iE_1t/ℏ)
+      + c_2 ψ_2(x) exp(-iE_2t/ℏ)              (14.4)</code></pre>
+<p>とする。<code>|c_1|^2+|c_2|^2=1</code>なら全確率は保たれる。二つの位相差は<code>(E_2-E_1)t/ℏ</code>で変化し、干渉項を通じて確率密度が時間変化する。第12章の周波数は測定信号の成分、第14章の<code>(E_2-E_1)/ℏ</code>は状態間位相の変化率であり、単位が似ていても意味を同一視しない。</p>
+<h2 id="section-3-schr-dinger">3　Schrödinger方程式</h2>
+<h3 id="section-3-1">3.1　時間依存方程式</h3>
+<p>非相対論的な一粒子を、ポテンシャル<code>V(x,t)</code>の中で扱う。<a class="term" href="index.html#term-concept_14_schr_dinger_55e31a7c">時間依存Schrödinger方程式</a>は</p>
+<pre><code class="language-text">iℏ ∂ψ/∂t = [-ℏ²/(2m) ∂²/∂x² + V(x,t)] ψ  (14.5)</code></pre>
+<p>である。左辺の<code>ℏ ∂ψ/∂t</code>と右辺の運動エネルギー演算子・ポテンシャル項は、波動関数に作用したエネルギーの単位を持つ。<code>m</code>はkg、<code>x</code>はm、<code>V</code>と固有エネルギーはJ、<code>ℏ</code>はJ sである。</p>
+<p>式(14.5)は古典軌道を少しぼかした式ではない。状態へ作用する演算子と、複素振幅の時間発展を定める基本方程式として導入する。どの演算子がどの観測量に対応するかは、測定の公理と併せて定義する。</p>
+<h3 id="section-3-2">3.2　時間独立方程式</h3>
+<p>ポテンシャルが時間に依存せず、<code>V(x,t)=V(x)</code>なら、</p>
+<pre><code class="language-text">ψ(x,t)=φ(x) exp(-iEt/ℏ)                    (14.6)</code></pre>
+<p>という形を試せる。式(14.5)へ代入すると、</p>
+<pre><code class="language-text">[-ℏ²/(2m) d²/dx² + V(x)] φ(x) = E φ(x)    (14.7)</code></pre>
+<p>を得る。これはHamiltonian演算子<code>H</code>の固有値問題<code>Hφ=Eφ</code>である。<code>φ</code>が規格化された固有状態なら、式(14.6)の時間因子は絶対値1なので<code>|ψ|^2=|φ|^2</code>を保つ。</p>
+<p>時間独立方程式の<code>E</code>は、任意の古典エネルギーを表す変数ではなく、境界条件を満たす固有値である。ポテンシャルを変えれば<code>H</code>が変わり、固有値、固有関数、トンネル透過も変わる。</p>
+<h3 id="section-3-3">3.3　境界条件と自己共役性の役割</h3>
+<p>確率保存と実数のエネルギーを得るには、Hamiltonianと境界条件を組にして指定する。無限井戸では端点の波動関数を0にする。有限領域を数値化するとき、端点で確率が流出しない境界、周期境界、入射・吸収境界では、別の物理模型になる。</p>
+<p>境界を省略して行列を対角化しても、得られた固有値が「量子井戸の準位」とは限らない。境界残差、規格化、固有方程式の残差を、固有値そのものとは別に検査する。</p>
+<h2 id="section-4">4　無限井戸を導く</h2>
+<h3 id="section-4-1">4.1　波数の量子化</h3>
+<p>井戸内で<code>V(x)=0</code>なら、式(14.7)は</p>
+<pre><code class="language-text">d²φ/dx² + k² φ = 0,
+k² = 2mE/ℏ²                             (14.8)</code></pre>
+<p>となる。一般解は<code>φ=A sin(kx)+B cos(kx)</code>である。左端<code>φ(0)=0</code>から<code>B=0</code>、右端<code>φ(L)=0</code>から<code>sin(kL)=0</code>である。零関数でない解には</p>
+<pre><code class="language-text">k_n=nπ/L,  n=1,2,3,...</code></pre>
+<p>が必要で、</p>
+<pre><code class="language-text">φ_n(x)=sqrt(2/L) sin(nπx/L)
+E_n=n²π²ℏ²/(2mL²)                         (14.9)</code></pre>
+<p>を得る。<code>∫_0^L|φ_n|²dx=1</code>を使って係数を決めた。<code>n=0</code>は零関数なので状態ではない。</p>
+<h3 id="section-4-2">4.2　時間発展と定常状態</h3>
+<p>固有状態一つの時間発展は、</p>
+<pre><code class="language-text">ψ_n(x,t)=φ_n(x) exp(-iE_n t/ℏ)              (14.10)</code></pre>
+<p>である。位相は変わるが<code>|ψ_n|²</code>は変わらない。<code>φ_1</code>と<code>φ_2</code>を重ねると、相対位相が変わり、確率密度の時間変化を計算できる。定常状態という言葉は「波動関数の複素位相が全く変わらない」という意味ではなく、確率密度や期待値が時間に依存しない状態を指す。</p>
+<p><code>L=1 nm</code>の電子では第13章の解析予測を再現し、<code>E_1≈6.0247×10^-20 J≈0.3760 eV</code>、<code>E_2=4E_1≈1.504 eV</code>、<code>E_3=9E_1≈3.384 eV</code>となる。固有状態の順序、エネルギーの単位、境界条件を一つのレコードへ保存する。</p>
+<h2 id="section-5">5　有限障壁とトンネル</h2>
+<h3 id="section-5-1">5.1　障壁内でも波動関数はゼロとは限らない</h3>
+<p>高さ<code>V_0</code>、幅<code>a</code>の矩形障壁を、</p>
+<pre><code class="language-text">V(x)=0       (x&lt;0, x&gt;a)
+V(x)=V_0     (0≤x≤a)</code></pre>
+<p>とする。入射粒子のエネルギーが<code>0&lt;E&lt;V_0</code>なら、障壁内の方程式は</p>
+<pre><code class="language-text">d²ψ/dx² = κ² ψ,
+κ=sqrt(2m(V_0-E))/ℏ                        (14.11)</code></pre>
+<p>で、波動関数は正弦ではなく指数関数の組み合わせになる。有限障壁では境界で波動関数とその一次微分を接続するため、障壁の反対側にも透過波が残る。粒子が古典的に障壁を越える運動エネルギーを持たないことと、透過確率が0であることは同じではない。</p>
+<h3 id="section-5-2">5.2　透過確率</h3>
+<p>質量<code>m</code>、エネルギー<code>E</code>、障壁<code>V_0</code>、幅<code>a</code>の矩形障壁では、<code>E&lt;V_0</code>の透過確率は</p>
+<pre><code class="language-text">T = [1 + V_0² sinh²(κa)/(4E(V_0-E))]^-1  (14.12)</code></pre>
+<p>である。<code>T</code>は無次元で、入射・反射・透過の確率流の比として定義する。<code>κa</code>が十分大きい場合、<code>sinh(κa)</code>の指数部分を残す漸近式は、前因子を含めて</p>
+<pre><code class="language-text">T ≈ [16E(V_0-E)/V_0²] exp(-2κa)             (14.13)</code></pre>
+<p>となる。<code>exp(-2κa)</code>だけを取り出した値は指数スケールの比較用であり、一般には前因子を欠く。式(14.13)は全ての障壁へ使える正確式ではなく、<code>κa</code>が十分大きい範囲の漸近式である。</p>
+<p><code>E=0.20 eV</code>、<code>V_0=0.50 eV</code>、<code>a=1.0 nm</code>の電子では、</p>
+<pre><code class="language-text">κ≈2.81×10^9 m^-1,
+κa≈2.81,
+exp(-2κa)≈3.7×10^-3,
+前因子×exp(-2κa)≈1.4×10^-2,
+T_exact≈1.4×10^-2</code></pre>
+<p>という解析予測になる。この条件では前因子<code>16E(V_0-E)/V_0²=3.84</code>を含めた漸近式が、正確式にほぼ一致する。一方、裸の<code>exp(-2κa)</code>は前因子を欠くため約3.8倍小さい。<code>κa</code>を大きくしても、このエネルギー比による前因子は残る。runnerでは、解析式、漸近式（前因子付き）、指数スケール、<a class="term" href="index.html#term-finite_difference">有限差分</a>または散乱行列、格子・境界の収束を別の列へ保存する。</p>
+<h3 id="section-5-3">5.3　障壁の境界条件を変える</h3>
+<p>障壁の高さを無限大へ近づければ透過は抑えられ、有限井戸の端点条件へ近づく。高さ・幅・入射エネルギーを変えたとき、<code>κ</code>、波動関数の接続、確率流の保存を同時に再計算する。壁の外を強制的に<code>ψ=0</code>へするのは有限障壁のトンネルを消す別模型である。</p>
+<h2 id="section-6">6　数値計算で固有状態と時間発展を検査する</h2>
+<h3 id="section-6-1-hamiltonian">6.1　有限差分Hamiltonian</h3>
+<p>格子点<code>x_j</code>、間隔<code>Δx</code>で、</p>
+<pre><code class="language-text">d²ψ/dx² ≈ (ψ[j+1]-2ψ[j]+ψ[j-1])/(Δx)^2  (14.14)</code></pre>
+<p>とする。井戸内部のHamiltonian行列は、<code>a_h=ℏ²/(2m(Δx)²)</code>として対角<code>2a_h</code>、隣接<code>−a_h</code>の三重対角行列になる。端点の扱いは、端点を未知数から外して<code>ψ=0</code>を組み込むか、制約行を明示する。行列の要素はJ、固有値もJである。</p>
+<p>有限井戸では、格子上で<code>V_j=V(x_j)</code>を対角要素へ加える。障壁の位置が格子点の間にあるなら、丸め方またはセル平均を入力へ記録し、障壁幅を意図せず変えない。</p>
+<h3 id="section-6-2">6.2　固有値の収束</h3>
+<p><code>N=50,100,200,400</code>の格子で最低固有値を計算し、無限井戸の解析値へ対する相対誤差を</p>
+<pre><code class="language-text">error_N=|E_fd(N)-E_analytic|/E_analytic    (14.15)</code></pre>
+<p>とする。滑らかな一様格子の中心差分では、十分細かい範囲で誤差が<code>(Δx)^2</code>に比例して減る候補がある。ただし、境界位置、ポテンシャルの段差、固有ベクトルの規格化、固有方程式の残差も同時に合格させる。</p>
+<h3 id="section-6-3-crank-nicolson">6.3　時間依存の<a class="term" href="index.html#term-concept_14_crank_nicolson_f917268c">Crank–Nicolson法</a></h3>
+<p>時間依存方程式を有限差分行列<code>H</code>で書くと、Crank–Nicolson法の一ステップは</p>
+<pre><code class="language-text">[I + i Δt H/(2ℏ)] ψ[n+1]
+= [I - i Δt H/(2ℏ)] ψ[n]                    (14.16)</code></pre>
+<p>となる。左辺の連立方程式を解き、各ステップ後に<code>Σ|ψ_j|²Δx</code>を検査する。理想的なHermitian<code>H</code>と正しい境界なら、ノルムは丸め誤差内で保たれる。<code>Δt</code>を大きくしても形式上安定な場合があるが、位相誤差や障壁通過の時間分解能まで保証するわけではない。</p>
+<p>固有状態<code>φ_n</code>を初期値にすれば、解析的には位相<code>exp(-iE_n t/ℏ)</code>だけが変化する。数値結果の確率密度、ノルム、位相をこの解と比較すれば、行列の符号、境界、時間刻みを検査できる。散乱状態では、入射・反射・透過の確率流を別に計算し、箱の中の規格化条件をそのまま使わない。</p>
+<h3 id="section-6-4-runner">6.4　解析・数値・runner・測定の分離</h3>
+<table><thead><tr><th>経路</th><th>例</th><th>状態</th></tr></thead>
+<tbody><tr><td>解析予測</td><td>式(14.9)、式(14.12)</td><td><code>analytic_prediction</code></td></tr><tr><td>数値予測</td><td>有限差分固有値、Crank–Nicolson、散乱計算</td><td><code>numeric_prediction</code></td></tr><tr><td>runner出力</td><td>固定環境で生成したartifact</td><td><code>runner_prediction</code></td></tr><tr><td>実測</td><td>分光、電子回折、トンネル<a class="term" href="index.html#term-current">電流</a>など</td><td><code>measurement</code></td></tr></tbody>
+</table>
+<p><code>0.376 eV</code>や<code>T≈1.4×10^-2</code>を、runnerや実測の列へコピーしてはならない。数値誤差、測定装置のエネルギー分解能、試料温度、有限障壁、相互作用は、解析予測とは別の条件である。</p>
+<h2 id="section-7">7　故障診断と古典限界</h2>
+<h3 id="section-7-1-1">7.1　エネルギーが負、確率が1を超える</h3>
+<p>無限井戸の運動エネルギー準位が負になったら、Hamiltonianの符号、<code>ℏ²/(2m)</code>、境界、ポテンシャル基準を確認する。束縛状態の全エネルギーを負にするポテンシャル基準は可能だが、井戸内の運動エネルギーと同じ量ではない。透過確率が<code>T&lt;0</code>または<code>T&gt;1</code>なら、波数、確率流、単位、入射・反射・透過の向きを検査する。</p>
+<h3 id="section-7-2">7.2　固有値が解析値へ近づかない</h3>
+<p>まず<code>L</code>、<code>m</code>、<code>ℏ</code>、<code>Δx</code>の単位、端点の個数、障壁位置、Hamiltonianの符号を確認する。格子を増やしても誤差が減らないなら、境界条件やポテンシャルの離散化を疑う。固有値solverが返した数列を、規格化残差や<code>Hφ−Eφ</code>の残差なしに採用しない。</p>
+<h3 id="section-7-3">7.3　古典の連続軌道と量子の固有状態</h3>
+<p>古典の初期位置・速度は連続に選べる。<a class="term" href="index.html#term-quantum_state">量子状態</a>は同じ<code>L</code>と<code>m</code>でも、Hamiltonianと境界条件を満たす固有関数の線形結合として表す。古典energy gridを細かくするだけでは、<code>n</code>の整数性、確率解釈、トンネルを導入できない。</p>
+<h3 id="section-7-4">7.4　<a class="term" href="index.html#term-concept_2_term_1a86fdf188_1a86fdf1">抽象化台帳</a></h3>
+<table><thead><tr><th>層</th><th>下位表現</th><th>上位契約</th><th>隠す変数</th><th>成立条件</th><th>破綻条件</th></tr></thead>
+<tbody><tr><td>古典粒子</td><td><code>x(t),v(t),E</code></td><td>連続軌道</td><td>波動関数、離散準位</td><td>大きい尺度、低速</td><td>原子、微小障壁、低温</td></tr><tr><td>量子状態</td><td><code>ψ(x,t)</code></td><td>`</td><td>ψ</td><td>²`と演算子の測定規則</td><td>測定装置、多粒子相互作用</td><td>一粒子、指定Hamiltonian</td><td>多粒子、相対論、環境</td></tr><tr><td>固有状態</td><td><code>Hφ=Eφ</code></td><td>離散または連続のエネルギー候補</td><td>時間位相、散乱境界</td><td>境界、規格化、自己共役性</td><td>境界欠落、非Hermitian、未収束</td></tr><tr><td>数値状態</td><td>格子行列、固有値、時系列</td><td>解析・保存則への収束</td><td>格子誤差、丸め、solver</td><td>単位、境界、残差</td><td>未収束、確率漏れ、状態混同</td></tr></tbody>
+</table>
+<p>第13章の古典限界からは、古典軌道の連続エネルギーと放射不安定性を引き継いだ。第12章の周波数からは、エネルギー差と周波数の対応を引き継いだ。第15章では、多数の電子へ進み、同じ量子状態を何個の粒子が占められるか、温度で占有確率がどう変わるかを扱う。量子井戸の一粒子準位を、多粒子の統計へそのままコピーしない。</p>
+<h2 id="section-8">8　次章へ渡す入力</h2>
+<pre><code class="language-text">{
+  &quot;model&quot;: &quot;one_particle_quantum_state&quot;,
+  &quot;potential&quot;: &quot;infinite_well_or_finite_barrier&quot;,
+  &quot;length_m&quot;: 1.0e-9,
+  &quot;mass_kg&quot;: 9.1093837e-31,
+  &quot;boundary&quot;: &quot;explicit&quot;,
+  &quot;state_kind&quot;: &quot;bound_eigenstate_or_scattering_state&quot;,
+  &quot;normalization_kind&quot;: &quot;box_L2_or_flux_normalized&quot;,
+  &quot;source_kind&quot;: &quot;analytic_prediction&quot;,
+  &quot;status&quot;: &quot;analytic_prediction_recorded_measurement_not_run&quot;,
+  &quot;comparison&quot;: [&quot;analytic_eigenvalues&quot;, &quot;finite_difference&quot;, &quot;time_propagation&quot;]
+}</code></pre>
+<p>第15章へは、固有値<code>E_n</code>、波動関数の規格化、量子数<code>n</code>、ポテンシャル、質量、境界、温度を渡す。Pauli原理とFermi–Dirac統計を導入するとき、状態の数え上げと占有確率を追加し、単一粒子の<code>ψ</code>と混同しない。全ての出力について、単位、境界、残差、解析・数値・runner・測定の状態を保存する。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-14">14.補助演習　手を動かす導出帳</h2>
+<p>Schrödinger方程式と固有状態の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-2">例題1　無限井戸・有限障壁の固有状態とトンネル確率を解析・数値比較する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 14 1</code>である。入力は<code>[{"無限井戸": "L=1.0e-9 m、m=9.1093837e-31 kg、psi(0)=psi(L)=0、n=1,2,3"}, {"有限矩形障壁": "E=0.20 eV、V0=0.50 eV、a=1.0e-9 m、電子質量"}, {"有限差分": "無限井戸と障壁のN=50、100、200、400、固定境界または散乱境界を明示"}, {"時間発展": "固有状態一つとpsi1/psi2の重ね合わせ、Crank–Nicolson、複数dt"}, "解析式、有限差分、runner、将来の分光・透過測定を別source_kindで記録する", "L&lt;=0、m&lt;=0、n&lt;=0、NaN、J/eV・nm/m混同、境界欠落、規格化失敗、確率流非保存、未収束を負のテストとする"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・register・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-3">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>時間依存Schrödinger方程式</code>は、Hamiltonianが状態の時間変化を定める非相対論的一粒子方程式。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>時間依存Schrödinger方程式</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>期待値と測定値</code>は、状態から観測量の平均を計算し、一回の測定結果と区別する規則。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>期待値と測定値</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>トンネル効果</code>は、古典的に越えられない有限障壁の反対側へ量子状態の確率流が到達する現象。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>トンネル効果</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Crank–Nicolson法</code>は、時間依存方程式を二時刻の平均で離散化し、状態のノルムを検査できる数値法。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Crank–Nicolson法</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-3">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（固有状態、重ね合わせ、位相、確率密度）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（有限障壁の指数波とトンネル確率）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（厚い障壁近似と矩形障壁の解析式）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（Hamiltonian行列、境界、固有値残差）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（格子・時間刻み・規格化・確率流の収束）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（Crank–Nicolson法、ノルム保存、JSONL記録）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（単位、境界、model、solver、source_kindの故障）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第15章のPauli原理・Fermi統計への橋渡し）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-4">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-3">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-14-2">14.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>Schrödinger方程式と固有状態</strong>の中心問題「粒子の位置を一つに固定せず、状態から観測確率をどう計算するか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-4">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["1 nm無限井戸のE1≈6.0247e-20 J≈0.3760 eV、E2≈1.504 eV、E3≈3.384 eVという解析予測", "固有状態一つでは確率密度が時間不変、重ね合わせでは相対位相による確率密度変化が現れる解析予測", "E=0.20 eV、V0=0.50 eV、a=1 nmの障壁でkappa≈2.81e9 1/m、指数スケール≈3.7e-3…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"無限井戸": "L=1.0e-9 m、m=9.1093837e-31 kg、psi(0)=psi(L)=0、n=1,2,3"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"有限矩形障壁": "E=0.20 eV、V0=0.50 eV、a=1.0e-9 m、電子質量"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>{"有限差分": "無限井戸と障壁のN=50、100、200、400、固定境界または散乱境界を明示"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>{"時間発展": "固有状態一つとpsi1/psi2の重ね合わせ、Crank–Nicolson、複数dt"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>解析式、有限差分、runner、将来の分光・透過測定を別source_kindで記録する</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>L&lt;=0、m&lt;=0、n&lt;=0、NaN、J/eV・nm/m混同、境界欠落、規格化失敗、確率流非保存、未収束を負のテストとする</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「波動関数の絶対値二乗を確率密度とし、全空間の積分を1へ規格化する。」で、参照する式IDまたは検証項目は <code>normalization, probability bounds, expectation-value check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「時間依存方程式へpsi=phi exp(-iEt/hbar)を代入し、H phi=E phiの固有値問題を得る。」で、参照する式IDまたは検証項目は <code>stationary-density, phase-factor, operator-unit check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「0&lt;x&lt;L、psi(0)=psi(L)=0の境界からk_n=n pi/L、phi_n=sqrt(2/L)sin(n pi x/L)、E_n=n^2 pi^2 hbar^2/(2mL^2)を得る。」で、参照する式IDまたは検証項目は <code>boundary, normalization, n^2 scaling, unit check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「有限矩形障壁の境界接続から、E&lt;V0での指数波と透過確率Tを得て、厚い障壁のexp(-2 kappa a)近似と比較する。」で、参照する式IDまたは検証項目は <code>probability-current conservation, matched-barrier limit, thickness sweep</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「二階微分を中心差分へ置換し、境界を固定した三重対角Hamiltonianと固有値問題を構成する。」で、参照する式IDまたは検証項目は <code>grid refinement, residual, normalization and boundary check</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「時間依存方程式をCrank–Nicolsonで二時刻へ離散化し、Hermitian Hamiltonianでノルムと固有状態位相を検査する。」で、参照する式IDまたは検証項目は <code>norm conservation, stationary-state phase, dt refinement</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-4">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 無限井戸・有限障壁の固有状態とトンネル確率を解析・数値比較する</p>
+<p>入口は <code>book run 14 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-14-schrodinger-source", "chapter-14-eigenvalue-source", "chapter-14-time-propagation-source", "chapter-14-comparison-output", "chapter-14-diagnostic-output", "chapter-14…</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["1 nm無限井戸のE1≈6.0247e-20 J≈0.3760 eV、E2≈1.504 eV、E3≈3.384 eVという解析予測", "固有状態一つでは確率密度が時間不変、重ね合わせでは相対位相による確率密度変化が現れる解析予測", "E=0.20 eV、V0=0.50 eV、a=1 nmの障壁でkappa≈2.81e9 1/m、指数スケール≈3.7e-3…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-4">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-5">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>Schrödinger方程式は本章では非相対論的一粒子の基本方程式として導入し、相対論、多粒子、量子電磁力学、環境との開放系を含まない。</li><li>波動関数は確率振幅であり、電圧波、古典確率密度、物質中の<a class="term" href="index.html#term-charge_density">電荷密度</a>と同一ではない。</li><li>無限井戸は一粒子・一次元・無限障壁・一定ポテンシャルの模型で、実原子、有限障壁、核運動、電子間相互作用を含まない。</li><li>有限障壁の透過式は矩形・一粒子・指定エネルギーの散乱模型であり、障壁の揺らぎ、散逸、時間依存、測定器を含まない。</li><li>厚い障壁のT≈exp(-2κa)は指数スケールの近似で、前因子を無視できない薄い障壁へ正確式として使わない。</li><li>有限差分の固有値収束は、離散化した同じHamiltonianが解析値へ近づくことを示すが、ポテンシャル模型や物理定数の正しさを証明しない。</li><li>Crank–Nicolsonのノルム保存は数値手法の性質で、境界、位相、散乱透過、実測スペクトルの正しさを単独では保証しない。</li><li>本章の固定runnerは契約を再生済みだが、図・固有値計算の外部tool実行は未実行で、具体値は解析または数値予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第13章の<a class="term" href="index.html#term-concept_13_term_ae56558e7e_ae56558e">古典連続エネルギー</a>、無限井戸、有限差分、境界、単位、収束</li><li>第12章の周波数、スペクトル、エネルギー差と周波数の対応</li><li>第11章の<a class="term" href="index.html#term-concept_11_term_ebe20fe073_ebe20fe0">状態変数</a>、時間発展、解析・数値・SPICEの比較境界</li><li>第5章のCoulomb力、<a class="term" href="index.html#term-electric_field">電場</a>、ポテンシャル、古典放射の限界</li><li>第6章の位置エネルギー、<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>、境界条件</li><li>第3章の微分積分、複素数、偏微分、固有値、<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a></li><li>第4章の解析予測・数値予測・測定値・runner状態、格子・時間収束</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第15章で複数電子、Pauli原理、Fermi–Dirac統計、温度と占有確率を扱う</li><li>第16章で<a class="term" href="index.html#term-periodic_potential">周期ポテンシャル</a>、Blochの定理、エネルギーバンドへ接続する</li><li>第17〜20章で量子状態と<a class="term" href="index.html#term-semiconductor">半導体</a>キャリア・接合へ、第21章でMOS構造と量子容量、第22章でMOSFETへ接続する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-4">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — <a class="term" href="index.html#term-wavefunction">wavefunction</a>_probability_and_units。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — time_dependent_and_stationary_equations。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — infinite_well_derivation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — analytic_energy_levels。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — finite_<a class="term" href="index.html#term-barrier">barrier</a>_tunneling。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — finite_difference_boundary_convergence。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — time_propagation_norm_and_phase。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — analytic_numeric_runner_measurement_separation。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — unit_boundary_negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — chapter_13_and_15_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — artifact_figure_source_registry_links。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — exercise_solution_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-5">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 無限井戸・有限障壁の固有状態とトンネル確率を解析・数値比較する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 14 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["1 nm無限井戸のE1≈6.0247e-20 J≈0.3760 eV、E2≈1.504 eV、E3≈3.384 eVという解析予測", "固有状態一つでは確率密度が時間不変、重ね合わせでは相対位相による確率密度変化が現れる解析予測", "E=0.20 eV、V0=0.50 eV、a=1 nmの障壁でkappa≈2.81e9 1/m、指数スケール≈3.7e-3…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

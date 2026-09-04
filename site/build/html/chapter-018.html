@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第18章　ドーピングとFermi準位</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-018-exercises.html">この章の演習</a>　<a href="chapter-018-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-18-1"><code>book run 18 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-018/experiment-01.json">成果物</a></li></ul></section><h1 id="section-18-fermi">第18章　<a class="term" href="index.html#term-doping">ドーピング</a>とFermi準位</h1>
+<h2 id="section-1">1　少量の不純物で、キャリア数を設計する</h2>
+<p>第17章では、不純物を入れない真性<a class="term" href="index.html#term-semiconductor">半導体</a>で、伝導帯の電子密度<code>n</code>と価電子帯の正孔密度<code>p</code>を数えた。第16章のバンド図に、結晶へごく少量の別元素を加える操作を重ねる。これをドーピングと呼ぶ。ドーピングは「電子を回路へ注入する魔法」ではなく、バンドギャップ内に追加の準位と電荷の帳簿を作り、熱平衡の化学ポテンシャル、つまりFermi準位を変える模型である。</p>
+<p>伝導帯端を<code>E_c</code>、価電子帯端を<code>E_v</code>、ギャップを<code>E_g=E_c-E_v</code>とする。伝導帯の電子密度と価電子帯の<a class="term" href="index.html#term-hole">正孔</a>密度は、非縮退近似の範囲で</p>
+<pre><code class="language-text">n = N_c exp[-(E_c-E_F)/(k_B T)]
+p = N_v exp[-(E_F-E_v)/(k_B T)]                 (18.1)</code></pre>
+<p>と書く。熱平衡では<a class="term" href="index.html#term-fermi_level">Fermi準位</a><code>E_F</code>は化学ポテンシャル<code>μ</code>と同じ量として扱う。<code>N_c,N_v</code>は第17章の有効状態密度で、密度の単位を持つ。<code>E_F</code>を上へ動かすと<code>n</code>は増え、<code>p</code>は減る。</p>
+<p><a class="term" href="index.html#term-donor">ドナー</a>濃度<code>N_D</code>とアクセプタ濃度<code>N_A</code>を指定した教材caseを考える。300 K、<code>N_D=1.0×10^16 cm^-3</code>、アクセプタなし、完全イオン化、前章と同じ<code>N_c=2.8×10^19 cm^-3</code>、<code>n_i=6.5×10^9 cm^-3</code>なら、</p>
+<pre><code class="language-text">n ≈ N_D = 1.0×10^16 cm^-3
+p ≈ n_i^2/N_D ≈ 4.3×10^3 cm^-3               (18.2)</code></pre>
+<p>という解析予測になる。<code>E_c-E_F≈k_B T ln(N_c/N_D)≈0.205 eV</code>で、Fermi準位は伝導帯へ近づく。これはモデルからの予測であり、特定試料のHall測定値ではない。<code>book run 18 1</code>は固定runnerの入力由来契約モデルまで実行済みで、外部domain tool・実測は未実行（<code>measurement.status=not_run</code>）である。</p>
+<p>この章の中心問題は次である。</p>
+<blockquote>ドナーと<a class="term" href="index.html#term-acceptor">アクセプタ</a>の電荷状態を数え、電荷中性条件からFermi準位と多数・少数キャリアをどう決めるか。</blockquote>
+<p>第17章からは、バンド端、<a class="term" href="index.html#term-density_of_states">状態密度</a>、<code>n_i</code>、電子・正孔の符号、温度、単位を受け取る。第19章では、ここで得た<code>n</code>と<code>p</code>をdrift、diffusion、再結合の方程式へ渡す。</p>
+<h2 id="section-2">2　ドナーとアクセプタを準位として数える</h2>
+<h3 id="section-2-1">2.1　ドナーは伝導帯の近くに電子を渡す</h3>
+<p>純粋な結晶の原子を別の原子で置き換えると、結晶の周期性と結合の条件が局所的に変わる。ドナーは、電子を一個余分に持ちやすく、伝導帯端<code>E_c</code>の少し下にドナー準位<code>E_D</code>を作る、と最小模型で表す。</p>
+<p>ドナー準位の電子が束縛されていればドナーは中性、そこから電子が伝導帯へ移ればドナーは正にイオン化される。従って<code>N_D^+</code>は正にイオン化したドナーの個数密度であり、<code>N_D</code>全体とは異なる。ドナー準位の位置、<a class="term" href="index.html#term-degeneracy">縮退</a>因子<code>g_D</code>、温度、Fermi準位を使う予定式は、</p>
+<pre><code class="language-text">N_D^+ = N_D / [1 + g_D exp((E_F-E_D)/(k_B T))]       (18.3)</code></pre>
+<p>である。ここで<code>g_D</code>は採用する状態数の規約を明示したモデル入力で、暗記した固定値を無条件に入れない。<code>E_F</code>が低いと指数が小さくなり、多くのドナーがイオン化する。<code>E_F</code>が高いとドナー準位は電子で埋まり、<code>N_D^+</code>は小さくなる。</p>
+<h3 id="section-2-2">2.2　アクセプタは価電子帯から電子を受け取る</h3>
+<p>アクセプタは、価電子帯の電子を受け取りやすく、価電子帯端<code>E_v</code>の少し上にアクセプタ準位<code>E_A</code>を作ると表す。アクセプタが電子を受け取ると負にイオン化される。その個数密度を<code>N_A^-</code>と書き、</p>
+<pre><code class="language-text">N_A^- = N_A / [1 + g_A exp((E_A-E_F)/(k_B T))]       (18.4)</code></pre>
+<p>とする。<code>E_F</code>が高いと指数が小さくなり、アクセプタは負にイオン化しやすい。<code>E_F</code>が低いとアクセプタは空に近く、<code>N_A^-</code>は小さい。</p>
+<p>式(18.3),(18.4)の縮退因子は、ドナー・アクセプタの電子状態を何通りとして数えるかに依存する。文献によって記号や因子の置き場所が違うため、<code>g_D,g_A</code>の定義をartifactへ保存する。同じ縮退を、準位の列挙と因子の両方で二重に掛けない。</p>
+<h3 id="section-2-3-fermi">2.3　Fermi準位は温度平衡の帳尻を合わせる</h3>
+<p>Fermi準位<code>E_F</code>は、ドナーの<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>、アクセプタの電荷、伝導帯電子、価電子帯正孔を一つの温度で同時に数えるためのエネルギー尺度である。電圧端子の「電位」と同じ単位eVを使うことはできるが、<code>E_F</code>は一個の電荷あたりの電位差そのものではない。<code>E_F</code>を電源電圧として回路式へ代入しない。</p>
+<p>バンド端からの距離を比較すると、ドナーは通常<code>E_c</code>に近く、アクセプタは<code>E_v</code>に近い。ドナーが多数なら<code>E_F</code>は<code>E_c</code>側へ、アクセプタが多数なら<code>E_v</code>側へ寄る。これは「電子を足すとFermi準位が上がる」という直観の具体化であり、DOSと温度を無視した定性的な決め打ちではない。</p>
+<h2 id="section-3-fermi">3　<a class="term" href="index.html#term-charge_neutrality">電荷中性条件</a>からFermi準位を解く</h2>
+<h3 id="section-3-1">3.1　バルクの電荷を足し合わせる</h3>
+<p>バルク試料のある領域が巨視的に中性である最小条件は、正電荷の正孔とイオン化ドナーの合計が、負電荷の電子とイオン化アクセプタの合計に等しいという式である。</p>
+<pre><code class="language-text">p(E_F) + N_D^+(E_F) = n(E_F) + N_A^-(E_F)       (18.5)</code></pre>
+<p>左辺と右辺はすべて個数密度で、単位は<code>m^-3</code>または<code>cm^-3</code>。電荷<code>e</code>を両辺へ掛けた<a class="term" href="index.html#term-charge_density">電荷密度</a>の式からも同じ関係が得られるが、まず正の個数を数える。<code>N_D^+</code>を負にしたり、正孔<code>p</code>へ電子の符号を付けたりしない。</p>
+<p>真性の場合<code>N_D=N_A=0</code>で、式(18.5)は<code>p=n</code>になる。ドープした場合は一般に<code>n≠p</code>であるが、熱平衡・非縮退の範囲なら第17章の<a class="term" href="index.html#term-mass_action_law">質量作用則</a></p>
+<pre><code class="language-text">n p = n_i^2                               (18.6)</code></pre>
+<p>も同時に使える。<code>np=n_i²</code>は電荷中性そのものではなく、状態密度とFermi占有から出る別の関係である。</p>
+<h3 id="section-3-2">3.2　単調な一変数方程式としての二分法</h3>
+<pre><code class="language-text">F(E_F) = p(E_F) + N_D^+(E_F)
+         - n(E_F) - N_A^-(E_F)              (18.7)</code></pre>
+<p>と置く。<code>E_F</code>を上げると、式(18.1)の<code>p</code>と式(18.3)の<code>N_D^+</code>は減り、<code>n</code>と式(18.4)の<code>N_A^-</code>は増える。従ってFは通常単調に減る。<code>F(E_low)&gt;0</code>、<code>F(E_high)&lt;0</code>となる探索区間を作れば、二分法でゼロを挟みながらFermi準位を求められる。</p>
+<p>擬似コードは次のようになる。</p>
+<pre><code class="language-text">assert T &gt; 0 and all densities &gt;= 0
+lo, hi = choose_energy_bracket(Ev, Ec, dopant_levels)
+assert F(lo) &gt;= 0 and F(hi) &lt;= 0
+repeat up to max_iter:
+    mid = (lo + hi)/2
+    if abs(F(mid)) &lt; tolerance_density: return mid
+    if F(mid) &gt; 0: lo = mid
+    else: hi = mid
+return mid, status=&quot;not_converged&quot;</code></pre>
+<p>端点で符号が挟めなければ、Fermi準位を無理に返さない。状態密度の範囲不足、単位不一致、濃度の入力ミス、<a class="term" href="index.html#term-nondegenerate_approximation">非縮退近似</a>の破綻を診断する。二分法の探索区間、許容密度残差、反復数、<code>g_D,g_A</code>をcanonical artifactへ保存する。</p>
+<h3 id="section-3-3">3.3　完全イオン化の近似と解析解</h3>
+<p>室温で浅いドナーがほぼ全てイオン化し、アクセプタがないとする。<code>N_D^+≈N_D</code>、<code>p≪n</code>なら、式(18.5)から、</p>
+<pre><code class="language-text">n ≈ N_D,
+p ≈ n_i^2/N_D                         (18.8)</code></pre>
+<p>を得る。浅いアクセプタだけなら、</p>
+<pre><code class="language-text">p ≈ N_A,
+n ≈ n_i^2/N_A                         (18.9)</code></pre>
+<p>である。これは<code>N_D,N_A</code>が<code>n_i</code>より十分大きく、かつ<code>n</code>や<code>p</code>が対応する<a class="term" href="index.html#term-effective_density_of_states">有効状態密度</a>より十分小さいときの予測である。<code>N_D</code>を増やせば永遠に<code>n=N_D</code>になるわけではなく、Fermi準位が伝導帯へ近づくと縮退と不完全イオン化を調べる。</p>
+<p>完全イオン化・ドナーのみなら、式(18.1)から</p>
+<pre><code class="language-text">E_F ≈ E_c - k_B T ln(N_c/N_D)            (18.10)</code></pre>
+<p>となる。アクセプタのみなら、</p>
+<pre><code class="language-text">E_F ≈ E_v + k_B T ln(N_v/N_A)            (18.11)</code></pre>
+<p>である。これらは二分法の初期値や検算に使う解析予測で、全温度・全濃度に適用する式ではない。</p>
+<h2 id="section-4">4　温度で変わる三つの領域</h2>
+<h3 id="section-4-1">4.1　凍結領域</h3>
+<p>低温では、ドナー準位やアクセプタ準位を熱励起できない。ドナーがあっても<code>N_D^+</code>が<code>N_D</code>より小さく、伝導帯の電子数<code>n</code>も少ない。この領域を凍結領域と呼ぶ。式(18.3),(18.4)を使ってイオン化率を数え、完全イオン化の近似を使わない。</p>
+<h3 id="section-4-2">4.2　外因領域</h3>
+<p>中間の温度で浅い不純物がほぼイオン化し、真性励起がまだ小さいと、ドナーなら<code>n≈N_D</code>、アクセプタなら<code>p≈N_A</code>となる。ドーピングによって決まる多数キャリアと、質量作用則で決まる少数キャリアを分ける。多数・少数という語は個数の比較であり、電荷の符号を表す語ではない。</p>
+<h3 id="section-4-3">4.3　真性領域</h3>
+<p>高温では<a class="term" href="index.html#term-band_gap">バンドギャップ</a>を越える熱励起が急増し、<code>n_i</code>がドーピング濃度を上回る。すると<code>n</code>と<code>p</code>が再び近づき、真性半導体の挙動が支配的になる。温度ごとに、(i)不純物のイオン化率、(ii)<code>n_i</code>、(iii)<code>N_D,N_A</code>の大小を比較する。領域の境界を固定の温度で決めず、採用した材料パラメータと許容誤差から決める。</p>
+<h3 id="section-4-4">4.4　混合ドーピング</h3>
+<p>ドナーとアクセプタが両方あると、まず完全イオン化の近似で<code>N_D-N_A</code>の差を調べる。しかし<code>N_D≈N_A</code>では差だけで多数キャリアを決められず、少数キャリア、イオン化率、真性励起を含む式(18.5)を解く。ドナー濃度とアクセプタ濃度を単純に引き算してFermi準位を決めるのは、近似の成立を確認した場合に限る。</p>
+<h3 id="section-4-5">4.5　領域名を数値の閾値へ結びつける</h3>
+<p>「低温だから凍結」のように温度名だけで判定すると、材料やドーパントを変えたときに境界が動かない。そこでrunnerでは、教材の既定閾値を入力として保存し、各温度で同じ規則を適用する。既定値は、有限イオン化を使う不純物のイオン化率が<code>0.5</code>未満なら<code>freezeout</code>、すべてが<code>0.9</code>以上で、<code>n_i/max(N_D,N_A)</code>が<code>0.1</code>以下、かつ多数キャリアがイオン化ドーパント濃度に対して相対誤差<code>0.1</code>以内なら<code>extrinsic</code>とする。<code>N_D</code>と<code>N_A</code>がともに0、または<code>n_i/max(N_D,N_A)</code>が<code>10</code>以上で<code>n</code>と<code>p</code>が相対差<code>0.1</code>以内なら<code>intrinsic</code>とする。</p>
+<p>これらを同時に満たさない中間帯は<code>transition</code>、二つ以上の規則を同時に満たす場合は<code>boundary_overlap</code>として、無理に三分類へ押し込めない。閾値は物理定数ではなく教材の判定規約なので、<code>regime_thresholds</code>としてartifactへ書き出す。こうして「どの温度を凍結と呼んだか」だけでなく、「どの比と許容誤差でそう呼んだか」を再現できる。</p>
+<h2 id="section-5">5　数値ノートを設計する</h2>
+<h3 id="section-5-1">5.1　入力の単位と状態の定義</h3>
+<p>予定ノートには、<code>E_c,E_v,E_D,E_A</code>、<code>N_c,N_v,N_D,N_A</code>、<code>g_D,g_A</code>、<code>T</code>、エネルギー単位、密度単位、<code>equilibrium_model</code>を入力する。<code>E_F</code>または<code>μ</code>はeVで表示してもよいが、<code>k_B T</code>と同じエネルギー単位にそろえる。濃度は全て<code>cm^-3</code>か<code>m^-3</code>のどちらかへ統一する。</p>
+<p>完全イオン化case、有限イオン化case、ドナーとアクセプタの混合case、温度掃引caseを分ける。各caseで<code>n,p,N_D^+,N_A^-,F(E_F)</code>、質量作用残差、近似の適用判定を保存する。混合caseの多数キャリア近似とドーパントの比較には、個別の濃度だけでなく正味イオン化濃度<code>|N_D^+-N_A^-|</code>を使う。</p>
+<h3 id="section-5-2-runner">5.2　解析、数値、runner、測定</h3>
+<p>解析予測は式(18.8)や(18.10)から得る。数値予測は式(18.5)の二分法で<code>E_F</code>を解き、Fermi–Dirac積分を使う。runner出力は<code>book run 18 1</code>が実行されて初めて生成される。測定値には試料、ドーパント濃度の測定方法、温度、電極、雰囲気、測定装置を記録する。</p>
+<p><code>source_kind</code>は<code>analytic_prediction</code>、<code>numeric_prediction</code>、<code>runner_output</code>、<code>measurement</code>から選び、<code>status</code>と<code>measured</code>を別フィールドにする。固定runnerは契約artifactを再生済みであり、外部domain・測定は未実行のため<code>measurement.status=not_run</code>を維持する。</p>
+<p>#### 5.2.1　代表caseの二分法を先に検算する</p>
+<p>runnerを実行する前でも、式(18.1)、(18.3)、(18.4)、(18.5)を同じ単位へそろえた参照計算を置き、解析近似との違いを数値予測として固定しておく。<code>E_c=0 eV</code>、<code>E_v=-1.12 eV</code>、<code>N_c=2.8×10^19 cm^-3</code>、<code>N_v=1.0×10^19 cm^-3</code>、<code>T=300 K</code>、<code>n_i=6.55×10^9 cm^-3</code>を使い、二分法の初期区間を<code>[-1.12,0] eV</code>、停止条件を<code>|F|/max(N_D,N_A)&lt;10^-12</code>（最小反復数の上限60）とする。以下は<code>source_kind="numeric_prediction"</code>、<code>status="predicted"</code>であり、<code>book run 18 1</code>の実行結果ではない。</p>
+<table><thead><tr><th>case</th><th>有限イオン化の二分法予測</th><th>完全イオン化の解析予測</th><th>差の読み方</th></tr></thead>
+<tbody><tr><td><a class="term" href="index.html#term-donor">donor</a>-only: <code>N_D=1.0×10^16 cm^-3</code>、<code>E_D=-0.045 eV</code>、<code>g_D=2</code></td><td><code>E_F=-0.20530 eV</code>、<code>N_D^+/N_D=0.99596</code>、<code>n=9.9596×10^15</code>、<code>p=4.31×10^3 cm^-3</code>、43回、`</td><td>F</td><td>/N_D&lt;5×10^-13`</td><td><code>E_F=-0.20520 eV</code>、<code>n≈N_D</code></td><td>`</td><td>ΔE_F</td><td>≈1.0×10^-4 eV`。室温では完全イオン化がよい初期値になる</td></tr><tr><td><a class="term" href="index.html#term-acceptor">acceptor</a>-only: <code>N_A=1.0×10^16 cm^-3</code>、<code>E_v=-1.12 eV</code>、<code>E_A=-1.065 eV</code>、<code>g_A=4</code></td><td><code>E_F=-0.94059 eV</code>（<code>E_v</code>から<code>+0.17941 eV</code>）、<code>N_A^-/N_A=0.96851</code>、<code>p=9.6851×10^15</code>、<code>n=4.43×10^3 cm^-3</code>、44回、`</td><td>F</td><td>/N_A&lt;5×10^-13`</td><td><code>E_F=-0.94142 eV</code>（<code>E_v</code>から<code>+0.17858 eV</code>）、<code>p≈N_A</code></td><td>`</td><td>ΔE_F</td><td>≈8.3×10^-4 eV`。donor caseと同じエネルギー原点で比較する</td></tr></tbody>
+</table>
+<p>表の残差は密度の大きな項を差し引くため、絶対値ではなく規模で割った相対値も保存する。runner実行後は、同じ入力・bracket・許容値で再計算し、表の行を<code>runner_output</code>へ複製してから実測値と比較する。予測行を測定行へ上書きしてはいけない。</p>
+<h3 id="section-5-3-fermi">5.3　非平衡と<a class="term" href="index.html#term-quasi_fermi_level">準Fermi準位</a></h3>
+<p>光照射や注入中の半導体では、電子と正孔が一つの<code>E_F</code>で平衡にない場合がある。そのとき電子用の準Fermi準位<code>μ_n</code>と正孔用の<code>μ_p</code>を分ける。<code>n=p</code>や平衡の質量作用則を、非平衡の証拠として無条件に使わない。</p>
+<p>runnerの<code>equilibrium_model</code>が<code>thermal_equilibrium</code>なら一つの<code>E_F</code>を計算する。<code>non_equilibrium</code>なら、まず<code>μ_n,μ_p</code>の有無と単位を入力検査し、両方そろっていても本章では<code>unsupported_non_equilibrium_model</code>を返す。本章は不純物の占有を平衡Fermi分布でしか定義しておらず、非平衡の<code>n(μ_n)</code>、<code>p(μ_p)</code>や不純物の捕獲・放出速度を計算する模型をまだ導入していないためである。準Fermi準位が欠ける場合は先に<code>missing_quasi_fermi_levels</code>として拒否し、平衡式の数値を隠れて流用しない。</p>
+<p>出力schemaでは、平衡・非平衡を同じ欄へ押し込めない。平衡行は<code>equilibrium_model="thermal_equilibrium"</code>、<code>EF</code>を数値、<code>mu_n=null</code>、<code>mu_p=null</code>とし、<code>mass_action_residual</code>を計算する。非平衡行は入力の<code>mu_n</code>と<code>mu_p</code>を保持するが、<code>EF=null</code>、<code>n=null</code>、<code>p=null</code>、<code>mass_action_residual="not_applicable"</code>、<code>status="unsupported_non_equilibrium_model"</code>として境界だけを記録する。<code>n</code>と<code>p</code>が与えられていても、準Fermi準位なしで平衡solverを再利用した行は<code>missing_quasi_fermi_levels</code>として拒否する。第19章以降で非平衡の輸送・再結合模型を定義した後に初めて、別のrunner契約を追加する。</p>
+<h2 id="section-6">6　負のテストと設計判断</h2>
+<p>次の入力は、同じ「計算できない」でも診断を分ける。</p>
+<pre><code class="language-text">T &lt; 0、T=0へ有限温度式を直接代入
+Ec &lt;= Ev、ND &lt; 0、NA &lt; 0、gD &lt;= 0、gA &lt;= 0
+cm^-3とm^-3の混在、eVのE_DとJのk_B Tの混在
+電子を+e、正孔を-e、N_D^+を負の個数として入力
+N_D^+ &gt; N_D、N_A^- &gt; N_A、n &lt; 0、p &lt; 0
+Fermi準位の探索端点でF(E_low)とF(E_high)が符号を挟まない
+高濃度でmuがEcまたはEvへ近いのに非縮退近似を採用
+Underflowしたniやイオン化率を0へclipして収束扱い
+non_equilibriumでmu_nまたはmu_pがない、または両方あっても本章solverへ渡す
+解析予測をmeasured=trueとして保存</code></pre>
+<p><code>T=0 K</code>は<code>zero_temperature_limit</code>として、占有の段階関数とイオン化状態の境界を別に定義する。<code>E_F</code>がギャップ内にあるとき、理想化した完全絶縁状態ではFermi準位の代表値が一意に決まらない場合がある。その場合は<code>mu_status="nonunique_in_gap"</code>を保存し、数値solverの一つの値を物理的に唯一な測定値と呼ばない。</p>
+<h2 id="section-7">7　次章へ渡す設計判断</h2>
+<p>第19章へは、次の値と条件を固定した入力として渡す。</p>
+<ul><li>電子密度<code>n</code>と正孔密度<code>p</code>は正の個数密度として保存し、電子の電荷<code>-e</code>、正孔の有効電荷<code>+e</code>を電荷密度・<a class="term" href="index.html#term-current">電流</a>式で別に掛ける。</li><li><code>N_D^+</code>と<code>N_A^-</code>は総ドーパント濃度ではなく、温度・Fermi準位・縮退因子で決まるイオン化濃度である。総濃度とイオン化濃度を同じフィールドへ入れない。</li><li>平衡のFermi準位は電荷中性条件を二分法で解いて求め、解析の完全イオン化式は初期値と検算に使う。<code>F(E_F)</code>の残差、探索区間、単位を必ず残す。</li><li>凍結・外因・真性の領域は、固定温度名ではなく<code>N_D,N_A,n_i</code>とイオン化率の比較から判定する。</li><li>第19章のdrift、diffusion、再結合へは<code>n,p,T</code>、ドーピングの符号、平衡・非平衡状態を渡す。散乱時間、<a class="term" href="index.html#term-mobility">移動度</a>、濃度勾配、再結合係数は追加入力である。</li><li>解析、数値、runner、測定を上書きせず、<code>source_kind</code>、<code>status</code>、<code>measured</code>で出所を分ける。未実行のcarrier値を測定と呼ばない。</li></ul>
+<h2 id="section-8">8　この章で使った模型の限界</h2>
+<p>ドーピングは、実際には結晶構造、局所歪み、補償、欠陥、イオン化エネルギー、温度依存のバンド端を持つ。本章は、バンド端近くの有効質量DOS、指定したドナー・アクセプタ準位、熱平衡のFermi占有、バルク電荷中性という最小模型である。</p>
+<p>この模型からキャリア数の傾向は読めるが、ドーパントの空間分布、接合の<a class="term" href="index.html#term-electric_field">電場</a>、移動度、抵抗、再結合寿命はまだ決まらない。第19章で<code>n</code>と<code>p</code>を空間的・時間的に変化させるとき、非平衡の準Fermi準位と境界条件を追加し、平衡式をそのまま使わない。</p>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-18">18.補助演習　手を動かす導出帳</h2>
+<p>ドーピングとFermi準位の計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-fermi">例題1　ドナー・アクセプタのイオン化と電荷中性からFermi準位を計算する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 18 1</code>である。入力は<code>[{"donor case": "Ec=0 eV、Ev=-1.12 eV、Eg=1.12 eV、Nc=2.8e19 cm^-3、Nv=1.0e19 cm^-3、ni=6.55e9 cm^-3、ND=1.0e16 cm^-3、ED=-0.045 eV、gD=2、NA=0、gA=4、T=300 K"}, {"acceptor case": "Ec=0 eV、Ev=-1.12 eV、Eg=1.12 eV、Nv=1.0e19 cm^-3、Nc=2.8e19 cm^-3、ni=6.55e9 cm^-3、NA=1.0e16 cm^-3、EA=-1.065 eV、gA=4、ND=0、gD=2、T=300 K"}, {"mixed case": "Ec、Ev、Eg、Nc、Nv、ni、ND、NA、ED、EA、gD、gA、Tを同じeV・cm^-3単位で指定し、F(EF)=0を二分法で解く"}, {"temperature sweep": "Nc、Nv、ni、ED、EA、ND、NAを温度依存として与え、freezeout、extrinsic、intrinsic、transition、boundary_overlapの各領域と、イオン化率・ni・majority/minorityを比較"}, {"regime thresholds": "freezeout_ionization_max=0.5、extrinsic_ionization_min=0.9、intrinsic_dopant_ratio_min=10、majority_match_relative_error_max=0.1、intrinsic_carrier_balance_relative_error_max=0.1を入力と出力へ保存（教材既定値、変更可能）"}, "complete-ionization analytic predictionとfinite-ionization numeric predictionを別caseで保存", "T&lt;0、T=0の直接代入、Ec&lt;=Ev、負濃度、非正縮退、J/eV混同、cm^-3/m^-3混同、ND_plus&gt;ND、NA_minus&gt;NA、端点非bracket、非縮退違反、non_equilibriumでmu_n/mu_p欠落または両方そろっていてもunsupported、未測定measured=trueを負のテストとする"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-2">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-3">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>ドーピング</code>は、結晶へ不純物を加え、バンドギャップ内の準位とキャリア数を変える模型。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>ドーピング</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>ドナー</code>は、伝導帯へ電子を渡しやすい準位を作る不純物の記述。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>ドナー</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>アクセプタ</code>は、価電子帯から電子を受け取り正孔を作りやすい準位の記述。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>アクセプタ</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>Fermi準位</code>は、キャリアと不純物の平衡占有を一つのエネルギーでつなぐ尺度。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>Fermi準位</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電荷中性条件</code>は、電子、正孔、イオン化不純物の個数密度を釣り合わせるバルク条件。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電荷中性条件</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>多数キャリアと少数キャリア</code>は、ドーピング後のキャリア数の大小を表す分類。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>多数キャリアと少数キャリア</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>準Fermi準位</code>は、非平衡で電子と正孔へ別々に割り当てる<a class="term" href="index.html#term-chemical_potential">化学ポテンシャル</a>様の尺度。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>準Fermi準位</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-6">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E5</code>（n型完全イオン化近似とFermi準位）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E6</code>（p型完全イオン化近似とFermi準位）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（電荷中性方程式のFermi準位二分法）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（凍結、外因、真性領域と多数・少数キャリア）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（完全イオン化近似、Fermi積分、質量作用則）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（単位、電荷符号、T極限、非縮退、入力拒否）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（解析・数値・runner・測定の出所分離）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（第19章のdrift、diffusion、再結合への入力）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-2">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-2">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-18-2">18.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>ドーピングとFermi準位</strong>の中心問題「微量の不純物が半導体の導電性を桁違いに変えるのはなぜか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-3">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["donor-only complete-ionization caseはn≈ND、p≈ni^2/ND、EFがEc側へ寄る解析予測", "acceptor-only caseはp≈NA、n≈ni^2/NA、EFがEv側へ寄る解析予測", "低温ではイオン化率が下がる凍結、高温ではniが増える真性領域へ移る予測", "mixed dopingでは差ND-N…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>{"donor case": "Ec=0 eV、Ev=-1.12 eV、Eg=1.12 eV、Nc=2.8e19 cm^-3、Nv=1.0e19 cm^-3、ni=6.55e9 cm^-3、ND=1.0e16 cm^-3、ED=-0.045 eV、gD=2、NA=0、gA=4、T=300 K"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>{"acceptor case": "Ec=0 eV、Ev=-1.12 eV、Eg=1.12 eV、Nv=1.0e19 cm^-3、Nc=2.8e19 cm^-3、ni=6.55e9 cm^-3、NA=1.0e16 cm^-3、EA=-1.065 eV、gA=4、ND=0、gD=2、T=300 K"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>{"mixed case": "Ec、Ev、Eg、Nc、Nv、ni、ND、NA、ED、EA、gD、gA、Tを同じeV・cm^-3単位で指定し、F(EF)=0を二分法で解く"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>{"temperature sweep": "Nc、Nv、ni、ED、EA、ND、NAを温度依存として与え、freezeout、extrinsic、intrinsic、transition、boundary_overlapの各領域と、イオン化率・ni・majority/minorityを比較"}</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>{"regime thresholds": "freezeout_ionization_max=0.5、extrinsic_ionization_min=0.9、intrinsic_dopant_ratio_min=10、majority_match_relative_error_max=0.1、intrinsic_carrier_balance_rela…</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目6: <code>complete-ionization analytic predictionとfinite-ionization numeric predictionを別caseで保存</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目7: <code>T&lt;0、T=0の直接代入、Ec&lt;=Ev、負濃度、非正縮退、J/eV混同、cm^-3/m^-3混同、ND_plus&gt;ND、NA_minus&gt;NA、端点非bracket、非縮退違反、non_equilibriumでmu_n/mu_p欠落または両方そろっていてもunsupported、未測定measured=trueを負のテストとする</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-4">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「ドナー準位の電子占有と空席を数え、総濃度NDから正にイオン化した濃度ND_plusを温度・準位・Fermi準位で求める。」で、参照する式IDまたは検証項目は <code>ionization-bounds, temperature-limit, degeneracy-definition</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「アクセプタ準位の電子受容と空席を数え、総濃度NAから負にイオン化した濃度NA_minusを求める。」で、参照する式IDまたは検証項目は <code>ionization-bounds, temperature-limit, degeneracy-definition</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「n、p、ND_plus、NA_minusを個数密度として電荷中性条件p+ND_plus=n+NA_minusへ入れ、Fermi準位を解く。」で、参照する式IDまたは検証項目は <code>sign-balance, intrinsic-zero-dopant, neutrality-residual</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「F(EF)=p+ND_plus-n-NA_minusの単調な零点を二分法で探索し、解析的完全イオン化近似と比較する。」で、参照する式IDまたは検証項目は <code>bracket-sign, monotonicity, residual, convergence</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出5: <code>derivation-5</code></p>
+<p>到達する結果は「凍結・外因・真性領域を、イオン化率、ND/NA、ni、n、pの大小から判定する。」で、参照する式IDまたは検証項目は <code>temperature-sweep, regime-boundary, approximation-scope</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出6: <code>derivation-6</code></p>
+<p>到達する結果は「熱平衡の一つのEFと、非平衡で電子・正孔へ別々に割り当てるmu_n,mu_pをrunner状態として分離する。」で、参照する式IDまたは検証項目は <code>equilibrium-single-level, non-equilibrium-required-input, provenance</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-4">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: ドナー・アクセプタのイオン化と電荷中性からFermi準位を計算する</p>
+<p>入口は <code>book run 18 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-18-doping-source", "chapter-18-neutrality-source", "chapter-18-carrier-output", "chapter-18-diagnostic-output", "chapter-18-doping-plot"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["donor-only complete-ionization caseはn≈ND、p≈ni^2/ND、EFがEc側へ寄る解析予測", "acceptor-only caseはp≈NA、n≈ni^2/NA、EFがEv側へ寄る解析予測", "低温ではイオン化率が下がる凍結、高温ではniが増える真性領域へ移る予測", "mixed dopingでは差ND-N…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-7">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-3">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>ドーピングは不純物が作る準位と電荷状態の最小模型であり、実際の結晶構造、欠陥、補償、局所歪みを含まない。</li><li>ドナー・アクセプタの縮退因子は状態数の規約に依存し、文献の因子を定義なしに混ぜない。</li><li>完全イオン化近似は温度・準位・濃度の範囲に限られ、低温の凍結領域では式(18.3),(18.4)を解く必要がある。</li><li>質量作用則と非縮退のキャリア式は熱平衡と低占有率の近似で、高濃度ではFermi積分を使う。</li><li>バルク電荷中性条件は表面、接合、空乏層、空間電荷、電場の分布を決めない。</li><li>一つのFermi準位は熱平衡の記述であり、光照射・注入・過渡状態では準Fermi準位を分ける必要がある。</li><li>キャリア数とFermi準位だけでは散乱、移動度、拡散、再結合、抵抗、電流は決まらない。</li><li>本章の固定runnerは契約を再生済みだが、図・数値計算の外部tool実行は未実行で、具体値は解析または数値予測である。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第16章のバンド端、ギャップ、状態密度、Fermi占有</li><li>第17章の電子・正孔、Nc、Nv、ni、質量作用則、<a class="term" href="index.html#term-intrinsic_chemical_potential">真性化学ポテンシャル</a></li><li>第15章の縮退、化学ポテンシャル、非縮退の<a class="term" href="index.html#term-concept_15_term_1571aba314_1571aba3">古典極限</a></li><li>第8章のキャリア、電荷、<a class="term" href="index.html#term-conductivity">導電率</a>、移動度、物質模型の限界</li><li>第5章の電子電荷と符号、電荷密度</li><li>第3章の指数、<a class="term" href="index.html#term-concept_3_term_8d8794d7de_8d8794d7">対数</a>、二分法、次元解析</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第19章へドーピング後のn、p、電子・正孔の符号、温度、平衡・非平衡状態を渡す</li><li>第19章へFermi準位、準Fermi準位、濃度勾配を輸送計算の入力候補として渡す</li><li>第20章以降へドーピング、電荷中性、空間電荷、接合境界の課題を渡す</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-3">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — donor_acceptor_state_definition。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — ionization_formula_and_<a class="term" href="index.html#term-degeneracy">degeneracy</a>。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — fermi_level_and_chemical_potential。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — charge_neutrality_and_sign。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — mass_action_<a class="term" href="index.html#term-scope">scope</a>。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — donor_acceptor_analytic_limits。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件7: <code>A7</code> — fermi_neutrality_bi<a class="term" href="index.html#term-concept_70_section_20182fbc">section</a>。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件8: <code>A8</code> — freezeout_extrinsic_intrinsic。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件9: <code>A9</code> — equilibrium_quasi_fermi。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件10: <code>A10</code> — units_limits_negative_tests。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件11: <code>A11</code> — <a class="term" href="index.html#term-provenance">provenance</a>_and_artifact_registry。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件12: <code>A12</code> — exercise_solution_and_transport_bridge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-2">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: ドナー・アクセプタのイオン化と電荷中性からFermi準位を計算する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 18 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["donor-only complete-ionization caseはn≈ND、p≈ni^2/ND、EFがEc側へ寄る解析予測", "acceptor-only caseはp≈NA、n≈ni^2/NA、EFがEv側へ寄る解析予測", "低温ではイオン化率が下がる凍結、高温ではniが増える真性領域へ移る予測", "mixed dopingでは差ND-N…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-2">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、<a class="term" href="index.html#term-voltage">電圧</a>、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

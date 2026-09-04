@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="電気回路から半導体、CPU、OS、言語処理系、Pythonの実行までを一続きに学ぶ公開制作版教材">
+<meta name="robots" content="index,follow">
+<title>第6章　電位、電圧、エネルギー</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; line-height: 1.75; }
+body { max-width: 54rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; color: #1e293b; }
+nav { border-bottom: 1px solid #cbd5e1; margin-bottom: 2rem; padding-bottom: 1rem; }
+nav a { margin-right: 1rem; }
+a { color: #075985; }
+a:focus, summary:focus { outline: 3px solid #f59e0b; outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; display: inline-block; padding: .4rem .7rem; background: #fef3c7; }
+code { background: #f1f5f9; border-radius: .25rem; padding: .1rem .3rem; }
+pre { overflow-x: auto; padding: 1rem; background: #0f172a; color: #e2e8f0; border-radius: .4rem; }
+pre code { background: transparent; padding: 0; }
+.math { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f8fafc; border-bottom: 1px dotted #64748b; padding: 0 .2rem; }
+.term { text-decoration-style: dotted; text-underline-offset: .15em; }
+details.hint { margin: .8rem 0; border-left: .25rem solid #38bdf8; padding: .3rem .8rem; background: #f0f9ff; }
+details.hint summary { cursor: pointer; font-weight: 600; }
+.experiment-panel { border: 1px solid #bae6fd; background: #f0f9ff; padding: .7rem 1rem; margin: 1rem 0; }
+.glossary { columns: 2 18rem; }
+.glossary dt { font-weight: 600; break-after: avoid; }
+.glossary dd { margin: 0 0 .5rem 1rem; }
+blockquote { border-left: .25rem solid #94a3b8; margin-left: 0; padding-left: 1rem; color: #475569; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { border: 1px solid #cbd5e1; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: #f8fafc; }
+.draft { background: #fef3c7; border: 1px solid #f59e0b; padding: .75rem 1rem; }
+.status-panel { border: 1px solid #94a3b8; background: #f8fafc; padding: .8rem 1rem; margin: 1rem 0 1.5rem; }
+.status-panel h2 { margin-top: 0; }
+.status-panel ul { margin-bottom: .4rem; }
+footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; color: #475569; font-size: .9rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">本文へ移動</a>
+<nav><a href="index.html">目次</a> <a href="runner.html">実験台帳</a> <a href="prelude.html">先行一周　電気からPythonまでの地図</a> <a href="chapter-001.html">第1章　一行のPythonが通る全層</a> <a href="chapter-002.html">第2章　法則、モデル、契約、実装</a> <a href="chapter-003.html">第3章　必要な数学を必要な場所で使う</a> <a href="chapter-004.html">第4章　観測、測定、数値計算</a> <a href="chapter-005.html">第5章　電荷と電場</a> <a href="chapter-006.html">第6章　電位、電圧、エネルギー</a> <a href="chapter-007.html">第7章　電流、連続の式、電力</a> <a href="chapter-008.html">第8章　物質の導電性と古典モデル</a> <a href="chapter-009.html">第9章　回路という近似</a> <a href="chapter-010.html">第10章　Kirchhoff則の由来と限界</a> <a href="chapter-011.html">第11章　抵抗、コンデンサ、インダクタの時間発展</a> <a href="chapter-012.html">第12章　信号、周波数、雑音、伝送線路</a> <a href="chapter-013.html">第13章　古典論が破綻する場所</a> <a href="chapter-014.html">第14章　Schrödinger方程式と固有状態</a> <a href="chapter-015.html">第15章　原子、Pauli原理、Fermi–Dirac統計</a> <a href="chapter-016.html">第16章　結晶、Blochの定理、エネルギーバンド</a> <a href="chapter-017.html">第17章　真性半導体とキャリア</a> <a href="chapter-018.html">第18章　ドーピングとFermi準位</a> <a href="chapter-019.html">第19章　drift、diffusion、再結合</a> <a href="chapter-020.html">第20章　p-n接合と金属接触</a> <a href="chapter-021.html">第21章　MOSキャパシタ</a> <a href="chapter-022.html">第22章　MOSFETの形成とI-V特性</a> <a href="chapter-023.html">第23章　非理想性、微細化、現代トランジスタ</a> <a href="chapter-024.html">第24章　CMOSインバータ</a> <a href="chapter-025.html">第25章　論理電圧、雑音余裕、信号再生</a> <a href="chapter-026.html">第26章　CMOS NAND、NOR、伝送ゲート</a> <a href="chapter-027.html">第27章　伝搬遅延、負荷、消費電力</a> <a href="chapter-028.html">第28章　製造、レイアウト、設計規則</a> <a href="chapter-029.html">第29章　物理状態からビットへ</a> <a href="chapter-030.html">第30章　Boolean代数とNANDの完全性</a> <a href="chapter-031.html">第31章　組合せ論理の合成</a> <a href="chapter-032.html">第32章　HDL、シミュレーション、合成、形式検証</a> <a href="chapter-033.html">第33章　二進表現、符号、有限幅</a> <a href="chapter-034.html">第34章　加算器、減算器、比較器</a> <a href="chapter-035.html">第35章　shift、乗除算、ALU</a> <a href="chapter-036.html">第36章　帰還と双安定性</a> <a href="chapter-037.html">第37章　latchとflip-flop</a> <a href="chapter-038.html">第38章　setup、hold、metastability</a> <a href="chapter-039.html">第39章　register、counter、有限状態機械</a> <a href="chapter-040.html">第40章　clock、発振、分配、reset</a> <a href="chapter-041.html">第41章　SRAMセルとregister file</a> <a href="chapter-042.html">第42章　DRAM、ROM、flash、誤り訂正</a> <a href="chapter-043.html">第43章　memory array、bank、timing interface</a> <a href="chapter-044.html">第44章　stored-program machineとISA</a> <a href="chapter-045.html">第45章　RISC-V RV32Iのprogrammer&#x27;s model</a> <a href="chapter-046.html">第46章　assembly、stack、calling convention</a> <a href="chapter-047.html">第47章　単一cycle datapath</a> <a href="chapter-048.html">第48章　control、decode、memory map</a> <a href="chapter-049.html">第49章　trap、interrupt、privilege</a> <a href="chapter-050.html">第50章　rv32eduの統合とboot ROM</a> <a href="chapter-051.html">第51章　latency、throughput、critical path</a> <a href="chapter-052.html">第52章　五段pipeline</a> <a href="chapter-053.html">第53章　data hazardとstructural hazard</a> <a href="chapter-054.html">第54章　control hazardとbranch prediction</a> <a href="chapter-055.html">第55章　cacheと局所性</a> <a href="chapter-056.html">第56章　仮想address、page table、TLB</a> <a href="chapter-057.html">第57章　multicoreとcache coherence</a> <a href="chapter-058.html">第58章　atomic操作とmemory model</a> <a href="chapter-059.html">第59章　superscalarとout-of-order実行</a> <a href="chapter-060.html">第60章　speculation、side channel、信頼境界</a> <a href="chapter-061.html">第61章　bus、interconnect、MMIO</a> <a href="chapter-062.html">第62章　device controller、interrupt、DMA</a> <a href="chapter-063.html">第63章　電源、clock、温度、信頼性</a> <a href="chapter-064.html">第64章　reset vector、firmware、boot chain</a> <a href="chapter-065.html">第65章　永続storageの物理とcontroller</a> <a href="chapter-066.html">第66章　keyboardからTTYまで</a> <a href="chapter-067.html">第67章　UART、framebuffer、GPU、画面表示</a> <a href="chapter-068.html">第68章　network interfaceからsocketまで</a> <a href="chapter-069.html">第69章　二pass assembler</a> <a href="chapter-070.html">第70章　object file、section、relocation</a> <a href="chapter-071.html">第71章　linkerとELF executable</a> <a href="chapter-072.html">第72章　loader、dynamic linking、library</a> <a href="chapter-073.html">第73章　Cの抽象機械、ABI、stack、heap</a> <a href="chapter-074.html">第74章　lexer、parser、型検査</a> <a href="chapter-075.html">第75章　IR、control-flow graph、data-flow</a> <a href="chapter-076.html">第76章　instruction selection、register allocation、code generation</a> <a href="chapter-077.html">第77章　debugger、disassembler、profiling</a> <a href="chapter-078.html">第78章　cross compile、bootstrap、self-host</a> <a href="chapter-079.html">第79章　kernel mode、trap、system call</a> <a href="chapter-080.html">第80章　process、context switch、scheduler</a> <a href="chapter-081.html">第81章　address spaceとpage table管理</a> <a href="chapter-082.html">第82章　page fault、demand paging、copy-on-write、mmap</a> <a href="chapter-083.html">第83章　kernel memory、allocator、保護</a> <a href="chapter-084.html">第84章　thread、race、atomicity、memory ordering</a> <a href="chapter-085.html">第85章　lock、semaphore、condition variable、deadlock</a> <a href="chapter-086.html">第86章　device driverとblock I/O</a> <a href="chapter-087.html">第87章　filesystem、cache、crash consistency</a> <a href="chapter-088.html">第88章　pipe、signal、TTY、shell、process起動</a> <a href="chapter-089.html">第89章　socket、network stack、権限と隔離</a> <a href="chapter-090.html">第90章　xv6とminiosの統合</a> <a href="chapter-091.html">第91章　syntax、semantics、PythonとCPython</a> <a href="chapter-092.html">第92章　tokenizer、indentation、PEG parser</a> <a href="chapter-093.html">第93章　AST、symbol table、scope、closure</a> <a href="chapter-094.html">第94章　bytecode compiler、CFG、code object</a> <a href="chapter-095.html">第95章　stack VM、evaluation loop、frame</a> <a href="chapter-096.html">第96章　object、identity、type、value</a> <a href="chapter-097.html">第97章　allocation、reference count、cycle GC</a> <a href="chapter-098.html">第98章　integer、string、list、dict</a> <a href="chapter-099.html">第99章　function、closure、exception、generator</a> <a href="chapter-100.html">第100章　module、import、builtins、C API、I/O</a> <a href="chapter-101.html">第101章　GIL、free-threading、subinterpreter</a> <a href="chapter-102.html">第102章　adaptive interpreter、inline cache、tier 2、JIT</a> <a href="chapter-103.html">第103章　MiniPyの言語仕様とcompiler統合</a> <a href="chapter-104.html">第104章　MiniPyのRISC-V port</a> <a href="chapter-105.html">第105章　全層trace atlas</a> <a href="chapter-106.html">第106章　現代PCへの写像と最終統合</a></nav>
+<div class="draft">公開制作版です。解析runnerの結果と、未実測・未確認の境界を明示しています。章別の必修実験・受入ゲートが完了するまでは、学習者向け完成版とは扱いません。</div>
+<main id="content" tabindex="-1"><p><a href="chapter-006-exercises.html">この章の演習</a>　<a href="chapter-006-solutions.html">演習の解答・再挑戦</a></p>
+<section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-6-1"><code>book run 6 1</code></a> （章固有の解析検証済み（実測なし）） <a href="../../artifacts/runner/chapter-006/experiment-01.json">成果物</a></li></ul></section><h1 id="section-6">第6章　<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>、電圧、エネルギー</h1>
+<h2 id="section-5-v">回路図の「5 V」は何を要約しているか</h2>
+<p>回路図に、ある端子が「5 V」と書かれているとする。しかし、<a class="term" href="index.html#term-voltage">電圧</a>は端子一つに貼り付いた絶対的な数ではない。どの端子を基準にしたか、どのような電場を通って電荷を運ぶか、測定器をつないだことで電荷分布が変わっていないかを指定して、はじめてその数の意味が決まる。</p>
+<p>第5章の<a class="term" href="index.html#term-electric_field">電場</a>は、位置ごとに力の向きと大きさを持つベクトルだった。電場が正電荷を動かすとき、その力は仕事をする。静電場なら、その仕事を「単位電荷あたりの位置エネルギー」というスカラーにまとめられる。それが電位である。電位差を端子間で測った値が、回路図でいう電圧になる。</p>
+<p>たとえば、無限遠を電位0とした点<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a> <code>Q=+1.0 nC</code>から<code>0.10 m</code>離れた点の電位は、</p>
+<pre><code class="language-text">V = kQ/r ≈ 89.9 V</code></pre>
+<p>である。そこへ<code>q=+2.0 nC</code>をゆっくり運ぶなら、位置エネルギーの増加は<code>qV≈1.80×10^-7 J</code>になる。一方、基準を別の場所へ移せば二点の<code>V</code>は同じ定数だけ変わる。<a class="term" href="index.html#term-concept_6_term_6e8719b5ae_6e8719b5">電位差</a>と、電荷を実際に運ぶときのエネルギー差は変わらない。</p>
+<p>本章の計算入口は次の一つである。</p>
+<pre><code class="language-text">book run 6 1</code></pre>
+<p>これは平行板コンデンサの電位分布、電荷、エネルギーを解析式と数値計算で比べるための共通入口である。<code>book run 6 1</code> は固定runnerの解析・契約adapterで再生済みだが、実測済みの波形や外部domainの数値ログではない。本文の予測値、runnerの実行結果、将来追加する測定値は別々に保存する。</p>
+<h2 id="section-1">1　仕事から位置エネルギーへ</h2>
+<h3 id="section-1-1">1.1　力がした仕事</h3>
+<p>物体に力<code>F</code>が働き、位置が微小なベクトル<code>dℓ</code>だけ変化したとき、その力がした微小仕事を</p>
+<pre><code class="language-text">dW = F · dℓ</code></pre>
+<p>と書く。内積なので、力と移動が同じ向きなら正、反対向きなら負、直角なら0である。始点<code>a</code>から終点<code>b</code>までの仕事は、経路に沿って積分する。</p>
+<pre><code class="language-text">W_a→b = ∫_a^b F · dℓ</code></pre>
+<p>単位は<code>J=N m</code>である。第3章で扱った次元で見ると、力に長さを掛けるのでエネルギーになる。</p>
+<p>第5章の電場中に電荷<code>q</code>を置くと、電気力は</p>
+<pre><code class="language-text">F = qE</code></pre>
+<p>だから、電場が電荷にした仕事は</p>
+<pre><code class="language-text">W_field = q ∫_a^b E · dℓ                         (6.1)</code></pre>
+<p>となる。<code>q</code>が負なら、同じ電場と経路でも仕事の符号が反転する。電場の向きだけを見て、どの電荷にも同じ仕事がされると考えてはいけない。</p>
+<h3 id="section-1-2">1.2　位置エネルギーの定義</h3>
+<p>保存力では、力がした<a class="term" href="index.html#term-concept_6_term_0837eb6108_0837eb61">仕事と位置エネルギー</a><code>U</code>の変化を</p>
+<pre><code class="language-text">ΔU = U(b) - U(a) = -W_field                     (6.2)</code></pre>
+<p>で結ぶ。電気力が正の仕事をしたなら、電荷を含む系の位置エネルギーは減る。逆に、外力が電気力に逆らってゆっくり電荷を運ぶなら、外力は正の仕事をし、系の位置エネルギーを増やす。</p>
+<p>「ゆっくり」という言葉は、運動エネルギーの変化を無視する近似を含む。電荷を急に放せば、位置エネルギーの一部が運動エネルギーへ移る。位置エネルギーの差だけで最終速度まで決められるのは、他の散逸や磁気的な効果を無視し、初期条件を指定した場合である。</p>
+<p>静電場では、閉じた経路に沿う電場の線積分は0になる。</p>
+<pre><code class="language-text">∮ E · dℓ = 0                                    (6.3)</code></pre>
+<p>そのため、式(6.1)の積分は、始点と終点が同じなら経路の細部によらない。この経路独立性が、位置だけの関数<code>U</code>、さらに電位<code>V</code>を定義できる条件である。時間変化する磁場がある場合は、誘導電場についてこの単純な経路独立性をそのまま仮定できない。後の電磁誘導の章で扱う境界を、ここで覚えておく。</p>
+<h2 id="section-2">2　電位と電位差</h2>
+<h3 id="section-2-1">2.1　単位電荷あたりのエネルギー</h3>
+<p>電荷<code>q</code>の位置エネルギーを、電荷の値で割って電位<code>V</code>を定義する。</p>
+<pre><code class="language-text">U = qV                                             (6.4)</code></pre>
+<p>電位差は式(6.2)と式(6.1)から、</p>
+<pre><code class="language-text">V(b) - V(a) = -∫_a^b E · dℓ                    (6.5)</code></pre>
+<p>となる。左辺の単位は<code>J/C</code>であり、これをボルト（volt、<code>V</code>）と呼ぶ。</p>
+<pre><code class="language-text">1 V = 1 J/C</code></pre>
+<p>同じ記号<code>V</code>を電位という物理量と単位ボルトの略号に使うので、式の文脈を読む。電位差を<code>ΔV</code>、単位を<code>V</code>と書けば混乱しにくい。</p>
+<p>式(6.5)には積分の向きがある。<code>a</code>から<code>b</code>へ正電荷を運ぶとき、電場と同じ向きに進めば<code>E·dℓ&gt;0</code>となり、<code>V(b)-V(a)&lt;0</code>になる。正電荷は電位の高い方から低い方へ、電気力によって自然に動く。外力で高い電位へ運ぶには、系へエネルギーを加える。</p>
+<h3 id="section-2-2">2.2　電位の基準</h3>
+<p>電位は基準なしには一意に決まらない。ある電位<code>V(r)</code>へ定数<code>V_0</code>を足した</p>
+<pre><code class="language-text">V&#x27;(r) = V(r) + V_0</code></pre>
+<p>も、勾配が同じなので同じ電場を与える。</p>
+<pre><code class="language-text">-∇V&#x27; = -∇V = E                                (6.6)</code></pre>
+<p>したがって、物理的に意味を持つのは、通常、二点間の差、電場、電荷の位置エネルギー差である。位置エネルギー<code>U=qV</code>そのものを比較する場合は、同じ基準を使う。</p>
+<p>「接地（ground）」は、回路の中で基準として選んだ導体または節点を表す。地球へ実際につながっている場合もあるが、机上の回路で記号として0 Vを置く場合もある。接地記号があるから、電位の絶対的な原点が自然界に一つ存在するわけではない。</p>
+<p>二つの端子<code>P</code>,<code>N</code>の電圧を</p>
+<pre><code class="language-text">V_PN = V(P) - V(N)</code></pre>
+<p>と定義するなら、測定器の赤リードを<code>P</code>、黒リードを<code>N</code>へつなぐ、という向きまで含めて記録する。リードを逆にすれば符号が反転する。</p>
+<h3 id="section-2-3">2.3　電位から電場へ</h3>
+<p>三次元で電位の変化を微小移動に対して書くと、</p>
+<pre><code class="language-text">dV = -E · dℓ</code></pre>
+<p>である。<code>dℓ=(dx,dy,dz)</code>とし、勾配を使えば</p>
+<pre><code class="language-text">E = -∇V
+  = ( -∂V/∂x, -∂V/∂y, -∂V/∂z )             (6.7)</code></pre>
+<p>となる。電位が最も急に増える向きが<code>∇V</code>、電場はその反対向きである。</p>
+<p>一次元で<code>V(x)=V_0-Ex</code>なら、</p>
+<pre><code class="language-text">dV/dx = -E</code></pre>
+<p>であり、<code>+x</code>方向の一様電場<code>E</code>が得られる。式の係数<code>E</code>の単位は<code>V/m</code>である。第5章の<code>N/C</code>と同じ量になることは、</p>
+<pre><code class="language-text">1 V/m = (1 J/C)/m = (1 N m/C)/m = 1 N/C</code></pre>
+<p>から分かる。</p>
+<h2 id="section-3">3　点電荷と複数の電荷の電位</h2>
+<h3 id="section-3-1">3.1　点電荷の電位</h3>
+<p>原点に点電荷<code>Q</code>があり、無限遠を基準<code>V(∞)=0</code>にする。電場は半径方向なので、半径<code>r</code>から無限遠へ向かう経路を取ると、</p>
+<pre><code class="language-text">V(r) - V(∞) = -∫_∞^r kQ/r&#x27;^2 dr&#x27;
+             = kQ/r                              (6.8)</code></pre>
+<p>となる。<code>Q&gt;0</code>なら電位は正、<code>Q&lt;0</code>なら負である。電場の大きさは<code>1/r²</code>で減少するのに対し、電位は<code>1/r</code>で減少する。</p>
+<p>式(6.8)へ<code>r=0</code>を代入してはいけない。点電荷の位置では、点電荷模型の電場と電位が発散する。現実の電荷分布には有限の大きさ、物質構造、量子効果があり、同じ式を無制限に延長しない。</p>
+<h3 id="section-3-2">3.2　重ね合わせはスカラーで足す</h3>
+<p>複数の点電荷があるとき、基準を同じ無限遠にそろえれば、電位は符号を保ったまま足せる。</p>
+<pre><code class="language-text">V(r) = Σ_i k q_i / |r-r_i|                       (6.9)</code></pre>
+<p>電場を求めるときはベクトルを成分ごとに足す必要があるが、電位はスカラーなので、まず各電荷の数値を足してから勾配を取れる。この性質は、対称性が完全でない配置の計算で便利である。</p>
+<p>ただし、電位の基準を電荷ごとに別々に選んで足してはいけない。<code>V_i</code>を足すなら、同じ基準、同じ単位、同じ観測点を使う。無限に広がる一様電荷分布など、無限遠を基準にできない場合は、有限の基準面や別の基準点を指定する。</p>
+<h3 id="section-3-3">3.3　電位差を積分で確かめる</h3>
+<p>一様電場<code>E=(0,0,E_0)</code>の中で、<code>z=a</code>から<code>z=b</code>へ移動する。<code>dℓ=(0,0,dz)</code>なので、</p>
+<pre><code class="language-text">V(b)-V(a) = -∫_a^b E_0 dz = -E_0(b-a)             (6.10)</code></pre>
+<p>である。<code>b&gt;a</code>なら、電場と同じ<code>+z</code>方向へ進んだので電位は下がる。</p>
+<p>逆に、平行板の下側を<code>V=0</code>、上側を<code>V=V_0</code>と置き、上向きの距離を<code>d</code>とするなら、板の間の理想一様場は</p>
+<pre><code class="language-text">V(z) = V_0 z/d
+E_z = -dV/dz = -V_0/d                         (6.11)</code></pre>
+<p>となる。上側が高電位なら、電場は上から下へ向く。導体表面の正負、電場の矢印、電位の増減を一枚の図に置くと、符号を確認しやすい。</p>
+<h2 id="section-4">4　<a class="term" href="index.html#term-concept_6_term_0375b56d41_0375b56d">等電位面</a>と導体</h2>
+<h3 id="section-4-1">4.1　等電位面</h3>
+<p>電位が一定の面を等電位面（equipotential surface）と呼ぶ。同じ面上の二点<code>a</code>,<code>b</code>では<code>V(b)-V(a)=0</code>なので、静電場では</p>
+<pre><code class="language-text">∫_a^b E · dℓ = 0</code></pre>
+<p>である。局所的には、面に沿う移動<code>dℓ</code>と電場が直交する。よって、電場は等電位面に垂直で、電位の高い側から低い側へ向く。</p>
+<p>等電位面の間隔が狭い場所は、同じ電位差が短い距離に落ちる場所であり、電場の大きさが大きい。図の等高線が密だからといって「電荷が線に沿って流れる」と考えない。等電位面はエネルギー差を読み取るための地図である。</p>
+<h3 id="section-4-2">4.2　静電平衡の導体</h3>
+<p>理想導体を静電平衡に置く。もし導体内部に有限の電場が残れば、自由に動ける電荷へ<code>F=qE</code>が働き、電荷が移動して平衡ではなくなる。したがって、この理想化では</p>
+<pre><code class="language-text">E_inside = 0</code></pre>
+<p>である。式(6.7)から、つながった導体の内部と表面は同一電位になる。表面上に接線方向の電場があれば、表面電荷が動くので、静電平衡では接線成分も0である。表面直外の場は法線方向になる。</p>
+<p>第5章のピルボックスの議論から、真空中の導体表面では</p>
+<pre><code class="language-text">E_out,n - E_in,n = σ/ε0</code></pre>
+<p>である。<code>E_in,n=0</code>なら、</p>
+<pre><code class="language-text">E_out,n = σ/ε0                              (6.12)</code></pre>
+<p>となる。ここで<code>σ</code>はその場所の表面<a class="term" href="index.html#term-charge_density">電荷密度</a>であり、導体全体の電荷を面積で単純に割った値とは限らない。尖った部分では表面電荷が集中し、電場と電位の空間変化も一様ではない。</p>
+<h3 id="section-4-3">4.3　遮蔽と限界</h3>
+<p>閉じた導体の空洞内に外部電荷が作る静電場を、導体の自由電荷の再配置によって小さくできる。これが静電遮蔽である。しかし、次の条件を隠した言い方にしてはいけない。</p>
+<ul><li>導体が静電平衡に達していること。</li><li>導体の導電性を十分大きく、表面を理想的に扱えること。</li><li>電場の時間変化、周波数、導体の抵抗、開口部、接地を指定すること。</li><li>空洞内に電荷がある場合、誘導表面電荷とガウス面を含めて扱うこと。</li></ul>
+<p>高周波の電磁波や有限抵抗の遮蔽は、<code>E_inside=0</code>の一行だけでは説明できない。後の伝送線路、雑音、電磁波の章で、周波数と寸法を条件に加える。</p>
+<h2 id="section-5">5　電圧を測るということ</h2>
+<h3 id="section-5-1">5.1　二点間の量</h3>
+<p>回路でいう電圧は、通常、二つの端子の電位差である。<code>P</code>を高い側、<code>N</code>を基準側とする<a class="term" href="index.html#term-concept_11_term_1d38fab790_1d38fab7">受動符号規約</a>なら、</p>
+<pre><code class="language-text">v_PN(t) = V(P,t) - V(N,t)                    (6.13)</code></pre>
+<p>と書く。これは一点の「電圧」ではなく、端子の組と基準の指定である。</p>
+<p>電池の端子に「5 V」と書いてあっても、開放端子の電圧なのか、負荷<a class="term" href="index.html#term-current">電流</a>が流れているときの端子電圧なのか、内部抵抗を含む模型のどの値なのかを確認する。化学反応が電荷を低電位側から高電位側へ運ぶ電池内部では、静電場だけでなく非電気的な力が電荷へ仕事をする。電池の起電力と端子間電圧を同じ概念として扱わない。</p>
+<h3 id="section-5-2">5.2　測定器は無色透明ではない</h3>
+<p>理想電圧計は、二端子間の電位差を読み、回路から電流を奪わない、つまり入力抵抗を無限大とする。しかし実際の電圧計には有限の入力抵抗<code>R_in</code>と入力容量<code>C_in</code>がある。測定器をつなぐと、対象回路へ並列の枝が加わる。</p>
+<p>したがって、測定値は「つなぐ前に存在していた値を覗いたもの」とは限らない。低抵抗の回路なら負荷電流の影響が小さいが、高抵抗の節点では<code>R_in</code>だけでも電位を変える。速い波形では<code>C_in</code>、帯域、サンプリング、量子化も記録する。</p>
+<p>第4章の測定経路の考え方をここへ接続する。</p>
+<pre><code class="language-text">対象の電場・回路 ─→ プローブ(R_in,C_in) ─→ 増幅・帯域 ─→ サンプル ─→ 記録値</code></pre>
+<p>この列のどこまでを「電圧」と呼んだのかを明示し、解析式の<code>V</code>と測定器の出力値を同じ欄へ無条件に置かない。</p>
+<h2 id="section-6-2">6　<a class="term" href="index.html#term-concept_6_term_86ad554dac_86ad554d">静電容量</a>とコンデンサ</h2>
+<h3 id="section-6-1">6.1　電荷を電位差で支える</h3>
+<p>二つの導体を分離し、一方へ<code>+Q</code>、他方へ<code>-Q</code>を置くと、導体間に電位差が生じる。線形で静電的な二導体系では、静電容量（capacitance）<code>C</code>を</p>
+<pre><code class="language-text">C = Q/ΔV                                      (6.14)</code></pre>
+<p>と定義する。単位はファラド（farad、<code>F</code>）で、</p>
+<pre><code class="language-text">1 F = 1 C/V</code></pre>
+<p>である。<code>C</code>は「その物体が常に保持する電荷の量」ではない。形状、導体間距離、周囲の物質、境界条件で決まる比例係数であり、同じコンデンサでも電圧を変えれば<code>Q</code>が変わる。</p>
+<p>線形でない素子や誘電体では、局所的な微分容量を</p>
+<pre><code class="language-text">C_diff = dQ/d(ΔV)</code></pre>
+<p>として区別する。式(6.14)を使うときは、<code>Q</code>と<code>ΔV</code>の範囲で比例関係が成立していることを確認する。</p>
+<h3 id="section-6-2-2">6.2　平行板コンデンサ</h3>
+<p>面積<code>A</code>の二枚の平行導体板を距離<code>d</code>だけ離し、端効果を無視する。板間が一様な線形誘電体で、誘電率を<code>ε</code>とする。板間電場の大きさは</p>
+<pre><code class="language-text">E = σ/ε = Q/(εA)</code></pre>
+<p>である。板間の電位差の大きさは<code>ΔV=Ed</code>だから、</p>
+<pre><code class="language-text">ΔV = Qd/(εA)
+C = Q/ΔV = εA/d                             (6.15)</code></pre>
+<p>となる。真空なら<code>ε=ε0</code>、物質を一様に満たすなら単純模型では<code>ε=εr ε0</code>と置く。</p>
+<p>式(6.15)は、板が十分広く、<code>d</code>に比べて端からの距離が小さく、板間の物質が線形・均一であるという近似を含む。端では電場が外へ回り込むフリンジ（fringing）電場があり、<code>E=V/d</code>は局所的に正確でない。薄い板、有限面積、空気の不均一、絶縁破壊もこの模型の外側である。</p>
+<h3 id="section-6-3">6.3　接続方法と基準</h3>
+<p>コンデンサの極板電荷を<code>Q</code>、極板間電圧を<code>V=V_+-V_-</code>とする。符号をこの組で固定すれば、線形コンデンサの関係は<code>Q=CV</code>と書ける。</p>
+<p>並列接続では同じ二端子間電圧を共有し、電荷が足し合わされる。</p>
+<pre><code class="language-text">C_parallel = C_1 + C_2 + ...</code></pre>
+<p>直列接続では、理想化した中間導体に正味の外部電荷がないという条件から、各コンデンサの電荷の大きさが同じになり、電圧が足し合わされる。</p>
+<pre><code class="language-text">1/C_series = 1/C_1 + 1/C_2 + ...</code></pre>
+<p>これらの式は端子の接続、初期電荷、漏れ、<a class="term" href="index.html#term-parasitic_capacitance">寄生容量</a>を指定した回路模型の式であり、どの部品にも無条件に適用する自然法則ではない。</p>
+<h2 id="section-7">7　コンデンサに蓄えられるエネルギー</h2>
+<h3 id="section-7-1">7.1　充電の微小仕事</h3>
+<p>コンデンサの電荷を0から<code>Q</code>まで、微小電荷<code>dq</code>ずつ運ぶ。最後の時点での電圧を<code>V(q)</code>とすれば、外部が加える微小仕事は、準静的な理想充電では</p>
+<pre><code class="language-text">dU = V(q) dq                                  (6.16)</code></pre>
+<p>である。線形コンデンサでは<code>V(q)=q/C</code>だから、</p>
+<pre><code class="language-text">U = ∫_0^Q (q/C)dq
+  = Q²/(2C)
+  = 1/2 QV
+  = 1/2 C V²                                 (6.17)</code></pre>
+<p>となる。単位は<code>C·V=J</code>である。</p>
+<p><code>U=QV</code>ではないことに注意する。<code>QV</code>は、最後の電圧を最初から一定とみなした積であり、充電中に電圧が0から<code>V</code>へ上がることを無視している。線形コンデンサの平均電圧は<code>V/2</code>なので、積分結果は<code>QV/2</code>になる。</p>
+<h3 id="section-7-2">7.2　電場に蓄える</h3>
+<p>平行板コンデンサの式を式(6.17)へ代入する。</p>
+<pre><code class="language-text">U = 1/2 (εA/d) (Ed)²
+  = 1/2 ε E² (Ad)                             (6.18)</code></pre>
+<p>板間の体積を<code>Ad</code>とすれば、単位体積あたりの<a class="term" href="index.html#term-concept_6_term_a88de2a67b_a88de2a6">電場エネルギー密度</a>は</p>
+<pre><code class="language-text">u_E = U/(Ad) = 1/2 εE²                        (6.19)</code></pre>
+<p>である。これは「電荷が板の表面だけにエネルギーを持つ」という見方ではなく、電場が存在する空間へエネルギーを割り当てる見方である。式(6.19)は線形・等方的な媒質の静電場模型であり、誘電体の微視的な分極エネルギーを詳しく分解した式ではない。誘電体と電気変位<code>D</code>は第8章で扱う。</p>
+<h3 id="section-7-3">7.3　電源、抵抗、蓄積エネルギーを分ける</h3>
+<p>電池から抵抗を介してコンデンサを充電する場合、電池が供給したエネルギーのすべてがコンデンサへ残るわけではない。理想的な一定電圧源と抵抗で、最終電圧が<code>V_0</code>になる単純な充電では、電源の供給は<code>CV_0²</code>、コンデンサに残るのは<code>1/2 CV_0²</code>、残りは抵抗で熱になる。</p>
+<p>この比率は、抵抗値が小さいほど充電が速くなるという話とは別である。理想的な部品、一定電圧源、最終状態、抵抗だけの経路という条件を置いた結果である。電源の内部抵抗、漏れ、放電経路、測定器を追加すれば、エネルギー収支をその経路ごとに記録する。</p>
+<h2 id="section-8">8　平行板コンデンサを解析と数値で比べる</h2>
+<h3 id="section-8-1">8.1　実験契約</h3>
+<p>必修実験の入力を次で固定する。これは期待値を作るための設定であり、まだrunnerで実行した結果ではない。</p>
+<pre><code class="language-text">A       = 0.010 m^2
+d       = 0.0010 m
+epsilon = epsilon_0 = 8.8541878188e-12 F/m  (CODATA 2022)
+V_top   = 5.0 V
+V_bottom= 0.0 V</code></pre>
+<p>端効果を無視した解析値は、</p>
+<pre><code class="language-text">E_z       = -(V_top - V_bottom)/d = -5.00e3 V/m
+C         = epsilon_0 A/d       = 8.85419e-11 F
+Q_top     = C(V_top-V_bottom)   = 4.42709e-10 C
+U         = 1/2 C(V_top-V_bottom)^2 = 1.10677e-9 J
+u_E       = 1/2 epsilon_0 E_z^2 = 1.10677e-4 J/m^3</code></pre>
+<p>座標<code>z=0</code>を下板、<code>z=d</code>を上板とし、解析電位を</p>
+<pre><code class="language-text">V_analytic(z) = V_bottom + (V_top-V_bottom) z/d       (6.20)</code></pre>
+<p>とする。数値側では、板間を<code>N</code>個の区間へ分け、等間隔の格子点で<code>V(z)</code>を評価する。内部点の中心差分</p>
+<pre><code class="language-text">E_numeric(z_i) = -(V(z_i+Δz)-V(z_i-Δz))/(2Δz)          (6.21)</code></pre>
+<p>から電場を求める。<code>N</code>を増やしたときの最大電位誤差、電場誤差、<a class="term" href="index.html#term-concept_11_term_e82a112e82_e82a112e">数値積分</a>した電位差を保存する。一次関数を等間隔格子で差分すれば内部電場は理論上ほぼ一定になるが、端点処理、浮動小数点、面積重み、単位変換は別に検査する。</p>
+<h3 id="section-8-2">8.2　電荷と<a class="term" href="index.html#term-concept_5_term_b12f6ea0fb_b12f6ea0">電束</a>の二通りの確認</h3>
+<p>解析的には<code>Q=εA|E|</code>である。数値側では、上板直下の法線電場から<code>Q_numeric=εA|E_numeric|</code>を計算し、さらに球面ではない開いた板面の電束として、法線の向きを明示して</p>
+<pre><code class="language-text">Φ_plate = ∫_A E · dA</code></pre>
+<p>を求める。板の上向き法線と下向き法線では符号が反転する。前章の<a class="term" href="index.html#term-concept_5_term_2025243934_20252439">ガウスの法則</a>で扱った閉曲面の正味電束と、この板面の電束を同じものとして扱わない。</p>
+<p>エネルギーは、(a)<code>1/2 C V²</code>、(b)<code>∫ u_E d^3r</code>、(c)<code>∫_0^Q V(q)dq</code>の三通りを比較する。三つが一致するのは、同じ線形・一様・端効果なしの模型と同じ境界条件を使ったときである。</p>
+<h3 id="section-8-3">8.3　失敗したときの順番</h3>
+<p>差が出たら、最初に物理模型を変えるのではなく、次の順で切り分ける。</p>
+<ol><li><code>mm</code>を<code>m</code>へ変換したか、<code>μF</code>を<code>F</code>へ変換したか確認する。</li><li><code>z=0</code>と<code>z=d</code>の電位を逆にしていないか、<code>E=-dV/dz</code>の負号を確認する。</li><li><code>A</code>が面積であり、辺長をそのまま代入していないか確認する。</li><li><code>Q</code>の符号、法線の向き、上板と下板の接続を確認する。</li><li>格子幅、端点差分、積分重み、収束表を確認する。</li><li>最後に、フリンジ電場、誘電体、漏れ、<a class="term" href="index.html#term-concept_4_term_f45c8e51fa_f45c8e51">測定器負荷</a>など、理想模型に含めていない現象を追加する。</li></ol>
+<p>理論値へ近づいた数値結果は、コードの全行が正しいことを証明しない。境界条件を意図的に反転し、電位差と電場の符号が一緒に反転する負のテストを必ず行う。</p>
+<h2 id="section-9">9　模型の境界と次章への接続</h2>
+<p>ここまでの電位は、静電場が経路独立であること、電荷と電場を指定できること、基準を選べることを前提にした。電圧は二点間の差であり、測定器をつなぐ前後の系を同じとみなせるとは限らない。コンデンサの<code>C=Q/V</code>と<code>U=1/2CV²</code>は、線形な二導体系と準静的充電の模型である。</p>
+<p>次に電荷が時間あたりどれだけ移動するかを考えると、電流が現れる。電位差は電荷を動かすエネルギー差として電流と結び付くが、電流そのもの、電荷密度の局所変化、<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>の流れは別の量である。第7章では、電流密度と連続の式から始め、<code>P=IV</code>とJoule熱へ進む。</p>
+<p>また、第8章では、真空の<code>ε0</code>を物質の誘電率へ置き換えるだけでは十分でない場面を扱う。束縛電荷、電気変位<code>D</code>、境界条件を導入し、式(6.15)と式(6.19)の適用範囲を広げたり狭めたりする。</p>
+<h2 id="section-10">10　章の確認</h2>
+<p>次の文を、式・基準・条件を添えて説明できるか確認する。</p>
+<ul><li>「5 V」は端子一つの絶対量ではなく、指定した二点間の電位差である。</li><li>電位へ定数を足しても電場は変わらないが、電位差は変わらない。</li><li>静電場では<code>E=-∇V</code>であり、電場は電位の下がる向きを向く。</li><li>導体の静電平衡では内部電場が0で、つながった導体は等電位になる。</li><li><code>Q=CV</code>は線形な二導体系の関係であり、<code>U=1/2CV²</code>は充電仕事の積分から出る。</li><li>コンデンサのエネルギーを電場エネルギー密度として読むには、媒質、境界、端効果の模型を記録する。</li><li>解析値、数値予測、測定値、domain adapter未導入の状態を別々に保存する。</li></ul>
+<p>&lt;!-- deepened-worked-examples --&gt;</p>
+<h2 id="section-6-4">6.補助演習　手を動かす導出帳</h2>
+<p>電位、電圧、エネルギーの計算を、結果だけでなく途中の状態から再構成する。以下では、各実験を同じ順序で読む。順序をそろえることで、物理の積分、回路の連立方程式、命令の状態遷移、<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>のstack操作を同じ観測方法で比較できる。</p>
+<h3 id="section-0">0　共通の書式</h3>
+<p>最初の行に入力と単位、二行目に使う式または遷移規則、三行目に途中状態、四行目に出力、五行目に検証条件を書く。五行を書けない場合は、本文の式・表・仕様のどれかがまだ手元にない。数値を計算機へ渡す前に、符号、桁、基数、配列の添字、アドレス幅を声に出して確認する。</p>
+<h3 id="section-1-3">例題1　平行板コンデンサの電位分布、電荷、蓄積エネルギーを解析式と数値計算で比較する</h3>
+<p>固定するcaseは<code>（指定なし）</code>、入口は<code>book run 6 1</code>である。入力は<code>["A=0.010 m^2、d=0.0010 m、epsilon=epsilon_0", "下板V_bottom=0 V、上板V_top=5.0 V", "z=0からdまでの一様格子、Nを複数設定", "中心差分と端点処理、電位差・電荷・エネルギーの計算方法", "端効果なしの解析模型と、端効果を含める場合の状態を分離する"]</code>として読み、未指定の値を勝手に補わない。 第一段階では、入力をそのまま状態へ写す。物理なら位置・電荷・境界、回路なら節点・枝・初期値、論理ならbit列・真理値表、CPUならPC・<a class="term" href="index.html#term-register">register</a>・memory、処理系ならsource・frame・objectを列挙する。 第二段階では、状態を一つだけ更新する。更新式の左辺と右辺の単位または幅をそろえ、更新前後の差分を一行で残す。 第三段階では、上位の契約を照合する。期待結果が数値なら許容誤差、状態名なら遷移表、文章なら観測項目の集合を使う。 宣言された期待値は<code>（指定なし）</code>である。これは解析予測または契約値であり、測定欄へ移さない。 第四段階では、反例を一つ作る。符号反転、境界外、幅超過、順序逆転、未初期化のうち、この例に近いものを一つ選ぶ。 反例の出力が正常値に見える場合は、診断が遅すぎる。失敗した層、入力、上流artifact、source_kindを同時に保存する。 最後に、同じ入力をもう一度実行し、trace ID以外の意味のある値が一致するかを確認する。時刻やhost名など実行 metadataの差は、計算値の差と分けて扱う。</p>
+<h3 id="section-1-4">1　途中状態の照合表</h3>
+<p>次の表を章ごとに埋める。空欄をゼロで埋めてはいけない。ゼロが意味のある値なら、なぜゼロなのかを右端に書く。</p>
+<table><thead><tr><th>順番</th><th>層</th><th>入力</th><th>更新した状態</th><th>契約・<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a></th><th>出所</th></tr></thead>
+<tbody><tr><td>1</td><td>sourceまたは初期条件</td><td>固定入力</td><td>初期状態</td><td>入力の型・単位</td><td>source</td></tr><tr><td>2</td><td>modelまたは<a class="term" href="index.html#term-compiler">compiler</a></td><td>式・規則</td><td>中間状態</td><td>次元・<a class="term" href="index.html#term-stack_effect">stack effect</a>・幅</td><td>analytic_prediction</td></tr><tr><td>3</td><td>runner</td><td>payload</td><td>実行状態</td><td>exit code・<a class="term" href="index.html#term-trace_id">trace ID</a></td><td>runner</td></tr><tr><td>4</td><td>deviceまたは表示</td><td><a class="term" href="index.html#term-bus">bus</a>・出力</td><td>観測イベント</td><td>範囲・順序</td><td>measurementまたはnot_run</td></tr></tbody>
+</table>
+<p>この表の<code>出所</code>列が重要である。解析予測が正しくても、測定器を通過したことにはならない。逆に測定値が得られても、式や実装との対応が記録されていなければ、どの層の違いか診断できない。</p>
+<h3 id="section-2-4">2　式・状態・コードを往復する</h3>
+<p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
+<p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
+<ul><li>用語<code>仕事と位置エネルギー</code>は、力の線積分とエネルギー差を結ぶ。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>仕事と位置エネルギー</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電位差</code>は、単位電荷あたりの位置エネルギー差として電場の線積分を要約する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電位差</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>基準電位</code>は、電位の任意定数と、端子間電圧の符号を固定する。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>基準電位</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>等電位面</code>は、電場に垂直な一定電位の面を場の地図として読む。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>等電位面</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電圧測定の負荷</code>は、電圧計の入力抵抗・容量が対象の電位差を変え得ることを表す。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電圧測定の負荷</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>静電容量</code>は、二導体系の電荷と電位差の比例係数。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>静電容量</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<ul><li>用語<code>電場エネルギー密度</code>は、コンデンサに蓄えられるエネルギーを空間の電場へ割り当てる。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<p><code>電場エネルギー密度</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
+<h3 id="section-3-4">3　失敗を一段ずつ切り分ける</h3>
+<p>故障診断では、まず入力を固定したまま実行し、次に一つの条件だけを変更する。二つの変更を同時に入れると、見えた差がどの条件の効果か分からなくなる。</p>
+<p>第一の切り分けは入力である。有限値、型、単位、符号、配列長、アドレス範囲を確認する。第二は計算である。式の項、丸め、符号拡張、stack effect、遷移の順序を確認する。第三は境界である。ROM/RAM、<a class="term" href="index.html#term-host">host</a>/target、解析/実測、適用内/適用外を確認する。</p>
+<p>失敗を直した後は、成功例だけを再実行しない。失敗例を同じ入力で再実行し、診断名が維持されることを確認する。診断名が消えた場合は、修正がエラーを隠している可能性がある。</p>
+<h3 id="section-4-4">4　再挑戦ノート</h3>
+<p>章末の再挑戦では、下の三つの欄を必ず埋める。</p>
+<ol><li>変更した条件: 変更前と変更後の値、単位、変更理由。</li><li>変わった観測: 出力、途中状態、trace、診断のどれが変わったか。</li><li>残った不変条件: 変更しても守られる契約と、その根拠。</li></ol>
+<ul><li><code>E6</code>（静電平衡の導体と表面電荷）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E7</code>（平行板の静電容量と端効果の条件）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E8</code>（コンデンサの充電仕事と電場エネルギー）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E9</code>（電圧計の基準端子と入力負荷）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E10</code>（平行板電位の数値差分と収束）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E11</code>（電位・電場・電荷の符号反転故障）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E12</code>（エネルギー計算の三経路と状態記録）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<ul><li><code>E13</code>（電圧と電流、次章への接続）を、値を一つだけ変えて再実行する。</li></ul>
+<p>期待する変化を先に一文で書き、実行後にその予測と実際の差を比較する。</p>
+<h3 id="section-5-3">5　次の層へ渡す最小データ</h3>
+<p>次章へ渡すのは、結論の文章だけではない。入力の意味、途中状態、単位または幅、成立条件、破綻条件、source_kind、status、measuredを一つの記録にまとめる。次章が別の模型を使う場合は、同じ記号でも定義が変わることを明示する。</p>
+<p>この章の成果物を開いた次の読者が、本文を読まずに同じ実験を再現できることを目標にする。ただし、実行可能モデルや契約再生の結果を実測値へ昇格させない。外部toolや機器が必要な例は、その未実行理由を残したまま次のゲートへ渡す。</p>
+<h3 id="section-6-5">6　短い口頭試問</h3>
+<p>最後に、次の質問へ答える。『入力は何か』『隠した変数は何か』『どの不変条件を検査したか』『一番近い失敗は何か』『測定値と呼べない理由は何か』。五問に答えられれば、結果の暗記ではなく契約の再構成ができている。</p>
+<p>&lt;!-- chapter-casebook --&gt;</p>
+<h2 id="section-6-6">6.実践ケースブック　宣言から観測へ</h2>
+<p>このケースブックは、<strong>電位、電圧、エネルギー</strong>の中心問題「回路図に書かれる数Vという値は、空間に存在する何を要約しているのか。」を、manifestに宣言された入力から追い直すための作業欄である。本文の結論を写すのではなく、入力、途中状態、出力、境界、出所の順に自分で埋める。ここにない値を補ってはいけない。</p>
+<h3 id="section-91103d5457">ケースを読む共通手順</h3>
+<ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
+<h3 id="section-1-5">1　代表入力の棚卸し</h3>
+<p>#### ケース1: <code>experiment-1</code></p>
+<p>このcaseは <code>["解析電場はE_z=-5.00e3 V/m、C≈8.85419e-11 F、Q≈4.42709e-10 Cとなる予測", "蓄積エネルギーはU≈1.10677e-9 J、密度はu_E≈1.10677e-4 J/m^3となる予測", "解析電位はzに対する一次関数で、上板から下板へ進む電場は負向きになる", "格子を細かくしたとき、内部中心差分の電場と電位…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<ul><li>入力項目1: <code>A=0.010 m^2、d=0.0010 m、epsilon=epsilon_0</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目2: <code>下板V_bottom=0 V、上板V_top=5.0 V</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目3: <code>z=0からdまでの一様格子、Nを複数設定</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目4: <code>中心差分と端点処理、電位差・電荷・エネルギーの計算方法</code>。本文の定義へ戻り、単位・幅・符号を補う。</li><li>入力項目5: <code>端効果なしの解析模型と、端効果を含める場合の状態を分離する</code>。本文の定義へ戻り、単位・幅・符号を補う。</li></ul>
+<p>出所欄は <code>source_kind=manifest_experiment_input</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
+<h3 id="section-2-5">2　導出カード</h3>
+<p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
+<p>#### 導出1: <code>derivation-1</code></p>
+<p>到達する結果は「電気力の仕事ΔW=q∫E·dℓと位置エネルギーの差から、ΔV=-∫E·dℓを得る。」で、参照する式IDまたは検証項目は <code>一様場の一次元積分、点電荷の無限遠基準、経路の向き反転</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出2: <code>derivation-2</code></p>
+<p>到達する結果は「点電荷の電場を半径方向に積分し、V=kQ/rを無限遠基準で得る。」で、参照する式IDまたは検証項目は <code>-dV/dr=E_r、正負Qの符号、r=0拒否</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出3: <code>derivation-3</code></p>
+<p>到達する結果は「平行板の一様場E=Q/(εA)とΔV=EdからC=εA/dを得る。」で、参照する式IDまたは検証項目は <code>解析電位の差分、Q=CΔV、板面電束の法線反転</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<p>#### 導出4: <code>derivation-4</code></p>
+<p>到達する結果は「dU=V(q)dqを0からQまで積分し、U=Q²/(2C)=1/2C(ΔV)²を得る。」で、参照する式IDまたは検証項目は <code>Q-V積分、1/2CV²、1/2εE²の体積積分</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
+<h3 id="section-3-5">3　実験カード</h3>
+<p>実験カードは、コマンドを実行したという事実と、何を検査したかを分離する。実行前に予測を書き、実行後は終了コード・artifact・<a class="term" href="index.html#term-diagnostic">diagnostic</a>を照合する。外部toolが未接続なら <code>not_run</code> を維持する。</p>
+<p>#### 実験1: 平行板コンデンサの電位分布、電荷、蓄積エネルギーを解析式と数値計算で比較する</p>
+<p>入口は <code>book run 6 1</code>、caseは <code>未指定</code>、required artifactは <code>["chapter-06-potential-source", "chapter-06-potential-plot", "chapter-06-energy-table", "chapter-06-failure-log"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>["解析電場はE_z=-5.00e3 V/m、C≈8.85419e-11 F、Q≈4.42709e-10 Cとなる予測", "蓄積エネルギーはU≈1.10677e-9 J、密度はu_E≈1.10677e-4 J/m^3となる予測", "解析電位はzに対する一次関数で、上板から下板へ進む電場は負向きになる", "格子を細かくしたとき、内部中心差分の電場と電位…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<h3 id="section-4-5">4　反例と故障診断</h3>
+<p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
+<p>明示的な負のテストがない場合も、範囲外・単位違い・幅超過・未初期化のうち一つを追加して診断を書く。</p>
+<h3 id="section-5-4">5　模型の境界と章間の橋</h3>
+<p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
+<ul><li>電位は基準に依存し、基準を電荷ごとに変えて重ね合わせてはいけない。</li><li>E=-grad(V)は静電場の経路独立性を前提とし、時間変化する磁場の誘導電場へ無条件に適用しない。</li><li>点電荷のV=kQ/rはr=0、有限サイズの電荷、物質応答、時間変化、速度効果を含まない。</li><li>導体内部E=0と等電位は静電平衡・理想導体の条件であり、抵抗、周波数、開口、過渡を隠している。</li><li>電圧計は有限入力抵抗・容量・帯域を持つため、接続前の電位差を透明に読むとは限らない。</li><li>C=εA/dは平行板、線形媒質、一様場、端効果なしの模型であり、漏れ・誘電損失・破壊・非線形性を含まない。</li><li>U=1/2CV²はコンデンサへ残る蓄積エネルギーで、電源の供給エネルギーや抵抗での発熱とは別である。</li><li>電場エネルギー密度u=1/2εE²は線形・等方的な静電場での式で、束縛電荷の詳細は第8章へ残す。</li><li>平行板の解析adapter成果物は生成済みだが、domain出力は未生成で、本文の数値は予測値としてのみ扱う。</li></ul>
+<p>前章から受け取るもの:</p>
+<ul><li>第5章の電荷q、電場E、電束、ガウスの法則、理想導体境界条件</li><li>第3章の仕事、線積分、勾配、<a class="term" href="index.html#term-concept_3_term_a8a037d8b9_a8a037d8">次元解析</a>、数値差分</li><li>第4章の解析予測・数値予測・測定値・未実装状態の分離</li><li>固定Linux環境と共通実行入口 book run &lt;chapter-id&gt; &lt;experiment-id&gt;</li></ul>
+<p>次章へ渡すもの:</p>
+<ul><li>第7章で電位差により移動する電荷を電流Iと<a class="term" href="index.html#term-current_density">電流密度</a>Jへ接続する</li><li>第8章で電流密度、<a class="term" href="index.html#term-conductivity">導電率</a>、移動度、抵抗率を担体模型へ接続する</li><li>第9章以降で基準節点、端子電圧、コンデンサを集中定数回路へ縮約する</li></ul>
+<p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
+<h3 id="section-6-7">6　合格前のセルフチェック</h3>
+<p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
+<ul><li>中心問題を一文で言い換える: ＿＿＿＿＿＿＿＿＿＿</li><li>最小の代表入力と単位・幅: ＿＿＿＿＿＿＿＿＿＿</li><li>途中状態から出力までの更新を二段: ＿＿＿＿＿＿＿＿＿＿</li><li>最も近い反例と最初の診断層: ＿＿＿＿＿＿＿＿＿＿</li><li>測定値と呼べない条件: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactと、そのsource_kind/status: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<ul><li>合格条件1: <code>A1</code> — potential_and_reference_are_explicit。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件2: <code>A2</code> — conductor_and_meter_limits_are_explicit。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件3: <code>A3</code> — capacitor_energy_three_routes。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件4: <code>A4</code> — runner_analytic_replay_is_not_external_measurement。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件5: <code>A5</code> — exercise_solution_and_rechallenge。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<ul><li>合格条件6: <code>A6</code> — independent_review_pending。</li></ul>
+<p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
+<h3 id="section-7-4">7　実験ごとの観測表</h3>
+<p>同じ実験を再実行する前に、次の観測表を一枚ずつ埋める。表の目的は出力を増やすことではなく、入力と判定の間にある状態を消さないことである。</p>
+<p>#### 観測表1: 平行板コンデンサの電位分布、電荷、蓄積エネルギーを解析式と数値計算で比較する</p>
+<table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
+<tbody><tr><td>入口</td><td><code>book run 6 1</code></td></tr><tr><td>case</td><td><code>未指定</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>["解析電場はE_z=-5.00e3 V/m、C≈8.85419e-11 F、Q≈4.42709e-10 Cとなる予測", "蓄積エネルギーはU≈1.10677e-9 J、密度はu_E≈1.10677e-4 J/m^3となる予測", "解析電位はzに対する一次関数で、上板から下板へ進む電場は負向きになる", "格子を細かくしたとき、内部中心差分の電場と電位…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+</table>
+<p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
+<h3 id="section-8-4">8　ひとつの値を最後まで追う</h3>
+<p>この章で最も小さい代表入力を一つ選び、上位の問いから下位の実装へ、また下位の結果から上位の契約へ往復する。値の名前が層ごとに変わるときは、同じ行に別名を並べ、同一視してよい条件を右側に書く。</p>
+<p>最初の行には、入力の出所と固定版を書く。二行目には、本文で導入した式または状態遷移を一つだけ置く。三行目には、式を評価する前の中間状態を書く。四行目には、計算後の値と残差を書く。五行目には、上位の契約へ戻るための不変条件を書く。</p>
+<p>単位を持つ量は、数値の横へSI単位または宣言した単位系を必ず付ける。bit列は幅と符号解釈を付け、アドレスは対象memory領域を付ける。状態名は初期状態と更新順を付ける。<a class="term" href="index.html#term-token">token</a>やASTはsource spanを付ける。これらを省略した値は、数字が同じでも別のcaseである。</p>
+<p>途中で予測と結果が異なったら、最後の行から修正しない。入力、仮定、更新、表現、実行環境の順に一つずつ戻り、最初に不一致になった行へ診断名を付ける。診断名を付けられない差は、未解決として後段へ渡さない。</p>
+<h3 id="section-9-2">9　逆向きに説明する</h3>
+<p>今度は出力から出発し、どの入力と規則が必要だったかを逆向きに書く。画面の文字、論理値、レジスタ値、電圧、エネルギーのように異なる表現を、途中のartifactなしで直接つないではいけない。各矢印のそばに、保証する契約と保証しない詳細を一つずつ書く。</p>
+<p>逆向きの説明で最初に見つかる欠落は、たいてい三種類のどれかである。入力の単位または幅がない、モデルの適用条件がない、または実行と測定の境界がない。この章の本文へ戻り、欠落を埋める行を一つ追加する。</p>
+<h3 id="section-10-2">10　再現記録の最小形</h3>
+<p>再現記録には、章ID、実験ID、case、入力hash、toolまたはmodelの版、終了コード、出力artifact、source_kind、status、measuredを残す。時刻やhost名は再現性の補助情報であり、計算値や状態遷移の一部として扱わない。</p>
+<p>この最小形を満たせないときは、実験が難しいのではなく、契約がまだ閉じていない。閉じていない契約は、成功結果を保存するより先に、未指定欄と診断欄を保存する。</p>
+<h3 id="section-11">11　次章の読者への引き継ぎ文</h3>
+<p>最後に、次章の読者がこの章を読み返さなくても前提を再構成できる引き継ぎ文を書く。第一文はこの章が固定した定義、第二文は代表入力と途中状態、第三文は守る不変条件、第四文は最も近い破綻条件、第五文は未実行または未照合の境界である。</p>
+<p>引き継ぎ文の主語を『この値は』だけにしない。『この模型では』『この版のtoolでは』『このmemory領域では』『この<a class="term" href="index.html#term-source_span">source span</a>では』のように、値の所有者を明記する。所有者が変わるところが、章間のbridgeであり、独立レビューが最初に読む境界である。</p>
+<p>引き継ぎ文を書いたら、manifestの <code>bridge_in</code> と <code>bridge_out</code>、handoffのopen question、required artifactを照合する。本文に書いた橋と台帳の橋が異なる場合は、どちらかを勝手に合わせず、差分を未解決として残す。</p>
+<p>引き継ぎの確認欄:</p>
+<ul><li>定義した量・状態・構造: ＿＿＿＿＿＿＿＿＿＿</li><li>入力の単位・幅・版: ＿＿＿＿＿＿＿＿＿＿</li><li>一段目の更新とその根拠: ＿＿＿＿＿＿＿＿＿＿</li><li>二段目の出力と不変条件: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻時に停止するs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e: ＿＿＿＿＿＿＿＿＿＿</li><li>次章へ渡すartifactのpath: ＿＿＿＿＿＿＿＿＿＿</li><li>未実行・未照合・適用外の境界: ＿＿＿＿＿＿＿＿＿＿</li></ul>
+<p>このケースブックを通過しても、外部tool・<a class="term" href="index.html#term-fpga">FPGA</a>・実機を使ったことにはならない。実行可能教育モデル、解析予測、外部tool出力、物理測定、独立レビューをそれぞれ別の根拠として保持する。</p></main>
+<footer><p>公開制作版 — 本文・オリジナル図版は <a href="../../LICENSE-CONTENT.md">CC BY 4.0</a>、コード例は <a href="../../LICENSE-CODE">MIT License</a>。第三者資料には各権利者の条件が適用されます。<a href="https://github.com/mani1261790/electric-circuits-to-python">GitHub</a></p></footer>
+<script>
+document.addEventListener('keydown', function (event) {
+  if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key !== 'j' && event.key !== 'k') return;
+  const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'));
+  const current = headings.indexOf(document.activeElement);
+  const next = event.key === 'j' ? current + 1 : current - 1;
+  if (headings[next]) { event.preventDefault(); headings[next].tabIndex = -1; headings[next].focus(); }
+});
+</script>
+</body>
+</html>

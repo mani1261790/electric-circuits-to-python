@@ -1,0 +1,816 @@
+{
+  "checks": {
+    "event_ids_unique": true,
+    "event_schema_complete": true,
+    "measured_is_false": true,
+    "object_graph_has_four_nodes": true,
+    "object_graph_has_three_edges": true,
+    "object_graph_links_source": true,
+    "parent_chain_is_closed": true,
+    "source_ast_is_list": true,
+    "trace_id_is_consistent": true,
+    "vm_build_list_present": true
+  },
+  "cpython": {
+    "ast": "Module(body=[Assign(targets=[Name(id='x', ctx=Store())], value=List(elts=[Constant(value=1), Constant(value=2), Constant(value=3)], ctx=Load()))])",
+    "bytecode": [
+      "  0           RESUME                   0",
+      "",
+      "  1           BUILD_LIST               0",
+      "              LOAD_CONST               2 ((1, 2, 3))",
+      "              LIST_EXTEND              1",
+      "              STORE_NAME               0 (x)",
+      "              LOAD_CONST               1 (None)",
+      "              RETURN_VALUE"
+    ],
+    "measured": false,
+    "runtime": "CPython",
+    "source": "x = [1, 2, 3]",
+    "source_kind": "external_tool_output_without_physical_measurement",
+    "tokens": [
+      {
+        "kind": "NAME",
+        "span": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "value": "x"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "value": "="
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "value": "["
+      },
+      {
+        "kind": "NUMBER",
+        "span": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ]
+        ],
+        "value": "1"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ]
+        ],
+        "value": ","
+      },
+      {
+        "kind": "NUMBER",
+        "span": [
+          [
+            1,
+            8
+          ],
+          [
+            1,
+            9
+          ]
+        ],
+        "value": "2"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            10
+          ]
+        ],
+        "value": ","
+      },
+      {
+        "kind": "NUMBER",
+        "span": [
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            12
+          ]
+        ],
+        "value": "3"
+      },
+      {
+        "kind": "OP",
+        "span": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            13
+          ]
+        ],
+        "value": "]"
+      },
+      {
+        "kind": "NEWLINE",
+        "span": [
+          [
+            1,
+            13
+          ],
+          [
+            1,
+            14
+          ]
+        ],
+        "value": ""
+      },
+      {
+        "kind": "ENDMARKER",
+        "span": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "value": ""
+      }
+    ],
+    "version": "3.14.7"
+  },
+  "display_example": "x = [1, 2, 3]",
+  "events": [
+    {
+      "artifact": "trace-atlas",
+      "event": "source_assign",
+      "event_id": "trace-B-list-construction:source:1",
+      "layer": "source",
+      "measured": false,
+      "parent_event_id": null,
+      "sequence": 0,
+      "source": "x = [1, 2, 3]",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        0,
+        13
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "trace-atlas",
+      "element_count": 3,
+      "event": "list_literal",
+      "event_id": "trace-B-list-construction:ast:2",
+      "layer": "AST",
+      "measured": false,
+      "node_type": "List",
+      "parent_event_id": "trace-B-list-construction:source:1",
+      "sequence": 1,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        4,
+        13
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "compile_list",
+      "event_id": "trace-B-list-construction:bytecode:3",
+      "instruction_count": 6,
+      "layer": "bytecode",
+      "measured": false,
+      "parent_event_id": "trace-B-list-construction:ast:2",
+      "sequence": 2,
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        4,
+        13
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "minipy-vm-trace",
+      "event": "LOAD_CONST",
+      "event_id": "trace-B-list-construction:minipy:1",
+      "layer": "MiniPy",
+      "measured": false,
+      "offset": 0,
+      "op": "LOAD_CONST",
+      "parent_event_id": "trace-B-list-construction:bytecode:3",
+      "sequence": 3,
+      "source_reference": "projects/minipy/runtime.py",
+      "source_span": [
+        5,
+        6
+      ],
+      "span": [
+        5,
+        6
+      ],
+      "stack_after": [
+        1
+      ],
+      "stack_before": [],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "minipy-vm-trace",
+      "event": "LOAD_CONST",
+      "event_id": "trace-B-list-construction:minipy:2",
+      "layer": "MiniPy",
+      "measured": false,
+      "offset": 1,
+      "op": "LOAD_CONST",
+      "parent_event_id": "trace-B-list-construction:minipy:1",
+      "sequence": 4,
+      "source_reference": "projects/minipy/runtime.py",
+      "source_span": [
+        8,
+        9
+      ],
+      "span": [
+        8,
+        9
+      ],
+      "stack_after": [
+        1,
+        2
+      ],
+      "stack_before": [
+        1
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "minipy-vm-trace",
+      "event": "LOAD_CONST",
+      "event_id": "trace-B-list-construction:minipy:3",
+      "layer": "MiniPy",
+      "measured": false,
+      "offset": 2,
+      "op": "LOAD_CONST",
+      "parent_event_id": "trace-B-list-construction:minipy:2",
+      "sequence": 5,
+      "source_reference": "projects/minipy/runtime.py",
+      "source_span": [
+        11,
+        12
+      ],
+      "span": [
+        11,
+        12
+      ],
+      "stack_after": [
+        1,
+        2,
+        3
+      ],
+      "stack_before": [
+        1,
+        2
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "minipy-vm-trace",
+      "event": "BUILD_LIST",
+      "event_id": "trace-B-list-construction:minipy:4",
+      "layer": "MiniPy",
+      "measured": false,
+      "offset": 3,
+      "op": "BUILD_LIST",
+      "parent_event_id": "trace-B-list-construction:minipy:3",
+      "sequence": 6,
+      "source_reference": "projects/minipy/runtime.py",
+      "source_span": [
+        4,
+        13
+      ],
+      "span": [
+        4,
+        13
+      ],
+      "stack_after": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "stack_before": [
+        1,
+        2,
+        3
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "minipy-vm-trace",
+      "event": "STORE_NAME",
+      "event_id": "trace-B-list-construction:minipy:5",
+      "layer": "MiniPy",
+      "measured": false,
+      "offset": 4,
+      "op": "STORE_NAME",
+      "parent_event_id": "trace-B-list-construction:minipy:4",
+      "sequence": 7,
+      "source_reference": "projects/minipy/runtime.py",
+      "source_span": [
+        0,
+        13
+      ],
+      "span": [
+        0,
+        13
+      ],
+      "stack_after": [],
+      "stack_before": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "minipy-vm-trace",
+      "event": "HALT",
+      "event_id": "trace-B-list-construction:minipy:6",
+      "halt": true,
+      "layer": "MiniPy",
+      "measured": false,
+      "offset": 5,
+      "op": "HALT",
+      "parent_event_id": "trace-B-list-construction:minipy:5",
+      "sequence": 8,
+      "source_reference": "projects/minipy/runtime.py",
+      "source_span": [
+        13,
+        13
+      ],
+      "span": [
+        13,
+        13
+      ],
+      "stack_after": [],
+      "stack_before": [],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "list_allocate",
+      "event_id": "trace-B-list-construction:object:10",
+      "layer": "object",
+      "length": 3,
+      "measured": false,
+      "object_id": "B.list.0",
+      "object_type": "list",
+      "parent_event_id": "trace-B-list-construction:minipy:4",
+      "sequence": 9,
+      "source_kind": "educational_object_model",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        4,
+        13
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction"
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "element_allocate",
+      "event_id": "trace-B-list-construction:object:11",
+      "layer": "object",
+      "measured": false,
+      "object_id": "B.int.1",
+      "object_type": "int",
+      "parent_event_id": "trace-B-list-construction:object:10",
+      "sequence": 10,
+      "source_kind": "educational_object_model",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        5,
+        6
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction",
+      "value": 1
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "element_allocate",
+      "event_id": "trace-B-list-construction:object:12",
+      "layer": "object",
+      "measured": false,
+      "object_id": "B.int.2",
+      "object_type": "int",
+      "parent_event_id": "trace-B-list-construction:object:10",
+      "sequence": 11,
+      "source_kind": "educational_object_model",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        8,
+        9
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction",
+      "value": 2
+    },
+    {
+      "artifact": "trace-atlas",
+      "event": "element_allocate",
+      "event_id": "trace-B-list-construction:object:13",
+      "layer": "object",
+      "measured": false,
+      "object_id": "B.int.3",
+      "object_type": "int",
+      "parent_event_id": "trace-B-list-construction:object:10",
+      "sequence": 12,
+      "source_kind": "educational_object_model",
+      "source_reference": "tools/trace_atlas.py",
+      "source_span": [
+        11,
+        12
+      ],
+      "status": "executed_model",
+      "trace_id": "trace-B-list-construction",
+      "value": 3
+    }
+  ],
+  "layer_status": {
+    "DRAM": {
+      "reason": "no physical memory observation",
+      "status": "not_applicable"
+    },
+    "cache": {
+      "reason": "no cache simulator or hardware trace",
+      "status": "not_run"
+    },
+    "heap": {
+      "reason": "object graph only; allocator address is not measured",
+      "status": "modeled"
+    },
+    "rv32edu": {
+      "reason": "list construction has no UART port in the current stack",
+      "status": "not_applicable"
+    },
+    "virtual_memory": {
+      "reason": "not part of MiniPy host trace",
+      "status": "not_run"
+    }
+  },
+  "measured": false,
+  "minipy": {
+    "bytecode": [
+      {
+        "arg": 0,
+        "const_index": 0,
+        "op": "LOAD_CONST",
+        "span": [
+          5,
+          6
+        ],
+        "value": 1
+      },
+      {
+        "arg": 1,
+        "const_index": 1,
+        "op": "LOAD_CONST",
+        "span": [
+          8,
+          9
+        ],
+        "value": 2
+      },
+      {
+        "arg": 2,
+        "const_index": 2,
+        "op": "LOAD_CONST",
+        "span": [
+          11,
+          12
+        ],
+        "value": 3
+      },
+      {
+        "arg": 3,
+        "op": "BUILD_LIST",
+        "span": [
+          4,
+          13
+        ]
+      },
+      {
+        "arg": 0,
+        "name": "x",
+        "name_index": 0,
+        "op": "STORE_NAME",
+        "span": [
+          0,
+          13
+        ]
+      },
+      {
+        "op": "HALT",
+        "span": [
+          13,
+          13
+        ]
+      }
+    ],
+    "compiler": {
+      "constant_folding": false,
+      "name": "minipy-reference",
+      "version": "0.2"
+    },
+    "verification": {
+      "code_objects": [
+        {
+          "instruction_count": 6,
+          "name": "<module>",
+          "reachable": 6,
+          "stack_verified": true
+        }
+      ],
+      "status": "verified"
+    },
+    "vm": {
+      "globals": {
+        "x": [
+          1,
+          2,
+          3
+        ]
+      },
+      "trace": [
+        {
+          "artifact": "minipy-vm-trace",
+          "event": "LOAD_CONST",
+          "event_id": "trace-B-list-construction:minipy:1",
+          "layer": "MiniPy",
+          "offset": 0,
+          "op": "LOAD_CONST",
+          "parent_event_id": null,
+          "sequence": 0,
+          "source_reference": "projects/minipy/runtime.py",
+          "source_span": [
+            5,
+            6
+          ],
+          "span": [
+            5,
+            6
+          ],
+          "stack_after": [
+            1
+          ],
+          "stack_before": [],
+          "trace_id": "trace-B-list-construction"
+        },
+        {
+          "artifact": "minipy-vm-trace",
+          "event": "LOAD_CONST",
+          "event_id": "trace-B-list-construction:minipy:2",
+          "layer": "MiniPy",
+          "offset": 1,
+          "op": "LOAD_CONST",
+          "parent_event_id": "trace-B-list-construction:minipy:1",
+          "sequence": 1,
+          "source_reference": "projects/minipy/runtime.py",
+          "source_span": [
+            8,
+            9
+          ],
+          "span": [
+            8,
+            9
+          ],
+          "stack_after": [
+            1,
+            2
+          ],
+          "stack_before": [
+            1
+          ],
+          "trace_id": "trace-B-list-construction"
+        },
+        {
+          "artifact": "minipy-vm-trace",
+          "event": "LOAD_CONST",
+          "event_id": "trace-B-list-construction:minipy:3",
+          "layer": "MiniPy",
+          "offset": 2,
+          "op": "LOAD_CONST",
+          "parent_event_id": "trace-B-list-construction:minipy:2",
+          "sequence": 2,
+          "source_reference": "projects/minipy/runtime.py",
+          "source_span": [
+            11,
+            12
+          ],
+          "span": [
+            11,
+            12
+          ],
+          "stack_after": [
+            1,
+            2,
+            3
+          ],
+          "stack_before": [
+            1,
+            2
+          ],
+          "trace_id": "trace-B-list-construction"
+        },
+        {
+          "artifact": "minipy-vm-trace",
+          "event": "BUILD_LIST",
+          "event_id": "trace-B-list-construction:minipy:4",
+          "layer": "MiniPy",
+          "offset": 3,
+          "op": "BUILD_LIST",
+          "parent_event_id": "trace-B-list-construction:minipy:3",
+          "sequence": 3,
+          "source_reference": "projects/minipy/runtime.py",
+          "source_span": [
+            4,
+            13
+          ],
+          "span": [
+            4,
+            13
+          ],
+          "stack_after": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "stack_before": [
+            1,
+            2,
+            3
+          ],
+          "trace_id": "trace-B-list-construction"
+        },
+        {
+          "artifact": "minipy-vm-trace",
+          "event": "STORE_NAME",
+          "event_id": "trace-B-list-construction:minipy:5",
+          "layer": "MiniPy",
+          "offset": 4,
+          "op": "STORE_NAME",
+          "parent_event_id": "trace-B-list-construction:minipy:4",
+          "sequence": 4,
+          "source_reference": "projects/minipy/runtime.py",
+          "source_span": [
+            0,
+            13
+          ],
+          "span": [
+            0,
+            13
+          ],
+          "stack_after": [],
+          "stack_before": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "trace_id": "trace-B-list-construction"
+        },
+        {
+          "artifact": "minipy-vm-trace",
+          "event": "HALT",
+          "event_id": "trace-B-list-construction:minipy:6",
+          "halt": true,
+          "layer": "MiniPy",
+          "offset": 5,
+          "op": "HALT",
+          "parent_event_id": "trace-B-list-construction:minipy:5",
+          "sequence": 5,
+          "source_reference": "projects/minipy/runtime.py",
+          "source_span": [
+            13,
+            13
+          ],
+          "span": [
+            13,
+            13
+          ],
+          "stack_after": [],
+          "stack_before": [],
+          "trace_id": "trace-B-list-construction"
+        }
+      ]
+    }
+  },
+  "object_graph": {
+    "edges": [
+      {
+        "field": "index_0",
+        "owner": "B.list.0",
+        "target": "B.int.1"
+      },
+      {
+        "field": "index_1",
+        "owner": "B.list.0",
+        "target": "B.int.2"
+      },
+      {
+        "field": "index_2",
+        "owner": "B.list.0",
+        "target": "B.int.3"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "B.list.0",
+        "length": 3,
+        "type": "list"
+      },
+      {
+        "id": "B.int.1",
+        "type": "int",
+        "value": 1
+      },
+      {
+        "id": "B.int.2",
+        "type": "int",
+        "value": 2
+      },
+      {
+        "id": "B.int.3",
+        "type": "int",
+        "value": 3
+      }
+    ],
+    "source_kind": "educational_object_model"
+  },
+  "schema_version": 1,
+  "source": "x = [1, 2, 3]",
+  "source_kind": "executable_educational_model_plus_host_cpython_summary",
+  "trace_id": "trace-B-list-construction"
+}

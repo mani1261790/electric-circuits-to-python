@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "kind": "pc_only_learning_contract",
+  "scope": "checked-in educational models and chapter PC-side scripts; no external instrument or physical measurement",
+  "measured": false,
+  "changes": [
+    {
+      "id": "minipy-constant-change",
+      "input_change": "2 -> 3",
+      "expected": "stdout follows the changed operand",
+      "observed": [
+        "3\n",
+        "4\n"
+      ],
+      "passed": true
+    },
+    {
+      "id": "minios-uart-byte-change",
+      "input_change": "UART payload 3 -> 4",
+      "expected": "UART bytes and syscall length follow the changed payload",
+      "observed": [
+        "3\n",
+        "4\n"
+      ],
+      "passed": true
+    },
+    {
+      "id": "rv32edu-alu-change",
+      "input_change": "ADD -> SUB",
+      "expected": "x7 and the instruction trace change",
+      "observed": [
+        3,
+        4294967295
+      ],
+      "passed": true
+    }
+  ],
+  "faults": [
+    {
+      "id": "minipy-unsupported-syntax",
+      "expected_diagnostic": "feature_error",
+      "observed": "MiniPyError",
+      "passed": true
+    },
+    {
+      "id": "minios-unknown-syscall",
+      "expected_diagnostic": "ENOSYS",
+      "observed": -38,
+      "passed": true
+    },
+    {
+      "id": "rv32edu-unmapped-mmio",
+      "expected_diagnostic": "unmapped SW address",
+      "observed": "rejected",
+      "passed": true
+    },
+    {
+      "id": "minipy-invalid-bytecode",
+      "expected_diagnostic": "invalid opcode rejected before execution",
+      "observed": "rejected",
+      "passed": true
+    }
+  ],
+  "manifest_negative_contracts": [
+    {
+      "manifest_ref": "manuscript/volume-06/chapter-48/manifest.yml#unmapped_access",
+      "chapter": 48,
+      "test_id": "unmapped_access",
+      "expected_error": "unmapped_address",
+      "observed": "unmapped SW address: 0x20000000",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "rv32edu.CPU"
+    },
+    {
+      "manifest_ref": "manuscript/volume-06/chapter-45/manifest.yml#unknown_word",
+      "chapter": 45,
+      "test_id": "unknown_word",
+      "expected_error": "illegal_instruction",
+      "observed": "unsupported RV32I instruction: 0xffffffff",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "rv32edu.CPU"
+    },
+    {
+      "manifest_ref": "manuscript/volume-06/chapter-48/manifest.yml#illegal_decode",
+      "chapter": 48,
+      "test_id": "illegal_decode",
+      "expected_error": "illegal_instruction",
+      "observed": "unsupported RV32I instruction: 0xffffffff",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "rv32edu.CPU"
+    },
+    {
+      "manifest_ref": "manuscript/volume-05/chapter-35/manifest.yml#opcode_unknown",
+      "chapter": 35,
+      "test_id": "opcode_unknown",
+      "expected_error": "opcode_unknown",
+      "observed": "MiniPyError",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.runtime.verify_bytecode"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-94/manifest.yml#bad_opcode",
+      "chapter": 94,
+      "test_id": "bad_opcode",
+      "expected_error": "opcode_rejected",
+      "observed": "MiniPyError",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.runtime.verify_bytecode"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-95/manifest.yml#bad_opcode",
+      "chapter": 95,
+      "test_id": "bad_opcode",
+      "expected_error": "opcode_rejected",
+      "observed": "MiniPyError",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.runtime.verify_bytecode"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-94/manifest.yml#underflow",
+      "chapter": 94,
+      "test_id": "underflow",
+      "expected_error": "stack_underflow",
+      "observed": "stack underflow at POP_TOP",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.runtime.verify_bytecode"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-95/manifest.yml#stack_underflow",
+      "chapter": 95,
+      "test_id": "stack_underflow",
+      "expected_error": "stack_underflow",
+      "observed": "stack underflow at POP_TOP",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.runtime.verify_bytecode"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-95/manifest.yml#bad_jump",
+      "chapter": 95,
+      "test_id": "bad_jump",
+      "expected_error": "jump_rejected",
+      "observed": "invalid jump target 99",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.runtime.verify_bytecode"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-91/manifest.yml#syntax_layer",
+      "chapter": 91,
+      "test_id": "syntax_layer",
+      "expected_error": "syntax_error_classified",
+      "observed": "MiniPyError",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.run_source"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-91/manifest.yml#binding_layer",
+      "chapter": 91,
+      "test_id": "binding_layer",
+      "expected_error": "name_error_classified",
+      "observed": "name is not bound: 'undefined'",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.run_source"
+    },
+    {
+      "manifest_ref": "manuscript/volume-12/chapter-91/manifest.yml#runtime_layer",
+      "chapter": 91,
+      "test_id": "runtime_layer",
+      "expected_error": "runtime_exception_classified",
+      "observed": "unhandled ZeroDivisionError: division by zero",
+      "verification_status": "educational_model_verified",
+      "passed": true,
+      "measured": false,
+      "model": "minipy.run_source"
+    }
+  ],
+  "chapter_artifact_scripts": [
+    {
+      "path": "artifacts/chapter-03/unitcheck.py",
+      "input_sha256": "bb0d923091d7db93181ccdfdf1a36644775d5a796cbc2be641358b76b95d2f2a",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-05/field.py",
+      "input_sha256": "900b24f847e5575640f5f1fcb69fe64fc91bb1b223ab90d7c523c68cc02b8a68",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-05/flux.py",
+      "input_sha256": "500616032226a474c6cc01341002b6d6037bbe6c8dd9a0cbbbfe01777d119fea",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-06/potential.py",
+      "input_sha256": "73c338de99dc22cb5f6daa0e0f0387366975eadf98dcc2e78a8ce2ed8446327b",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-07/continuity.py",
+      "input_sha256": "5a2608f8070f5e5772bc74e8d9950d11e9c7e85a0da96c5d14a7e88a2f68441a",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-07/current_density.py",
+      "input_sha256": "f83617c37b5c79c752ce52e76c76beef30202fd3b23966bbf13046b748aaa100",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-08/conductivity.py",
+      "input_sha256": "4a22fd6ac7d17a181c1da6038b9eb78b66b4e1d6b8e67895960d7b21dbb73e81",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-09/line_model.py",
+      "input_sha256": "ea5d71a2838188739552a142d32b8a773f821378db479bc4bd84ed32320484d6",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-10/mna_solver.py",
+      "input_sha256": "4981685326fa0b9c90384ef4ebd3d3fb5c0c6364b87a8296b66c7da7a3751d00",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-11/transient.py",
+      "input_sha256": "befa5f98f4cece2243750076e22de230868c1c84533c25952091a7a55c9d67d6",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-12/signal_analysis.py",
+      "input_sha256": "eb43332339a64200f01ea639e8bd5bc9a615d3de29a60934863daab0bc8e34a9",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-13/classical_quantum_compare.py",
+      "input_sha256": "e30cb9708744d831741215031d506f72c85b28a0890049611a9b439a8544e5cf",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-13/infinite_well_fd.py",
+      "input_sha256": "1d02eaa58d8ad7fdbc6dc176e10ff015f06a85ef7be3f8dbd5f8d303bd2c1a9a",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-14/eigenvalues.py",
+      "input_sha256": "91a07055ee22105ef10414f6da8dca9672ae256e9d9e894e84d8ab5841f9bf3b",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-14/schrodinger.py",
+      "input_sha256": "f1b5ee7270e2b53d382dc64ea0900da904a656c5dc016f3163d19f8294726284",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-14/time_propagation.py",
+      "input_sha256": "1f5c4b748fd886a693b5adbbc20af1519d53ec82a8e369a89f4d11509ed8805f",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-15/fermi_occupancy.py",
+      "input_sha256": "165366a21c3dd8f19519c3935ce4273f855ce34433d5ac5de7a65b11d417c055",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-15/state_counting.py",
+      "input_sha256": "1543d84ffc55cb0b19f3a5833f206868d33a65702b9eb14929f913a1acf213f0",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-16/periodic_fd.py",
+      "input_sha256": "9774ae865041fa05525c8254aebcbca2576a1e4ad30d0e3070c7e501e900685e",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-16/tight_binding.py",
+      "input_sha256": "a689a334667673c9c84d7b39f92d47740cd647b02ff9bc85a65f70a12f9797e8",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-17/density_of_states.py",
+      "input_sha256": "8eb1448b37dc6b7effcde012b472b2d15317e617061df7f177ccd349a36b2350",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-17/intrinsic_carriers.py",
+      "input_sha256": "d99a7adfa39961758edd2550fdcdfcce6394897ef84508255bff656b2aa3f0a4",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-18/doping_levels.py",
+      "input_sha256": "def8620e1f9c4f3cec9eefab1d5c3e4f6db1ccd00810347d0697035957aa55fa",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-18/fermi_neutrality.py",
+      "input_sha256": "c42a144a9bd5a0bb486231718ac070158c415a14989bac6902284a94d17c50e6",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-19/drift_diffusion.py",
+      "input_sha256": "384c238081d1da3781c96e651759060e6f095bc3a639e44c5f6f4879f371263d",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    },
+    {
+      "path": "artifacts/chapter-19/recombination.py",
+      "input_sha256": "734b91ea8be52d494c10c60d3a605b9d39eeaf93f012dbb2062a86daf46280f5",
+      "exit_code": 0,
+      "passed": true,
+      "stderr_tail": ""
+    }
+  ],
+  "cross_layer_anchor": {
+    "baseline": {
+      "passed": true,
+      "trace_id": "trace-A-print-1-plus-2-executable-stack"
+    },
+    "negative": {
+      "passed": true,
+      "trace_id": "trace-A-negative-stack-boundaries"
+    }
+  },
+  "summary": {
+    "change_passed": 3,
+    "change_total": 3,
+    "fault_passed": 4,
+    "fault_total": 4,
+    "manifest_negative_contract_passed": 12,
+    "manifest_negative_contract_total": 12,
+    "artifact_scripts_passed": 26,
+    "artifact_scripts_total": 26,
+    "all_passed": true
+  },
+  "boundary": "This closes only the PC-only executable anchor and artifact scripts. It does not close every chapter's domain-specific external tool, FPGA, or physical measurement gate."
+}
