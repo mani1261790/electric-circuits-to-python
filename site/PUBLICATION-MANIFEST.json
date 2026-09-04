@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-04T16:38:26.611434+00:00",
+  "generated_at_utc": "2026-09-04T16:46:27.953832+00:00",
   "source_file_count": 1065,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1070,
-  "total_bytes_before_manifest": 21009922,
+  "total_bytes_before_manifest": 21020964,
   "files": [
     {
       "path": ".nojekyll",
@@ -33,13 +33,13 @@
     },
     {
       "path": "artifacts/learning-contract/chapter-acceptance-results-20260904.json",
-      "bytes": 341458,
-      "sha256": "7c1f32c449bbf2a6623c88c195586d028c041d0007e9ffeef7f42fc69716fcba"
+      "bytes": 346166,
+      "sha256": "b6c105ad14f6e05aab209d67607ebe5cda57bc5552483314db00446c722541f8"
     },
     {
       "path": "artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json",
-      "bytes": 568758,
-      "sha256": "e9eb550d3b73fd8560718c07528cab7ca766cbcf389a2c3217b0925aff0f5b88"
+      "bytes": 573750,
+      "sha256": "5d4ad15d46a66df78c7e25ddaa5ec6aaf20ddf55f99558d2c23ca3d67c3e7d90"
     },
     {
       "path": "artifacts/learning-contract/pc-only-change-fault-20260904.json",
@@ -5269,7 +5269,7 @@
     {
       "path": "build/html/index.html",
       "bytes": 101875,
-      "sha256": "fb79a54f3d6e4f058b51f4e478bab3a5493b45851361488b1151874b8dd277a9"
+      "sha256": "b203b91fbad317bd07a22257325ef774cb04a09d7f76e3cd1422709985f7fb43"
     },
     {
       "path": "build/html/prelude.html",
@@ -5289,12 +5289,12 @@
     {
       "path": "reviews/chapter-acceptance-results-20260904.md",
       "bytes": 603,
-      "sha256": "e9480fd0de453a1ed841dcf9b3613b2a70200ecdfa6dfc4e406c88acce9e1f37"
+      "sha256": "4937c295e9704fa93b31623b7d65036d932bb4b70fafc596a6c752dc2d478814"
     },
     {
       "path": "reviews/chapter-learning-gate-inventory-20260904.md",
       "bytes": 1721,
-      "sha256": "0e34d072587173b82064e95a2a6f973c93822a32a759d9a4d303d8dd0aa2fed1"
+      "sha256": "7b9eed2ed346bfbb4b2ac7631db2b2d58c6966a4ffb4b6fff40d9872e38d76eb"
     },
     {
       "path": "reviews/chapter-schema-audit-20260904.md",
@@ -5308,8 +5308,8 @@
     },
     {
       "path": "reviews/completion-gates.md",
-      "bytes": 175786,
-      "sha256": "65a3e696fee3c780cfc04fb2d6e0af8dc976e416e8c0d8c821b9a74f978ac179"
+      "bytes": 177128,
+      "sha256": "8bdb1710bae1bd859064c8d746517fdd16ea5740987908926070c8dc8f66fa01"
     },
     {
       "path": "reviews/independent-chapter-confirmation-20260904.md",

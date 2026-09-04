@@ -1086,3 +1086,11 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 公開後にroot、HTML目次、第1章、runner artifact、CC BYライセンスの各URLを外部取得し、すべてHTTP 200を確認した。公開リポジトリのmainはorigin/mainと同期し、Pages workflowはNode 24対応のcheckout v7、configure-pages v6、upload-pages-artifact v5、deploy-pages v5へ更新済みである。
 
 この確認は公開配信ゲートのpassであり、教材内容の未実行acceptance、negative、章固有change/fault、外部domain・物理測定を閉じない。判定は **P0=0 / P1=1 / P2=2 / `learner-ready`保留**を維持する。
+
+## 116. 2026-09-05 第1巻acceptance証拠の再確認
+
+執筆へ戻る最初の区切りとして、第1章の`trace_a_constant_folding_pair_present`と、第1〜7章の`independent_review_pending`を再確認した。前者はmanifestの入力対`print(1 + 2)`／`a = 1; b = 2; print(a + b)`、AST・bytecodeのrequired artifact、固定runnerのexit 0・`measurement.status=not_run`、Trace Aの全check true・`measured=false`を照合した。後者は執筆セッションとは別の独立確認artifactがCH1〜8をP0=0 / P1=0 / P2=0と判定し、最終的に対象範囲Prelude＋CH1〜56を同判定としていることを照合した。
+
+これによりacceptance 699件中`structural_contract_verified`は269件、failed 0件、domain／learner未実行は430件となった。章別inventoryの`acceptance_executed_rows`は0件、negative教育モデルは12/459件、章固有change／fault execution artifactは0章、`measured=true`は0件のままである。独立レビューの完了と解析artifactの存在を、CPython・SPICE・RTL・QEMU・FPGA・実機測定や学習者操作の合格へ読み替えていない。
+
+現行判定は **P0=0 / P1=1（必修実験・章固有change/fault・外部実装受入） / P2=2（FPGA任意経路、trace D/E/F物理下位層） / `learner-ready`保留**を維持する。

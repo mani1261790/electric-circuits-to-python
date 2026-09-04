@@ -15,9 +15,9 @@
     "runner_measurement_not_run": 718,
     "acceptance_result_rows": 699,
     "acceptance_executed_rows": 0,
-    "acceptance_structural_verified_rows": 261,
+    "acceptance_structural_verified_rows": 269,
     "acceptance_structural_failed_rows": 0,
-    "acceptance_not_run_rows": 438,
+    "acceptance_not_run_rows": 430,
     "acceptance_execution_rows": 0,
     "negative_result_rows": 459,
     "negative_executed_rows": 12,
@@ -30,7 +30,7 @@
     "chapters_with_fault_prompt": 106
   },
   "blockers": [
-    "manifest acceptance_tests have 261 structural-contract rows verified; 0 structural rows failed and 438 domain/learner rows remain not_run",
+    "manifest acceptance_tests have 269 structural-contract rows verified; 0 structural rows failed and 430 domain/learner rows remain not_run",
     "manifest negative_tests have 12 educational-model result rows; the remaining 447 are not_run and measured=true is still zero",
     "no chapter-keyed change/fault execution artifact exists; the PC-only anchor is a separate three-change/four-fault check",
     "the explicit model mapping is still only an educational contract check; it does not close external-tool, FPGA, physical, or learner interaction gates"
@@ -98,13 +98,44 @@
           "test_id": "A3",
           "check": "trace_a_constant_folding_pair_present",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "trace_a_contract_artifact_check",
+          "evidence": {
+            "inputs": [
+              "print(1 + 2)",
+              "a = 1; b = 2; print(a + b)"
+            ],
+            "required_pair_artifacts": [
+              "trace-a-ast-dump",
+              "trace-a-bytecode"
+            ],
+            "required_pair_artifacts_materialized": true,
+            "runner_artifact": "artifacts/runner/chapter-001/experiment-01.json",
+            "runner_exit_code": 0,
+            "runner_measurement": "not_run",
+            "trace_artifact": "artifacts/trace-A-print-1-plus-2.json",
+            "trace_checks": {
+              "ast_has_add": true,
+              "vm_value_is_3": true,
+              "rv32_add_is_3": true,
+              "uart_is_3_newline": true,
+              "uart_data_depends_on_add": true,
+              "executable_stack_is_3_newline": true
+            },
+            "trace_measured": false
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "trace contract artifacts only; not external CPython observation, measurement, or a learner gate"
         },
         {
           "test_id": "A4",
@@ -181,13 +212,25 @@
           "test_id": "A7",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],
@@ -350,13 +393,25 @@
           "test_id": "A9",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],
@@ -550,13 +605,25 @@
           "test_id": "A10",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],
@@ -674,13 +741,25 @@
           "test_id": "A7",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],
@@ -868,13 +947,25 @@
           "test_id": "A11",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],
@@ -980,13 +1071,25 @@
           "test_id": "A6",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],
@@ -1092,13 +1195,25 @@
           "test_id": "A6",
           "check": "independent_review_pending",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "independent_review_artifact_check",
+          "evidence": {
+            "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+            "reviewer_separate_from_authoring_session": true,
+            "chapter_covered": true,
+            "range_verdict": "P0=0 / P1=0 / P2=0",
+            "final_verdict_present": true,
+            "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
         }
       ],
       "negative_results": [],

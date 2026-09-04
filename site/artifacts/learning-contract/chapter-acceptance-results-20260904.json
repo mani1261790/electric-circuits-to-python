@@ -6,9 +6,9 @@
   "summary": {
     "chapters": 106,
     "acceptance_tests": 699,
-    "structural_verified": 261,
+    "structural_verified": 269,
     "structural_failed": 0,
-    "not_run": 438,
+    "not_run": 430,
     "measured_true": 0,
     "learner_ready": false
   },
@@ -65,12 +65,44 @@
       "manifest_ref": "manuscript/volume-01/chapter-01/manifest.yml#A3",
       "test_id": "A3",
       "check": "trace_a_constant_folding_pair_present",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "trace_a_contract_artifact_check",
+      "evidence": {
+        "inputs": [
+          "print(1 + 2)",
+          "a = 1; b = 2; print(a + b)"
+        ],
+        "required_pair_artifacts": [
+          "trace-a-ast-dump",
+          "trace-a-bytecode"
+        ],
+        "required_pair_artifacts_materialized": true,
+        "runner_artifact": "artifacts/runner/chapter-001/experiment-01.json",
+        "runner_exit_code": 0,
+        "runner_measurement": "not_run",
+        "trace_artifact": "artifacts/trace-A-print-1-plus-2.json",
+        "trace_checks": {
+          "ast_has_add": true,
+          "vm_value_is_3": true,
+          "rv32_add_is_3": true,
+          "uart_is_3_newline": true,
+          "uart_data_depends_on_add": true,
+          "executable_stack_is_3_newline": true
+        },
+        "trace_measured": false
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "trace contract artifacts only; not external CPython observation, measurement, or a learner gate"
     },
     {
       "chapter": 1,
@@ -151,12 +183,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-01/manifest.yml#A7",
       "test_id": "A7",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 2,
@@ -306,12 +351,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-02/manifest.yml#A9",
       "test_id": "A9",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 3,
@@ -495,12 +553,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-03/manifest.yml#A10",
       "test_id": "A10",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 4,
@@ -603,12 +674,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-04/manifest.yml#A7",
       "test_id": "A7",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 5,
@@ -784,12 +868,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-05/manifest.yml#A11",
       "test_id": "A11",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 6,
@@ -880,12 +977,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-06/manifest.yml#A6",
       "test_id": "A6",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 7,
@@ -976,12 +1086,25 @@
       "manifest_ref": "manuscript/volume-01/chapter-07/manifest.yml#A6",
       "test_id": "A6",
       "check": "independent_review_pending",
-      "status": "not_run",
-      "passed": null,
+      "status": "structural_contract_verified",
+      "passed": true,
       "measured": false,
-      "execution_mode": "not_implemented",
-      "evidence": null,
-      "reason": "domain or learner-interaction acceptance adapter is not implemented"
+      "execution_mode": "independent_review_artifact_check",
+      "evidence": {
+        "review_artifact": "reviews/independent-chapter-confirmation-20260904.md",
+        "reviewer_separate_from_authoring_session": true,
+        "chapter_covered": true,
+        "range_verdict": "P0=0 / P1=0 / P2=0",
+        "final_verdict_present": true,
+        "scope_boundary": "chapter-content independent review only; external execution and measurement remain separate"
+      },
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "reason": "independent-review artifact coverage only; not a domain experiment, measurement, or learner gate"
     },
     {
       "chapter": 8,
