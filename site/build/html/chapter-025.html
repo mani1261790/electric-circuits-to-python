@@ -69,6 +69,14 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>データシートや実験記録にある電圧には、同じ<code>V_OH</code>という文字を使っても異なる意味があり得る。</p>
 <ul><li>保証最小値・最大値は、指定条件の全範囲で守る契約の境界である。</li><li>典型値は、ある模型、代表条件、代表個体に対する見積もりである。</li><li>観測値は、特定の装置と手順で一回または複数回得た値である。</li></ul>
 <p>本章のartifactでは、<code>value_kind</code>を<code>guaranteed_limit</code>、<code>analytic_prediction</code>、<code>spice_prediction</code>、<code>measurement</code>に分ける。解析式から得た<code>V_OH</code>を、測定器で読んだ値と同じ欄へ入れない。保証範囲が資料から得られない場合も、空欄を0や典型値で埋めない。</p>
+<h3 id="section-2-4">2.4　まず四つの境界を一枚にする</h3>
+<p>四つの記号を覚えるときは、送り手と受け手を左右に分けて書く。送り手の出力側に<code>V_OL</code>と<code>V_OH</code>、受け手の入力側に<code>V_IL</code>と<code>V_IH</code>を置く。左の二つは「出す側が守る範囲」、右の二つは「受ける側が認める範囲」であり、同じインバータの同じ端子の値ではない。</p>
+<p>たとえば、<code>V_DD=1.0 V</code>の教材用解析caseで、送り手が<code>V_OL=0.05 V</code>以下、<code>V_OH=0.95 V</code>以上を目標にし、受け手が<code>V_IL=0.20 V</code>以下を低入力、<code>V_IH=0.80 V</code>以上を高入力と定めたとする。このとき表は次のようになる。</p>
+<table><thead><tr><th>境界</th><th>誰の条件か</th><th>この例での値</th><th>読者が確認する問い</th></tr></thead>
+<tbody><tr><td><code>V_OL</code></td><td>送り手の低出力上限</td><td><code>0.05 V</code></td><td>低く出したとき、これより上へ行かないか</td></tr><tr><td><code>V_OH</code></td><td>送り手の高出力下限</td><td><code>0.95 V</code></td><td>高く出したとき、これより下へ行かないか</td></tr><tr><td><code>V_IL</code></td><td>受け手の低入力上限</td><td><code>0.20 V</code></td><td>この電圧以下なら低いと認めるか</td></tr><tr><td><code>V_IH</code></td><td>受け手の高入力下限</td><td><code>0.80 V</code></td><td>この電圧以上なら高いと認めるか</td></tr></tbody>
+</table>
+<p>低い側では<code>V_IL-V_OL=0.15 V</code>、高い側では<code>V_OH-V_IH=0.15 V</code>なので、どちらにも同じ幅の雑音余裕がある。この数値は、指定した解析caseの例であって、<a class="term" href="index.html#term-cmos">CMOS</a>一般の保証値ではない。<code>V_OL</code>や<code>V_OH</code>が測定値へ置き換わったり、受け手の規格が変わったりすれば、同じ計算をやり直す。</p>
+<p>ここで入力と出力を入れ替えてはいけない。<code>V_OL</code>と<code>V_IL</code>はいずれも「低い側」だが、前者は出力、後者は入力である。<code>V_OH</code>と<code>V_IH</code>も同じ関係にある。名前の<code>O</code>（output）と<code>I</code>（input）を表へ書き添えるだけで、式(25.1)と式(25.2)の引き算を取り違えにくくなる。</p>
 <h2 id="section-3">3　雑音余裕を差で表す</h2>
 <h3 id="section-3-1">3.1　<a class="term" href="index.html#term-low_noise_margin">低い信号の雑音余裕</a></h3>
 <p>前段が低い信号を出したとき、前段の出力は理想的な0 Vではなく、最悪の場合<code>V_OL</code>まで上がるとする。そこへ正の雑音<code>n_L</code>が加わったとしても、後段の入力が<code>V_IL</code>以下なら、低い入力として受け取れる。</p>
@@ -280,7 +288,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <ul><li><code>V_OL_V</code> = <code>0.2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_IL_V</code> = <code>0.35</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_IH_V</code> = <code>0.65</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>V_OH_V</code> = <code>0.8</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
 <p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
-<h3 id="section-2-4">2　導出カード</h3>
+<h3 id="section-2-5">2　導出カード</h3>
 <p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
 <p>#### 導出1: <code>derivation-25-logic-contract</code></p>
 <p>到達する結果は「入力・出力の保証範囲と未定義領域」で、参照する式IDまたは検証項目は <code>["logic_input_output_guarantee"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
