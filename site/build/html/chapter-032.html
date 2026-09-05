@@ -46,6 +46,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-32-1">32.1 この章の問い</h2>
 <p>第31章では、真理値表から式と<a class="term" href="index.html#term-nand_netlist">NANDネットリスト</a>を作った。規模が大きくなると、ゲートを手で並べるより、回路の関係を文章で書く方が扱いやすい。問いは「回路をプログラムのような文章で書いても、なぜ順次実行されるソフトウェアとは異なるのか」である。</p>
 <p>HDL（<a class="term" href="index.html#term-hdl">hardware description language</a>）は、入力と出力、組合せ・順序、時間や同時性を記述する言語である。SystemVerilogの<code>assign</code>は連続代入で、右辺の信号が変わるたびに回路の出力関係が成立する。<code>always_comb</code>は組合せ回路を手続き的な書式で表すが、すべての分岐で出力へ代入しなければラッチを推論し得る。どちらも普通のPython関数のように一行ずつ一度だけ実行する命令列ではない。Verilatorはその記述を論理シミュレーションするrunner、Yosysはゲート表現へ変換する合成器である。どちらも実機やSPICE測定ではない。</p>
+<h3 id="section-32-1-1">32.1.1　同じ入力を四つの層で追う</h3>
+<p>2対1 MUXを読むときは、入力<code>sel=1, a=0, b=1</code>を一つ選び、次の順に追う。</p>
+<table><thead><tr><th>層</th><th>この入力で確認すること</th><th>結果の種類</th></tr></thead>
+<tbody><tr><td>HDL</td><td><code>assign y = sel ? b : a</code>の幅と意味</td><td>ソース契約</td></tr><tr><td>シミュレーション</td><td><code>y</code>が1になるイベントとログ</td><td>runner output</td></tr><tr><td>合成</td><td>MUXがどのcell・ゲートへ変換されたか</td><td>netlist構造</td></tr><tr><td>物理</td><td>遅延・<a class="term" href="index.html#term-voltage">電圧</a>・電力を測ったか</td><td>SPICE予測またはmeasurement</td></tr></tbody>
+</table>
+<p>上の三行が正しくても、最後の行が未実行なら実機のタイミングを語れない。<code>source_kind</code>、tool version、入力vector、未定義値の扱いを各層の証拠に添えると、HDLの文面をPythonの順次実行や物理測定と取り違えにくい。</p>
 <h2 id="section-32-2-mux">32.2 MUXを記述する</h2>
 <p>2対1 MUXは、選択信号<code>sel</code>が0なら<code>a</code>、1なら<code>b</code>を出力する。Boolean式なら</p>
 <p><code>y = (not(sel) and a) or (sel and b)</code></p>
@@ -62,7 +68,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>Yosysの予定経路では、SystemVerilogの組合せ記述をRTLの論理表現からcellまたは基本ゲートへ変換する。合成前のHDL、合成中間表現、合成後netlist、最適化設定、cell libraryを別artifactへ保存する。</p>
 <p>「合成できた」は、文法と選択したlibraryの範囲でネットリストが得られたという意味である。特定の<a class="term" href="index.html#term-cmos">CMOS</a>寸法、遅延、消費電力が実現したことや、製造可能であることを意味しない。Yosysが出したゲートをNANDへ再分解する場合も、真理値の同値、ゲート数、段数、fan-outを別に比較する。</p>
 <h2 id="section-32-6">32.6 <a class="term" href="index.html#term-formal_verification">形式検証</a>とテストの違い</h2>
-<p>全入力組合せが有限なら、MUXやdecoderの真理値表を全行比較できる。これは反例がないことを列挙で示す形式的な検査に近い。一方、ランダムテストや代表ベクトルは、試した範囲での証拠である。どちらも、物理<a class="term" href="index.html#term-voltage">電圧</a>や実機タイミングを検証するものではない。</p>
+<p>全入力組合せが有限なら、MUXやdecoderの真理値表を全行比較できる。これは反例がないことを列挙で示す形式的な検査に近い。一方、ランダムテストや代表ベクトルは、試した範囲での証拠である。どちらも、物理電圧や実機タイミングを検証するものではない。</p>
 <p>HDLのRTLと合成後netlistの等価性を検査するときは、信号名の対応、幅、re<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>、未定義値、許される遅延モデルを固定する。等価性が崩れたら、期待値を変えて通すのではなく反例の入力と変換段階を保存する。</p>
 <p>予定する形式検証では、Yosysの<code>equiv_make</code>でRTLと<a class="term" href="index.html#term-nand_netlist">NAND netlist</a>から比較用wrapperをその場で生成し、<code>equiv_simple</code>と<code>equiv_status -assert</code>で証明状態を確認する。wrapperを別の未管理ファイルから読み込まず、生成コマンド、対象top、全入力domain、X/Z方針をartifactへ保存する。Verilatorの全入力シミュレーションは別のrunner出力であり、この形式検証artifactへ流用しない。</p>
 <h2 id="section-32-7-runner-spice">32.7 解析・runner・SPICE・測定を分ける</h2>

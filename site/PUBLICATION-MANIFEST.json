@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T14:04:31.537771+00:00",
+  "generated_at_utc": "2026-09-05T14:24:31.753019+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21613258,
+  "total_bytes_before_manifest": 21620599,
   "files": [
     {
       "path": ".nojekyll",
@@ -4103,8 +4103,8 @@
     },
     {
       "path": "build/html/chapter-028.html",
-      "bytes": 103531,
-      "sha256": "a7e6bb6de1342706ad5af41392a4957934682f4194c71989a92620de2a6fbf94"
+      "bytes": 104827,
+      "sha256": "5209c62d07a3a8881c7c892a8b25182770c4e7c19eddf07e22dcd1fe8f4a47ff"
     },
     {
       "path": "build/html/chapter-029-exercises.html",
@@ -4118,8 +4118,8 @@
     },
     {
       "path": "build/html/chapter-029.html",
-      "bytes": 107497,
-      "sha256": "9c16a862ee12b79bf6424a92f5e61706e3a767abad0cd03ab175ae363a15c871"
+      "bytes": 108787,
+      "sha256": "ba8cd72f5cb2baefb90c6603fe8e24c5e7714c358a9a33678a353af1a51ea97f"
     },
     {
       "path": "build/html/chapter-030-exercises.html",
@@ -4133,8 +4133,8 @@
     },
     {
       "path": "build/html/chapter-030.html",
-      "bytes": 95941,
-      "sha256": "19e82b5778aaf56523022237f549b0c6eb4e68e6c44db359fd4c47896de71cfa"
+      "bytes": 97218,
+      "sha256": "585e5882e147a71688ce68ad6c4c617d50c115153222da54dc1fa5738e7df92b"
     },
     {
       "path": "build/html/chapter-031-exercises.html",
@@ -4148,8 +4148,8 @@
     },
     {
       "path": "build/html/chapter-031.html",
-      "bytes": 102948,
-      "sha256": "d9f1970662c2da4d2e104390410d7e5b6d8e2db455cecc3df578f9b587a43f88"
+      "bytes": 104143,
+      "sha256": "a5ce6c92c1064478968ebfc1cad0ec55857b6e448fa596c439f39c1dd60d13fd"
     },
     {
       "path": "build/html/chapter-032-exercises.html",
@@ -4163,8 +4163,8 @@
     },
     {
       "path": "build/html/chapter-032.html",
-      "bytes": 100348,
-      "sha256": "4ac63789e38614402fe89a2ef3c07e9a630f50f9fbf57b38955ec611bcbfa50e"
+      "bytes": 101415,
+      "sha256": "478faaf96f30b2d54b6751abcdcfa9a7abeac87fb5bde82e01a8d3afdca92388"
     },
     {
       "path": "build/html/chapter-033-exercises.html",
@@ -5279,7 +5279,7 @@
     {
       "path": "build/html/index.html",
       "bytes": 102814,
-      "sha256": "db1e7ca1e9fa930c5fb80bbc829ef60c6542eb9b0f9f1755b0369e2d3a9a9045"
+      "sha256": "8063cecc92654599bf9fd858e37097ce8b41574ee2871fab04605f9a0fa9ffd6"
     },
     {
       "path": "build/html/prelude.html",
@@ -5333,8 +5333,8 @@
     },
     {
       "path": "reviews/completion-gates.md",
-      "bytes": 184063,
-      "sha256": "68366e998bdbb341a12503474d801c3ebf7a6b0c3c6172b21383568824aa6571"
+      "bytes": 185279,
+      "sha256": "6cb98e78bdebdce0fd7cd2087e1ea04edd4b11bc8993f0c61b0f751dd32d4e4c"
     },
     {
       "path": "reviews/external-acceptance-evidence-20260905.md",

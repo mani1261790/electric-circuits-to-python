@@ -46,16 +46,22 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-28-1">28.1 この章の問い</h2>
 <p>第27章で、配線と次段入力は<code>C_load</code>として遅延と<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>に影響することを見た。しかし回路図の一本の線は、シリコン上では面積と厚みを持つ複数の材料層、接点、金属、ビアの組合せである。この章の問いは「回路図に描いたMOSFETと配線は、ウェハ上にどのような構造として作られるのか」である。</p>
 <p>ここで製造の<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a>、教育用のプロセス模型、設計規則という契約、レイアウト・DRC・LVSという実装道具を分ける。具体的な製造工場の寸法や歩留まりをこの草稿で断定しない。オープンPDKを使った実行は発展課題であり、必修の理解は汎用模型とグラフで完結させる。</p>
+<h3 id="section-28-1-1">28.1.1　まず四つの層を別の欄にする</h3>
+<p>回路図からレイアウトへ進むときは、色や図形を先に覚えない。次の四つを別々の欄へ書くと、形状を見たことと電気的に接続したことを混同しにくい。</p>
+<table><thead><tr><th>欄</th><th>例</th><th>まだ保証しないこと</th></tr></thead>
+<tbody><tr><td>端子</td><td><code>source</code>、<code>drain</code>、<code>gate</code></td><td>ウェハ上でどの層が重なるか</td></tr><tr><td>層</td><td><code>active</code>、<code>poly</code>、<code>metal1</code>、<code>contact</code></td><td>色や名前だけで導通すること</td></tr><tr><td>形状</td><td>多角形の頂点、単位、<code>layer_id</code></td><td>最小幅・間隔・囲みを満たすこと</td></tr><tr><td>検査</td><td><a class="term" href="index.html#term-design_rule_check">DRC</a>、LVS、寄生抽出の<code>status</code></td><td>SPICE波形や製造測定が済んだこと</td></tr></tbody>
+</table>
+<p>「gateという端子」と「polyという層」は、対応付けが必要な別の名前である。最初の練習では、インバータの端子表、層スタック、最小規則、接続<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>を横に並べ、各欄に出所と単位を付ける。これができてから図形を描く。</p>
 <h2 id="section-28-2">28.2 回路図から層の積み重ねへ</h2>
 <p><a class="term" href="index.html#term-cmos">CMOS</a>の模式的な断面を、下から基板またはwell、active領域、gate、contact、金属配線、via、上部の保護層という集合として考える。実際の工程には材料を堆積する、不要部分をエッチングする、不純物を導入する、熱処理する、平坦化する、といった操作が含まれるが、工程の順番や材料名はプロセス世代で変わる。</p>
 <p>重要なのは、回路図の<code>source</code>、<code>drain</code>、<code>gate</code>という端子が、形状の重なり、接続層、電気的な領域として対応付けられることである。図中の色は物理法則ではなく、レイアウトツールが採用する層名の契約である。形状が見えることと、導通が保証されることも別である。</p>
 <h2 id="section-28-3">28.3 マスクと製造工程の模型</h2>
-<p>フォトリソ<a class="term" href="index.html#term-concept_3_term_8f32fcf6a8_8f32fcf6">グラフ</a>ィでは、ある層の形状をマスクのパターンとして転写するという抽象化ができる。マスクは「どこを残すか」を直接表すとは限らず、反転、露光、エッチング、注入の極性を含むプロセス契約と組み合わせて解釈する。</p>
+<p>フォトリソグラフィでは、ある層の形状をマスクのパターンとして転写するという抽象化ができる。マスクは「どこを残すか」を直接表すとは限らず、反転、露光、エッチング、注入の極性を含む<a class="term" href="index.html#term-process">プロセス</a>契約と組み合わせて解釈する。</p>
 <p>教育用模型では、各層を<code>layer_id</code>、形状を多角形、工程を順序付き操作として保存する。<code>N_layer</code>や層名があっても、それだけで実際の膜厚、抵抗、しきい値、<a class="term" href="index.html#term-parasitic_capacitance">寄生容量</a>が決まるわけではない。物理的な装置・材料・温度・時間の情報がない限り、これは実装前の設計表である。</p>
 <h2 id="section-28-4">28.4 <a class="term" href="index.html#term-design_rule">設計規則</a>はプロセスとの契約</h2>
 <p>レイアウトには、最小幅、最小間隔、接触の囲み、重なり、端からの距離などの設計規則がある。汎用模型では、最小寸法の単位を<code>lambda_D</code>とし、幅を<code>W_min</code>、間隔を<code>S_min</code>、囲みを<code>E_min</code>、重なりを<code>O_min</code>と書く。たとえば「形状Aが形状Bを少なくとも<code>E_min</code>だけ囲む」という規則を、幾何学的な不等式として検査する。</p>
-<p>この数値は自然界から一意に出る定数ではない。ある製造<a class="term" href="index.html#term-process">プロセス</a>が許す、または要求する最小寸法の契約である。同じ回路でもPDKや製造世代が変われば規則ファイルが変わる。したがって、<code>lambda_D</code>を実際の工場寸法として扱わず、規則ファイルの版と単位を保存する。</p>
-<h2 id="section-28-5-drc">28.5 <a class="term" href="index.html#term-design_rule_check">DRC</a>：形状が規則を守るか</h2>
+<p>この数値は自然界から一意に出る定数ではない。ある製造プロセスが許す、または要求する最小寸法の契約である。同じ回路でもPDKや製造世代が変われば規則ファイルが変わる。したがって、<code>lambda_D</code>を実際の工場寸法として扱わず、規則ファイルの版と単位を保存する。</p>
+<h2 id="section-28-5-drc">28.5 DRC：形状が規則を守るか</h2>
 <p>DRC（<a class="term" href="index.html#term-design_rule_check">design rule check</a>）は、形状だけを入力として、幅・間隔・囲み・重なり・層の許可された組合せを検査する。回路が論理的に正しいかではなく、指定されたプロセスでその形状を作れる契約になっているかを問う。</p>
 <p>汎用DRC artifactには、入力レイアウト、規則ファイルの版、層の単位、規則ID、違反箇所、検査結果、<code>status</code>を保存する。違反がゼロでも、規則ファイルが空、層名が未知、単位が不明なら合格とはしない。<code>N_drc</code>という件数を保存しても、検査対象と規則の完全性がなければ意味はない。</p>
 <h2 id="section-28-6-lvs">28.6 <a class="term" href="index.html#term-layout_versus_schematic">LVS</a>：接続が回路図と同じか</h2>

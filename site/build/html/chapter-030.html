@@ -46,6 +46,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-30-1">30.1 この章の問い</h2>
 <p>第29章では、連続<a class="term" href="index.html#term-voltage">電圧</a>を0/1として読む境界を決めた。この章では、その後の0/1を物理回路からいったん切り離し、記号の規則として操作する。問いは「電圧やトランジスタを忘れても、論理機能を式として操作できるのはなぜか」である。</p>
 <p>Boolean代数は、0と1、AND・OR・NOTなどの演算規則を持つ数学模型である。NANDは「ANDしてから否定する」一つの演算だが、NOT、AND、ORをNANDだけで構成できる。この性質を完全性と呼ぶ。ただし、Boolean式が正しいことは、<a class="term" href="index.html#term-cmos">CMOS</a>の遅延、電圧、面積、電力まで同じであることを意味しない。</p>
+<h3 id="section-30-1-1-0-1">30.1.1　0/1の表を電圧へ戻さない</h3>
+<p>この章で最初に固定するのは、入力が0/1のBoolean値なのか、連続電圧なのかである。たとえば<code>A=1</code>は、論理模型では一つの値だが、回路側では<code>V_in &gt;= V_IH</code>という範囲の契約を短く書いたものに過ぎない。</p>
+<table><thead><tr><th>層</th><th>入力の例</th><th>出力の例</th><th>主な検査</th></tr></thead>
+<tbody><tr><td>Boolean式</td><td><code>A=0, B=1</code></td><td><code>NAND(A,B)=1</code></td><td>真理値表・恒等式</td></tr><tr><td>論理runner</td><td>同じ0/1のベクトル</td><td>内部wireと最終wire</td><td>未定義wire・二重駆動</td></tr><tr><td>CMOS/SPICE</td><td><code>V_A</code>、<code>V_B</code>と時間</td><td><code>V_out(t)</code></td><td>モデル・負荷・source_kind</td></tr><tr><td>実機</td><td>端子電圧と測定条件</td><td>オシロ波形</td><td>probe・校正・温度・取得ファイル</td></tr></tbody>
+</table>
+<p>Booleanの式を正しく変形しても、下の行の検査は自動的には通らない。まず最上段の全入力を評価し、必要になったときだけ下の層へ渡す値と証拠を追加する。</p>
 <h2 id="section-30-2">30.2 記号と演算規則</h2>
 <p>Boolean変数は0か1だけを取る。<code>NOT A</code>はAを反転し、<code>A AND B</code>は両方が1のときだけ1、<code>A OR B</code>は少なくとも一つが1なら1である。これは物理電圧の連続値ではなく、真理値表に記された契約である。</p>
 <p>NANDを<code>NAND(A,B) = NOT(AND(A,B))</code>と定義する。入力が二つ以上のNANDでは、全入力が1のときだけ0、それ以外は1である。第26章のCMOS NANDはこの関数を回路として実装する候補だが、ここでの式は回路遅延を含まない。</p>

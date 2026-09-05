@@ -1108,6 +1108,14 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 
 本文導線の改善後も学習ゲートは昇格させていない。現行acceptanceは699件中`structural_contract_verified=385`、`host_evidence_verified=16`、failed=0、domain／learner未実行298件、`measured=true=0`。negativeは教育モデル12/459件、固定runnerは718/718 successだが全件`measurement_status=not_run`、章固有change/fault execution artifactは0章である。したがってP1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）は残り、`learner-ready`は保留する。
 
+## 122. 2026-09-05 第28〜32章の境界導入追記後
+
+第28〜32章へ、製造層・電圧状態・Boolean・論理合成・HDLをそれぞれ表へ戻す初心者向け導入を追加した。端子と層、状態と判定、Booleanと物理、真理値表の一行、HDL・runner・合成・物理の証拠を分離している。本文・manifest・実験契約の未実行境界は変えていない。
+
+HTML再生成・`validate_book`・固定Chrome測定はPrelude 12頁、本文3,504頁、合算3,516頁、各章24〜40頁、under24=0、107/107 hash一致。`tmp/page-counts.json`は生成`2026-09-05T14:23:13+00:00`、SHA-256=`a142d2aec602b6dc1ba84b53e94f489fdff7a8246289e3cd2e31a7b6703da9fd`である。
+
+現行acceptanceは699件中`structural_contract_verified=385`、`host_evidence_verified=16`、failed=0、domain／learner未実行298件、`measured=true=0`。negativeは教育モデル12/459件、固定runnerは718/718 successだが測定欄718件すべて`not_run`、章固有change/fault execution artifactは0章である。P1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）は残り、`learner-ready`は保留する。
+
 ## 120. 2026-09-05 acceptance構造契約とhost証拠の現行反映
 
 acceptance checkerに、汎用的な負の入力・正常経路・状態記録・言語境界の構造契約を追加し、第21〜24章のnegative manifestへ`status`、`measured`、`accessed_for_this_draft`を補った。さらに、第9〜12章について、実行済みmacOS host toolのうちmanifest acceptance IDへ明示対応する11行を、固定Linux target・物理測定・学習者操作とは分離した`host_evidence_verified`として結果へ投影した。

@@ -46,6 +46,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-29-1">29.1 この章の問い</h2>
 <p><a class="term" href="index.html#term-voltage">電圧</a>は連続量なのに、論理回路は0と1を扱う。これは電圧が本当に二つの値しか取るからではない。回路が「この範囲なら0」「この範囲なら1」と読む契約を置き、雑音やばらつきを含む物理状態の集合を重ならないよう設計するからである。</p>
 <p>本章では、<a class="term" href="index.html#term-voltage_distribution">電圧分布</a>、判定閾値、誤り率、雑音余裕を順に分ける。分布を数式で置くことは模型、閾値で0/1を返すことは判定契約、実際のヒストグラムは測定またはrunnerの出力である。ここに実データはなく、例の分布や誤り率は計算予定の入力である。</p>
+<h3 id="section-29-1-1">29.1.1　まず状態・判定・証拠を分ける</h3>
+<p>同じ電圧値でも、どの欄に置くかで意味が変わる。低い状態を表す分布から一つの値を選んだだけでは、受信器が0と判定したことにも、測定が成功したことにもならない。</p>
+<table><thead><tr><th>欄</th><th>書くもの</th><th>例</th></tr></thead>
+<tbody><tr><td>状態</td><td>物理または模型の値</td><td><code>V_L=0.4 V</code>、<code>V_H=0.7 V</code></td></tr><tr><td>判定規則</td><td>値を0/1へ写す境界</td><td><code>v &lt; V_dec</code>なら0</td></tr><tr><td>契約</td><td>保証入力・出力の範囲</td><td><code>V_IL</code>、<code>V_IH</code>、<code>V_OL</code>、<code>V_OH</code></td></tr><tr><td>証拠</td><td>その値がどこから来たか</td><td><code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code></td></tr></tbody>
+</table>
+<p>この表の「例」は教材入力であり、実機の分布ではない。以後の計算では、まず状態の集合と単位、次に判定規則、最後に<a class="term" href="index.html#term-bit_error_rate">誤り率</a>または観測ログを書く。この順序なら、未定義領域を勝手に0へ丸めたり、観測回数0を誤り率0と呼んだりしない。</p>
 <h2 id="section-29-2-0-1">29.2 0と1は集合である</h2>
 <p>第25章の<code>V_OL</code>と<code>V_OH</code>は、出力が保証される境界を表した。受け手側では<code>V_IL</code>以下を低い入力、<code>V_IH</code>以上を高い入力として保証する。従って、理想化した受信集合を</p>
 <p><code>L = {v | v &lt;= V_IL}</code>、<code>H = {v | v &gt;= V_IH}</code></p>
@@ -54,7 +60,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-29-3">29.3 分布が重なるとはどういうことか</h2>
 <p>同じ論理値を何度も送っても、電源揺らぎ、熱雑音、製造ばらつき、前段の残留、測定器の分解能などで観測電圧は一点にならない。低い状態の観測を確率変数<code>V_L</code>、高い状態を<code>V_H</code>とし、それぞれの分布を<code>p(v|L)</code>、<code>p(v|H)</code>とする。</p>
 <p>二つの分布が完全に離れていれば、ある閾値で誤りなく分類できる。裾が重なれば、同じ閾値でも低い状態を高いと誤る確率と、高い状態を低いと誤る確率が生じる。分布の形を正規分布と仮定するのは便利な統計模型だが、<a class="term" href="index.html#term-semiconductor">半導体</a>の自然法則が全ての回路で正規分布を要求するわけではない。</p>
-<h2 id="section-29-4">29.4 閾値と<a class="term" href="index.html#term-bit_error_rate">誤り率</a></h2>
+<h2 id="section-29-4">29.4 閾値と誤り率</h2>
 <p>判定器を、閾値<code>V_dec</code>に対して</p>
 <p><code>v &lt; V_dec =&gt; 0</code>、<code>v &gt;= V_dec =&gt; 1</code></p>
 <p>と定義する。<code>V_dec</code>は入力保証境界<code>V_IL</code>や<code>V_IH</code>と同じ記号ではなく、受信器が採用した判定規則である。未知領域を持つインターフェースでは、単一閾値で必ず安全に分類できるとは限らない。ヒステリシスや再試行がある場合は、その規則も保存する。</p>

@@ -46,12 +46,18 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-31-1">31.1 この章の問い</h2>
 <p>第30章で、NANDだけでも基本的な論理関数を表せることを見た。しかし「この真理値表を満たす回路がほしい」という要求から、式とゲートの接続をどう作ればよいだろうか。問いは「望む入出力表から、少ないゲートで同じ機能を持つ回路をどう作るか」である。</p>
 <p>この章では、真理値表→論理式→<a class="term" href="index.html#term-nand_netlist">NANDネットリスト</a>という流れを作る。式の簡単化はBooleanの模型、ゲート数・段数・fan-outの見積りは実装コストの模型、runnerは記号ネットリストの実行である。SPICEや測定を実行した結果は含めない。</p>
+<h3 id="section-31-1-1">31.1.1　表の一行を式の一項へ移す</h3>
+<p>合成の最初の一行は、入力の順序と出力を固定することである。<code>[A,B,C]=[0,1,1]</code>で出力が1なら、その行の積項は<code>NOT(A) AND B AND C</code>になる。0を否定し、1をそのままにするという規則を表へ書いてから、全ての出力1行をORで結ぶ。</p>
+<table><thead><tr><th>確認する欄</th><th>一行の例</th><th>失敗にするもの</th></tr></thead>
+<tbody><tr><td>入力順</td><td><code>[A,B,C]</code></td><td>行ごとの順序の入れ替え</td></tr><tr><td>入力値</td><td><code>[0,1,1]</code></td><td>0/1以外、列数不足</td></tr><tr><td>積項</td><td><code>NOT(A) B C</code></td><td>否定方向の取り違え</td></tr><tr><td>出力</td><td><code>1</code></td><td>元の表との不一致</td></tr><tr><td>実装</td><td>NAND nodeとwire</td><td>二重駆動・未接続</td></tr></tbody>
+</table>
+<p>この表を一行ずつ埋め、最後に元の全入力をネットリストへ戻して比較する。式を短くした段階では、同値性とゲート数・段数・<a class="term" href="index.html#term-fanout">fan-out</a>を別の表へ保存する。</p>
 <h2 id="section-31-2">31.2 真理値表を式へ写す</h2>
 <p>入力が<code>A,B,C</code>で、出力が1になる行を選ぶ。各行から、1の入力はそのまま、0の入力はNOTした積（AND）を作り、それらをORで足し合わせる。この形を<a class="term" href="index.html#term-sum_of_products">積和形</a>という。出力が0になる行から和積形を作る方法もある。</p>
 <p>この手順は、有限個の入力組合せを列挙するという論理契約である。行の順序、入力名、未定義値、don't-careを明示しなければ、同じ表を再現できない。表から得た式の真理値を元表へ戻して全行で確認する。</p>
 <h2 id="section-31-3">31.3 簡単化は同値変形である</h2>
 <p><code>A AND 1 = A</code>、<code>A OR 0 = A</code>、<code>A OR NOT(A) = 1</code>などの恒等式で式を短くできる。共通項を共有したり、カルノー図やアルゴリズムで項をまとめたりすることもできる。簡単化前後で、全入力組合せに対する出力が同じことを確認する。</p>
-<p>ただし、短い文字列が常に少ない物理ゲート数になるとは限らない。NOTをNANDへ展開する方法、同じ部分を共有するか、入力を何度駆動するかで、ゲート数、段数、<a class="term" href="index.html#term-fanout">fan-out</a>、負荷が変わる。式の文字数と回路コストを同じものとして扱わない。</p>
+<p>ただし、短い文字列が常に少ない物理ゲート数になるとは限らない。NOTをNANDへ展開する方法、同じ部分を共有するか、入力を何度駆動するかで、ゲート数、段数、fan-out、負荷が変わる。式の文字数と回路コストを同じものとして扱わない。</p>
 <h2 id="section-31-4-nand">31.4 NANDネットリストへの変換</h2>
 <p>第30章のNAND-only形式へ変換するとき、NOT・AND・ORの各演算をNAND構成へ置き換える。各中間結果に固有のwire名を与え、共有する場合は、そのwireを何個の後段が読むかを記録する。二重駆動や未接続がないことを確認する。</p>
 <p>合成器の出力は、入力表、元の式、簡単化後の式、NANDノード、出力wire、ゲート数、論理段数、fan-out、検査結果を含む。元表と同値であることは必要条件であり、遅延や<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>の測定値ではない。</p>
