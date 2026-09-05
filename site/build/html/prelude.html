@@ -129,6 +129,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <ol><li><strong>何を主張しているか。</strong> 値、関係、手順、または実装上の選択を一文にする。</li><li><strong>何を根拠にしているか。</strong> 自然法則、模型、規格、実行ログ、または教材の契約のどれかを選ぶ。</li><li><strong>どこまで言えるか。</strong> 版、入力、単位、境界、<code>measured</code>の状態を確認する。</li><li><strong>次に何を確かめるか。</strong> 式の導出、runner、変更課題、故障診断、または下位層へのhandoffを一つだけ選ぶ。</li></ol>
 <p>この四問は、先行一周で解答する課題ではない。第1章以降で実験カードや章末の確認問題を読むときに使う見取り線である。たとえば「<code>ADD</code>の結果は3だった」という記録なら、主張は模型上のレジスタ更新、根拠はCPU trace、境界はRV32Iと<code>rv32edu</code>の契約、次の確認はUART storeまたは変更後の故障診断になる。そこへ電圧や実機timingを勝手に足さない。</p>
 <p>このページを読み終えた時点で、四問に答えられなくてもよい。先行一周の目的は、分からないものを分からない層のまま置き、後の章で確かめる場所を失わないことである。</p>
+<h3 id="section-02323b8745">公開制作版の表示を読む</h3>
+<p>目次に表示される <code>structural_contract_verified</code>、<code>host_evidence_verified</code>、<code>educational_model_verified</code> は、根拠の種類を示すラベルである。ファイルの形が整ったこと、host toolが狭い入力を再生したこと、入力由来の模型が<a class="term" href="index.html#term-concept_2_term_7fb6c43bf0_7fb6c43b">不変条件</a>を満たしたことを、それぞれ記録している。どのラベルも、章末演習を自分で解いたこと、変更課題と故障診断を通過したこと、FPGAや実回路を測定したことの代わりにはならない。</p>
+<p><code>measured=false</code> は失敗という意味ではなく、その値を物理測定値として扱わないという境界である。<code>not_run</code> も、未確認の範囲を隠さず次の検査へ渡すための状態である。先行一周では数字を増やすことより、主張・根拠・範囲・次の確認を同じ表に置くことを優先する。</p>
 <h2 id="section-1cb31b3fb7">おわりに</h2>
 <p><code>print(1 + 2)</code> は小さな文である。しかし、意味、表現、実行時の値、OSとの境界、命令、CPU、論理回路、トランジスタ、半導体、電磁場という、異なる種類の問いを一つの道に置ける。</p>
 <p>この教材で学ぶのは、単にPythonを電気へ言い換えることではない。ある層で便利な約束が、下の層で何に支えられ、どの範囲で成り立ち、どこで破綻するかを追えるようになることである。</p>

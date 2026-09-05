@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T11:36:00.937841+00:00",
+  "generated_at_utc": "2026-09-05T11:39:00.732098+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21364248,
+  "total_bytes_before_manifest": 21365356,
   "files": [
     {
       "path": ".nojekyll",
@@ -5283,8 +5283,8 @@
     },
     {
       "path": "build/html/prelude.html",
-      "bytes": 39781,
-      "sha256": "1352801f7c87691277aaf57e2e7a37bdb31322a6bd45f1a4d1ba13b8371b8de1"
+      "bytes": 40889,
+      "sha256": "d2573409d94f698acb70d07aebd123e36d5f7d66d23fa4072982bdabb8f5f96d"
     },
     {
       "path": "build/html/runner.html",
