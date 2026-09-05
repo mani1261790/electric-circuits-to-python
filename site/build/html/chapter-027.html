@@ -47,16 +47,23 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>第26章では、入力の組合せをpMOSの<a class="term" href="index.html#term-pun">PUN</a>（pull-up network）とnMOSのPDN（pull-down network）へ写した。真理値は決まっていても、実際の出力電圧は瞬間にrailへ移らない。配線と次段の入力端子には電荷をためる性質があり、トランジスタにはその電荷を出し入れする有限の電流しか流せないからである。</p>
 <p>この章の問いは「<a class="term" href="index.html#term-logic_gate">論理ゲート</a>はなぜ瞬時に切り替わらず、クロック周波数と発熱を制限するのか」である。ここでは遅延、負荷、エネルギー、電力を同じ一つの数字に潰さない。論理値は契約、電荷と電流は物理法則、RC近似は模型、SPICEの波形は指定したモデルを解いた計算結果、実機オシロスコープの波形は測定、と分けて記録する。</p>
 <p>本章に実測値はない。SPICE掃引は<code>planned</code>で、固定runnerによる入力由来の解析・契約再生は実行済みとしてartifactへ保存されている。runnerの数値は模型の結果であり、SPICEまたは実機の測定結果ではない。</p>
+<h3 id="section-27-1-1">27.1.1　まず波形を一枚にする</h3>
+<p>遅延を初めて読むときは、入力と出力を別々の数字として覚えない。同じ時間軸に<code>V_in(t)</code>と<code>V_out(t)</code>を置き、どの<a class="term" href="index.html#term-voltage">電圧</a>を横切った時刻を採用したかを印す。たとえば電源が<code>V_DD</code>なら、<code>V_DD/2</code>を判定電圧に選んだ場合、入力の立上りがその値を横切る時刻と、出力の立下りがその値を横切る時刻の差が<code>t_pHL</code>になる。入力の立下りと出力の立上りなら<code>t_pLH</code>である。</p>
+<table><thead><tr><th>波形の組合せ</th><th>名前</th><th>最初に保存するもの</th></tr></thead>
+<tbody><tr><td>入力立上り→出力立下り</td><td><code>t_pHL</code></td><td>入力・出力の測定点、判定電圧、二つの時刻、単位<code>s</code></td></tr><tr><td>入力立下り→出力立上り</td><td><code>t_pLH</code></td><td>入力・出力の測定点、判定電圧、二つの時刻、単位<code>s</code></td></tr><tr><td>出力が判定電圧へ届くまでの傾き</td><td>立上り時間・立下り時間</td><td>開始・終了の電圧、時間窓、波形の向き</td></tr></tbody>
+</table>
+<p>ここで、立上り時間は出力波形の区間の長さ、伝搬遅延は入力の基準時刻から出力の基準時刻までのずれである。どちらも時間だが、同じ列へ上書きしない。また、判定電圧へ到達しない波形には、もっともらしい遅延を補間して埋めず、<code>delay_not_observable</code>として条件とともに止める。</p>
+<p>この一枚の表に、<code>C_load</code>、入力のslew、<code>V_DD</code>、温度、負荷、<code>source_kind</code>を後から追加する。すると、同じ形に見える波形でも、一次RC模型の予測、SPICEの数値解、実機の測定を別の証拠として扱える。まず時刻の定義を固定し、その後で<a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>と電流の式へ進む。</p>
 <h2 id="section-27-2">27.2 「遅延」を一つの時刻として定義する</h2>
 <p>入力が変化した時刻と出力が変化した時刻には差がある。この差を伝搬遅延と呼ぶが、どこを時刻とするかを先に決めなければ、二つの人が同じ波形を見ても違う値になる。</p>
-<p>出力が高い状態から低い状態へ移るとき、出力波形が選んだ判定<a class="term" href="index.html#term-voltage">電圧</a>を下向きに横切る時刻を<code>t_pHL</code>とする。逆向きの時刻を<code>t_pLH</code>とする。入力側も同じ規則で時刻を取り、入力判定時刻との差を遅延とする。判定電圧を<code>V_DD/2</code>にするのは一つの解析規約であり、規格で指定された<code>V_IL</code>や<code>V_IH</code>、測定器のしきい値と同一ではない。</p>
+<p>出力が高い状態から低い状態へ移るとき、出力波形が選んだ判定電圧を下向きに横切る時刻を<code>t_pHL</code>とする。逆向きの時刻を<code>t_pLH</code>とする。入力側も同じ規則で時刻を取り、入力判定時刻との差を遅延とする。判定電圧を<code>V_DD/2</code>にするのは一つの解析規約であり、規格で指定された<code>V_IL</code>や<code>V_IH</code>、測定器のしきい値と同一ではない。</p>
 <p>したがって、波形artifactには少なくとも、入力・出力の測定点、判定電圧、50%を採用した理由、立下り・立上りの向き、単位<code>s</code>を保存する。立上り時間（波形の傾きが大きいか）と伝搬遅延（入力時刻から出力判定時刻まで）は近い概念だが別の量である。</p>
 <h2 id="section-27-3">27.3 負荷は何を含むか</h2>
 <p>ゲート出力から見える負荷を、教育用の集中定数として</p>
 <p><code>C_load = C_intrinsic + N_fanout C_in + C_wire</code></p>
 <p>と表す。<code>C_intrinsic</code>は現在のゲート内部と出力拡散に由来する容量、<code>N_fanout</code>は直接駆動する次段入力の個数、<code>C_in</code>は一つの次段入力の等価入力容量、<code>C_wire</code>は配線の等価容量である。この式は、容量を足し合わせるという模型の契約であって、<a class="term" href="index.html#term-layout">レイアウト</a>から自動的に得られた実データではない。</p>
 <p><a class="term" href="index.html#term-fanout">fan-out</a>は単なる「何個つないだか」の数である。同じ個数でも、次段セルの大きさ、配線長、上下の入力容量が違えば<code>C_load</code>は変わる。また、2入力NANDのように直列のMOSがあるnetworkでは、インバータと同じ駆動抵抗になるとは限らない。したがって「fan-outが2なら遅延も2倍」と断定してはいけない。まず負荷定義、network、電源、しきい値、入力波形を固定する。</p>
-<h2 id="section-27-4">27.4 <a class="term" href="index.html#term-concept_5_term_2024a2952d_2024a295">電荷</a>を運ぶ有限電流</h2>
+<h2 id="section-27-4">27.4 電荷を運ぶ有限<a class="term" href="index.html#term-current">電流</a></h2>
 <p>第25章で扱った過渡<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>を、遅延の視点から書くと</p>
 <p><code>C_load dV_out/dt = I_PUN - I_PDN</code></p>
 <p>である。出力を低から高へ上げるときはPUNが負荷へ電荷を供給し、出力を高から低へ下げるときは<a class="term" href="index.html#term-pdn">PDN</a>が電荷をGNDへ抜く。電流が有限なら、<code>dV_out/dt</code>も有限であり、出力が判定電圧を通過するまで時間がかかる。これは電荷保存と回路の電流方向からくる物理的説明である。</p>
@@ -119,7 +126,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続電圧を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタや<a class="term" href="index.html#term-stack_pointer">stack pointer</a>を隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
 <p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
 <h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
-<ul><li>t_pHLとt_pLHを判定電圧・測定点・単位つきで定義できる</li><li>fan-outとC_loadの内訳を区別し、条件を固定した掃引計画を作れる</li><li>過渡KCLを電荷・<a class="term" href="index.html#term-current">電流</a>・出力傾きと結びつけられる</li><li>E_chargeとE_stored、P_dynと静的・短絡電力を分けられる</li><li>一次RC模型、SPICE予測、実機測定の証拠範囲を分けられる</li><li>閾値未交差、単位不整合、負荷不正、source_kind不一致をfail closedにできる</li></ul>
+<ul><li>t_pHLとt_pLHを判定電圧・測定点・単位つきで定義できる</li><li>fan-outとC_loadの内訳を区別し、条件を固定した掃引計画を作れる</li><li>過渡KCLを電荷・電流・出力傾きと結びつけられる</li><li>E_chargeとE_stored、P_dynと静的・短絡電力を分けられる</li><li>一次RC模型、SPICE予測、実機測定の証拠範囲を分けられる</li><li>閾値未交差、単位不整合、負荷不正、source_kind不一致をfail closedにできる</li></ul>
 <p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
 <h3 id="section-86aa35e5e4">故障診断の手順</h3>
 <p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>
