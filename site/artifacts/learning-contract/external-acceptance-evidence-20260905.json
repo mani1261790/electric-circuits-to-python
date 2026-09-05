@@ -1312,7 +1312,7 @@
     {
       "chapter": 24,
       "acceptance_ids": [
-        "host-probe"
+        "A24-04"
       ],
       "status": "host_evidence_verified",
       "passed": true,
@@ -1365,7 +1365,9 @@
     {
       "chapter": 32,
       "acceptance_ids": [
-        "host-probe"
+        "A32-02",
+        "A32-03",
+        "A32-04"
       ],
       "status": "host_evidence_verified",
       "passed": true,
@@ -1531,7 +1533,7 @@
     {
       "chapter": 92,
       "acceptance_ids": [
-        "host-probe"
+        "A92-01"
       ],
       "status": "host_evidence_verified",
       "passed": true,

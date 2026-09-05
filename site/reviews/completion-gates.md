@@ -1099,7 +1099,7 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 
 acceptance checkerに、汎用的な負の入力・正常経路・状態記録・言語境界の構造契約を追加し、第21〜24章のnegative manifestへ`status`、`measured`、`accessed_for_this_draft`を補った。さらに、第9〜12章について、実行済みmacOS host toolのうちmanifest acceptance IDへ明示対応する11行を、固定Linux target・物理測定・学習者操作とは分離した`host_evidence_verified`として結果へ投影した。
 
-現行結果はacceptance 699件中、`structural_contract_verified` 385件、`host_evidence_verified` 11件、構造failed 0件、domain／learner未実行303件、`measured=true` 0件である。host 11件はCPythonまたはngspiceの入力・出力・ログhash、終了コード、版、狭い不変条件を確認した記録であり、学習者の章合格・変更／故障診断・固定Linux target版の実行を意味しない。negativeは教育モデル12/459件、固定runnerは718/718成功・測定欄718件`not_run`、章固有change/fault execution artifactは0章のままである。
+現行結果はacceptance 699件中、`structural_contract_verified` 385件、`host_evidence_verified` 16件、構造failed 0件、domain／learner未実行298件、`measured=true` 0件である。host 16件はCPython、ngspice、Icarus、Verilator、Yosysの入力・出力・ログhash、終了コード、版、狭い不変条件を確認した記録であり、学習者の章合格・変更／故障診断・固定Linux target版の実行を意味しない。negativeは教育モデル12/459件、固定runnerは718/718成功・測定欄718件`not_run`、章固有change/fault execution artifactは0章のままである。
 
 これは構造と外部host証拠の分類精度を上げたもので、P1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）を解除しない。現行判定は **P0=0 / P1=1 / P2=2 / `learner-ready`保留**である。
 

@@ -4,7 +4,7 @@
 
 - 宣言: 106章 / 実験718件 / acceptance_tests 699件 / negative_tests 459件
 - 固定runner: 718/718成功、測定欄not_run 718件
-- acceptance_tests結果行: 699件（構造契約検査済み 385件、host evidence 11件、構造契約failed 0件、domain/learner実行済み 0件、not_run 303件）
+- acceptance_tests結果行: 699件（構造契約検査済み 385件、host evidence 16件、構造契約failed 0件、domain/learner実行済み 0件、not_run 298件）
 - negative_tests結果行: 459件（教育モデル実行済み 12件、not_run 447件）、measured=true 0件
 - manifest negativeの教育モデル検証: 12/12件（measured=false）
 - 章別変更・故障診断: 教育モデル 106章（基準 106、変更 106、故障 106）、学習者実行 0章
@@ -17,7 +17,7 @@
 
 ### 残る理由
 
-- manifest acceptance_tests have 385 structural-contract rows and 11 mapped host-evidence rows; 0 structural rows failed and 303 domain/learner rows remain not_run
+- manifest acceptance_tests have 385 structural-contract rows and 16 mapped host-evidence rows; 0 structural rows failed and 298 domain/learner rows remain not_run
 - manifest negative_tests have 12 educational-model result rows; the remaining 447 are not_run and measured=true is still zero
 - chapter-keyed educational change/fault model rows are 106 (baseline 106, change 106, fault 106); these are not learner interactions or external-domain executions
 - the explicit model mapping is still only an educational contract check; it does not close external-tool, FPGA, physical, or learner interaction gates

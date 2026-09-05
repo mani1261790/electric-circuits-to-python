@@ -16,9 +16,9 @@
     "acceptance_result_rows": 699,
     "acceptance_executed_rows": 0,
     "acceptance_structural_verified_rows": 385,
-    "acceptance_host_evidence_rows": 11,
+    "acceptance_host_evidence_rows": 16,
     "acceptance_structural_failed_rows": 0,
-    "acceptance_not_run_rows": 303,
+    "acceptance_not_run_rows": 298,
     "acceptance_execution_rows": 0,
     "negative_result_rows": 459,
     "negative_executed_rows": 12,
@@ -35,7 +35,7 @@
     "chapters_with_fault_prompt": 106
   },
   "blockers": [
-    "manifest acceptance_tests have 385 structural-contract rows and 11 mapped host-evidence rows; 0 structural rows failed and 303 domain/learner rows remain not_run",
+    "manifest acceptance_tests have 385 structural-contract rows and 16 mapped host-evidence rows; 0 structural rows failed and 298 domain/learner rows remain not_run",
     "manifest negative_tests have 12 educational-model result rows; the remaining 447 are not_run and measured=true is still zero",
     "chapter-keyed educational change/fault model rows are 106 (baseline 106, change 106, fault 106); these are not learner interactions or external-domain executions",
     "the explicit model mapping is still only an educational contract check; it does not close external-tool, FPGA, physical, or learner interaction gates"
@@ -5992,13 +5992,81 @@
           "test_id": "A24-04",
           "check": "SPICE・解析・測定出所",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 24,
+            "acceptance_ids": [
+              "A24-04"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-24-ngspice-vtc",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-024-cmos-inverter.cir"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-024-vtc.csv",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-024-ngspice-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "ngspice",
+                "version": "ngspice-47 : Circuit level simulation program",
+                "physical_measurement": false
+              },
+              "output": {
+                "rows": 11,
+                "columns": 4,
+                "output_start": 0.999999999,
+                "output_end": 1.44285714e-09
+              }
+            },
+            "boundary": "ngspice generic level-1 CMOS inverter only; silicon measurement, chapter acceptance, change and fault diagnosis remain open."
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A24-05",
@@ -7840,37 +7908,697 @@
           "test_id": "A32-02",
           "check": "mux_decoder",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 32,
+            "acceptance_ids": [
+              "A32-02",
+              "A32-03",
+              "A32-04"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": [
+              "chapter-32-iverilog-simulation",
+              "chapter-32-verilator-simulation",
+              "chapter-32-yosys-mux2",
+              "chapter-32-yosys-decoder2to4"
+            ],
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "chapter-32-iverilog-simulation": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv",
+                    "artifacts/external/host-3.11-20260905/chapter-032-tb.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/chapter-032-iverilog-run.log",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-iverilog-run.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Icarus Verilog/vvp",
+                  "version": "Icarus Verilog version 13.0 (stable) (v13_0)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "pass_line": true
+                }
+              },
+              "chapter-32-verilator-simulation": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv",
+                    "artifacts/external/host-3.11-20260905/chapter-032-tb.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/chapter-032-Vtb",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-verilator-run.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Verilator",
+                  "version": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "pass_line": true
+                }
+              },
+              "chapter-32-yosys-mux2": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/yosys-build/mux2.json",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-yosys-mux2.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Yosys",
+                  "version": "Yosys 0.68+post (git sha1 c12172fbae8af5e20f6fb52e3d4e92d56ed587b6, Release, AppleClang clang++ 21.0.0.21000101)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "module": "mux2",
+                  "ports": [
+                    "a",
+                    "b",
+                    "sel",
+                    "y"
+                  ],
+                  "cell_count": 1
+                }
+              },
+              "chapter-32-yosys-decoder2to4": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/yosys-build/decoder2to4.json",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-yosys-decoder2to4.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Yosys",
+                  "version": "Yosys 0.68+post (git sha1 c12172fbae8af5e20f6fb52e3d4e92d56ed587b6, Release, AppleClang clang++ 21.0.0.21000101)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "module": "decoder2to4",
+                  "ports": [
+                    "addr",
+                    "en",
+                    "y"
+                  ],
+                  "cell_count": 8
+                }
+              }
+            },
+            "boundary": "Icarus/Verilator/Yosys mux-decoder host runs only; HDL coverage, formal completeness, FPGA and physical measurement remain open."
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A32-03",
           "check": "verilator",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 32,
+            "acceptance_ids": [
+              "A32-02",
+              "A32-03",
+              "A32-04"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": [
+              "chapter-32-iverilog-simulation",
+              "chapter-32-verilator-simulation",
+              "chapter-32-yosys-mux2",
+              "chapter-32-yosys-decoder2to4"
+            ],
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "chapter-32-iverilog-simulation": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv",
+                    "artifacts/external/host-3.11-20260905/chapter-032-tb.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/chapter-032-iverilog-run.log",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-iverilog-run.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Icarus Verilog/vvp",
+                  "version": "Icarus Verilog version 13.0 (stable) (v13_0)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "pass_line": true
+                }
+              },
+              "chapter-32-verilator-simulation": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv",
+                    "artifacts/external/host-3.11-20260905/chapter-032-tb.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/chapter-032-Vtb",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-verilator-run.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Verilator",
+                  "version": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "pass_line": true
+                }
+              },
+              "chapter-32-yosys-mux2": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/yosys-build/mux2.json",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-yosys-mux2.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Yosys",
+                  "version": "Yosys 0.68+post (git sha1 c12172fbae8af5e20f6fb52e3d4e92d56ed587b6, Release, AppleClang clang++ 21.0.0.21000101)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "module": "mux2",
+                  "ports": [
+                    "a",
+                    "b",
+                    "sel",
+                    "y"
+                  ],
+                  "cell_count": 1
+                }
+              },
+              "chapter-32-yosys-decoder2to4": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/yosys-build/decoder2to4.json",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-yosys-decoder2to4.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Yosys",
+                  "version": "Yosys 0.68+post (git sha1 c12172fbae8af5e20f6fb52e3d4e92d56ed587b6, Release, AppleClang clang++ 21.0.0.21000101)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "module": "decoder2to4",
+                  "ports": [
+                    "addr",
+                    "en",
+                    "y"
+                  ],
+                  "cell_count": 8
+                }
+              }
+            },
+            "boundary": "Icarus/Verilator/Yosys mux-decoder host runs only; HDL coverage, formal completeness, FPGA and physical measurement remain open."
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A32-04",
           "check": "yosys",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 32,
+            "acceptance_ids": [
+              "A32-02",
+              "A32-03",
+              "A32-04"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": [
+              "chapter-32-iverilog-simulation",
+              "chapter-32-verilator-simulation",
+              "chapter-32-yosys-mux2",
+              "chapter-32-yosys-decoder2to4"
+            ],
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "chapter-32-iverilog-simulation": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv",
+                    "artifacts/external/host-3.11-20260905/chapter-032-tb.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/chapter-032-iverilog-run.log",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-iverilog-run.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Icarus Verilog/vvp",
+                  "version": "Icarus Verilog version 13.0 (stable) (v13_0)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "pass_line": true
+                }
+              },
+              "chapter-32-verilator-simulation": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv",
+                    "artifacts/external/host-3.11-20260905/chapter-032-tb.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/chapter-032-Vtb",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-verilator-run.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Verilator",
+                  "version": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "pass_line": true
+                }
+              },
+              "chapter-32-yosys-mux2": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/yosys-build/mux2.json",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-yosys-mux2.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Yosys",
+                  "version": "Yosys 0.68+post (git sha1 c12172fbae8af5e20f6fb52e3d4e92d56ed587b6, Release, AppleClang clang++ 21.0.0.21000101)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "module": "mux2",
+                  "ports": [
+                    "a",
+                    "b",
+                    "sel",
+                    "y"
+                  ],
+                  "cell_count": 1
+                }
+              },
+              "chapter-32-yosys-decoder2to4": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/external/host-3.11-20260905/chapter-032-mux_decoder.sv"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/yosys-build/decoder2to4.json",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-032-yosys-decoder2to4.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "Yosys",
+                  "version": "Yosys 0.68+post (git sha1 c12172fbae8af5e20f6fb52e3d4e92d56ed587b6, Release, AppleClang clang++ 21.0.0.21000101)",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "module": "decoder2to4",
+                  "ports": [
+                    "addr",
+                    "en",
+                    "y"
+                  ],
+                  "cell_count": 8
+                }
+              }
+            },
+            "boundary": "Icarus/Verilator/Yosys mux-decoder host runs only; HDL coverage, formal completeness, FPGA and physical measurement remain open."
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A32-05",
@@ -17966,13 +18694,90 @@
           "test_id": "A92-01",
           "check": "tokens",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 92,
+            "acceptance_ids": [
+              "A92-01"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-92-cpython-tokenize-ast",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-092-cpython-input.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-092-cpython-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-092-cpython-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "token_count": 7,
+                "token_strings": [
+                  "x",
+                  "=",
+                  "1",
+                  "+",
+                  "2",
+                  "\n",
+                  ""
+                ],
+                "ast_prefix": "Module(body=[Assign(targets=[Nam"
+              }
+            },
+            "boundary": "CPython tokenize/AST probe only; parser chapter acceptance, change/fault diagnosis, and implementation equivalence remain open."
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A92-02",
