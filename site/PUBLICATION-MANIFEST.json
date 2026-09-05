@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T12:02:24.116724+00:00",
+  "generated_at_utc": "2026-09-05T12:35:29.875861+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21429505,
+  "total_bytes_before_manifest": 21431430,
   "files": [
     {
       "path": ".nojekyll",
@@ -3698,8 +3698,8 @@
     },
     {
       "path": "build/html/chapter-001.html",
-      "bytes": 80272,
-      "sha256": "980ed74683aa5affe05d903a4fc8464d06fe58cd3f5f2d779439e9b2c02c868c"
+      "bytes": 82148,
+      "sha256": "8e49c699404a63ffc297c6de50dd074762afa8bd01181b470467a9f6b67dfea7"
     },
     {
       "path": "build/html/chapter-002-exercises.html",
@@ -5279,7 +5279,7 @@
     {
       "path": "build/html/index.html",
       "bytes": 102762,
-      "sha256": "237d6daf550f309a9e98aefbe2e6584f17aa052b281b3fde38ee703c26fadfc8"
+      "sha256": "9b7a7f2eb5d035737753e53df10b6bed7f827f334d4789948e376a4c1978750d"
     },
     {
       "path": "build/html/prelude.html",
@@ -5328,8 +5328,8 @@
     },
     {
       "path": "reviews/completion-audit-20260905.md",
-      "bytes": 3569,
-      "sha256": "f842b5f14c72baf818213086932b7d8d3d4d4ac2bb00364ee1fbcec0511f12f0"
+      "bytes": 3618,
+      "sha256": "e382fdb6500a6e09a1b2dcbedf46983e4f35b0e6143f09510ac9e77541f47ca4"
     },
     {
       "path": "reviews/completion-gates.md",

@@ -16,7 +16,7 @@
 | 範囲限定のhost tool証跡 | `external-acceptance-evidence-20260905.json` がmacOS host run 30件を検査し、第1〜21・24・32・92章の24章をhash・版・終了コード・狭い不変条件つきで確認 | pass（範囲限定、measured=false） |
 | MiniPy対象外の境界 | 第99章E5/E7が `contract_model_only`、`execution_scope=contract_model_only_not_minipy` | pass |
 | HTMLリンク・公開Bundle | `check_public_site.py` と `check_site.py` が失敗0、Pages実URL HTTP 200 | pass |
-| 現行HTML分量 | 固定Chrome/Letter/pdfinfoで107文書を再測定。先行一周12頁、第1〜106章3,497頁、合算3,509頁、各章24〜40頁、24頁未満0章、hash不一致0件 | pass（組版条件限定） |
+| 現行HTML分量 | 第1章の初心者向け実行導入追記後、固定Chrome/Letter/pdfinfoで107文書を再測定。先行一周12頁、第1〜106章3,498頁、合算3,510頁、各章24〜40頁、24頁未満0章、hash不一致0件 | pass（組版条件限定） |
 
 ## 完了扱いにできないこと
 

@@ -59,10 +59,23 @@ print(a + b)</code></pre>
 book run 1 2   # プロセスとシステムコールの観測
 book run 1 3   # 小さなCPUトレースの観測</code></pre>
 <p>実行結果のアドレス、命令オフセット、初期化時の<a class="term" href="index.html#term-system_call">システムコール</a>は、OS、ビルド、最適化によって変わる。変わらない意味と、変わり得る詳細を分けて記録する。</p>
+<h3 id="section-1-1-3">1.1　まず自分の環境で「3」を見る</h3>
+<p>まだASTやCPUを知らなくても、この二つは先に実行できる。テキストエディタで<code>const.py</code>と<code>runtime.py</code>を作り、端末で次を入力する。</p>
+<pre><code class="language-text">python3 --version
+python3 const.py
+python3 runtime.py</code></pre>
+<p>二つの実行結果は、通常どちらも次の一行になる。</p>
+<pre><code class="language-text">3</code></pre>
+<p>ここで記録するのは、少なくとも次の三つである。</p>
+<table><thead><tr><th>記録</th><th>今わかること</th><th>まだわからないこと</th></tr></thead>
+<tbody><tr><td><code>python3 --version</code></td><td>どのPython実装の版を使ったか</td><td>その版の内部命令が何か</td></tr><tr><td><code>const.py</code>の<code>3</code></td><td>定数式を含む文が受理され、出力が得られた</td><td>実行時に加算命令を通ったか</td></tr><tr><td><code>runtime.py</code>の<code>3</code></td><td>変数を介した文も同じ出力を得た</td><td>OS、CPU、<a class="term" href="index.html#term-voltage">電圧</a>、画面の全経路</td></tr></tbody>
+</table>
+<p><code>python3</code>が見つからない場合は、環境の問題をこの章の理解不足と混同しない。<code>py</code>など別の入口が用意されている場合もあるし、実行を保留してコードを読むだけでもよい。先に進むために無理なインストールを要求しない。</p>
+<p>二つとも<code>3</code>になったことは、言語<a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>の入口から見た出力契約の確認である。これは、CPUの<code>ADD</code>命令、OSの特定のsystem call、CMOSの電圧、実機の測定値を確認したことではない。その境界を残したまま、次節で同じ入力をASTという別の窓から見る。</p>
 <h2 id="section-2">2　五つの窓</h2>
 <p>一行のプログラムには、少なくとも次の窓がある。</p>
 <table><thead><tr><th>窓</th><th>例</th><th>その窓で見えるもの</th><th>見えないもの</th></tr></thead>
-<tbody><tr><td>ソース</td><td><code>print(1 + 2)</code></td><td>人が書いた文字列</td><td>実行順序、機械命令</td></tr><tr><td>構文木</td><td><code>Call(func=Name("print"), args=[BinOp(...)])</code></td><td>文の構造と名前</td><td>CPUのレジスタ、<a class="term" href="index.html#term-voltage">電圧</a></td></tr><tr><td><a class="term" href="index.html#term-bytecode">バイトコード</a></td><td><code>LOAD_CONST</code>、<code>CALL</code></td><td><a class="term" href="index.html#term-concept_1_term_f51cc827d2_f51cc827">処理系</a>が選んだ仮想命令</td><td>実CPUの配線、カーネル内部</td></tr><tr><td>システムコール</td><td><code>write</code>、<code>exit</code></td><td><a class="term" href="index.html#term-process">プロセス</a>とOSの境界</td><td>Pythonの式の意図、<a class="term" href="index.html#term-mosfet">MOSFET</a></td></tr><tr><td>CPUトレース</td><td><code>ADD</code>、<code>SW</code>、PC</td><td>命令、レジスタ、メモリ要求</td><td>命令の意味を決める<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a></td></tr></tbody>
+<tbody><tr><td>ソース</td><td><code>print(1 + 2)</code></td><td>人が書いた文字列</td><td>実行順序、機械命令</td></tr><tr><td>構文木</td><td><code>Call(func=Name("print"), args=[BinOp(...)])</code></td><td>文の構造と名前</td><td>CPUのレジスタ、電圧</td></tr><tr><td><a class="term" href="index.html#term-bytecode">バイトコード</a></td><td><code>LOAD_CONST</code>、<code>CALL</code></td><td>処理系が選んだ仮想命令</td><td>実CPUの配線、カーネル内部</td></tr><tr><td>システムコール</td><td><code>write</code>、<code>exit</code></td><td><a class="term" href="index.html#term-process">プロセス</a>とOSの境界</td><td>Pythonの式の意図、<a class="term" href="index.html#term-mosfet">MOSFET</a></td></tr><tr><td>CPUトレース</td><td><code>ADD</code>、<code>SW</code>、PC</td><td>命令、レジスタ、メモリ要求</td><td>命令の意味を決める<a class="term" href="index.html#term-concept_2_term_d78fe01a91_d78fe01a">自然法則</a></td></tr></tbody>
 </table>
 <p>さらに下には、メモリセルや<a class="term" href="index.html#term-concept_67_uart_3c85ca67">UART</a>の端子の電圧、電荷、電磁場がある。<code>3</code> という文字はそれ自体が電圧ではない。ある層では数値、別の層ではバイト列、さらに別の層では時間ごとに変化する信号である。</p>
 <p>ここで「上の表現が下の表現に変換される」とだけ覚えるのは不十分である。変換は常に一対一ではない。構文木の一部は定数にまとめられることがあり、OSは多数の内部処理を一つのシステムコールとして見せる。各窓は、下位の詳細を隠しながら、上位の利用者に一定の約束を提供している。</p>
