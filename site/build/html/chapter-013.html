@@ -59,6 +59,8 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>本章の中心問題は次である。</p>
 <blockquote>原子が崩壊せず、固体が導体と絶縁体に分かれる事実を古典力学で説明できないのはなぜか。</blockquote>
 <p>数値例の<code>0.3760 eV</code>、<code>1.504 eV</code>、<code>3.384 eV</code>は量子井戸式からの解析予測である。解析adapterは入力と期待値を再生済みだが、実在の原子の測定値や外部solverの結果ではない。</p>
+<h3 id="section-55e24585b9">先に使う記号</h3>
+<p>ここで初めて出る記号を、式を読む前に固定する。<code>e</code>は電気素量（<code>C</code>）、<code>m_e</code>は電子の質量（<code>kg</code>）、<code>ε_0</code>は真空の誘電率（<code>F/m</code>）、<code>c</code>は光速（<code>m/s</code>）である。計算時は距離を<code>m</code>、電荷を<code>C</code>、質量を<code>kg</code>へそろえる。<code>eV</code>はエネルギーの単位で、<code>1 eV = e × 1 V</code>（約<code>1.602×10^-19 J</code>）であり、電圧そのものではない。</p>
 <h2 id="section-2">2　古典模型が説明できることと、できないこと</h2>
 <h3 id="section-2-1">2.1　古典の連続状態</h3>
 <p>古典力学では、質量<code>m</code>の粒子の位置<code>x</code>と速度<code>v</code>は実数の時間関数である。ポテンシャル<code>U(x)</code>中の全エネルギーは</p>

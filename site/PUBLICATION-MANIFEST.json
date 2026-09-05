@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T09:19:07.426150+00:00",
+  "generated_at_utc": "2026-09-05T09:22:43.843248+00:00",
   "source_file_count": 1067,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1072,
-  "total_bytes_before_manifest": 21051750,
+  "total_bytes_before_manifest": 21052845,
   "files": [
     {
       "path": ".nojekyll",
@@ -3873,8 +3873,8 @@
     },
     {
       "path": "build/html/chapter-013.html",
-      "bytes": 69681,
-      "sha256": "2ada4d5550d465ffc14a56f9488d2f6f87a4261f1c231ffc7aee7a5fc9f9a2f0"
+      "bytes": 70304,
+      "sha256": "6096feb1261060728ec6887ba5428d316110cf0dde6b27e822032aad01cd189c"
     },
     {
       "path": "build/html/chapter-014-exercises.html",
@@ -3903,8 +3903,8 @@
     },
     {
       "path": "build/html/chapter-015.html",
-      "bytes": 70037,
-      "sha256": "513290858c85c00e27daa89fe9bfd32a15ec6a14025cd85664656ac70850e674"
+      "bytes": 70509,
+      "sha256": "8935bc20e41b93101585b34a295e17a8ab1b6618227a9421b832e5204e5da30c"
     },
     {
       "path": "build/html/chapter-016-exercises.html",
