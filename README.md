@@ -19,6 +19,8 @@ https://mani1261790.github.io/electric-circuits-to-python/
 
 第1〜106章の限定的な教育モデル実行記録は、[`site/reviews/chapter-change-fault-20260905.md`](./site/reviews/chapter-change-fault-20260905.md) と [`site/artifacts/learning-contract/chapter-change-fault-20260905.json`](./site/artifacts/learning-contract/chapter-change-fault-20260905.json) にあります。これは学習者の合格、外部tool、物理測定、独立レビュー、106章全体の完了を示しません。
 
+FPGAを試す読者向けの任意追加経路は、[`site/machine-spec/fpga-optional-path.md`](./site/machine-spec/fpga-optional-path.md) に候補条件・必要artifact・合格境界をまとめています。現状は `candidate` / `not_built` で、PC-only必修経路の代替ではありません。
+
 このリポジトリは公開サイト用に抽出した静的ファイルだけを保持します。制作原本、取得した第三者PDF、一時ファイル、ローカル実行環境は含みません。`site/PUBLICATION-MANIFEST.json` に公開ファイルのhashを記録しています。
 
 ## ライセンス
