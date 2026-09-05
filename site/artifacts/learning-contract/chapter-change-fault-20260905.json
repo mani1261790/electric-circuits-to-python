@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "64d4e83081873254a877e0fb1c3754a2841c40046cd2349a9cbd0f7e15de21a6",
-  "scope": "chapters 9-16; executable educational models",
+  "source_sha256": "8ee01641582019ab015db3fc768e292a2bc3ccb2c26482bf120c1a5ff4ca35cc",
+  "scope": "chapters 9-20; executable educational models",
   "summary": {
-    "chapters": 8,
-    "baseline_passed": 8,
-    "change_passed": 8,
-    "fault_passed": 8,
+    "chapters": 12,
+    "baseline_passed": 12,
+    "change_passed": 12,
+    "fault_passed": 12,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -701,6 +701,341 @@
           "input_sha256": "a4ceae2a0b5dd63748202c4afa8f8ca5ce3e59246621e8061676f614e3ceeb31",
           "error_code": "input_contract_error",
           "error": "lattice_constant_m must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 17,
+      "title": "真性半導体とキャリア",
+      "exercise_refs": [
+        "E2",
+        "E5",
+        "E8",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "intrinsic_non_degenerate_carrier_density",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "band_gap_ev": 1.12,
+          "temperature_k": 300.0,
+          "Nc_cm3": 2.8e+19,
+          "Nv_cm3": 1e+19
+        },
+        "input_sha256": "2b7790e7d8535424a1bef7284a4acb9f1c98ba7aa52741402b584d0a1b4dcba0",
+        "output": {
+          "ni_cm3": 6546257275.033092,
+          "n_cm3": 6546257275.033092,
+          "p_cm3": 6546257275.033092,
+          "neutrality_residual_cm3": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "band_gap_ev": 1.12,
+          "temperature_k": 600.0,
+          "Nc_cm3": 2.8e+19,
+          "Nv_cm3": 1e+19
+        },
+        "output_changed_key": "ni_cm3",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "band_gap_ev": 1.12,
+            "temperature_k": 600.0,
+            "Nc_cm3": 2.8e+19,
+            "Nv_cm3": 1e+19
+          },
+          "input_sha256": "d0fa7b45be85f4b399c39d6793577464a7bc1b5b23bb52769f55fc942b0093df",
+          "output": {
+            "ni_cm3": 330968028227140.75,
+            "n_cm3": 330968028227140.75,
+            "p_cm3": 330968028227140.75,
+            "neutrality_residual_cm3": 0.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "band_gap_ev": 1.12,
+          "temperature_k": 300.0,
+          "Nc_cm3": -1.0,
+          "Nv_cm3": 1e+19
+        },
+        "expected_error_fragment": "Nc_cm3 must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "band_gap_ev": 1.12,
+            "temperature_k": 300.0,
+            "Nc_cm3": -1.0,
+            "Nv_cm3": 1e+19
+          },
+          "input_sha256": "41c6ba7a865cf1530ebecd83baf5af46d015b5b08a25e64836f7bf7eeb0acabd",
+          "error_code": "input_contract_error",
+          "error": "Nc_cm3 must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 18,
+      "title": "ドーピングとFermi準位",
+      "exercise_refs": [
+        "E2",
+        "E4",
+        "E7",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "complete_ionization_charge_neutrality",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "donor_cm3": 1e+16,
+          "acceptor_cm3": 0.0,
+          "ni_cm3": 6550000000.0
+        },
+        "input_sha256": "b0e6dbe46c08c9e60cfda574a31cb89d67a95c1eee5e17d48cfc7ed79199d625",
+        "output": {
+          "net_doping_cm3": 1e+16,
+          "majority_cm3": 1e+16,
+          "minority_cm3": 4290.25,
+          "charge_neutrality_residual_cm3": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "donor_cm3": 2e+16,
+          "acceptor_cm3": 0.0,
+          "ni_cm3": 6550000000.0
+        },
+        "output_changed_key": "majority_cm3",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "donor_cm3": 2e+16,
+            "acceptor_cm3": 0.0,
+            "ni_cm3": 6550000000.0
+          },
+          "input_sha256": "3d413c65184ae8066d0207f38fea7301766c092dd5558ba2f291402ab16ef27f",
+          "output": {
+            "net_doping_cm3": 2e+16,
+            "majority_cm3": 2e+16,
+            "minority_cm3": 2145.125,
+            "charge_neutrality_residual_cm3": 0.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "donor_cm3": -1.0,
+          "acceptor_cm3": 0.0,
+          "ni_cm3": 6550000000.0
+        },
+        "expected_error_fragment": "donor_cm3 must be a finite nonnegative number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "donor_cm3": -1.0,
+            "acceptor_cm3": 0.0,
+            "ni_cm3": 6550000000.0
+          },
+          "input_sha256": "08785df4852638e042b99b15a11bbfc42c1804c53d0a869da08fa53c4191f431",
+          "error_code": "input_contract_error",
+          "error": "donor_cm3 must be a finite nonnegative number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 19,
+      "title": "drift、diffusion、再結合",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E5",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "electron_hole_drift_current",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "q_c": 1.602176634e-19,
+          "electron_density_m3": 1e+21,
+          "hole_density_m3": 1e+20,
+          "electric_field_v_per_m": 100.0,
+          "electron_mobility_m2_per_vs": 0.1,
+          "hole_mobility_m2_per_vs": 0.05
+        },
+        "input_sha256": "9e3f7f284c9049bf1ef27bab503a81a08bee87cc20558095ef110fcb420a09fc",
+        "output": {
+          "Jn_a_per_m2": 1602.176634,
+          "Jp_a_per_m2": 80.10883170000001,
+          "Jtotal_a_per_m2": 1682.2854657
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "q_c": 1.602176634e-19,
+          "electron_density_m3": 1e+21,
+          "hole_density_m3": 1e+20,
+          "electric_field_v_per_m": 200.0,
+          "electron_mobility_m2_per_vs": 0.1,
+          "hole_mobility_m2_per_vs": 0.05
+        },
+        "output_changed_key": "Jtotal_a_per_m2",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "q_c": 1.602176634e-19,
+            "electron_density_m3": 1e+21,
+            "hole_density_m3": 1e+20,
+            "electric_field_v_per_m": 200.0,
+            "electron_mobility_m2_per_vs": 0.1,
+            "hole_mobility_m2_per_vs": 0.05
+          },
+          "input_sha256": "5758320bf269a4dc48eafdd055e88dd89876893dccad0d3173832a9fd6cbb4e3",
+          "output": {
+            "Jn_a_per_m2": 3204.353268,
+            "Jp_a_per_m2": 160.21766340000002,
+            "Jtotal_a_per_m2": 3364.5709314
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "q_c": 1.602176634e-19,
+          "electron_density_m3": 1e+21,
+          "hole_density_m3": 1e+20,
+          "electric_field_v_per_m": 100.0,
+          "electron_mobility_m2_per_vs": -0.1,
+          "hole_mobility_m2_per_vs": 0.05
+        },
+        "expected_error_fragment": "electron_mobility_m2_per_vs must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "q_c": 1.602176634e-19,
+            "electron_density_m3": 1e+21,
+            "hole_density_m3": 1e+20,
+            "electric_field_v_per_m": 100.0,
+            "electron_mobility_m2_per_vs": -0.1,
+            "hole_mobility_m2_per_vs": 0.05
+          },
+          "input_sha256": "89525c300265ea5b7182b87c75989f55a3c5bac6ecde76d1c6838eefa9614b83",
+          "error_code": "input_contract_error",
+          "error": "electron_mobility_m2_per_vs must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 20,
+      "title": "p-n接合と金属接触",
+      "exercise_refs": [
+        "E2",
+        "E3",
+        "E4",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "abrupt_pn_depletion_approximation",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "epsilon_r": 11.7,
+          "acceptor_m3": 1e+21,
+          "donor_m3": 1e+22,
+          "junction_potential_v": 0.654790722655649
+        },
+        "input_sha256": "6c2c0eca17b6e441e37d2643e8d7eeeae48a5ca84e6f4482b904cc9cfbab6f8d",
+        "output": {
+          "depletion_width_m": 9.65105294461201e-07,
+          "peak_field_v_per_m": 1356931.1585244292
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "epsilon_r": 11.7,
+          "acceptor_m3": 1e+21,
+          "donor_m3": 1e+22,
+          "junction_potential_v": 0.754790722655649
+        },
+        "output_changed_key": "depletion_width_m",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "epsilon_r": 11.7,
+            "acceptor_m3": 1e+21,
+            "donor_m3": 1e+22,
+            "junction_potential_v": 0.754790722655649
+          },
+          "input_sha256": "18683803ebdf303ccf367fbc4677244aacf4c3087222db939f54e2a7cd928e93",
+          "output": {
+            "depletion_width_m": 1.0361836043257157e-06,
+            "peak_field_v_per_m": 1456866.7550898378
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "epsilon_r": 0.0,
+          "acceptor_m3": 1e+21,
+          "donor_m3": 1e+22,
+          "junction_potential_v": 0.654790722655649
+        },
+        "expected_error_fragment": "epsilon_r must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "epsilon_r": 0.0,
+            "acceptor_m3": 1e+21,
+            "donor_m3": 1e+22,
+            "junction_potential_v": 0.654790722655649
+          },
+          "input_sha256": "078d65f555ebaa8801b8ee8a88de1a48725160c247488caab82c3aa250eec272",
+          "error_code": "input_contract_error",
+          "error": "epsilon_r must be a finite positive number"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
