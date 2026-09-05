@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "a9f62c417d41fc335537cde5df3fa844d635f3381d965688c3d9e6552472ca33",
-  "scope": "chapters 9-80; executable educational models",
+  "source_sha256": "60133039333e064cefdc7513aa142be49ae8b3c5aedbd33d0d8746e6cb4f37a3",
+  "scope": "chapters 9-90; executable educational models",
   "summary": {
-    "chapters": 72,
-    "baseline_passed": 72,
-    "change_passed": 72,
-    "fault_passed": 72,
+    "chapters": 82,
+    "baseline_passed": 82,
+    "change_passed": 82,
+    "fault_passed": 82,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -5821,6 +5821,833 @@
           "input_sha256": "ff3f9189d27b858308d2f3029f8b2efd7d89b0cd657e4147f5d516073f41b5ac",
           "error_code": "input_contract_error",
           "error": "quantum must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 81,
+      "title": "address spaceとpage table管理",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "page_table_walk_and_permission",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "virtual_address": 74565,
+          "page_size_bytes": 4096,
+          "physical_page": 32,
+          "present": true,
+          "writable": true
+        },
+        "input_sha256": "1bcc611de07020d6b7746b8bc271cd5fa1e122ca752689c63baec20eb0fc3cb6",
+        "output": {
+          "vpn": 18.0,
+          "physical_address": 131909.0,
+          "writable": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "virtual_address": 74565,
+          "page_size_bytes": 4096,
+          "physical_page": 33,
+          "present": true,
+          "writable": true
+        },
+        "output_changed_key": "physical_address",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "virtual_address": 74565,
+            "page_size_bytes": 4096,
+            "physical_page": 33,
+            "present": true,
+            "writable": true
+          },
+          "input_sha256": "45d417d9a2a20e39763ce39eb68be78e0a73c012adf3a4f9f197d759cb47e39e",
+          "output": {
+            "vpn": 18.0,
+            "physical_address": 136005.0,
+            "writable": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "virtual_address": 74565,
+          "page_size_bytes": 4096,
+          "physical_page": 32,
+          "present": false,
+          "writable": true
+        },
+        "expected_error_fragment": "PTE must be present for address translation",
+        "observed": {
+          "status": "error",
+          "input": {
+            "virtual_address": 74565,
+            "page_size_bytes": 4096,
+            "physical_page": 32,
+            "present": false,
+            "writable": true
+          },
+          "input_sha256": "c498f1fdca6a18a42ea357df641e7a7787d61bf6e6e2a1d3d0bddab636081a4c",
+          "error_code": "input_contract_error",
+          "error": "PTE must be present for address translation"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 82,
+      "title": "page fault、demand paging、copy-on-write、mmap",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "demand_paging_and_cow_fault_actions",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "fault_kind": "not_present",
+          "page_index": 4,
+          "writable": true
+        },
+        "input_sha256": "3a83d2c5804f282cfa36da4ab4c8fee64d2d7b679c6bb06da95c1b46f4e239e5",
+        "output": {
+          "fault_action": 1.0,
+          "page_index": 4.0,
+          "mapped_writable": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "fault_kind": "cow",
+          "page_index": 4,
+          "writable": true
+        },
+        "output_changed_key": "fault_action",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "fault_kind": "cow",
+            "page_index": 4,
+            "writable": true
+          },
+          "input_sha256": "263d51b83a9936eefbc34d8449514ed17170694b79a20c523064819c8812a6f8",
+          "output": {
+            "fault_action": 2.0,
+            "page_index": 4.0,
+            "mapped_writable": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "fault_kind": "not_present",
+          "page_index": -1,
+          "writable": true
+        },
+        "expected_error_fragment": "page_index must be nonnegative and writable must be boolean",
+        "observed": {
+          "status": "error",
+          "input": {
+            "fault_kind": "not_present",
+            "page_index": -1,
+            "writable": true
+          },
+          "input_sha256": "f0bf9f896402aeec1408a7db6dcef983e35bb1db08f39f472173bda35c3ca794",
+          "error_code": "input_contract_error",
+          "error": "page_index must be nonnegative and writable must be boolean"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 83,
+      "title": "kernel memory、allocator、保護",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "kernel_page_allocator_and_copyin_bounds",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "total_pages": 128,
+          "allocated_pages": 32,
+          "request_pages": 8,
+          "user_buffer_bytes": 256,
+          "copyin_bytes": 128
+        },
+        "input_sha256": "945a4e65186dcd6b719858c34f11f57b886b1b2b0398497c478f6d7e84ac20c7",
+        "output": {
+          "free_pages": 96.0,
+          "allocated_after": 40.0,
+          "copyin_bytes": 128.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "total_pages": 128,
+          "allocated_pages": 32,
+          "request_pages": 16,
+          "user_buffer_bytes": 256,
+          "copyin_bytes": 128
+        },
+        "output_changed_key": "allocated_after",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "total_pages": 128,
+            "allocated_pages": 32,
+            "request_pages": 16,
+            "user_buffer_bytes": 256,
+            "copyin_bytes": 128
+          },
+          "input_sha256": "ef02d98327eee4d2a0da27eaa1ee2144fb6e1af10a519d5848e275b07a8b3c74",
+          "output": {
+            "free_pages": 96.0,
+            "allocated_after": 48.0,
+            "copyin_bytes": 128.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "total_pages": 128,
+          "allocated_pages": 32,
+          "request_pages": 8,
+          "user_buffer_bytes": 256,
+          "copyin_bytes": 300
+        },
+        "expected_error_fragment": "copyin exceeds the user buffer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "total_pages": 128,
+            "allocated_pages": 32,
+            "request_pages": 8,
+            "user_buffer_bytes": 256,
+            "copyin_bytes": 300
+          },
+          "input_sha256": "454d42627baefa0054a9cce4592269a6a7519e50887867f802484d6bf4abc30b",
+          "error_code": "input_contract_error",
+          "error": "copyin exceeds the user buffer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 84,
+      "title": "thread、race、atomicity、memory ordering",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "atomic_increment_and_lost_update",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "threads": 4,
+          "increments": 10,
+          "atomic": false
+        },
+        "input_sha256": "6bb4504177323ac67681d322238eb4883ce84052483113735528ae8d9373d03b",
+        "output": {
+          "final_count": 10.0,
+          "lost_updates": 30.0,
+          "atomic": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "threads": 4,
+          "increments": 10,
+          "atomic": true
+        },
+        "output_changed_key": "final_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "threads": 4,
+            "increments": 10,
+            "atomic": true
+          },
+          "input_sha256": "893a5e11bc7dec6e4a3f17c2e90220f665ff0a1cb9f0f2ee4ceefd8c0da7284c",
+          "output": {
+            "final_count": 40.0,
+            "lost_updates": 0.0,
+            "atomic": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "threads": 0,
+          "increments": 10,
+          "atomic": true
+        },
+        "expected_error_fragment": "threads must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "threads": 0,
+            "increments": 10,
+            "atomic": true
+          },
+          "input_sha256": "d35d379d0b0468f709c7e7ba51548b27b959c0ca24c655cca60ec654493a40dd",
+          "error_code": "input_contract_error",
+          "error": "threads must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 85,
+      "title": "lock、semaphore、condition variable、deadlock",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "semaphore_and_deadlock_cycle",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "permits": 1,
+          "waiting": 2,
+          "deadlock_cycle": false
+        },
+        "input_sha256": "df43a500643320de302d7420bdadf30c5b5b7e215ab38351e4de2e3bf44dc979",
+        "output": {
+          "deadlock_detected": 0.0,
+          "available_permits": 1.0,
+          "waiting_threads": 2.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "permits": 1,
+          "waiting": 2,
+          "deadlock_cycle": true
+        },
+        "output_changed_key": "deadlock_detected",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "permits": 1,
+            "waiting": 2,
+            "deadlock_cycle": true
+          },
+          "input_sha256": "5b618291cf8003e3d20899d916e2c742e56c307f862e2e5014c78d003e65c5c4",
+          "output": {
+            "deadlock_detected": 1.0,
+            "available_permits": 1.0,
+            "waiting_threads": 2.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "permits": -1,
+          "waiting": 2,
+          "deadlock_cycle": false
+        },
+        "expected_error_fragment": "permits/waiting must be nonnegative and deadlock_cycle must be boolean",
+        "observed": {
+          "status": "error",
+          "input": {
+            "permits": -1,
+            "waiting": 2,
+            "deadlock_cycle": false
+          },
+          "input_sha256": "ab1f04d8867aece0f0c0d93d4eeb29b748156eae6456067e20062e01b5050de8",
+          "error_code": "input_contract_error",
+          "error": "permits/waiting must be nonnegative and deadlock_cycle must be boolean"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 86,
+      "title": "device driverとblock I/O",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "block_io_partial_completion_and_irq",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "requested_bytes": 4096,
+          "completed_bytes": 2048,
+          "timeout_ms": 100,
+          "irq": true
+        },
+        "input_sha256": "49252bdc141b5c527c10040517122ecd6eba2aaae573ab70e8674289cdb4228f",
+        "output": {
+          "completion_ratio": 0.5,
+          "remaining_bytes": 2048.0,
+          "irq_seen": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "requested_bytes": 4096,
+          "completed_bytes": 3072,
+          "timeout_ms": 100,
+          "irq": true
+        },
+        "output_changed_key": "completion_ratio",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "requested_bytes": 4096,
+            "completed_bytes": 3072,
+            "timeout_ms": 100,
+            "irq": true
+          },
+          "input_sha256": "8a6ad96f3c6dbb0145f1180dd1c75e7ffb21ae977d38bc9332da0675705336fa",
+          "output": {
+            "completion_ratio": 0.75,
+            "remaining_bytes": 1024.0,
+            "irq_seen": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "requested_bytes": 4096,
+          "completed_bytes": 4097,
+          "timeout_ms": 100,
+          "irq": true
+        },
+        "expected_error_fragment": "completed_bytes must fit request and irq must be boolean",
+        "observed": {
+          "status": "error",
+          "input": {
+            "requested_bytes": 4096,
+            "completed_bytes": 4097,
+            "timeout_ms": 100,
+            "irq": true
+          },
+          "input_sha256": "02039394899ccbfaaf82c02a6413e356168b1bf48b94e80120dab881c50db91a",
+          "error_code": "input_contract_error",
+          "error": "completed_bytes must fit request and irq must be boolean"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 87,
+      "title": "filesystem、cache、crash consistency",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "filesystem_allocation_and_journal_recovery",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "total_blocks": 100,
+          "inode_blocks": 10,
+          "data_blocks": 40,
+          "journal_committed": true
+        },
+        "input_sha256": "23195f4dc8aa8e61fff4bbb692f70a8eac2b326f3dfda2e5f084e6ec860def96",
+        "output": {
+          "free_blocks": 50.0,
+          "recoverable": 1.0,
+          "used_blocks": 50.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "total_blocks": 100,
+          "inode_blocks": 10,
+          "data_blocks": 50,
+          "journal_committed": true
+        },
+        "output_changed_key": "free_blocks",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "total_blocks": 100,
+            "inode_blocks": 10,
+            "data_blocks": 50,
+            "journal_committed": true
+          },
+          "input_sha256": "e01915c29b325edbacd67ede8fc83080132d83738ee491dc03e4178bcf0818d6",
+          "output": {
+            "free_blocks": 40.0,
+            "recoverable": 1.0,
+            "used_blocks": 60.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "total_blocks": 100,
+          "inode_blocks": 70,
+          "data_blocks": 40,
+          "journal_committed": true
+        },
+        "expected_error_fragment": "filesystem allocation exceeds total blocks",
+        "observed": {
+          "status": "error",
+          "input": {
+            "total_blocks": 100,
+            "inode_blocks": 70,
+            "data_blocks": 40,
+            "journal_committed": true
+          },
+          "input_sha256": "3123433982b0c4a8efd9b57c9a5d22ba87a4ec4a596a4a973f152936da0141ce",
+          "error_code": "input_contract_error",
+          "error": "filesystem allocation exceeds total blocks"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 88,
+      "title": "pipe、signal、TTY、shell、process起動",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "shell_fork_exec_tty_pipeline",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "command": "python",
+          "argv_count": 2,
+          "pipe_open": true,
+          "signal_pending": false
+        },
+        "input_sha256": "87b9fe3d06af963eb12a2d3276b4f4a2d6734b99b697d42bd03e7233f0634f97",
+        "output": {
+          "exec_ready": 1.0,
+          "argv_count": 2.0,
+          "pipe_fds": 2.0,
+          "signal_pending": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "command": "python",
+          "argv_count": 3,
+          "pipe_open": true,
+          "signal_pending": false
+        },
+        "output_changed_key": "argv_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "command": "python",
+            "argv_count": 3,
+            "pipe_open": true,
+            "signal_pending": false
+          },
+          "input_sha256": "78fb77a5220fcc1e3f41eddd2188217dfc9e70a3e01820f2609d29fb4fca5368",
+          "output": {
+            "exec_ready": 1.0,
+            "argv_count": 3.0,
+            "pipe_fds": 2.0,
+            "signal_pending": 0.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "command": "",
+          "argv_count": 2,
+          "pipe_open": true,
+          "signal_pending": false
+        },
+        "expected_error_fragment": "command must be nonempty and pipe/signal flags must be boolean",
+        "observed": {
+          "status": "error",
+          "input": {
+            "command": "",
+            "argv_count": 2,
+            "pipe_open": true,
+            "signal_pending": false
+          },
+          "input_sha256": "a7cc5efe67f61f396bb0c3b720b291d08adca67b7c314e35108572258c644aab",
+          "error_code": "input_contract_error",
+          "error": "command must be nonempty and pipe/signal flags must be boolean"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 89,
+      "title": "socket、network stack、権限と隔離",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "socket_namespace_capability_and_mtu",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "protocol": "stream",
+          "namespace": "net0",
+          "capability": true,
+          "payload_bytes": 512,
+          "mtu_bytes": 1500
+        },
+        "input_sha256": "f08cfe55d44e1eb88e53fe75a2f50ac5263b390808270d84395fa08fe240880f",
+        "output": {
+          "allowed": 1.0,
+          "delivered_bytes": 512.0,
+          "datagram": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "protocol": "datagram",
+          "namespace": "net0",
+          "capability": true,
+          "payload_bytes": 512,
+          "mtu_bytes": 1500
+        },
+        "output_changed_key": "datagram",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "protocol": "datagram",
+            "namespace": "net0",
+            "capability": true,
+            "payload_bytes": 512,
+            "mtu_bytes": 1500
+          },
+          "input_sha256": "9b231ff5c930ddd33c1eec01cf59816419aea12af904f5293302d2df242d32fb",
+          "output": {
+            "allowed": 1.0,
+            "delivered_bytes": 512.0,
+            "datagram": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "protocol": "stream",
+          "namespace": "net0",
+          "capability": false,
+          "payload_bytes": 512,
+          "mtu_bytes": 1500
+        },
+        "expected_error_fragment": "socket capability is required",
+        "observed": {
+          "status": "error",
+          "input": {
+            "protocol": "stream",
+            "namespace": "net0",
+            "capability": false,
+            "payload_bytes": 512,
+            "mtu_bytes": 1500
+          },
+          "input_sha256": "392a60022d243b4d1a9ca7fdef0a472c7750ce482059d9b6ecc4c0686144a1ba",
+          "error_code": "input_contract_error",
+          "error": "socket capability is required"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 90,
+      "title": "xv6とminiosの統合",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "os_boot_handoff_component_correspondence",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "boot_stage": 3,
+          "required_components": 5,
+          "present_components": 5,
+          "timer_ticks": 10,
+          "device_ready": true
+        },
+        "input_sha256": "a8ff516c5c22bde071cddfdc1a2889234cfb57ed748c7ad2b97b018e015cc2fc",
+        "output": {
+          "boot_handoff_stage": 3.0,
+          "integrated": 1.0,
+          "timer_ticks": 10.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "boot_stage": 4,
+          "required_components": 5,
+          "present_components": 5,
+          "timer_ticks": 10,
+          "device_ready": true
+        },
+        "output_changed_key": "boot_handoff_stage",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "boot_stage": 4,
+            "required_components": 5,
+            "present_components": 5,
+            "timer_ticks": 10,
+            "device_ready": true
+          },
+          "input_sha256": "972c0ab9719f791391c4a857b224cdc88c1637042d671259884d50b132f3840d",
+          "output": {
+            "boot_handoff_stage": 4.0,
+            "integrated": 1.0,
+            "timer_ticks": 10.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "boot_stage": 3,
+          "required_components": 5,
+          "present_components": 4,
+          "timer_ticks": 10,
+          "device_ready": true
+        },
+        "expected_error_fragment": "integrated OS is missing a required component",
+        "observed": {
+          "status": "error",
+          "input": {
+            "boot_stage": 3,
+            "required_components": 5,
+            "present_components": 4,
+            "timer_ticks": 10,
+            "device_ready": true
+          },
+          "input_sha256": "600e9d174b4aad5e5a5571558ee0f42d26768108d414a5f114ec8911ac76b7d3",
+          "error_code": "input_contract_error",
+          "error": "integrated OS is missing a required component"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
