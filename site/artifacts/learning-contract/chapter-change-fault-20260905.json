@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "c8b07ccd32285e357540f253f0f7e3f442dd601ab8922121f7890cb0ed92a02e",
-  "scope": "chapters 9-32; executable educational models",
+  "source_sha256": "e0cc158beea6c85e9af9e757db43c3be4b46e762f62b4cfd8a8cd1d7adccfa8a",
+  "scope": "chapters 9-36; executable educational models",
   "summary": {
-    "chapters": 24,
-    "baseline_passed": 24,
-    "change_passed": 24,
-    "fault_passed": 24,
+    "chapters": 28,
+    "baseline_passed": 28,
+    "change_passed": 28,
+    "fault_passed": 28,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -1980,6 +1980,318 @@
           "input_sha256": "85202beb01f15db7f2af36548cda288d2bad4cb2f1df7ae1c7a57b754a251e1d",
           "error_code": "input_contract_error",
           "error": "data_width must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 33,
+      "title": "二進表現、符号、有限幅",
+      "exercise_refs": [
+        "E1",
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "finite_width_unsigned_signed_interpretation",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "width_bits": 8,
+          "raw_value": 255
+        },
+        "input_sha256": "0f485bb619c14ed17a121644007e906ef990fe3f9b0e72d3be1fd3fb71094b48",
+        "output": {
+          "width_bits": 8.0,
+          "unsigned_value": 255.0,
+          "signed_value": -1.0,
+          "max_unsigned": 255.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "width_bits": 16,
+          "raw_value": 255
+        },
+        "output_changed_key": "signed_value",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "width_bits": 16,
+            "raw_value": 255
+          },
+          "input_sha256": "9ad30189f5a3fb6b93a5e3e536c777730d4f53c57e71799b84fc8c39ac54e503",
+          "output": {
+            "width_bits": 16.0,
+            "unsigned_value": 255.0,
+            "signed_value": 255.0,
+            "max_unsigned": 65535.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "width_bits": 0,
+          "raw_value": 255
+        },
+        "expected_error_fragment": "width_bits must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "width_bits": 0,
+            "raw_value": 255
+          },
+          "input_sha256": "a0a5f5c3dee933589b8e37a90e5e9d1f4d2365c1c6bc868cd5e2b1074750f9ff",
+          "error_code": "input_contract_error",
+          "error": "width_bits must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 34,
+      "title": "加算器、減算器、比較器",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "fixed_width_ripple_adder_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "width_bits": 4,
+          "a": 5,
+          "b": 3
+        },
+        "input_sha256": "ef8c3c76b3ebf2bca88310962fe925bb645f537617aa63cea0d9b3e8d218672e",
+        "output": {
+          "width_bits": 4.0,
+          "sum_modulo": 8.0,
+          "carry_out": 0.0,
+          "unsigned_greater": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "width_bits": 4,
+          "a": 7,
+          "b": 3
+        },
+        "output_changed_key": "sum_modulo",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "width_bits": 4,
+            "a": 7,
+            "b": 3
+          },
+          "input_sha256": "c0b47fbc07d9413cca0d4af9d8d924cca5a73f101be1d29af3c0bd8fc00605d7",
+          "output": {
+            "width_bits": 4.0,
+            "sum_modulo": 10.0,
+            "carry_out": 0.0,
+            "unsigned_greater": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "width_bits": 0,
+          "a": 5,
+          "b": 3
+        },
+        "expected_error_fragment": "width_bits must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "width_bits": 0,
+            "a": 5,
+            "b": 3
+          },
+          "input_sha256": "53aef793a78c205f2ac5479b409cd4e27164e03734154fe1cc2302a2b3cb5a8e",
+          "error_code": "input_contract_error",
+          "error": "width_bits must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 35,
+      "title": "shift、乗除算、ALU",
+      "exercise_refs": [
+        "E1",
+        "E3",
+        "E5",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "logical_shift_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "width_bits": 8,
+          "value": 19,
+          "shift": 2,
+          "direction": "left"
+        },
+        "input_sha256": "4378c35ef9a6350a1168e83e19d3ea4327752ab0c0586e99377dbbc6353a55da",
+        "output": {
+          "width_bits": 8.0,
+          "result": 76.0,
+          "shift": 2.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "width_bits": 8,
+          "value": 19,
+          "shift": 3,
+          "direction": "left"
+        },
+        "output_changed_key": "result",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "width_bits": 8,
+            "value": 19,
+            "shift": 3,
+            "direction": "left"
+          },
+          "input_sha256": "6b00cc52233cacd65b921e91feeb27c2928a1c101350ce9f026b73b777392996",
+          "output": {
+            "width_bits": 8.0,
+            "result": 152.0,
+            "shift": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "width_bits": 8,
+          "value": 19,
+          "shift": 8,
+          "direction": "left"
+        },
+        "expected_error_fragment": "shift must be in the range 0<=shift<width_bits",
+        "observed": {
+          "status": "error",
+          "input": {
+            "width_bits": 8,
+            "value": 19,
+            "shift": 8,
+            "direction": "left"
+          },
+          "input_sha256": "65ea05265cc6f89a5dfce2d1e98edbb30f7ea03f96b76db7be5672a83b8979ef",
+          "error_code": "input_contract_error",
+          "error": "shift must be in the range 0<=shift<width_bits"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 36,
+      "title": "帰還と双安定性",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E7",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "complementary_bistable_feedback",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "loop_gain": 2.0,
+          "initial_q": 1.0,
+          "initial_qbar": 0.0
+        },
+        "input_sha256": "b2013c0cd39083ca516f73d691c4e10266f1c1c304869f80a73bb24e1e99a5c9",
+        "output": {
+          "stable_state_count": 2.0,
+          "loop_gain": 2.0,
+          "complement_residual": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "loop_gain": 0.5,
+          "initial_q": 1.0,
+          "initial_qbar": 0.0
+        },
+        "output_changed_key": "stable_state_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "loop_gain": 0.5,
+            "initial_q": 1.0,
+            "initial_qbar": 0.0
+          },
+          "input_sha256": "ddfda01f78858ccc83603b77bb217850df4a5a81404756f05820b8f641cd322d",
+          "output": {
+            "stable_state_count": 1.0,
+            "loop_gain": 0.5,
+            "complement_residual": 0.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "loop_gain": 2.0,
+          "initial_q": 1.0,
+          "initial_qbar": 1.0
+        },
+        "expected_error_fragment": "initial_q and initial_qbar must be complementary",
+        "observed": {
+          "status": "error",
+          "input": {
+            "loop_gain": 2.0,
+            "initial_q": 1.0,
+            "initial_qbar": 1.0
+          },
+          "input_sha256": "9f04cf11d05c71e467e0dbe3086bec7069214d90d7e3f2e31c25401bd757c11d",
+          "error_code": "input_contract_error",
+          "error": "initial_q and initial_qbar must be complementary"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
