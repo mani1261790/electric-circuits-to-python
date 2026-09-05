@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T09:05:43.249086+00:00",
-  "source_file_count": 1065,
+  "generated_at_utc": "2026-09-05T09:19:07.426150+00:00",
+  "source_file_count": 1067,
   "generated_entrypoint_count": 5,
-  "file_count_before_manifest": 1070,
-  "total_bytes_before_manifest": 21040711,
+  "file_count_before_manifest": 1072,
+  "total_bytes_before_manifest": 21051750,
   "files": [
     {
       "path": ".nojekyll",
@@ -40,6 +40,11 @@
       "path": "artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json",
       "bytes": 583200,
       "sha256": "7d0f6a0feeef32eddc554e83b99322120773ccddf0ac6948b94243d2b272cc8a"
+    },
+    {
+      "path": "artifacts/learning-contract/external-acceptance-evidence-20260905.json",
+      "bytes": 8642,
+      "sha256": "6bb7c6b6195d916ff39cb7f672c30ae29b67413ae381ce651a48c1f9424f4c6a"
     },
     {
       "path": "artifacts/learning-contract/pc-only-change-fault-20260904.json",
@@ -5268,8 +5273,8 @@
     },
     {
       "path": "build/html/index.html",
-      "bytes": 101875,
-      "sha256": "85cf4797856d19aca081366cd4fd65a2dd3ac49bd68e1b45da0b93508718104b"
+      "bytes": 102172,
+      "sha256": "232545b01d103b58d2d00017b528307713bf7b4144970f6c8084323b0baf75d9"
     },
     {
       "path": "build/html/prelude.html",
@@ -5308,8 +5313,13 @@
     },
     {
       "path": "reviews/completion-gates.md",
-      "bytes": 178781,
-      "sha256": "a90495cf32b8294ff4da770c8380cd9e4dad1fbad8962b1457b12742d6875241"
+      "bytes": 180192,
+      "sha256": "0377e105a1920c43315635974ac74d2b7c8dd5b5b2aa60047c34781ae4c933c8"
+    },
+    {
+      "path": "reviews/external-acceptance-evidence-20260905.md",
+      "bytes": 689,
+      "sha256": "351a5e932e853e848ab5ec4e6ae30818627183a39159785260438aad8dd4f788"
     },
     {
       "path": "reviews/independent-chapter-confirmation-20260904.md",

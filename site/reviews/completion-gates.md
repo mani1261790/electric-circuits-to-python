@@ -1095,6 +1095,17 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 
 現行判定は **P0=0 / P1=1（必修実験・章固有change/fault・外部実装受入） / P2=2（FPGA任意経路、trace D/E/F物理下位層） / `learner-ready`保留**を維持する。
 
+## 118. 2026-09-05 第9〜12章host実行エビデンスの独立台帳化
+
+既存のmacOS host実行を、固定Linux runnerの解析・契約モデルや物理測定へ昇格させず、別台帳 [`external-acceptance-evidence-20260905.json`](../artifacts/learning-contract/external-acceptance-evidence-20260905.json) として検査した。入力・出力・ログのSHA-256、終了コード、ツール名・版、`physical_measurement=false`を確認し、狭い出力不変条件を照合した。
+
+- 第9章 CPython: `τ=5 ns`、`v_p=2e8 m/s`、`t_prop=5 ns`、50Ω整合・open反射、4 ns/5 nsの分布ステップ境界を確認
+- 第10章 CPython: manifest入力の抵抗網で `V1=2.75 V`、`V2=2.50 V`、最大KCL残差 `8.7e-19 A`を確認
+- 第11章 ngspice-47: RC/RLC netlistの終了コード、行数、列数、過渡波形の範囲、ログを確認
+- 第12章 CPython: `f_c`、RC利得、熱雑音RMS、有限終端反射係数、DFT bin構造を確認
+
+結果は4/4章 `host_evidence_verified`、`measured=true=0`、`physical_measurement=false`、`learner_ready=false`。このverifiedは外部tool実行と記録の整合だけを意味し、章末演習の理解、全acceptance、変更・故障診断、固定Linux target版、独立専門家確認、FPGA、実回路・実機測定を閉じない。現行判定は **P0=0 / P1=1 / P2=2 / `learner-ready`保留**を維持する。
+
 ## 117. 2026-09-05 第1巻本文内容契約の追加確認
 
 第1巻の本文を学習者向けの読み順で再確認し、未確認だった25件を、実験測定へ昇格させない構造・内容契約としてcheckerへ追加した。第2章は四つの抽象化台帳行、抵抗モデルの適用範囲、NANDの真理値表と波形の分離、RV32Iの有限幅を照合した。第3章は次元解析から形式文法までの数学mapと変更・故障診断欄、第4章はfigure/source registryとRC四経路・測定負荷・収束／不確かさの分離を照合した。第5〜8章は電場・電束・電位エネルギー・連続の式・電流の向き・発熱の式と境界を、本文および既存artifactへ照合した。

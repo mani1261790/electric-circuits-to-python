@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "kind": "external_acceptance_evidence",
+  "scope": "chapters 9-12; host-only external tool outputs; not locked Linux runner, physical measurement, or learner gate",
+  "measured": false,
+  "summary": {
+    "chapters": 4,
+    "host_evidence_verified": 4,
+    "host_evidence_failed": 0,
+    "measured_true": 0,
+    "physical_measurement": false,
+    "learner_ready": false
+  },
+  "chapters": [
+    {
+      "chapter": 9,
+      "acceptance_ids": [
+        "A5",
+        "A6",
+        "A7",
+        "A8"
+      ],
+      "status": "host_evidence_verified",
+      "passed": true,
+      "measured": false,
+      "execution_mode": "external_host_tool_output",
+      "tool_run_record": "chapter-9-cpython-intermediate-probe",
+      "provenance_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "output_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": {
+        "provenance": {
+          "input_paths": [
+            "artifacts/external/host-20260902/chapter-009-intermediate-probe.py"
+          ],
+          "input_hashes_match": true,
+          "output": "artifacts/external/host-20260902/chapter-009-intermediate-output.json",
+          "output_hash_matches": true,
+          "log": "artifacts/external/host-20260902/chapter-009-intermediate-command.log",
+          "log_hash_matches": true,
+          "exit_code": 0,
+          "tool": "CPython",
+          "version": "Python 3.14.7",
+          "physical_measurement": false
+        },
+        "output": {
+          "tau_s": 5e-09,
+          "v_p_m_per_s": 200000000.0,
+          "t_prop_s": 5e-09,
+          "gamma_50ohm": 0.0,
+          "gamma_open": 1.0,
+          "sample_boundary": {
+            "4ns": 0.0,
+            "5ns": 1.0
+          }
+        }
+      },
+      "boundary": "代表的な集中／分布解析とκ・終端のhost probeのみ。章全体の実験、変更、故障診断、実測は未閉鎖。"
+    },
+    {
+      "chapter": 10,
+      "acceptance_ids": [
+        "A5",
+        "A7"
+      ],
+      "status": "host_evidence_verified",
+      "passed": true,
+      "measured": false,
+      "execution_mode": "external_host_tool_output",
+      "tool_run_record": "chapter-10-cpython-intermediate-probe",
+      "provenance_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "output_checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": {
+        "provenance": {
+          "input_paths": [
+            "artifacts/external/host-20260902/chapter-010-intermediate-probe.py"
+          ],
+          "input_hashes_match": true,
+          "output": "artifacts/external/host-20260902/chapter-010-intermediate-output.json",
+          "output_hash_matches": true,
+          "log": "artifacts/external/host-20260902/chapter-010-intermediate-command.log",
+          "log_hash_matches": true,
+          "exit_code": 0,
+          "tool": "CPython",
+          "version": "Python 3.14.7",
+          "physical_measurement": false
+        },
+        "output": {
+          "node1_V": 2.7499999999999996,
+          "node2_V": 2.4999999999999996,
+          "residual_A": [
+            -8.673617379884035e-19,
+            0.0
+          ],
+          "max_abs_residual_A": 8.673617379884035e-19
+        }
+      },
+      "boundary": "電流源付き抵抗網のhost probeのみ。電圧源MNA、学習者実装、負のテスト全体は未閉鎖。"
+    },
+    {
+      "chapter": 11,
+      "acceptance_ids": [
+        "A8",
+        "A10"
+      ],
+      "status": "host_evidence_verified",
+      "passed": true,
+      "measured": false,
+      "execution_mode": "external_host_tool_output",
+      "tool_run_record": [
+        "chapter-11-ngspice-rc",
+        "chapter-11-ngspice-rlc"
+      ],
+      "provenance_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "output_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": {
+        "rc": {
+          "provenance": {
+            "input_paths": [
+              "artifacts/chapter-11/netlists/rc-transient.cir"
+            ],
+            "input_hashes_match": true,
+            "output": "artifacts/external/host-20260902/rc-transient.csv",
+            "output_hash_matches": true,
+            "log": "artifacts/external/host-20260902/chapter-011-rc-ngspice-command.log",
+            "log_hash_matches": true,
+            "exit_code": 0,
+            "tool": "ngspice",
+            "version": "ngspice-47 : Circuit level simulation program",
+            "physical_measurement": false
+          },
+          "output": {
+            "rows": 5091,
+            "columns": 4,
+            "time_range_s": [
+              0.0,
+              0.005
+            ],
+            "output_range_V": [
+              0.0,
+              3.64623251
+            ],
+            "case": "rc"
+          }
+        },
+        "rlc": {
+          "provenance": {
+            "input_paths": [
+              "artifacts/chapter-11/netlists/rlc-transient.cir"
+            ],
+            "input_hashes_match": true,
+            "output": "artifacts/external/host-20260902/rlc-transient.csv",
+            "output_hash_matches": true,
+            "log": "artifacts/external/host-20260902/chapter-011-rlc-ngspice-command.log",
+            "log_hash_matches": true,
+            "exit_code": 0,
+            "tool": "ngspice",
+            "version": "ngspice-47 : Circuit level simulation program",
+            "physical_measurement": false
+          },
+          "output": {
+            "rows": 5098,
+            "columns": 6,
+            "time_range_s": [
+              1e-11,
+              0.005
+            ],
+            "output_range_V": [
+              -8.1642462,
+              13.102607
+            ],
+            "case": "rlc"
+          }
+        }
+      },
+      "boundary": "ngspice RC/RLC transient execution only; cross-path learner comparison, change, fault diagnosis, and physical measurement remain open."
+    },
+    {
+      "chapter": 12,
+      "acceptance_ids": [
+        "A4",
+        "A6",
+        "A7"
+      ],
+      "status": "host_evidence_verified",
+      "passed": true,
+      "measured": false,
+      "execution_mode": "external_host_tool_output",
+      "tool_run_record": "chapter-12-cpython-intermediate-probe",
+      "provenance_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "output_checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": {
+        "provenance": {
+          "input_paths": [
+            "artifacts/external/host-20260902/chapter-012-intermediate-probe.py"
+          ],
+          "input_hashes_match": true,
+          "output": "artifacts/external/host-20260902/chapter-012-intermediate-output.json",
+          "output_hash_matches": true,
+          "log": "artifacts/external/host-20260902/chapter-012-intermediate-command.log",
+          "log_hash_matches": true,
+          "exit_code": 0,
+          "tool": "CPython",
+          "version": "Python 3.14.7",
+          "physical_measurement": false
+        },
+        "output": {
+          "fc_Hz": 159.15494309189535,
+          "gain_100Hz": 0.8467330159648304,
+          "gain_1kHz": 0.15717672547758987,
+          "thermal_rms_V": 1.2871591976131003e-07,
+          "reflection_gamma": 0.9047619047619048,
+          "dft_bin_count": 7
+        }
+      },
+      "boundary": "RC周波数、FFT、熱雑音、有限終端のhost probeのみ。SPICE、測定、窓掃引、変更、故障診断は未閉鎖。"
+    }
+  ],
+  "boundary": "host_evidence_verified confirms hashes, exit status, tool identity, and narrow output invariants only; it does not close chapter acceptance, change/fault diagnosis, independent review, FPGA, or physical measurement.",
+  "source_index": "artifacts/external/host-20260902/index.json"
+}
