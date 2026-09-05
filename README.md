@@ -15,9 +15,9 @@ https://mani1261790.github.io/electric-circuits-to-python/
 - canonical artifact: 739件（全件 `measured=false`）
 - 独立出典sign-off: 631/631、hold 0
 - MiniPy参照runtime: 20受入ケース成功
-- 第9〜44章change/fault教育モデル: 36/36章で変更・故障経路を確認（`measured=false`、learner gateではない）
+- 第9〜48章change/fault教育モデル: 40/40章で変更・故障経路を確認（`measured=false`、learner gateではない）
 
-第9〜44章の限定的な教育モデル実行記録は、[`site/reviews/chapter-change-fault-20260905.md`](./site/reviews/chapter-change-fault-20260905.md) と [`site/artifacts/learning-contract/chapter-change-fault-20260905.json`](./site/artifacts/learning-contract/chapter-change-fault-20260905.json) にあります。これは学習者の合格、外部tool、物理測定、独立レビュー、106章全体の完了を示しません。
+第9〜48章の限定的な教育モデル実行記録は、[`site/reviews/chapter-change-fault-20260905.md`](./site/reviews/chapter-change-fault-20260905.md) と [`site/artifacts/learning-contract/chapter-change-fault-20260905.json`](./site/artifacts/learning-contract/chapter-change-fault-20260905.json) にあります。これは学習者の合格、外部tool、物理測定、独立レビュー、106章全体の完了を示しません。
 
 このリポジトリは公開サイト用に抽出した静的ファイルだけを保持します。制作原本、取得した第三者PDF、一時ファイル、ローカル実行環境は含みません。`site/PUBLICATION-MANIFEST.json` に公開ファイルのhashを記録しています。
 

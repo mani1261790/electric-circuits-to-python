@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "cc7a6f0906403c2ddc70029a88822abf9e7afc995de6ea5b525c07bba5e3a7ba",
-  "scope": "chapters 9-44; executable educational models",
+  "source_sha256": "e69a6836136897ec5e3a4cec951189b180066ca08654b44054ef2f257c953f2a",
+  "scope": "chapters 9-48; executable educational models",
   "summary": {
-    "chapters": 36,
-    "baseline_passed": 36,
-    "change_passed": 36,
-    "fault_passed": 36,
+    "chapters": 40,
+    "baseline_passed": 40,
+    "change_passed": 40,
+    "fault_passed": 40,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -2907,6 +2907,303 @@
           "input_sha256": "784f09cfe9668016b3fac92bb42a321a72c8b35a0dd63fd7e550bf10fe224ec6",
           "error_code": "input_contract_error",
           "error": "writes to architectural r0 are forbidden"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 45,
+      "title": "RISC-V RV32Iのprogrammer's model",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "rv32i_field_encoding",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "opcode": 51,
+          "rd": 5,
+          "rs1": 6,
+          "immediate": 0
+        },
+        "input_sha256": "e93211bcf60695532b5330b58e0f30c2890630248e188336250db0eb7d243c1a",
+        "output": {
+          "encoded_word": 197299.0,
+          "rd": 5.0,
+          "rs1": 6.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "opcode": 51,
+          "rd": 7,
+          "rs1": 6,
+          "immediate": 0
+        },
+        "output_changed_key": "encoded_word",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "opcode": 51,
+            "rd": 7,
+            "rs1": 6,
+            "immediate": 0
+          },
+          "input_sha256": "9c2e4aaa8da553de847d3df40e9a11a74da6fb5c5d41d83c5590b848c8733bcf",
+          "output": {
+            "encoded_word": 197555.0,
+            "rd": 7.0,
+            "rs1": 6.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "opcode": 51,
+          "rd": 32,
+          "rs1": 6,
+          "immediate": 0
+        },
+        "expected_error_fragment": "rd and rs1 must be in x0..x31",
+        "observed": {
+          "status": "error",
+          "input": {
+            "opcode": 51,
+            "rd": 32,
+            "rs1": 6,
+            "immediate": 0
+          },
+          "input_sha256": "a629cf689bee80ea72ff8a5941c39689a7fbd6c861de938700b25a7ee3b1f6c3",
+          "error_code": "input_contract_error",
+          "error": "rd and rs1 must be in x0..x31"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 46,
+      "title": "assembly、stack、calling convention",
+      "exercise_refs": [
+        "E1",
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "aligned_stack_frame_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "stack_pointer": 4096,
+          "frame_size_bytes": 32,
+          "call_depth": 1
+        },
+        "input_sha256": "379e6ec500754814ed3e1fa2099edd7435ba24d473ea8fc9d50a97dda6ea153e",
+        "output": {
+          "final_stack_pointer": 4064.0,
+          "saved_return_slots": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "stack_pointer": 4096,
+          "frame_size_bytes": 32,
+          "call_depth": 2
+        },
+        "output_changed_key": "final_stack_pointer",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "stack_pointer": 4096,
+            "frame_size_bytes": 32,
+            "call_depth": 2
+          },
+          "input_sha256": "bfadcf7c3a204cc7a8705fbf03dbaaac3220b57969ffca29257275c7b9a2960a",
+          "output": {
+            "final_stack_pointer": 4032.0,
+            "saved_return_slots": 2.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "stack_pointer": 4096,
+          "frame_size_bytes": 12,
+          "call_depth": 1
+        },
+        "expected_error_fragment": "stack_pointer must be nonnegative and frame_size_bytes must be 16-byte aligned",
+        "observed": {
+          "status": "error",
+          "input": {
+            "stack_pointer": 4096,
+            "frame_size_bytes": 12,
+            "call_depth": 1
+          },
+          "input_sha256": "a87d8f287b8356ff5e3e004f4fb4eeae5842ff2ed656f80ee4206ca0c9d04646",
+          "error_code": "input_contract_error",
+          "error": "stack_pointer must be nonnegative and frame_size_bytes must be 16-byte aligned"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 47,
+      "title": "単一cycle datapath",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "single_cycle_next_pc_select",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "immediate": 16,
+          "branch_taken": false
+        },
+        "input_sha256": "91058da3ee924d1274902d664e3b0843d86abbefc443a0b356345ce77ddc7219",
+        "output": {
+          "next_pc": 4100.0,
+          "sequential_pc": 4100.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "immediate": 16,
+          "branch_taken": true
+        },
+        "output_changed_key": "next_pc",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "pc": 4096,
+            "immediate": 16,
+            "branch_taken": true
+          },
+          "input_sha256": "51fd5b50fae14c558c3aa12d8deb586647ea84473c21ab42f425a328d1a68346",
+          "output": {
+            "next_pc": 4112.0,
+            "sequential_pc": 4100.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "pc": 4098,
+          "immediate": 16,
+          "branch_taken": false
+        },
+        "expected_error_fragment": "pc must be a nonnegative 4-byte aligned address",
+        "observed": {
+          "status": "error",
+          "input": {
+            "pc": 4098,
+            "immediate": 16,
+            "branch_taken": false
+          },
+          "input_sha256": "f27f19a1bdf9ef80f3b9f38762c6edb46ba2ee07c4ec083b27bba20e2e5da181",
+          "error_code": "input_contract_error",
+          "error": "pc must be a nonnegative 4-byte aligned address"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 48,
+      "title": "control、decode、memory map",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "rv32edu_memory_map_classifier",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "address": 4
+        },
+        "input_sha256": "746ea0f05b448833011cd5355d5570ef1e5894c4c12b911925027f1691b25b91",
+        "output": {
+          "region_code": 1.0,
+          "address": 4.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "address": 32772
+        },
+        "output_changed_key": "region_code",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "address": 32772
+          },
+          "input_sha256": "eb7f773e32611674b507a25faeb6bc513ea7b2bcf8d1adc3af14ebeb85b11d50",
+          "output": {
+            "region_code": 3.0,
+            "address": 32772.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "address": -1
+        },
+        "expected_error_fragment": "address must be nonnegative",
+        "observed": {
+          "status": "error",
+          "input": {
+            "address": -1
+          },
+          "input_sha256": "a8a2296c3a14519c1ad1cd08d59b46dce0193cfa03dbc6f9d46309be30430a3d",
+          "error_code": "input_contract_error",
+          "error": "address must be nonnegative"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
