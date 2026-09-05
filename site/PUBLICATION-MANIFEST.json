@@ -1,6 +1,6 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T15:06:24.852253+00:00",
+  "generated_at_utc": "2026-09-05T15:08:08.541011+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
@@ -5279,7 +5279,7 @@
     {
       "path": "build/html/index.html",
       "bytes": 102814,
-      "sha256": "60fbbc076bc9e505497726d35a062075bddc9631064007fa5da79df65b5eb8a1"
+      "sha256": "963fe49f4dcb1b4c949efa8e7b45291f534aa1e285e9869f51af15c909f70c74"
     },
     {
       "path": "build/html/prelude.html",
