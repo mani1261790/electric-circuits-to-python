@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T10:41:23.377465+00:00",
-  "source_file_count": 1069,
+  "generated_at_utc": "2026-09-05T10:56:31.672012+00:00",
+  "source_file_count": 1070,
   "generated_entrypoint_count": 5,
-  "file_count_before_manifest": 1074,
-  "total_bytes_before_manifest": 21326385,
+  "file_count_before_manifest": 1075,
+  "total_bytes_before_manifest": 21328743,
   "files": [
     {
       "path": ".nojekyll",
@@ -5278,8 +5278,8 @@
     },
     {
       "path": "build/html/index.html",
-      "bytes": 102490,
-      "sha256": "cbbf9c412201752774434d7ae3276d6103ef49ecec2e990edc0363430d68de18"
+      "bytes": 102578,
+      "sha256": "73f2114580427735915109235609534a9aeded7c2f254b05828da24b96c6be0f"
     },
     {
       "path": "build/html/prelude.html",
@@ -5320,6 +5320,11 @@
       "path": "reviews/chapters-57-106-cross-independent-review-20260904.md",
       "bytes": 12116,
       "sha256": "b165de912f423d56e3162e4b648e2a2c15abd2d61b88d4139d56b4bd23c68eca"
+    },
+    {
+      "path": "reviews/completion-audit-20260905.md",
+      "bytes": 2270,
+      "sha256": "1d4eae77a232f14d84a1cd73e0bb689769b8dc40754b4443198fd39db6778a0d"
     },
     {
       "path": "reviews/completion-gates.md",
