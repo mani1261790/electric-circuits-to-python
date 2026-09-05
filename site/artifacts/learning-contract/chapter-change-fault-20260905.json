@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "49cd3ebb30e419482e092b1259862251f71db44fde1a7f98fb2888cfd5cbecf5",
-  "scope": "chapters 9-12; executable educational models",
+  "source_sha256": "64d4e83081873254a877e0fb1c3754a2841c40046cd2349a9cbd0f7e15de21a6",
+  "scope": "chapters 9-16; executable educational models",
   "summary": {
-    "chapters": 4,
-    "baseline_passed": 4,
-    "change_passed": 4,
-    "fault_passed": 4,
+    "chapters": 8,
+    "baseline_passed": 8,
+    "change_passed": 8,
+    "fault_passed": 8,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -373,6 +373,334 @@
           "input_sha256": "c60706515383b74343fcec29d8d48876dc24b89453b4aa9468f7493250cf65e4",
           "error_code": "input_contract_error",
           "error": "signal frequency must be below the Nyquist frequency"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 13,
+      "title": "古典論が破綻する場所",
+      "exercise_refs": [
+        "E5",
+        "E6",
+        "E8",
+        "E9"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "infinite_quantum_well_energy",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "length_m": 1e-09,
+          "mass_kg": 9.1093837e-31,
+          "n": 1
+        },
+        "input_sha256": "7eb189f566b04517b0e98e60bdbe066bb06938a68d8a37b2cdca1a0b40dd6d66",
+        "output": {
+          "energy_j": 6.024667395846766e-20,
+          "energy_ev": 0.37603016221785485
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "length_m": 2e-09,
+          "mass_kg": 9.1093837e-31,
+          "n": 1
+        },
+        "output_changed_key": "energy_ev",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "length_m": 2e-09,
+            "mass_kg": 9.1093837e-31,
+            "n": 1
+          },
+          "input_sha256": "28b77b6b629ca68c513cd49785e8412297d07b64442e2a5373539f3e6ab1eb4d",
+          "output": {
+            "energy_j": 1.5061668489616914e-20,
+            "energy_ev": 0.09400754055446371
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "length_m": 1e-09,
+          "mass_kg": 9.1093837e-31,
+          "n": 0
+        },
+        "expected_error_fragment": "n must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "length_m": 1e-09,
+            "mass_kg": 9.1093837e-31,
+            "n": 0
+          },
+          "input_sha256": "04f897748c8832f87ff06dcb0801037595f69bd5be228431d952decdd2c6b9d4",
+          "error_code": "input_contract_error",
+          "error": "n must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 14,
+      "title": "Schrödinger方程式と固有状態",
+      "exercise_refs": [
+        "E4",
+        "E6",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "rectangular_barrier_tunneling_scale",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "energy_ev": 0.2,
+          "barrier_ev": 0.5,
+          "width_m": 1e-09,
+          "mass_kg": 9.1093837e-31
+        },
+        "input_sha256": "93088abfe072fcdaea5e1820d376171c0217b158139d10d0cd3d3b3a5f14a848",
+        "output": {
+          "kappa_per_m": 2806074253.575288,
+          "exponential_scale": 0.0036532119678888268
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "energy_ev": 0.2,
+          "barrier_ev": 0.5,
+          "width_m": 2e-09,
+          "mass_kg": 9.1093837e-31
+        },
+        "output_changed_key": "exponential_scale",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "energy_ev": 0.2,
+            "barrier_ev": 0.5,
+            "width_m": 2e-09,
+            "mass_kg": 9.1093837e-31
+          },
+          "input_sha256": "a2d2c75c2fe45f1c2fc46f832f0d9864c89d4ad544a80611517d32bf342f763d",
+          "output": {
+            "kappa_per_m": 2806074253.575288,
+            "exponential_scale": 1.3345957682326154e-05
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "energy_ev": 0.6,
+          "barrier_ev": 0.5,
+          "width_m": 1e-09,
+          "mass_kg": 9.1093837e-31
+        },
+        "expected_error_fragment": "energy_ev must be below barrier_ev",
+        "observed": {
+          "status": "error",
+          "input": {
+            "energy_ev": 0.6,
+            "barrier_ev": 0.5,
+            "width_m": 1e-09,
+            "mass_kg": 9.1093837e-31
+          },
+          "input_sha256": "3b3878cd97caefb5e9296fa5bdec792a2944fa488ba67be5f012b56764b527ea",
+          "error_code": "input_contract_error",
+          "error": "energy_ev must be below barrier_ev"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 15,
+      "title": "原子、Pauli原理、Fermi–Dirac統計",
+      "exercise_refs": [
+        "E3",
+        "E4",
+        "E7",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "two_level_fermi_dirac_occupancy",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "E0_ev": 0.0,
+          "E1_ev": 0.1,
+          "mu_ev": 0.05,
+          "temperature_k": 300.0,
+          "g0": 2,
+          "g1": 2
+        },
+        "input_sha256": "30c82380d8b9ff90c64ad546331a24e601962f4448ac3740f3cb1399200569fd",
+        "output": {
+          "f0": 0.8737010279655975,
+          "f1": 0.1262989720344026,
+          "particle_count": 2.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "E0_ev": 0.0,
+          "E1_ev": 0.1,
+          "mu_ev": 0.05,
+          "temperature_k": 600.0,
+          "g0": 2,
+          "g1": 2
+        },
+        "output_changed_key": "f0",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "E0_ev": 0.0,
+            "E1_ev": 0.1,
+            "mu_ev": 0.05,
+            "temperature_k": 600.0,
+            "g0": 2,
+            "g1": 2
+          },
+          "input_sha256": "4961089ab8d9ba9de17e675a12d5a7244cfa3641ee70a9aa482f08231d4e882f",
+          "output": {
+            "f0": 0.7245297480787195,
+            "f1": 0.27547025192128044,
+            "particle_count": 2.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "E0_ev": 0.0,
+          "E1_ev": 0.1,
+          "mu_ev": 0.05,
+          "temperature_k": 0.0,
+          "g0": 2,
+          "g1": 2
+        },
+        "expected_error_fragment": "temperature_k must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "E0_ev": 0.0,
+            "E1_ev": 0.1,
+            "mu_ev": 0.05,
+            "temperature_k": 0.0,
+            "g0": 2,
+            "g1": 2
+          },
+          "input_sha256": "91b0b135d097554d2b99101249d4746fef2f18aea4c446f228fe124eef54c0ea",
+          "error_code": "input_contract_error",
+          "error": "temperature_k must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 16,
+      "title": "結晶、Blochの定理、エネルギーバンド",
+      "exercise_refs": [
+        "E4",
+        "E6",
+        "E8",
+        "E11"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "tight_binding_band_and_gap",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "lattice_constant_m": 5e-10,
+          "hopping_ev": 1.0,
+          "epsilon_a_ev": 0.0,
+          "epsilon_b_ev": 0.4
+        },
+        "input_sha256": "09ce0f7ebb617078ca41051e36f7f3f15f2a95d88b73df0dc770d15ad3f504d9",
+        "output": {
+          "one_site_bandwidth_ev": 4.0,
+          "two_site_gap_ev": 0.4,
+          "lattice_constant_m": 5e-10
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "lattice_constant_m": 5e-10,
+          "hopping_ev": 1.0,
+          "epsilon_a_ev": 0.0,
+          "epsilon_b_ev": 0.8
+        },
+        "output_changed_key": "two_site_gap_ev",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "lattice_constant_m": 5e-10,
+            "hopping_ev": 1.0,
+            "epsilon_a_ev": 0.0,
+            "epsilon_b_ev": 0.8
+          },
+          "input_sha256": "e555e83a341b9621eb33962b3a2be1d2f48aaa023b2652bc0516f62ba91e1faa",
+          "output": {
+            "one_site_bandwidth_ev": 4.0,
+            "two_site_gap_ev": 0.8,
+            "lattice_constant_m": 5e-10
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "lattice_constant_m": 0.0,
+          "hopping_ev": 1.0,
+          "epsilon_a_ev": 0.0,
+          "epsilon_b_ev": 0.4
+        },
+        "expected_error_fragment": "lattice_constant_m must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "lattice_constant_m": 0.0,
+            "hopping_ev": 1.0,
+            "epsilon_a_ev": 0.0,
+            "epsilon_b_ev": 0.4
+          },
+          "input_sha256": "a4ceae2a0b5dd63748202c4afa8f8ca5ce3e59246621e8061676f614e3ceeb31",
+          "error_code": "input_contract_error",
+          "error": "lattice_constant_m must be a finite positive number"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
