@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "b422b00539e99d7ad09567014beec3ef5f3d873c0526a394b92b4c1ae4ba81b6",
-  "scope": "chapters 9-28; executable educational models",
+  "source_sha256": "c8b07ccd32285e357540f253f0f7e3f442dd601ab8922121f7890cb0ed92a02e",
+  "scope": "chapters 9-32; executable educational models",
   "summary": {
-    "chapters": 20,
-    "baseline_passed": 20,
-    "change_passed": 20,
-    "fault_passed": 20,
+    "chapters": 24,
+    "baseline_passed": 24,
+    "change_passed": 24,
+    "fault_passed": 24,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -1687,6 +1687,299 @@
           "input_sha256": "5bd9e14210521a10b2c647a22ca5ebf00e73e7eab59c9c0968a55be17e88ffa2",
           "error_code": "input_contract_error",
           "error": "spacing_m must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 29,
+      "title": "物理状態からビットへ",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "logic_low_high_undefined_state_sets",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.0,
+          "V_IL_v": 0.3,
+          "V_IH_v": 0.7
+        },
+        "input_sha256": "4f9c954777f89e87833eb89b3b064e5017549c584525c341b0d9755ac395e7da",
+        "output": {
+          "low_interval_width_v": 0.3,
+          "undefined_interval_width_v": 0.39999999999999997,
+          "high_interval_width_v": 0.30000000000000004
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.0,
+          "V_IL_v": 0.2,
+          "V_IH_v": 0.7
+        },
+        "output_changed_key": "undefined_interval_width_v",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "V_DD_v": 1.0,
+            "V_IL_v": 0.2,
+            "V_IH_v": 0.7
+          },
+          "input_sha256": "f8f5e92a0500d1636b8090ac2004f1d8b39e929c124594a04b2bbac59807c8c4",
+          "output": {
+            "low_interval_width_v": 0.2,
+            "undefined_interval_width_v": 0.49999999999999994,
+            "high_interval_width_v": 0.30000000000000004
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.0,
+          "V_IL_v": 0.6,
+          "V_IH_v": 0.4
+        },
+        "expected_error_fragment": "logic state thresholds must satisfy 0<=V_IL<V_IH<V_DD",
+        "observed": {
+          "status": "error",
+          "input": {
+            "V_DD_v": 1.0,
+            "V_IL_v": 0.6,
+            "V_IH_v": 0.4
+          },
+          "input_sha256": "316dbb71dc3f6ae40a968236b5fa1e21e7397fa845fe866af77f97d65f41827c",
+          "error_code": "input_contract_error",
+          "error": "logic state thresholds must satisfy 0<=V_IL<V_IH<V_DD"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 30,
+      "title": "Boolean代数とNANDの完全性",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "nand_truth_table_and_network_depth",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "input_arity": 2,
+          "gate_kind": "nand"
+        },
+        "input_sha256": "78533ab20b3a790c0295914c909a75dc040b9a78fc959c7d58c056ddb0a380d8",
+        "output": {
+          "input_arity": 2.0,
+          "truth_table_rows": 4.0,
+          "series_stack_depth": 2.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "input_arity": 3,
+          "gate_kind": "nand"
+        },
+        "output_changed_key": "truth_table_rows",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "input_arity": 3,
+            "gate_kind": "nand"
+          },
+          "input_sha256": "f94fe4011ddf339ced7b7c8ff053329c2856905b611041712cef0446175e06a8",
+          "output": {
+            "input_arity": 3.0,
+            "truth_table_rows": 8.0,
+            "series_stack_depth": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "input_arity": 0,
+          "gate_kind": "nand"
+        },
+        "expected_error_fragment": "input_arity must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "input_arity": 0,
+            "gate_kind": "nand"
+          },
+          "input_sha256": "c06dea645e45393149fa34f824ae5a793521d8e00412b2ed53387a3b375a33cd",
+          "error_code": "input_contract_error",
+          "error": "input_arity must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 31,
+      "title": "組合せ論理の合成",
+      "exercise_refs": [
+        "E1",
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "nand_synthesis_cost",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "product_terms": 2,
+          "literal_count": 3
+        },
+        "input_sha256": "4f7f8665e7de212580c1ad37deb0eef312752a4cb85235f982a0da5985d90b90",
+        "output": {
+          "nand_gate_count": 6.0,
+          "logic_depth": 3.0,
+          "estimated_delay_unit": 3.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "product_terms": 3,
+          "literal_count": 4
+        },
+        "output_changed_key": "nand_gate_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "product_terms": 3,
+            "literal_count": 4
+          },
+          "input_sha256": "f1bc34942fcc8c6d64c0cb6d89b9bbb773380ffcf68a748d5f771c3c54816c89",
+          "output": {
+            "nand_gate_count": 8.0,
+            "logic_depth": 3.0,
+            "estimated_delay_unit": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "product_terms": 0,
+          "literal_count": 3
+        },
+        "expected_error_fragment": "product_terms must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "product_terms": 0,
+            "literal_count": 3
+          },
+          "input_sha256": "dcc480ce3c3877bf4540752f61beae1219affc1a8e15f3fdac6d7b54e8d4f398",
+          "error_code": "input_contract_error",
+          "error": "product_terms must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 32,
+      "title": "HDL、シミュレーション、合成、形式検証",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E6",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "systemverilog_width_and_select_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "data_width": 8,
+          "select_width": 2
+        },
+        "input_sha256": "96d071b65ba17b674045362907d159e16d7f13852f8f81327150252f26b690d8",
+        "output": {
+          "data_width": 8.0,
+          "select_width": 2.0,
+          "input_vectors": 8.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "data_width": 16,
+          "select_width": 2
+        },
+        "output_changed_key": "data_width",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "data_width": 16,
+            "select_width": 2
+          },
+          "input_sha256": "aabb557b2035d6102bc318e7bc5735e2f77483a44fb4103bff2fd968d4c8b6bc",
+          "output": {
+            "data_width": 16.0,
+            "select_width": 2.0,
+            "input_vectors": 8.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "data_width": 0,
+          "select_width": 2
+        },
+        "expected_error_fragment": "data_width must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "data_width": 0,
+            "select_width": 2
+          },
+          "input_sha256": "85202beb01f15db7f2af36548cda288d2bad4cb2f1df7ae1c7a57b754a251e1d",
+          "error_code": "input_contract_error",
+          "error": "data_width must be a positive integer"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
