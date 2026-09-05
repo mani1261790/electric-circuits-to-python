@@ -238,7 +238,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <ol><li>case名と入力を最初に固定する。数値には単位、bit列には幅、状態には初期条件、sourceには版を付ける。</li><li>途中状態を一つだけ更新し、更新前後を表にする。式の左辺と右辺の次元、レジスタの幅、stackの深さ、回路端子の向きを照合する。</li><li>期待値を出力欄へ写す。ただし <code>analytic_prediction</code>、<code>runner_output</code>、<code>measurement</code> を同じ欄へ置かない。</li><li>近い反例を一つ選び、失敗がどの層で止まるべきかを書く。正常値への丸めや、未実行の成功表示は禁止する。</li><li>最後に、次章へ渡す値と、その値が成立する条件を一文でまとめる。</li></ol>
 <h3 id="section-1-5">1　代表入力の棚卸し</h3>
 <p>#### ケース1: <code>si_p_substrate_ideal_mos</code></p>
-<p>このcaseは <code>{"C_ox_F_per_m2": 0.0034531332493319996, "Cdep_max_F_per_m2": 0.0003408489463269968, "Cmos_min_F_per_m2": 0.000310227293872973, "Qdep_max_abs_C_per_m2": 0.0004869484971968087, "V…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
+<p>このcaseは <code>{"C_ox_F_per_m2": 0.0034531332493319996, "Cdep_max_F_per_m2": 0.0003408489463269968, "Cmos_min_F_per_m2": 0.000310227293872973, "Qdep_max_abs_C_per_m2": 0.0004869484971968087, "V_…</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>T_K</code> = <code>300.0</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>q_C</code> = <code>1.602176634e-19</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>k_B_J_per_K</code> = <code>1.380649e-23</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>epsilon_0_F_per_m</code> = <code>8.8541878188e-12</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>epsilon_s_r</code> = <code>11.7</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>epsilon_ox_r</code> = <code>3.9</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>t_ox_m</code> = <code>1e-08</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>N_A_m-3</code> = <code>1.0e22</code>。単位・幅・符号を本文の定義と照合する。</li><li>残りの入力 7項目は、同じcase記録へ戻って確認する。</li></ul>
 <p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=未指定</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
@@ -266,7 +266,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>#### 実験5: しきい値予測</p>
 <p>入口は <code>book run 21 5</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-threshold-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Vth_V": 0.5881749985302475, "phiF_V": 0.35715857599399026}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
 <p>#### 実験6: C–Vモデル比較</p>
-<p>入口は <code>book run 21 6</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-cv-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_freque…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>入口は <code>book run 21 6</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-cv-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_frequen…</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
 <p>#### 実験7: Poisson格子収束</p>
 <p>入口は <code>book run 21 7</code>、caseは <code>si_p_substrate_ideal_mos</code>、required artifactは <code>["chapter-21-electrostatics-output", "chapter-21-diagnostic-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>{"record_each_N": true, "refinement": "error_nonincreasing_toward_Wd_max", "residual_target": "1e-10"}</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
 <p>#### 実験8: 単位・統計・モデルの失敗テスト</p>
@@ -295,9 +295,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>p型一様基板</li><li>一次元</li><li>非縮退Boltzmann統計</li><li>理想酸化膜</li><li>界面準位なしを基本とする</li><li>量子反転層・周波数分散・短チャネルは別モデル</li><li>runner・図・測定未完了の値は予測</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>2</li><li>0</li><li>章</li><li>の</li><li>P</li><li>o</li><li>i</li></ul>
+<ul><li>第20章のPoisson、空乏、接触、epsilon、<a class="term" href="index.html#term-doping">ドーピング</a>、温度、出所ラベルを受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>2</li><li>2</li><li>章</li><li>へ</li><li>C</li><li>_</li><li>o</li></ul>
+<ul><li>第22章へC_ox、V_FB、psi_s、Q_s、W_d、N_A、T、周波数・モデルラベルを渡し、ソース・ドレイン・チャネルを追加する。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-3">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
@@ -341,7 +341,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
 <p>#### 観測表6: C–Vモデル比較</p>
 <table><thead><tr><th>欄</th><th>記録する内容</th></tr></thead>
-<tbody><tr><td>入口</td><td><code>book run 21 6</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_freque…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
+<tbody><tr><td>入口</td><td><code>book run 21 6</code></td></tr><tr><td>case</td><td><code>si_p_substrate_ideal_mos</code></td></tr><tr><td>入力の意味</td><td>何を固定し、何を変数として残したか</td></tr><tr><td>途中状態</td><td>更新前・更新後の値、式、単位または幅</td></tr><tr><td>期待</td><td><code>{"Cdep_at_threshold_F_per_m2": 0.0003408489463269968, "Cmos_depletion_at_threshold_F_per_m2": 0.000310227293872973, "high_frequency_inversion_response": "suppressed", "low_frequen…</code></td></tr><tr><td>実行結果</td><td>終了コード、artifact、診断、source_kind、status</td></tr><tr><td>反例</td><td>一条件だけ変えた入力と、最初に止まる層</td></tr><tr><td>引き渡し</td><td>次章が読める最小値と成立条件</td></tr></tbody>
 </table>
 <p>表を埋めた後、期待欄と実行結果欄を一行ずつ照合する。値が一致しないときは、まず入力と単位を戻し、次に更新順、最後に実装または環境を疑う。値が一致しても、未実行の測定欄を成功へ書き換えない。</p>
 <p>#### 観測表7: Poisson格子収束</p>

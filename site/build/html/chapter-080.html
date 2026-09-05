@@ -207,42 +207,42 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>#### ケース1: <code>pcb_state</code></p>
 <p>このcaseは <code>pcb_contains_context</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>processes</code> = <code>[{"pc": "0x100", "pid": 1, "sp": "0x7f00", "state": "ready"}, {"pc": "0x200", "pid": 2, "sp": "0x6f00", "state": "blocked"}]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>current_pid</code> = <code>1</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース2: <code>save_restore</code></p>
 <p>このcaseは <code>register_and_stack_context_isolated</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>from_pid</code> = <code>1</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>saved_registers</code> = <code>["ra", "sp", "s0"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>from_sp</code> = <code>0x7f00</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>to_pid</code> = <code>2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>to_sp</code> = <code>0x6f00</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>order</code> = <code>["save_current", "load_next", "jump_next"]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース3: <code>round_robin</code></p>
 <p>このcaseは <code>time_slices_are_traceable</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>processes</code> = <code>["A", "B"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>quantum</code> = <code>3</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>bursts</code> = <code>{"A": 5, "B": 4}</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>schedule</code> = <code>[{"end": 3, "pid": "A", "start": 0}, {"end": 6, "pid": "B", "start": 3}, {"end": 8, "pid": "A", "start": 6}, {"end": 9, "pid": "B", "start": 8}]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース4: <code>preemption</code></p>
 <p>このcaseは <code>preemption_occurs_at_boundary</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>current_pid</code> = <code>A</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>timer_cycle</code> = <code>3</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>retired</code> = <code>True</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>next_pid</code> = <code>B</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>saved_pc</code> = <code>A_after_3</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース5: <code>priority</code></p>
 <p>このcaseは <code>selection_policy_is_explicit</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>ready</code> = <code>[{"pid": "H", "priority": 2}, {"pid": "L", "priority": 1}]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>policy</code> = <code>highest_then_fifo</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>first</code> = <code>H</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース6: <code>response</code></p>
 <p>このcaseは <code>response_time_is_calculated</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>arrival</code> = <code>2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>first_run</code> = <code>5</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>response_time</code> = <code>3</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>completion</code> = <code>9</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース7: <code>throughput</code></p>
 <p>このcaseは <code>throughput_uses_declared_interval</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>completed_jobs</code> = <code>2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>elapsed_cycles</code> = <code>12</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>jobs_per_cycle</code> = <code>0.1666667</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース8: <code>negative_sched</code></p>
 <p>このcaseは <code>scheduler_failure_is_diagnosable</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>cases</code> = <code>["no_quantum", "priority_starvation", "wrong_sp", "duplicate_ready_entry"]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=provenance_schema</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=provenance_schema</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <h3 id="section-2-2">2　導出カード</h3>
 <p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
@@ -285,9 +285,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>C subset・<a class="term" href="index.html#term-rv32i">RV32I</a>・toy runnerに限定し、全C標準、全ABI、全host debugger/OSを保証しない。</li><li>数値とtraceはrunner gate前の解析予測であり、実測結果ではない。</li><li>未固定のtool version、target board、QEMU/xv6差はsource gateで固定する。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>7</li><li>9</li><li>章</li><li>か</li><li>ら</li><li>前</li><li>段</li></ul>
+<ul><li>第79章から前段のartifactとsource_kind、measured境界を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>8</li><li>1</li><li>章</li><li>へ</li><li>、</li><li>p</li><li>r</li></ul>
+<ul><li>第81章へ、processごとに独立したmemoryの見え方を作るため、<a class="term" href="index.html#term-page_table">page table</a>とOS policyを結びつける。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

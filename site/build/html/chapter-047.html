@@ -360,11 +360,11 @@ operand2 = rs2_value                    (R-type)
 <ul><li>どの不変条件を最初に破るか: ＿＿＿＿＿＿＿＿＿＿</li><li>破綻した層と、後段へ渡してはいけないartifact: ＿＿＿＿＿＿＿＿＿＿</li><li>正常値に見える出力を採用しない理由: ＿＿＿＿＿＿＿＿＿＿</li></ul>
 <h3 id="section-5-2">5　模型の境界と章間の橋</h3>
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
-<ul><li>RV32I baseのADD、ADDI、LW、SW、BEQ、JAL、JALR subsetだけを扱い、例外、cache、pipeline、MMIOを含めない。</li><li>instruction memoryとdata memoryは一周期の組合せreadという教材仮定で、同期BRAMのlatencyを含めない。</li><li>単一cycleの結果と契約traceは固定runnerの再生artifactである。RTL・formal・FPGA・実機は未実行である。</li><li>FPGAは任意経路であり、合成、配置配線、timing、bitstream、実機のclock・電圧を測定したとは主張しない。</li></ul>
+<ul><li>RV32I baseのADD、ADDI、LW、SW、BEQ、JAL、JALR subsetだけを扱い、例外、cache、pipeline、MMIOを含めない。</li><li>instruction memoryとdata memoryは一周期の組合せreadという教材仮定で、同期BRAMのlatencyを含めない。</li><li>単一cycleの結果とtraceは固定runnerの契約再生artifactである。RTL・formal・FPGA・実機は未実行である。</li><li>FPGAは任意経路であり、合成、配置配線、timing、bitstream、実機のclock・電圧を測定したとは主張しない。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>4</li><li>6</li><li>章</li><li>の</li><li>R</li><li>V</li><li>3</li></ul>
+<ul><li>第46章のRV32I assembly、stack、<a class="term" href="index.html#term-calling_convention">calling convention</a>、instruction traceと、第45章のPC・register・memory・branch・jump規則を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>4</li><li>8</li><li>章</li><li>へ</li><li>、</li><li>命</li><li>令</li></ul>
+<ul><li>第48章へ、命令ごとのregister read、immediate、ALU、memory、write-back、branch/jump、next-PC選択のcontrol要求を渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

@@ -207,42 +207,42 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>#### ケース1: <code>ast_to_tac</code></p>
 <p>このcaseは <code>three_address_dependencies_are_explicit</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>source</code> = <code>a=b+1;c=a*2</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>temporaries</code> = <code>["t1", "t2"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>operations</code> = <code>[{"args": ["b", 1], "op": "add", "result": "t1"}, {"args": ["t1", 2], "op": "mul", "result": "t2"}, {"args": ["a", "t2"], "op": "store"}]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース2: <code>cfg_if</code></p>
 <p>このcaseは <code>branches_form_explicit_cfg</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>blocks</code> = <code>["entry", "then", "else", "join"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>edges</code> = <code>[["entry", "then"], ["entry", "else"], ["then", "join"], ["else", "join"]]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース3: <code>cfg_loop</code></p>
 <p>このcaseは <code>loop_back_edge_is_recorded</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>blocks</code> = <code>["head", "body", "exit"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>back_edge</code> = <code>["body", "head"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>exit_condition</code> = <code>i&gt;=3</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース4: <code>dominance</code></p>
 <p>このcaseは <code>dominance_is_computable</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>edges</code> = <code>[["entry", "a"], ["entry", "b"], ["a", "join"], ["b", "join"]]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>dominators</code> = <code>{"a": ["entry", "a"], "b": ["entry", "b"], "entry": ["entry"], "join": ["entry", "join"]}</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース5: <code>ssa</code></p>
 <p>このcaseは <code>phi_merges_reaching_definitions</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>source</code> = <code>x=1;if(c)x=2;use(x)</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>phi_block</code> = <code>join</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>versions</code> = <code>["x0", "x1", "x2"]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース6: <code>liveness</code></p>
 <p>このcaseは <code>live_ranges_are_recorded</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>operations</code> = <code>["t1=a+b", "t2=t1*2", "return t2"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>live_values</code> = <code>["t1", "t2"]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース7: <code>fold_dce</code></p>
 <p>このcaseは <code>optimization_preserves_result</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>transformations</code> = <code>["2+3-&gt;5", "5*4-&gt;20"]</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>removed_value</code> = <code>9</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース8: <code>negative_ir</code></p>
 <p>このcaseは <code>unsafe_transform_is_rejected</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
 <ul><li><code>cases</code> = <code>["use_before_def", "remove_volatile", "broken_phi"]</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
-<p>出所欄は <code>source_kind=provenance_schema</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
+<p>出所欄は <code>source_kind=provenance_schema</code>、<code>status=executed_analytic</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <h3 id="section-2-2">2　導出カード</h3>
 <p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
@@ -282,9 +282,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>C subset・<a class="term" href="index.html#term-rv32i">RV32I</a>・toy runnerに限定し、全C標準、全ABI、全host debugger/OSを保証しない。</li><li>数値とtraceはrunner gate前の解析予測であり、実測結果ではない。</li><li>未固定のtool version、target board、QEMU/xv6差はsource gateで固定する。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>7</li><li>4</li><li>章</li><li>か</li><li>ら</li><li>前</li><li>段</li></ul>
+<ul><li>第74章から前段のartifactとsource_kind、measured境界を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>7</li><li>6</li><li>章</li><li>へ</li><li>、</li><li>I</li><li>R</li></ul>
+<ul><li>第76章へ、IRの無限個の仮想値を有限registerとmachine instructionへ割り当てる。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

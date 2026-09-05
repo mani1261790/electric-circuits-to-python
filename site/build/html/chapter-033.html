@@ -206,7 +206,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース2: <code>word_ffffffff</code></p>
 <p>このcaseは <code>three_interpretations_recorded</code> を期待する契約として宣言されている。まず次の入力を紙に写し、値同士の関係を一つ選んで説明する。</p>
-<ul><li><code>width</code> = <code>32</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>raw_hex</code> = <code>0xFFFFFFFF</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>unsigned</code> = <code>4294967295</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>signed_twos_complement</code> = <code>-1</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>binary32</code> = <code>NaN</code>（<code>-Inf</code>ではない）。単位・幅・符号・仮数fieldを本文の定義と照合する。</li></ul>
+<ul><li><code>width</code> = <code>32</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>raw_hex</code> = <code>0xFFFFFFFF</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>unsigned</code> = <code>4294967295</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>signed_twos_complement</code> = <code>-1</code>。単位・幅・符号を本文の定義と照合する。</li><li><code>binary32</code> = <code>NaN</code>。単位・幅・符号を本文の定義と照合する。</li></ul>
 <p>出所欄は <code>source_kind=analytic_prediction</code>、<code>status=planned</code>、<code>measured=False</code> として残す。これは期待値を測定値へ変えるための欄ではなく、どの種類の根拠かを見分ける欄である。</p>
 <p>手計算では、最初に既知量を丸で囲み、次に未知量を一つだけ選ぶ。途中結果を出したら、符号・単位・範囲・幅を再確認する。計算結果が期待値と一致しても、入力の版や模型の限界を省略しない。</p>
 <p>#### ケース3: <code>interpretation_runner</code></p>
@@ -301,9 +301,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>bit列だけでは数値の型やsignednessは決まらない。</li><li>wrap、saturation、overflow flagは仕様・実装契約であり、数学的な和そのものではない。</li><li>binary32の特殊値・丸めはfield規則と実装環境に依存し、物理電圧を表さない。</li><li>本章の代表値は解析またはrunner予定で、実機バスの測定値ではない。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>3</li><li>2</li><li>章</li><li>の</li><li>H</li><li>D</li><li>L</li></ul>
+<ul><li>第32章のHDL/vector・検証・出所契約を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>3</li><li>4</li><li>章</li><li>へ</li><li>、</li><li>b</li><li>i</li></ul>
+<ul><li>第34章へ、bit列の値、carry、borrow、overflow、符号の契約を加算器・比較器へ渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-4">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

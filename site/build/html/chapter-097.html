@@ -279,7 +279,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>#### 実験7: peak memory trace</p>
 <p>入口は <code>book run 97 7</code>、caseは <code>peak_trace</code>、required artifactは <code>["chapter-97-formal-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>peak_live_bytes_is_recomputed</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
 <p>#### 実験8: negative GC metadata</p>
-<p>入口は <code>book run 97 8</code>、caseは <code>negative_gc</code>、required artifactは <code>["chapter-97-config"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>corrupt_metadata_fails_closed</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
+<p>入口は <code>book run 97 8</code>、caseは <code>negative_gc</code>、required artifactは <code>["chapter-97-final-output"]</code> である。実行前に、期待する変化を「入力を変えると何が変わるか」の一文で書く。 期待欄は <code>corrupt_metadata_fails_closed</code> とし、<code>measured</code> が false のままなら、出力を実測結果と呼ばない。 実験後は、(a)入力が保存されているか、(b)途中状態が一つ以上追えるか、(c)失敗時に後段が停止するか、(d)source_kindとstatusが記録されているかを順番に確認する。 同じ入力をもう一度実行し、計算値・状態遷移・診断名の一致を確認する。時刻、host名、ファイルhashの更新は意味のある差分と別欄に置く。</p>
 <h3 id="section-4-2">4　反例と故障診断</h3>
 <p>反例は、正常例を否定するためではなく、契約の範囲を見つけるために作る。次の各項目は、入力、最初に破綻する層、期待する診断、後段を止める理由を一組で書く。</p>
 <p>#### 反例1: <code>malformed</code></p>
@@ -301,9 +301,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>本章は固定したMiniPy/CPython候補と教育用入力に限定し、全Python仕様・全CPython内部・production runtimeを扱わない。</li><li>代表入力・traceは固定runnerで契約を再生済みだが、CPython観測や実測結果ではない。</li><li>性能、memory使用量、互換性は測定していないため数値主張をしない。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>9</li><li>6</li><li>章</li><li>の</li><li>r</li><li>u</li><li>n</li></ul>
+<ul><li>第96章のruntime/object/実行境界を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>9</li><li>8</li><li>章</li><li>へ</li><li>、</li><li>h</li><li>e</li></ul>
+<ul><li>第98章へ、heap allocatorとstate/operation/error/source_kind/measuredの契約を渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

@@ -351,9 +351,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>V_OH/V_OL/V_IH/V_ILは指定条件下の保証境界であり、普遍的な物理定数や常に実現する端子電圧ではない。</li><li>NML/NMHは静的または選択した動作条件の電圧差であり、パルス幅、帯域、判定時刻を自動的には含まない。</li><li>dV_out/dV_in=-1はV_IL/V_IHを読むための一つの規約であり、すべての規格・データシート・測定方法を置き換えない。</li><li>VTCの暗黙微分は滑らかな単一根と非零の偏微分を仮定し、領域境界、複数根、ヒステリシス、非単調曲線では別診断が必要である。</li><li>C_load dV_out/dt=I_p-I_nは集中容量の過渡模型であり、分布配線、誘導性、電源インピーダンス、詳細な短絡電流を含まない。</li><li>信号再生はアナログ波形の完全な複製ではなく、論理保証範囲への写像である。</li><li>解析値とSPICE値は測定値ではない。測定値には試料、装置、条件、校正、取得ファイルが必要である。</li><li><code>V_OH=V_DD</code>、<code>V_OL=0</code>、雑音が各段で必ず消えるという理想化を一般回路の保証として扱わない。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>2</li><li>4</li><li>章</li><li>の</li><li>V</li><li>T</li><li>C</li></ul>
+<ul><li>第24章のVTC、V_M、V_DD、V_tn、V_tp、beta_n、beta_p、C_load、電力、model/source_kind/statusを受け取る。第23章の寄生容量・非理想性と第12章の信号・雑音・帯域を再利用する。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>2</li><li>6</li><li>章</li><li>へ</li><li>V</li><li>_</li><li>O</li></ul>
+<ul><li>第26章へV_OH、V_OL、V_IH、V_IL、NML、NMH、VTC勾配、threshold_rule、過渡条件、network単位、model/source_kind/status/measured/残差を渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-5">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

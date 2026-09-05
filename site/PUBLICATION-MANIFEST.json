@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T11:17:22.642006+00:00",
+  "generated_at_utc": "2026-09-05T11:24:34.475830+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21351801,
+  "total_bytes_before_manifest": 21363570,
   "files": [
     {
       "path": ".nojekyll",
@@ -3848,8 +3848,8 @@
     },
     {
       "path": "build/html/chapter-011.html",
-      "bytes": 79620,
-      "sha256": "36bd7843f7de82fd859f361eb9da6b91e14ce4c62a7418771e44600feb8bd8f9"
+      "bytes": 79466,
+      "sha256": "f1f63d42763c4b525f4cec868ca00508f801a874e261a59653b7c62a91f79b70"
     },
     {
       "path": "build/html/chapter-012-exercises.html",
@@ -3878,8 +3878,8 @@
     },
     {
       "path": "build/html/chapter-013.html",
-      "bytes": 70304,
-      "sha256": "6096feb1261060728ec6887ba5428d316110cf0dde6b27e822032aad01cd189c"
+      "bytes": 70277,
+      "sha256": "c752aefd95093b0d2b46c7ce88f2aba0e35a9cefd6f065f36349cfe88006b894"
     },
     {
       "path": "build/html/chapter-014-exercises.html",
@@ -3893,8 +3893,8 @@
     },
     {
       "path": "build/html/chapter-014.html",
-      "bytes": 69049,
-      "sha256": "38127c1aec60f493b496fa61f44ec86cf593b5996679a483d76b9d5d7ddeb244"
+      "bytes": 69040,
+      "sha256": "5d3004f7ea668435ddbfb2cab0ee1106984175c3c20763317c960331686e4053"
     },
     {
       "path": "build/html/chapter-015-exercises.html",
@@ -3983,8 +3983,8 @@
     },
     {
       "path": "build/html/chapter-020.html",
-      "bytes": 94948,
-      "sha256": "5ccb052a327a3df5e5eb00411bb882b51e10f392edf1efe804c1700b63532097"
+      "bytes": 95062,
+      "sha256": "68ecbf862f56b302547a55b5815bb1baccd9cc8053beba66056f22607df4ed1b"
     },
     {
       "path": "build/html/chapter-021-exercises.html",
@@ -3998,8 +3998,8 @@
     },
     {
       "path": "build/html/chapter-021.html",
-      "bytes": 103293,
-      "sha256": "9b92c4b768cb17b5a832c2cc9a1eed5f895334dac7576b13cc316d8d6288ff00"
+      "bytes": 103455,
+      "sha256": "e4936976560dec04760da12d51bc52787c56e88885794ee5bcecc69d124477db"
     },
     {
       "path": "build/html/chapter-022-exercises.html",
@@ -4013,8 +4013,8 @@
     },
     {
       "path": "build/html/chapter-022.html",
-      "bytes": 98949,
-      "sha256": "55270af8d5af29e9d9c608462a11a842b5900a74afbb3157b6c3f9355cd1835a"
+      "bytes": 99003,
+      "sha256": "74f67993ae390ba775b039536ff3e6bbe872aaf0eb1f3b36d69df4295613c975"
     },
     {
       "path": "build/html/chapter-023-exercises.html",
@@ -4028,8 +4028,8 @@
     },
     {
       "path": "build/html/chapter-023.html",
-      "bytes": 97675,
-      "sha256": "97286d0636ac5a0d89d471c6cabdfd23f9a61fb5c0970b5f74b2522693346b88"
+      "bytes": 97823,
+      "sha256": "0f48bb1c166497c9ee4ad8b608993c820105f6c7ea0acdab03afa12b0c23dd99"
     },
     {
       "path": "build/html/chapter-024-exercises.html",
@@ -4043,8 +4043,8 @@
     },
     {
       "path": "build/html/chapter-024.html",
-      "bytes": 99897,
-      "sha256": "090f14d8835bd94ff24bfd46fdc5b1aae20549d221daec1df74069e40bc22196"
+      "bytes": 100071,
+      "sha256": "2c330d6f8be4eeb60769eceee007ee1c6da3ce3e1ca058302fc1f42baf6334d3"
     },
     {
       "path": "build/html/chapter-025-exercises.html",
@@ -4058,8 +4058,8 @@
     },
     {
       "path": "build/html/chapter-025.html",
-      "bytes": 114664,
-      "sha256": "6afec476996ea9aed96a6063e8ed3959802bed05fb4cdcc13fc68ad7ba9949a4"
+      "bytes": 114892,
+      "sha256": "4b2e601095092d1c64c6d5716217ad59ba74918b86f92126b6c86ac799c290dd"
     },
     {
       "path": "build/html/chapter-026-exercises.html",
@@ -4073,8 +4073,8 @@
     },
     {
       "path": "build/html/chapter-026.html",
-      "bytes": 95675,
-      "sha256": "74f7293a2698d7bad852ae4d564318ace6137ee88abbcadf4efcf790eb2cdae5"
+      "bytes": 96027,
+      "sha256": "71486f8fc9afd8fa9f817691472fa8f1ea71b964a35e89eac13dc7e0122ef844"
     },
     {
       "path": "build/html/chapter-027-exercises.html",
@@ -4088,8 +4088,8 @@
     },
     {
       "path": "build/html/chapter-027.html",
-      "bytes": 102779,
-      "sha256": "54c3a2b61169a9e77bd1255a1a7b1c8ef75ef467d81d8060b79f8a4ac73153f5"
+      "bytes": 102979,
+      "sha256": "d5b450ed0d2f35c0259b3a22b750d4219a089d9eeab135505ca45599986768ef"
     },
     {
       "path": "build/html/chapter-028-exercises.html",
@@ -4103,8 +4103,8 @@
     },
     {
       "path": "build/html/chapter-028.html",
-      "bytes": 103227,
-      "sha256": "d79d8d70aa471e54278491e6424bf9ed8c4b1b72696d770a12bb038619d0629a"
+      "bytes": 103531,
+      "sha256": "a7e6bb6de1342706ad5af41392a4957934682f4194c71989a92620de2a6fbf94"
     },
     {
       "path": "build/html/chapter-029-exercises.html",
@@ -4118,8 +4118,8 @@
     },
     {
       "path": "build/html/chapter-029.html",
-      "bytes": 107446,
-      "sha256": "8f8eb4e021b3ba32c7180649a68eee4105c21c2fd0ea8c7981008949b02f2bef"
+      "bytes": 107497,
+      "sha256": "9c16a862ee12b79bf6424a92f5e61706e3a767abad0cd03ab175ae363a15c871"
     },
     {
       "path": "build/html/chapter-030-exercises.html",
@@ -4133,8 +4133,8 @@
     },
     {
       "path": "build/html/chapter-030.html",
-      "bytes": 95866,
-      "sha256": "d63f1e7652676f01ebbef11286b3e68ef0cf971006ab1ca5491fefedd1a8b3d0"
+      "bytes": 95941,
+      "sha256": "19e82b5778aaf56523022237f549b0c6eb4e68e6c44db359fd4c47896de71cfa"
     },
     {
       "path": "build/html/chapter-031-exercises.html",
@@ -4148,8 +4148,8 @@
     },
     {
       "path": "build/html/chapter-031.html",
-      "bytes": 102794,
-      "sha256": "a761f33e57ac3f55907b6e960813ab07f4c97608d35fcd8451b0ffa252e5f211"
+      "bytes": 102948,
+      "sha256": "d9f1970662c2da4d2e104390410d7e5b6d8e2db455cecc3df578f9b587a43f88"
     },
     {
       "path": "build/html/chapter-032-exercises.html",
@@ -4163,8 +4163,8 @@
     },
     {
       "path": "build/html/chapter-032.html",
-      "bytes": 100011,
-      "sha256": "95da0acfe1af177544df1d6007d6d50c76c997bd4af455391b6cb156934501c1"
+      "bytes": 100348,
+      "sha256": "4ac63789e38614402fe89a2ef3c07e9a630f50f9fbf57b38955ec611bcbfa50e"
     },
     {
       "path": "build/html/chapter-033-exercises.html",
@@ -4178,8 +4178,8 @@
     },
     {
       "path": "build/html/chapter-033.html",
-      "bytes": 102645,
-      "sha256": "4ad476ebaab85c7f40a9f8b7f75dc88e24a255a14ef1c63a058be1b5970209c6"
+      "bytes": 102611,
+      "sha256": "f4eabd389cf8502847afbe0b15a145b6fe46af549fa5ef62e2b6fbf65366a57f"
     },
     {
       "path": "build/html/chapter-034-exercises.html",
@@ -4193,8 +4193,8 @@
     },
     {
       "path": "build/html/chapter-034.html",
-      "bytes": 105944,
-      "sha256": "887ee285c63b8db2773ad8074d923547fd5280e10c66d7b3869909d7de38ce13"
+      "bytes": 105981,
+      "sha256": "2cb4e1fa738acb4351fce73f8c9852e0ae1d07cce7ec2719974916fdade8621c"
     },
     {
       "path": "build/html/chapter-035-exercises.html",
@@ -4208,8 +4208,8 @@
     },
     {
       "path": "build/html/chapter-035.html",
-      "bytes": 104487,
-      "sha256": "977f23160a133141fe422558410dfbcd363f17133b12f0f6679bbf6694ae444f"
+      "bytes": 104567,
+      "sha256": "ba1a63fb56c8b7fccf6bb6123ba9180e1f122f2bd958bbb4ac78cd5d891dc3c7"
     },
     {
       "path": "build/html/chapter-036-exercises.html",
@@ -4223,8 +4223,8 @@
     },
     {
       "path": "build/html/chapter-036.html",
-      "bytes": 96133,
-      "sha256": "b1a7ef0c8fe2edbcac93fa73bdf3b3d298dbbacd2df486b357d517522bb5520d"
+      "bytes": 96275,
+      "sha256": "b2c5e833367d9bc74f5e206f3e6dd5b0ad86059923eedbec17f9b9a72c234dbb"
     },
     {
       "path": "build/html/chapter-037-exercises.html",
@@ -4238,8 +4238,8 @@
     },
     {
       "path": "build/html/chapter-037.html",
-      "bytes": 95359,
-      "sha256": "f6837e820ed2286a1229e305637ea7e4b2a077312a6d2865539ca560250c17f5"
+      "bytes": 95483,
+      "sha256": "d9c120986df229b24cd53134f6fc1413faff746f69ff666c08f32fe33e0a1b8b"
     },
     {
       "path": "build/html/chapter-038-exercises.html",
@@ -4253,8 +4253,8 @@
     },
     {
       "path": "build/html/chapter-038.html",
-      "bytes": 98423,
-      "sha256": "7f1929cfa781aa0ae6cc927690fd94ee1a5c7b94067be765d469d60f6f337bf1"
+      "bytes": 98545,
+      "sha256": "7b5242a8cfc0cd2bebd123c0cdeb5abcf15003f0a7b6c734c947e4acc5678cab"
     },
     {
       "path": "build/html/chapter-039-exercises.html",
@@ -4268,8 +4268,8 @@
     },
     {
       "path": "build/html/chapter-039.html",
-      "bytes": 96999,
-      "sha256": "649cec8affc988d079bc8ae86b7abfd293c9b1be2a555442e48e43c00c32dcbb"
+      "bytes": 97096,
+      "sha256": "56bd3730bbdafb6bd746b1cfb9df4ac1d434872a4c622811213a22e99a7be56c"
     },
     {
       "path": "build/html/chapter-040-exercises.html",
@@ -4283,8 +4283,8 @@
     },
     {
       "path": "build/html/chapter-040.html",
-      "bytes": 97791,
-      "sha256": "e68dff2f0d4cf6168fc9d69a7bb0590d7d7bc5781308ce570bc91468b2cd040c"
+      "bytes": 97915,
+      "sha256": "be560713faecf8ee394deb6644c230558a46b8c2832f4b53cf36fdac70628741"
     },
     {
       "path": "build/html/chapter-041-exercises.html",
@@ -4298,8 +4298,8 @@
     },
     {
       "path": "build/html/chapter-041.html",
-      "bytes": 100395,
-      "sha256": "4681263ef8965caf74056c390168d96b2eaea9eb297eeaf647227bf6867e50ff"
+      "bytes": 100587,
+      "sha256": "1c56e59bc1b5d6beb4da471594fef9807af066877b4354ab44c4e54684762364"
     },
     {
       "path": "build/html/chapter-042-exercises.html",
@@ -4313,8 +4313,8 @@
     },
     {
       "path": "build/html/chapter-042.html",
-      "bytes": 101245,
-      "sha256": "ed2137e1e23c2e2c03ca122f2e1833d8215d9ca2c05207c9fe2c62000c937a4a"
+      "bytes": 101345,
+      "sha256": "492f461bcfba29135117051378d7ad1292a4b4494a8fe69c40ccf1de0033e2a1"
     },
     {
       "path": "build/html/chapter-043-exercises.html",
@@ -4328,8 +4328,8 @@
     },
     {
       "path": "build/html/chapter-043.html",
-      "bytes": 106903,
-      "sha256": "e9e210ea857384eab2a036bc8e34e62922c12dca8bfc30ba7c16784e8d235928"
+      "bytes": 107021,
+      "sha256": "d006a687d36189533268373696cfbd579d812f6d50d55cfb80b5601d205ca282"
     },
     {
       "path": "build/html/chapter-044-exercises.html",
@@ -4343,8 +4343,8 @@
     },
     {
       "path": "build/html/chapter-044.html",
-      "bytes": 106504,
-      "sha256": "b0795f16abb9fab52e55c4685bac5070ec3937457cd7aab83f4b29f9f3e3efa3"
+      "bytes": 106732,
+      "sha256": "f3e5ec1380a0daf63e80d72be9a1787ecc020c9169fa9915b9bfac5a915fc9a6"
     },
     {
       "path": "build/html/chapter-045-exercises.html",
@@ -4358,8 +4358,8 @@
     },
     {
       "path": "build/html/chapter-045.html",
-      "bytes": 108651,
-      "sha256": "1473fc8dae0a88616c91ced653d626d12b2329aa3e72d65b60f2324d8cb31cd8"
+      "bytes": 108848,
+      "sha256": "69113f9cbf88db53615b633f1230234a51d8b36292a665cee3e9e4a8f727cd11"
     },
     {
       "path": "build/html/chapter-046-exercises.html",
@@ -4373,8 +4373,8 @@
     },
     {
       "path": "build/html/chapter-046.html",
-      "bytes": 109540,
-      "sha256": "63dfe1d36c51ef8849af7e4b4fef176b4ce6940a60722f14642c91135f6dcf3f"
+      "bytes": 109609,
+      "sha256": "9ede6afaae104e7d4c5c1e033a1fd804c096da24240a7f81ddc375ef11322592"
     },
     {
       "path": "build/html/chapter-047-exercises.html",
@@ -4388,8 +4388,8 @@
     },
     {
       "path": "build/html/chapter-047.html",
-      "bytes": 121658,
-      "sha256": "6dfbb17cf3630b8c4618d32767464178efc732e5c8adbc71c1911f24b518b2bd"
+      "bytes": 121853,
+      "sha256": "39e80dbae274a61af76bdea51570069ad41358b34336f38967a1aef510027afc"
     },
     {
       "path": "build/html/chapter-048-exercises.html",
@@ -4403,8 +4403,8 @@
     },
     {
       "path": "build/html/chapter-048.html",
-      "bytes": 102899,
-      "sha256": "30d33d9976c096b8053029572906db2ad89657f05996153420372f06ea017d33"
+      "bytes": 102836,
+      "sha256": "241a3d6a8a21bbe84a01dd10c1d5122e08a59f38b7a817dd1c9383d14fc505cf"
     },
     {
       "path": "build/html/chapter-049-exercises.html",
@@ -4418,8 +4418,8 @@
     },
     {
       "path": "build/html/chapter-049.html",
-      "bytes": 97136,
-      "sha256": "67bd20eb66a3a589f2baaaa0a07095de796afbd4635d0a2daf6778d230a61ae2"
+      "bytes": 97223,
+      "sha256": "30e2b5ed6274d05079631a8db05169f09f72a09f34c54d55fb2301ed5bddb9d6"
     },
     {
       "path": "build/html/chapter-050-exercises.html",
@@ -4433,8 +4433,8 @@
     },
     {
       "path": "build/html/chapter-050.html",
-      "bytes": 96590,
-      "sha256": "b00ba97cfc63cdaedcf5719c966ee7560217f4f4e6ae5c1961035362634f5b02"
+      "bytes": 96696,
+      "sha256": "3a53037d6e1c24d944385e903a108bf06664b28230eebc5afb0804b45ce4d2e8"
     },
     {
       "path": "build/html/chapter-051-exercises.html",
@@ -4448,8 +4448,8 @@
     },
     {
       "path": "build/html/chapter-051.html",
-      "bytes": 97212,
-      "sha256": "78980184b24211423edcc165c607138a7a13df86bde70eb3a3d1574417a2d09f"
+      "bytes": 97328,
+      "sha256": "537180f8847f5fb73eb75671a05d18798197ccd401d69b33e7623b1104de091a"
     },
     {
       "path": "build/html/chapter-052-exercises.html",
@@ -4463,8 +4463,8 @@
     },
     {
       "path": "build/html/chapter-052.html",
-      "bytes": 96159,
-      "sha256": "01de1a45e92152701abb1a3d9b185fbfa726b7545bd9bd0838f934ffee629057"
+      "bytes": 96245,
+      "sha256": "1ee457dd8f89e5c59cccf8151602ffaec848a0e2a4945372bb3fbdce768e3efc"
     },
     {
       "path": "build/html/chapter-053-exercises.html",
@@ -4478,8 +4478,8 @@
     },
     {
       "path": "build/html/chapter-053.html",
-      "bytes": 96298,
-      "sha256": "66adabb6e27ecdbc485045378a52e75c7c1755fee85f13a599f799d098a34ce8"
+      "bytes": 96458,
+      "sha256": "c735c7c38e41526e457595b6453ec08c7aead1849eec7012b992f9e5207804e6"
     },
     {
       "path": "build/html/chapter-054-exercises.html",
@@ -4493,8 +4493,8 @@
     },
     {
       "path": "build/html/chapter-054.html",
-      "bytes": 101291,
-      "sha256": "1050bf29286099e6cb41137e98017c460f00916d445a04d8f1670fe7fa90df55"
+      "bytes": 101342,
+      "sha256": "0cda29814895a5aca8b91db265ecee70dd00cc100e3e615d0ffc365ce72cebf0"
     },
     {
       "path": "build/html/chapter-055-exercises.html",
@@ -4508,8 +4508,8 @@
     },
     {
       "path": "build/html/chapter-055.html",
-      "bytes": 106388,
-      "sha256": "e859d739682bee4817e9bc16867a3064df1c5b714214946837c37f020695b512"
+      "bytes": 106649,
+      "sha256": "928ba39e972fabf35e620668b8541ee39357f23299fc994e540271fc7366d993"
     },
     {
       "path": "build/html/chapter-056-exercises.html",
@@ -4523,8 +4523,8 @@
     },
     {
       "path": "build/html/chapter-056.html",
-      "bytes": 104101,
-      "sha256": "3689f2f523916ca636fce0fbb4c6db8a12119b80afc9e67ba447c813268135aa"
+      "bytes": 104355,
+      "sha256": "df8baaf075d2f28478e5159940dbda140af942ddb71d3651dea7e79714b21978"
     },
     {
       "path": "build/html/chapter-057-exercises.html",
@@ -4538,8 +4538,8 @@
     },
     {
       "path": "build/html/chapter-057.html",
-      "bytes": 98867,
-      "sha256": "763797d76c539a3481e01fdce0e9a05117c2a50089e2e9179d57103587716b2c"
+      "bytes": 98902,
+      "sha256": "9991ef27512d3c4896a41aeb92898e72d992689e1758f0f60ccc436e84429a36"
     },
     {
       "path": "build/html/chapter-058-exercises.html",
@@ -4553,8 +4553,8 @@
     },
     {
       "path": "build/html/chapter-058.html",
-      "bytes": 96692,
-      "sha256": "81febf134d79b9bd6f53cea207c440ed0282f3e34e052668768b77fea6d325a6"
+      "bytes": 96837,
+      "sha256": "be43a3b8e6be84f4bb0107b1211363e9bb26cdd6206da63935964107f923fe01"
     },
     {
       "path": "build/html/chapter-059-exercises.html",
@@ -4568,8 +4568,8 @@
     },
     {
       "path": "build/html/chapter-059.html",
-      "bytes": 96235,
-      "sha256": "93863b2a293d03045b094cd5b94130e6eaea21ea101acbad303887fa4df7240f"
+      "bytes": 96641,
+      "sha256": "fa3f9911817b1c776db75edcae8fe67bbf3bc65d96c59b75c216b210f13c4856"
     },
     {
       "path": "build/html/chapter-060-exercises.html",
@@ -4583,8 +4583,8 @@
     },
     {
       "path": "build/html/chapter-060.html",
-      "bytes": 95731,
-      "sha256": "f1b5057db954eeae5a42c9cec97c903e5637bb26ee7bbc825e167d63d370ee6d"
+      "bytes": 95846,
+      "sha256": "cc5d077d8d50b7636ca90b407ba93534ef25fb18e525d8caa7e1472ef9f8d544"
     },
     {
       "path": "build/html/chapter-061-exercises.html",
@@ -4598,8 +4598,8 @@
     },
     {
       "path": "build/html/chapter-061.html",
-      "bytes": 95437,
-      "sha256": "cd9a85c8e9a9b2247cfac6b0860716f962d868f4cd305f884684487d154b1246"
+      "bytes": 95547,
+      "sha256": "dfb54491574448b12a06980a93378acba43b6297f8d67c02082286e3491eae0a"
     },
     {
       "path": "build/html/chapter-062-exercises.html",
@@ -4613,8 +4613,8 @@
     },
     {
       "path": "build/html/chapter-062.html",
-      "bytes": 95827,
-      "sha256": "5c8254e29125b128ba24f9c5cd9c56af8c9f258b43f0c64c6e739c9b6f7edc55"
+      "bytes": 95992,
+      "sha256": "adbf630a41fc01e1d473e72e6bcced4901d6b521cc6236a1fbbdac051f30b86b"
     },
     {
       "path": "build/html/chapter-063-exercises.html",
@@ -4628,8 +4628,8 @@
     },
     {
       "path": "build/html/chapter-063.html",
-      "bytes": 96748,
-      "sha256": "65812f34990283c0a373e1f0de0913c4be8187498966abd3d3e94f8869d0e3d6"
+      "bytes": 96847,
+      "sha256": "bf772631ea66a53c5bf60e4704cd1ff11f71ec22ab022d6a16e909d67fc77c34"
     },
     {
       "path": "build/html/chapter-064-exercises.html",
@@ -4643,8 +4643,8 @@
     },
     {
       "path": "build/html/chapter-064.html",
-      "bytes": 95978,
-      "sha256": "59e13d1bd676f389699c6809d0401ce302fc90d9654bff2e87f28d5819fa8ccd"
+      "bytes": 96143,
+      "sha256": "543c28379f7f9aa59598556f20b468a0f02b726d813104b3c341c38829c385ce"
     },
     {
       "path": "build/html/chapter-065-exercises.html",
@@ -4658,8 +4658,8 @@
     },
     {
       "path": "build/html/chapter-065.html",
-      "bytes": 104586,
-      "sha256": "925abc11b0d0de7f5fa75eda6a08d33a8a2b873eb6088e108678f8b38af2de9a"
+      "bytes": 104668,
+      "sha256": "768cf5492405f4ec3e3e4eb06bf9e4702146725c5fa2de0bc6d8a74e3fdbfc1c"
     },
     {
       "path": "build/html/chapter-066-exercises.html",
@@ -4673,8 +4673,8 @@
     },
     {
       "path": "build/html/chapter-066.html",
-      "bytes": 102059,
-      "sha256": "cb71738709a17421273950a0849bd9c2a2c82509da07badf72a173c35f8a5d2e"
+      "bytes": 102171,
+      "sha256": "f4d12c984218cd82fe18efd61321ee7334b0c1651c1ea132e4cbe681917c790a"
     },
     {
       "path": "build/html/chapter-067-exercises.html",
@@ -4688,8 +4688,8 @@
     },
     {
       "path": "build/html/chapter-067.html",
-      "bytes": 103480,
-      "sha256": "9a972c751f39caa67a1247e4e294bb389e2f779ea5eaab968544f62b364acc10"
+      "bytes": 103584,
+      "sha256": "19ceb2f008e79d53c71bd0d661b1a815ff79731188dce484c0e2ff6c43e2a57a"
     },
     {
       "path": "build/html/chapter-068-exercises.html",
@@ -4703,8 +4703,8 @@
     },
     {
       "path": "build/html/chapter-068.html",
-      "bytes": 103324,
-      "sha256": "ec5f255ca05536c098ec1799ca69db6d0e6c7e53b6c326149766ad748fb473e7"
+      "bytes": 103444,
+      "sha256": "392687efcb3e42a4fe8bc88c57cfc976a7ad7b3d28ef750c00867b00f344aadf"
     },
     {
       "path": "build/html/chapter-069-exercises.html",
@@ -4718,8 +4718,8 @@
     },
     {
       "path": "build/html/chapter-069.html",
-      "bytes": 102010,
-      "sha256": "8e9ec6894dca3a4af4bccde33a1735248b6640aed6e5e175247d553fb6de52e8"
+      "bytes": 102139,
+      "sha256": "e3cf3d73f4dec702f6101a3bb6d8faa29f56f022fb90e7d8bd3887b30aef05c8"
     },
     {
       "path": "build/html/chapter-070-exercises.html",
@@ -4733,8 +4733,8 @@
     },
     {
       "path": "build/html/chapter-070.html",
-      "bytes": 103092,
-      "sha256": "4feef8a3db8f54300627656e23d0c1f202e4c22d7f771807570621675bf1d7b9"
+      "bytes": 103293,
+      "sha256": "ee50343a3f94208eb2053ba3388b709ea2e78742c63d215d1fa1438a10d3165b"
     },
     {
       "path": "build/html/chapter-071-exercises.html",
@@ -4748,8 +4748,8 @@
     },
     {
       "path": "build/html/chapter-071.html",
-      "bytes": 102584,
-      "sha256": "bb5365c4092bc1f49dd661975f7bfc934154d04672f756d23abbd4166e60d7df"
+      "bytes": 102692,
+      "sha256": "f3846abe414fd98c0c2157b073889bbf2502322779dba2ebb1aeaa5b21b41d0e"
     },
     {
       "path": "build/html/chapter-072-exercises.html",
@@ -4763,8 +4763,8 @@
     },
     {
       "path": "build/html/chapter-072.html",
-      "bytes": 104392,
-      "sha256": "c48e6adf01d4519f6c0a35ef45b26ce64116cbc28e24cae22ba8dee0191d67a0"
+      "bytes": 104554,
+      "sha256": "169f810891a9f542f0fa7a6609bcdf9aa768e5c61bad1869ff572a8e2b2bc670"
     },
     {
       "path": "build/html/chapter-073-exercises.html",
@@ -4778,8 +4778,8 @@
     },
     {
       "path": "build/html/chapter-073.html",
-      "bytes": 96542,
-      "sha256": "b89fdeeb71a225a1d575f42d4a5e1743cabe424ab34cb355c24b13b99c709c27"
+      "bytes": 96711,
+      "sha256": "92776c9c5deb9f5374a5812d3d5fa58817ae2f9c7949f1a1f69a60ea2f7e622b"
     },
     {
       "path": "build/html/chapter-074-exercises.html",
@@ -4793,8 +4793,8 @@
     },
     {
       "path": "build/html/chapter-074.html",
-      "bytes": 94429,
-      "sha256": "e6584952ba7681b39e4acb4121c15cb395600018b901a85b179f4646df18b912"
+      "bytes": 94515,
+      "sha256": "c8e96501e27c4e558947555a9dfbd6e294434df25425052ed724e1cbfc8b4e5c"
     },
     {
       "path": "build/html/chapter-075-exercises.html",
@@ -4808,8 +4808,8 @@
     },
     {
       "path": "build/html/chapter-075.html",
-      "bytes": 93672,
-      "sha256": "1e743b86c9b57092f46b4742414e277d58f3d4a42dd037a4c9fee87d286337da"
+      "bytes": 93770,
+      "sha256": "58e5197f384015be63dbd44d8496bab3d3f3eb19e8c054dfe198e11b0262af0b"
     },
     {
       "path": "build/html/chapter-076-exercises.html",
@@ -4823,8 +4823,8 @@
     },
     {
       "path": "build/html/chapter-076.html",
-      "bytes": 95281,
-      "sha256": "39c454a7cf7b89b3c994cab379d38e6fca18f897fb62107010d133941c6cc6f5"
+      "bytes": 95444,
+      "sha256": "a5efceb4908f15dcbdac9aac1a8f7ec325af65d396175792ebc389db31ea437f"
     },
     {
       "path": "build/html/chapter-077-exercises.html",
@@ -4838,8 +4838,8 @@
     },
     {
       "path": "build/html/chapter-077.html",
-      "bytes": 95300,
-      "sha256": "fb54d50269bdd0334f74e8c6dea80bae06499cb8d79d7f359e4721440c472267"
+      "bytes": 95435,
+      "sha256": "1381e6c8c8e2c9f39d66e1384fbbfe0302c82a1ab67cbb70677d2d43df8affe9"
     },
     {
       "path": "build/html/chapter-078-exercises.html",
@@ -4853,8 +4853,8 @@
     },
     {
       "path": "build/html/chapter-078.html",
-      "bytes": 95136,
-      "sha256": "a3b155b314e98632cc157e4845fe3a95e3aa2da7f5c3d4eee1de19726b445fd0"
+      "bytes": 95257,
+      "sha256": "0666434b7bb24e56497c36af6973a324f5d9248b04298eafc80044d163d8d597"
     },
     {
       "path": "build/html/chapter-079-exercises.html",
@@ -4868,8 +4868,8 @@
     },
     {
       "path": "build/html/chapter-079.html",
-      "bytes": 96693,
-      "sha256": "858fa10edcf50b2194e7d2168d78534b6ca3906274a288851fa2ccbd0e8ef48c"
+      "bytes": 96935,
+      "sha256": "d3f86397b17fbeb50c80ed5d4dd5702da6db471f981394ffc0877d8a1918071c"
     },
     {
       "path": "build/html/chapter-080-exercises.html",
@@ -4883,8 +4883,8 @@
     },
     {
       "path": "build/html/chapter-080.html",
-      "bytes": 95444,
-      "sha256": "8cd3d436c04f0dd04aab6ea7c52d3933a434651a02a6482919be3820adc172c5"
+      "bytes": 95617,
+      "sha256": "dabe54c4d82c05230b7af75b1b42348f5c2da4804d6a556079fab0edd008e05e"
     },
     {
       "path": "build/html/chapter-081-exercises.html",
@@ -4898,8 +4898,8 @@
     },
     {
       "path": "build/html/chapter-081.html",
-      "bytes": 100653,
-      "sha256": "859cc4ef72cf117b61bf7ada994aee79e8874d39947032cc9f2c10a0a36af70f"
+      "bytes": 100927,
+      "sha256": "e21b9a7abdf27eeed00b6e6fa0794a38fb4d46e735a32668845c219c0f7f548e"
     },
     {
       "path": "build/html/chapter-082-exercises.html",
@@ -4913,8 +4913,8 @@
     },
     {
       "path": "build/html/chapter-082.html",
-      "bytes": 100984,
-      "sha256": "7ad70d43818c445a1edc2fd33bd470e60c2e4aeebdaec6917f0b265108cf9582"
+      "bytes": 101110,
+      "sha256": "21a331bd37106f521ef4eabad77d406a25302e7ae8cc77788f5504797dca1335"
     },
     {
       "path": "build/html/chapter-083-exercises.html",
@@ -4928,8 +4928,8 @@
     },
     {
       "path": "build/html/chapter-083.html",
-      "bytes": 98541,
-      "sha256": "50a631ebde3417aec6431dda7af1c9062501229ed9f45d634e9799c4127c93e3"
+      "bytes": 98615,
+      "sha256": "c47dba87e5f1959f0fe85ecf1bb9875aefe8b5b6ef83141bb0aeacd24d408adb"
     },
     {
       "path": "build/html/chapter-084-exercises.html",
@@ -4943,8 +4943,8 @@
     },
     {
       "path": "build/html/chapter-084.html",
-      "bytes": 98516,
-      "sha256": "e753c2ac979ea31b7f07eadb9985297b32756059211946446c1ef0acb2588e0c"
+      "bytes": 98581,
+      "sha256": "e918eb765534dbab6bae521bdb72d97395ca0c739aab19a12846eb3006ec1fec"
     },
     {
       "path": "build/html/chapter-085-exercises.html",
@@ -4958,8 +4958,8 @@
     },
     {
       "path": "build/html/chapter-085.html",
-      "bytes": 98378,
-      "sha256": "a3124e621228dd1683d6ce3fb27af7907db8b3d512fc9be0fd7a777935606360"
+      "bytes": 98438,
+      "sha256": "49eab1973f8f07311363e7f0fb6fa9f1dbf0927f6c2e4537f965e7ebc263e5ca"
     },
     {
       "path": "build/html/chapter-086-exercises.html",
@@ -4973,8 +4973,8 @@
     },
     {
       "path": "build/html/chapter-086.html",
-      "bytes": 98156,
-      "sha256": "119d5e592beb86850e0653f5618637eea0efea491fd3a9d00573dbc9723a1e2a"
+      "bytes": 98220,
+      "sha256": "98693f4dea40985351e8423b0be58f1e0e30832b7b054ccafe94edca73a9ea5e"
     },
     {
       "path": "build/html/chapter-087-exercises.html",
@@ -4988,8 +4988,8 @@
     },
     {
       "path": "build/html/chapter-087.html",
-      "bytes": 98396,
-      "sha256": "91759f281b7d717cfa6f7ea97ce02d406e398a10e12b3c4af9361f117a72bbe2"
+      "bytes": 98461,
+      "sha256": "323b534b8bd09f5647cf6f7bfdaaa19676761a5fbd8afc7160316beb98f441db"
     },
     {
       "path": "build/html/chapter-088-exercises.html",
@@ -5003,8 +5003,8 @@
     },
     {
       "path": "build/html/chapter-088.html",
-      "bytes": 98133,
-      "sha256": "31e4725661f6d57f81fa46bae1f9ffbf6252f0ff17a88f8743b411c75f4d28bc"
+      "bytes": 98137,
+      "sha256": "8c224104c24af06cda6e6c401b5d62273626cce1e96bc3498b39c40f4019c444"
     },
     {
       "path": "build/html/chapter-089-exercises.html",
@@ -5018,8 +5018,8 @@
     },
     {
       "path": "build/html/chapter-089.html",
-      "bytes": 103009,
-      "sha256": "3847fcb084985b923cec2972e1b3e353c9bb521ee43a1f3ddf31a972d4598b64"
+      "bytes": 103035,
+      "sha256": "da05d082b675ae2783c374adb571df6e655c08fee49dc5ce78f1b3c337c885d7"
     },
     {
       "path": "build/html/chapter-090-exercises.html",
@@ -5033,8 +5033,8 @@
     },
     {
       "path": "build/html/chapter-090.html",
-      "bytes": 101016,
-      "sha256": "7d1454c81b84994929994c572182a99422a4378139c37e054b63c7432eb383a3"
+      "bytes": 101078,
+      "sha256": "594e1cf38b6d925e31238c51db12337fcf8989280910a6b72d05dca8a8259fb6"
     },
     {
       "path": "build/html/chapter-091-exercises.html",
@@ -5048,8 +5048,8 @@
     },
     {
       "path": "build/html/chapter-091.html",
-      "bytes": 99142,
-      "sha256": "2cdc7fe73fdfddf738f2b9a82f59052ebb19efe1779b338ed630c9f2de2836aa"
+      "bytes": 99469,
+      "sha256": "317c9d2b1ad630b2006502059e6424b18c9b08d0ae1099f0415be7ed7fe7d7ba"
     },
     {
       "path": "build/html/chapter-092-exercises.html",
@@ -5063,8 +5063,8 @@
     },
     {
       "path": "build/html/chapter-092.html",
-      "bytes": 97272,
-      "sha256": "1237fba89f0f79071276576634bbc15df9e282a6925d915ba32f787c84ea632f"
+      "bytes": 97309,
+      "sha256": "517e07fd0b49c2bc543005fc06373a4ba8b861c8416a9e2153fb2bdabf9102f8"
     },
     {
       "path": "build/html/chapter-093-exercises.html",
@@ -5078,8 +5078,8 @@
     },
     {
       "path": "build/html/chapter-093.html",
-      "bytes": 98042,
-      "sha256": "1fb897d1fa896f018e48af55ba172614e7952faa36bcb93cef9573eb06c4858a"
+      "bytes": 98115,
+      "sha256": "0dd033aaed883be71c5243584be6519cd958df3e50c8f57836d4b6ba2fa12411"
     },
     {
       "path": "build/html/chapter-094-exercises.html",
@@ -5093,8 +5093,8 @@
     },
     {
       "path": "build/html/chapter-094.html",
-      "bytes": 97927,
-      "sha256": "35bcc8847ff68c26b7f34f9fcc8ffbf8ae63d19740a8ee8bb791a3d7612c5355"
+      "bytes": 97955,
+      "sha256": "d4c8f5a7e6a440a67b2832135b69fa3b1dc8f0f313ce4f94b8219876868c4210"
     },
     {
       "path": "build/html/chapter-095-exercises.html",
@@ -5108,8 +5108,8 @@
     },
     {
       "path": "build/html/chapter-095.html",
-      "bytes": 98895,
-      "sha256": "a959f6e9b8ed2078f922878c27e2e17241d622f412a376e530f08023efba139a"
+      "bytes": 98940,
+      "sha256": "63f217bddeb4e882c6bec1a61ad7f17ecaf18cf151d18acb0f336f485259e401"
     },
     {
       "path": "build/html/chapter-096-exercises.html",
@@ -5123,8 +5123,8 @@
     },
     {
       "path": "build/html/chapter-096.html",
-      "bytes": 98914,
-      "sha256": "dd0a529bf739d241b99df32a02c37502dda6084bba1890fd23b20ede273660ca"
+      "bytes": 98933,
+      "sha256": "f1cb11e75db0ce2ac60bc839d6ba2c13c1be26f5e0977b80be9cca1e87365994"
     },
     {
       "path": "build/html/chapter-097-exercises.html",
@@ -5139,7 +5139,7 @@
     {
       "path": "build/html/chapter-097.html",
       "bytes": 100029,
-      "sha256": "6fa935bdd886147360c1a34688097a8aee1b2304376880b621d7459ded0e782b"
+      "sha256": "c16c324005822b361fa9e998fa35d21d48856b297e14fba6ac4889cb124be6e0"
     },
     {
       "path": "build/html/chapter-098-exercises.html",
@@ -5153,8 +5153,8 @@
     },
     {
       "path": "build/html/chapter-098.html",
-      "bytes": 99984,
-      "sha256": "4e34714667ad6a60e5a93d81b64d8c877dd11fdf07a88884400cbd3f65b29ccd"
+      "bytes": 99997,
+      "sha256": "8460b2fd93c946d2ae8f27bc4dd53364ca1f878223bdb6323468970262dbc4cd"
     },
     {
       "path": "build/html/chapter-099-exercises.html",
@@ -5168,8 +5168,8 @@
     },
     {
       "path": "build/html/chapter-099.html",
-      "bytes": 100634,
-      "sha256": "d429c3bc5d5b004dda93fb5a6c1ed6420b79bfde4c2899447072a063c7a95a62"
+      "bytes": 100637,
+      "sha256": "b3a2dc3f3954e093b67bd44634b0cfbb8ed42b74f55a5b1a6641212baf1a26cc"
     },
     {
       "path": "build/html/chapter-100-exercises.html",
@@ -5184,7 +5184,7 @@
     {
       "path": "build/html/chapter-100.html",
       "bytes": 99749,
-      "sha256": "54f451727a804e18b923eeb186601d351e08c420f8b511031624c54fc2f071d4"
+      "sha256": "5a2c1ad5ef9affcaf85008093ead6bf830f69f2539f79d94ee0b7eb503de31b2"
     },
     {
       "path": "build/html/chapter-101-exercises.html",
@@ -5198,8 +5198,8 @@
     },
     {
       "path": "build/html/chapter-101.html",
-      "bytes": 100030,
-      "sha256": "681972fa0d6c3f732e0479df60c141ad14a8e6e3df784b7bf974da984f8026a3"
+      "bytes": 100021,
+      "sha256": "7fbd40cedf4e5ae6b74dae7d5bd7c207985fe8b9027c3209f2c0883447954982"
     },
     {
       "path": "build/html/chapter-102-exercises.html",
@@ -5213,8 +5213,8 @@
     },
     {
       "path": "build/html/chapter-102.html",
-      "bytes": 99192,
-      "sha256": "850cfa0de4668bb5f03628c9ea2dd3ce696184397ef5106cbf2aa42ff8f5c07d"
+      "bytes": 99202,
+      "sha256": "cdaf0d05d3f3af27ac1510c416d49749e10f44472f3286c1ad5045f9f855bb66"
     },
     {
       "path": "build/html/chapter-103-exercises.html",
@@ -5228,8 +5228,8 @@
     },
     {
       "path": "build/html/chapter-103.html",
-      "bytes": 99374,
-      "sha256": "4222c20209635cecca30c7a51383a28c531d697c82a4c0ee54584148f79b1fa4"
+      "bytes": 99375,
+      "sha256": "2d8875d5d906b1704d2199857f0e4e68a2e163045b1ad9843f9de2cfcf1b5106"
     },
     {
       "path": "build/html/chapter-104-exercises.html",
@@ -5243,8 +5243,8 @@
     },
     {
       "path": "build/html/chapter-104.html",
-      "bytes": 101381,
-      "sha256": "8dee1c32379763bdd1eaeff3742410260e3e4906d4bcf3d7ad65bb043d222ffa"
+      "bytes": 101383,
+      "sha256": "b4893dbde4dc940a9225f6240b88ff79f08b7667169f109412e8ebfaba70fc1a"
     },
     {
       "path": "build/html/chapter-105-exercises.html",
@@ -5258,8 +5258,8 @@
     },
     {
       "path": "build/html/chapter-105.html",
-      "bytes": 103159,
-      "sha256": "26d5597bf2eb269c676c8aeb4619f040039abf97fbdd6f41b6ba334ae4bc231e"
+      "bytes": 103308,
+      "sha256": "1e478af38df3469ec9a1fc47e3211b858167cdbc314abe9ee4afff616c3f1bcf"
     },
     {
       "path": "build/html/chapter-106-exercises.html",
@@ -5273,8 +5273,8 @@
     },
     {
       "path": "build/html/chapter-106.html",
-      "bytes": 100813,
-      "sha256": "3c9943a33b04103909a2bb8d13c047192b25cfff27ae0e706d8c9ffed0733ede"
+      "bytes": 100911,
+      "sha256": "44b73a3400a83e558a97caadcd57bfd18ad82b95b71dfe67d47c550cfa807ee2"
     },
     {
       "path": "build/html/index.html",
@@ -5283,8 +5283,8 @@
     },
     {
       "path": "build/html/prelude.html",
-      "bytes": 38085,
-      "sha256": "55e0d5b93d41075ac27d1bba804c660f1ba624c4bb4482e73fab4431f9270442"
+      "bytes": 39781,
+      "sha256": "1352801f7c87691277aaf57e2e7a37bdb31322a6bd45f1a4d1ba13b8371b8de1"
     },
     {
       "path": "build/html/runner.html",

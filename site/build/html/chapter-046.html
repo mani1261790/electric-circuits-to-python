@@ -314,9 +314,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>この章の模型は、適用範囲を明示して初めて安全に使える。次の限界を一つずつ、本文のどの主張に効くかと一緒に読む。</p>
 <ul><li>本章はRV32I base integer命令だけを使い、M extensionの乗算・除算を含めない。</li><li>calling conventionは本章のRV32教育domainで16-byte stack alignmentとlittle-endian word accessを固定するが、OSのABI全条件を再定義しない。</li><li>stack overflow、割込み、thread、ABIの浮動小数点規約は後章の対象である。</li><li>assembly runnerとtraceは予定出力であり、rv32edu実機・FPGA・電圧・速度を測定したものではない。</li></ul>
 <p>前章から受け取るもの:</p>
-<ul><li>第</li><li>4</li><li>5</li><li>章</li><li>の</li><li>R</li><li>V</li><li>3</li></ul>
+<ul><li>第45章のRV32I register、PC、memory、branch、jump、immediate規則を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第</li><li>4</li><li>7</li><li>章</li><li>へ</li><li>、</li><li>a</li><li>s</li></ul>
+<ul><li>第47章へ、assemblyの各命令が必要とするregister read、ALU、PC select、memory、write-backのdatapath要求を渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
