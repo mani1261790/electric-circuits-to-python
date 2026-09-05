@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "6233e3ce66b12997fd42302799983554ddab54e308ef519737ee36a275f4cd84",
-  "scope": "chapters 9-70; executable educational models",
+  "source_sha256": "a9f62c417d41fc335537cde5df3fa844d635f3381d965688c3d9e6552472ca33",
+  "scope": "chapters 9-80; executable educational models",
   "summary": {
-    "chapters": 62,
-    "baseline_passed": 62,
-    "change_passed": 62,
-    "fault_passed": 62,
+    "chapters": 72,
+    "baseline_passed": 72,
+    "change_passed": 72,
+    "fault_passed": 72,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -5001,6 +5001,826 @@
           "input_sha256": "72ffb02717052e468f1730c9fdd4c296e431341f16af3dd2bcc27664d2eddf43",
           "error_code": "input_contract_error",
           "error": "relocation field is outside the section"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 71,
+      "title": "linkerとELF executable",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "elf_section_symbol_relocation_link",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "text_base": 4096,
+          "data_base": 16384,
+          "symbol_value": 4608,
+          "addend": 4,
+          "duplicate_definition": false
+        },
+        "input_sha256": "2ca4172cf270d97b5e49178d6133856f5ea89ce0d78f4fad1329d44f94e926ff",
+        "output": {
+          "entry_point": 4096.0,
+          "data_base": 16384.0,
+          "relocated_symbol": 4612.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "text_base": 8192,
+          "data_base": 16384,
+          "symbol_value": 4608,
+          "addend": 4,
+          "duplicate_definition": false
+        },
+        "output_changed_key": "entry_point",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "text_base": 8192,
+            "data_base": 16384,
+            "symbol_value": 4608,
+            "addend": 4,
+            "duplicate_definition": false
+          },
+          "input_sha256": "66ed46b05bd31d6f9afcfd3328dd3183f5fb85172a4f7ab65569f88bb221262c",
+          "output": {
+            "entry_point": 8192.0,
+            "data_base": 16384.0,
+            "relocated_symbol": 4612.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "text_base": 4096,
+          "data_base": 16384,
+          "symbol_value": 4608,
+          "addend": 4,
+          "duplicate_definition": true
+        },
+        "expected_error_fragment": "duplicate symbol definition prevents linking",
+        "observed": {
+          "status": "error",
+          "input": {
+            "text_base": 4096,
+            "data_base": 16384,
+            "symbol_value": 4608,
+            "addend": 4,
+            "duplicate_definition": true
+          },
+          "input_sha256": "bbf6fb02fdc9729666115b8b19a20eb3cb122bda17ce716a53da8c5e94e3a6f0",
+          "error_code": "input_contract_error",
+          "error": "duplicate symbol definition prevents linking"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 72,
+      "title": "loader、dynamic linking、library",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "elf_segment_loader_and_bss_fill",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "filesz": 1024,
+          "memsz": 2048,
+          "stack_size": 4096,
+          "load_base": 32768,
+          "entry": 33024
+        },
+        "input_sha256": "6e839a6ce801890f1cce5e0987ebcaf33fb73de0de8391dd8c4c88eed19a5106",
+        "output": {
+          "bss_zero_bytes": 1024.0,
+          "entry_point": 33024.0,
+          "stack_top": 38912.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "filesz": 1024,
+          "memsz": 3072,
+          "stack_size": 4096,
+          "load_base": 32768,
+          "entry": 33024
+        },
+        "output_changed_key": "bss_zero_bytes",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "filesz": 1024,
+            "memsz": 3072,
+            "stack_size": 4096,
+            "load_base": 32768,
+            "entry": 33024
+          },
+          "input_sha256": "90da47e8eaef49a63b3c3661c920eb59c549d35706682c3916f931ff12661d3d",
+          "output": {
+            "bss_zero_bytes": 2048.0,
+            "entry_point": 33024.0,
+            "stack_top": 39936.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "filesz": 2048,
+          "memsz": 1024,
+          "stack_size": 4096,
+          "load_base": 32768,
+          "entry": 33024
+        },
+        "expected_error_fragment": "segment memsz must be at least filesz",
+        "observed": {
+          "status": "error",
+          "input": {
+            "filesz": 2048,
+            "memsz": 1024,
+            "stack_size": 4096,
+            "load_base": 32768,
+            "entry": 33024
+          },
+          "input_sha256": "530b849faac6b021676bf0a2cff4cc1baf840eae4be1326cbe350d7c63623a06",
+          "error_code": "input_contract_error",
+          "error": "segment memsz must be at least filesz"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 73,
+      "title": "Cの抽象機械、ABI、stack、heap",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "c_abi_struct_and_stack_layout",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "field_count": 3,
+          "field_size": 4,
+          "alignment": 8,
+          "frame_bytes": 32
+        },
+        "input_sha256": "3a4ad351785621a62cf0664ca70b5f24d528cbc395246c824c53b78c6a167b91",
+        "output": {
+          "struct_size": 16.0,
+          "last_field_offset": 8.0,
+          "frame_bytes": 32.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "field_count": 5,
+          "field_size": 4,
+          "alignment": 8,
+          "frame_bytes": 32
+        },
+        "output_changed_key": "struct_size",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "field_count": 5,
+            "field_size": 4,
+            "alignment": 8,
+            "frame_bytes": 32
+          },
+          "input_sha256": "81da0a509930bf89800212a95456d86955b6aa373fd9adbc176955630fdcfa3d",
+          "output": {
+            "struct_size": 24.0,
+            "last_field_offset": 16.0,
+            "frame_bytes": 32.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "field_count": 3,
+          "field_size": 4,
+          "alignment": 8,
+          "frame_bytes": 28
+        },
+        "expected_error_fragment": "frame_bytes must satisfy ABI alignment",
+        "observed": {
+          "status": "error",
+          "input": {
+            "field_count": 3,
+            "field_size": 4,
+            "alignment": 8,
+            "frame_bytes": 28
+          },
+          "input_sha256": "eaf8cc5ad0370522282689bf5f327f9f2986986564f22634cae8272264b7d905",
+          "error_code": "input_contract_error",
+          "error": "frame_bytes must satisfy ABI alignment"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 74,
+      "title": "lexer、parser、型検査",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "token_ast_and_type_check_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "token_count": 8,
+          "open_parens": 1,
+          "close_parens": 1,
+          "type_compatible": true
+        },
+        "input_sha256": "1ab071091efd41530b49ef4cf057f6f6d4b58765d3ebf0cadeca41f124726e75",
+        "output": {
+          "ast_nodes": 9.0,
+          "scope_depth": 1.0,
+          "type_checked": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "token_count": 10,
+          "open_parens": 1,
+          "close_parens": 1,
+          "type_compatible": true
+        },
+        "output_changed_key": "ast_nodes",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "token_count": 10,
+            "open_parens": 1,
+            "close_parens": 1,
+            "type_compatible": true
+          },
+          "input_sha256": "46ea49a33169b3f1c2ee03acfb7bef6834ba6bcbbdab828438bf3596be9f858e",
+          "output": {
+            "ast_nodes": 11.0,
+            "scope_depth": 1.0,
+            "type_checked": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "token_count": 8,
+          "open_parens": 1,
+          "close_parens": 0,
+          "type_compatible": true
+        },
+        "expected_error_fragment": "parentheses must be balanced",
+        "observed": {
+          "status": "error",
+          "input": {
+            "token_count": 8,
+            "open_parens": 1,
+            "close_parens": 0,
+            "type_compatible": true
+          },
+          "input_sha256": "e8e310e378b4d848fc3107b66ea1f6801e6833f68736d41cffcb7818fcf52926",
+          "error_code": "input_contract_error",
+          "error": "parentheses must be balanced"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 75,
+      "title": "IR、control-flow graph、data-flow",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "cfg_reachability_and_ssa_estimate",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "block_count": 5,
+          "edge_count": 5,
+          "constant_count": 2,
+          "dead_blocks": 1
+        },
+        "input_sha256": "d1b3dd38c79a8e2c763197333c063a5265d6e409e51f091a998aea282dceaf91",
+        "output": {
+          "reachable_blocks": 4.0,
+          "ssa_versions": 7.0,
+          "edge_count": 5.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "block_count": 5,
+          "edge_count": 5,
+          "constant_count": 4,
+          "dead_blocks": 1
+        },
+        "output_changed_key": "ssa_versions",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "block_count": 5,
+            "edge_count": 5,
+            "constant_count": 4,
+            "dead_blocks": 1
+          },
+          "input_sha256": "8225180a71f6b60a35595ffea709dd05e98f0f739fd27a18625d34731c06526d",
+          "output": {
+            "reachable_blocks": 4.0,
+            "ssa_versions": 9.0,
+            "edge_count": 5.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "block_count": 5,
+          "edge_count": 5,
+          "constant_count": 2,
+          "dead_blocks": 6
+        },
+        "expected_error_fragment": "CFG counts must be nonnegative and dead_blocks must fit block_count",
+        "observed": {
+          "status": "error",
+          "input": {
+            "block_count": 5,
+            "edge_count": 5,
+            "constant_count": 2,
+            "dead_blocks": 6
+          },
+          "input_sha256": "d048714c2fbad5d57a4e60123bb4478341574221286878e1fd05f264a4c9a9f2",
+          "error_code": "input_contract_error",
+          "error": "CFG counts must be nonnegative and dead_blocks must fit block_count"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 76,
+      "title": "instruction selection、register allocation、code generation",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "rv32i_selection_register_spill",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "ir_ops": 12,
+          "registers": 8,
+          "live_values": 6
+        },
+        "input_sha256": "65a8af6949d80bbd86fe421e7e27dbd97c7c6aff2539bc4456ef8a75e57ab848",
+        "output": {
+          "spill_count": 0.0,
+          "machine_instructions": 12.0,
+          "registers": 8.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "ir_ops": 12,
+          "registers": 4,
+          "live_values": 6
+        },
+        "output_changed_key": "spill_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "ir_ops": 12,
+            "registers": 4,
+            "live_values": 6
+          },
+          "input_sha256": "e2866402429954e049f80ad4cb29a844f6fbc950e4bbbcfa41a45af2fee4d408",
+          "output": {
+            "spill_count": 2.0,
+            "machine_instructions": 14.0,
+            "registers": 4.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "ir_ops": 12,
+          "registers": 0,
+          "live_values": 6
+        },
+        "expected_error_fragment": "registers must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "ir_ops": 12,
+            "registers": 0,
+            "live_values": 6
+          },
+          "input_sha256": "570d48a4235b78432799189ccddc14ad5d5ef126c8571b911fab39030379e556",
+          "error_code": "input_contract_error",
+          "error": "registers must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 77,
+      "title": "debugger、disassembler、profiling",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "breakpoint_and_sampling_observation",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "breakpoint": 4096,
+          "samples": 100
+        },
+        "input_sha256": "4147cceb3425feaecd205b8f86757e413a52b62d83c302524909338ba6bf1a5f",
+        "output": {
+          "breakpoint_hit": 1.0,
+          "sample_count": 100.0,
+          "observed_pc": 4096.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "breakpoint": 4100,
+          "samples": 100
+        },
+        "output_changed_key": "breakpoint_hit",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "pc": 4096,
+            "breakpoint": 4100,
+            "samples": 100
+          },
+          "input_sha256": "f2f3a9a802be9f1fbdff5321b9f745142e91ab325c919095042d68b98b7ecfee",
+          "output": {
+            "breakpoint_hit": 0.0,
+            "sample_count": 100.0,
+            "observed_pc": 4096.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "pc": -4,
+          "breakpoint": 4096,
+          "samples": 100
+        },
+        "expected_error_fragment": "pc and breakpoint must be nonnegative",
+        "observed": {
+          "status": "error",
+          "input": {
+            "pc": -4,
+            "breakpoint": 4096,
+            "samples": 100
+          },
+          "input_sha256": "43e3958c9b85c01602c6e139407724b4f00825f196920d1e02635647673ef52d",
+          "error_code": "input_contract_error",
+          "error": "pc and breakpoint must be nonnegative"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 78,
+      "title": "cross compile、bootstrap、self-host",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "cross_bootstrap_provenance",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "stage": 1,
+          "target_stage": 2,
+          "hash_matches": true,
+          "reproducible": true
+        },
+        "input_sha256": "271cfcc67755cd2fa12fc68549972324eae62520ca5c6cfaaa29093855997255",
+        "output": {
+          "next_stage": 2.0,
+          "reproducible": 1.0,
+          "provenance_ok": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "stage": 2,
+          "target_stage": 3,
+          "hash_matches": true,
+          "reproducible": true
+        },
+        "output_changed_key": "next_stage",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "stage": 2,
+            "target_stage": 3,
+            "hash_matches": true,
+            "reproducible": true
+          },
+          "input_sha256": "36a7c90101f6f23c30f1ea4d9fb5be33c664898cc9e9c43c3711d5cc37ec3f8a",
+          "output": {
+            "next_stage": 3.0,
+            "reproducible": 1.0,
+            "provenance_ok": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "stage": 1,
+          "target_stage": 2,
+          "hash_matches": false,
+          "reproducible": true
+        },
+        "expected_error_fragment": "stage binary hash does not match provenance",
+        "observed": {
+          "status": "error",
+          "input": {
+            "stage": 1,
+            "target_stage": 2,
+            "hash_matches": false,
+            "reproducible": true
+          },
+          "input_sha256": "d75c203f5663ec45420e13a4c9da0a79e1f9386101ba17d65125035b47157a98",
+          "error_code": "input_contract_error",
+          "error": "stage binary hash does not match provenance"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 79,
+      "title": "kernel mode、trap、system call",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "user_syscall_trap_and_argument_validation",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "mode": "user",
+          "syscall_number": 1,
+          "arg_length": 8,
+          "buffer_length": 16
+        },
+        "input_sha256": "274f1f58ee757eb50bcc143d001bd50a2bbdf989ce098ddbd3ce74268ca24f8e",
+        "output": {
+          "trap_entered": 1.0,
+          "validated_bytes": 8.0,
+          "return_mode_user": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "mode": "user",
+          "syscall_number": 1,
+          "arg_length": 12,
+          "buffer_length": 16
+        },
+        "output_changed_key": "validated_bytes",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "mode": "user",
+            "syscall_number": 1,
+            "arg_length": 12,
+            "buffer_length": 16
+          },
+          "input_sha256": "ef766371dc683806e9b41914e8a4da074b7e7016f142d11316a27adda1d53282",
+          "output": {
+            "trap_entered": 1.0,
+            "validated_bytes": 12.0,
+            "return_mode_user": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "mode": "user",
+          "syscall_number": 1,
+          "arg_length": 20,
+          "buffer_length": 16
+        },
+        "expected_error_fragment": "system call argument exceeds validated buffer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "mode": "user",
+            "syscall_number": 1,
+            "arg_length": 20,
+            "buffer_length": 16
+          },
+          "input_sha256": "24a09a924e156402016dde92f535bc65e824cc60c87c4172a23ae704889f7959",
+          "error_code": "input_contract_error",
+          "error": "system call argument exceeds validated buffer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 80,
+      "title": "process、context switch、scheduler",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "round_robin_quantum_scheduler",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "processes": 3,
+          "quantum": 4,
+          "burst": 10,
+          "priority": 8
+        },
+        "input_sha256": "fe019a1dc76a66174d027aadc3c926ebef67204e2cb50c6ee08c74ef7bb24b6d",
+        "output": {
+          "rounds": 3.0,
+          "completion_ticks": 12.0,
+          "ready_queue_slots": 3.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "processes": 3,
+          "quantum": 2,
+          "burst": 10,
+          "priority": 8
+        },
+        "output_changed_key": "rounds",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "processes": 3,
+            "quantum": 2,
+            "burst": 10,
+            "priority": 8
+          },
+          "input_sha256": "e12817f006246f8b1621db8a8c5270aaca649f38c0682906a2ecaeae17baa83e",
+          "output": {
+            "rounds": 5.0,
+            "completion_ticks": 10.0,
+            "ready_queue_slots": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "processes": 3,
+          "quantum": 0,
+          "burst": 10,
+          "priority": 8
+        },
+        "expected_error_fragment": "quantum must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "processes": 3,
+            "quantum": 0,
+            "burst": 10,
+            "priority": 8
+          },
+          "input_sha256": "ff3f9189d27b858308d2f3029f8b2efd7d89b0cd657e4147f5d516073f41b5ac",
+          "error_code": "input_contract_error",
+          "error": "quantum must be a positive integer"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
