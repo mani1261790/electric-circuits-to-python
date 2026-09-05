@@ -4,7 +4,7 @@
 
 - 宣言: 106章 / 実験718件 / acceptance_tests 699件 / negative_tests 459件
 - 固定runner: 718/718成功、測定欄not_run 718件
-- acceptance_tests結果行: 699件（構造契約検査済み 269件、構造契約failed 0件、domain/learner実行済み 0件、not_run 430件）
+- acceptance_tests結果行: 699件（構造契約検査済み 294件、構造契約failed 0件、domain/learner実行済み 0件、not_run 405件）
 - negative_tests結果行: 459件（教育モデル実行済み 12件、not_run 447件）、measured=true 0件
 - manifest negativeの教育モデル検証: 12/12件（measured=false）
 - 章別変更・故障診断実行artifact: 0章
@@ -17,7 +17,7 @@
 
 ### 残る理由
 
-- manifest acceptance_tests have 269 structural-contract rows verified; 0 structural rows failed and 430 domain/learner rows remain not_run
+- manifest acceptance_tests have 294 structural-contract rows verified; 0 structural rows failed and 405 domain/learner rows remain not_run
 - manifest negative_tests have 12 educational-model result rows; the remaining 447 are not_run and measured=true is still zero
 - no chapter-keyed change/fault execution artifact exists; the PC-only anchor is a separate three-change/four-fault check
 - the explicit model mapping is still only an educational contract check; it does not close external-tool, FPGA, physical, or learner interaction gates

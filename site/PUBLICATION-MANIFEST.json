@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-04T16:46:27.953832+00:00",
+  "generated_at_utc": "2026-09-05T09:02:09.432217+00:00",
   "source_file_count": 1065,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1070,
-  "total_bytes_before_manifest": 21020964,
+  "total_bytes_before_manifest": 21040711,
   "files": [
     {
       "path": ".nojekyll",
@@ -33,13 +33,13 @@
     },
     {
       "path": "artifacts/learning-contract/chapter-acceptance-results-20260904.json",
-      "bytes": 346166,
-      "sha256": "b6c105ad14f6e05aab209d67607ebe5cda57bc5552483314db00446c722541f8"
+      "bytes": 354810,
+      "sha256": "b3c028237e5a40d773670a1dec56e03c23b0f5176e6831e2f3ac017cf49280f3"
     },
     {
       "path": "artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json",
-      "bytes": 573750,
-      "sha256": "5d4ad15d46a66df78c7e25ddaa5ec6aaf20ddf55f99558d2c23ca3d67c3e7d90"
+      "bytes": 583200,
+      "sha256": "7d0f6a0feeef32eddc554e83b99322120773ccddf0ac6948b94243d2b272cc8a"
     },
     {
       "path": "artifacts/learning-contract/pc-only-change-fault-20260904.json",
@@ -5269,7 +5269,7 @@
     {
       "path": "build/html/index.html",
       "bytes": 101875,
-      "sha256": "b203b91fbad317bd07a22257325ef774cb04a09d7f76e3cd1422709985f7fb43"
+      "sha256": "85cf4797856d19aca081366cd4fd65a2dd3ac49bd68e1b45da0b93508718104b"
     },
     {
       "path": "build/html/prelude.html",
@@ -5289,12 +5289,12 @@
     {
       "path": "reviews/chapter-acceptance-results-20260904.md",
       "bytes": 603,
-      "sha256": "4937c295e9704fa93b31623b7d65036d932bb4b70fafc596a6c752dc2d478814"
+      "sha256": "b17fa935e349af4a6af57c56cda4f6f9cd05f992e05d448242c7a6a46f76acf4"
     },
     {
       "path": "reviews/chapter-learning-gate-inventory-20260904.md",
       "bytes": 1721,
-      "sha256": "7b9eed2ed346bfbb4b2ac7631db2b2d58c6966a4ffb4b6fff40d9872e38d76eb"
+      "sha256": "31b0b72d9cadcfe081ec4432c36d11ad018a6132e19f8fa52c589f4456a15be9"
     },
     {
       "path": "reviews/chapter-schema-audit-20260904.md",
@@ -5308,8 +5308,8 @@
     },
     {
       "path": "reviews/completion-gates.md",
-      "bytes": 177128,
-      "sha256": "8bdb1710bae1bd859064c8d746517fdd16ea5740987908926070c8dc8f66fa01"
+      "bytes": 178781,
+      "sha256": "9a4deb8bc24fe81169fbc860dba1071fd2d0063d6e9d05c87b7d511c85c1e698"
     },
     {
       "path": "reviews/independent-chapter-confirmation-20260904.md",
@@ -5334,7 +5334,7 @@
     {
       "path": "reviews/source-ledger-verification-20260903.md",
       "bytes": 831,
-      "sha256": "ed8e54694de28b665ae359ed5880cef931e9b02fcb1a6dc0a680f02249d50734"
+      "sha256": "950ae8beeb9ccdecfaae623811a103441d1bb899398ce0e0587a1e9c653be51d"
     },
     {
       "path": "reviews/source-semantic-signoff-verification-20260904.md",
