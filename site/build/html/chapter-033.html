@@ -46,9 +46,15 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-33-1">33.1 この章の問い</h2>
 <p>第32章では、<a class="term" href="index.html#term-hdl">HDL</a>のvectorを論理値として扱った。同じビット列でも、unsigned整数、signed整数、浮動小数点として読むと値が変わる。この章の問いは「有限個のビットで整数と実数を表すと、どの値が表せ、どこで意味が変わるのか」である。</p>
 <p>ビット列そのものは記号の並び、解釈は契約、加減算のwrapは有限幅の模型、Pythonでの計算はrunnerである。ビット列を見ただけで数値の意味を断定しない。</p>
+<h3 id="section-33-1-1-bit-flag">33.1.1　まずbit列・解釈・flagを分ける</h3>
+<p><code>11111111</code>を読む前に、次の三欄を作る。同じbit列に異なる数値が現れるのではなく、解釈規則が変わるだけだと確認する。</p>
+<table><thead><tr><th>欄</th><th>8 bit <code>11111111</code>の例</th><th>別に保存するもの</th></tr></thead>
+<tbody><tr><td>bit列</td><td><code>0xFF</code></td><td>幅、bit順、入力の出所</td></tr><tr><td>解釈</td><td>unsigned <code>255</code>、signed <code>-1</code></td><td>signedness、二の補数規則</td></tr><tr><td>演算結果</td><td>wrap後のbit列</td><td>carry、borrow、<a class="term" href="index.html#term-concept_33_overflow_10e80591">overflow</a>、saturation</td></tr></tbody>
+</table>
+<p>この表を作ってから値を計算する。幅のない<code>255</code>、signednessのない<code>-1</code>、flagを含まないwrap結果を、そのままCPUやHDLの仕様とは呼ばない。</p>
 <h2 id="section-33-2-unsigned-signed">33.2 unsignedとsigned</h2>
 <p><code>n</code> bitのunsigned値は、各bitに<code>2^i</code>を掛けた和である。8 bitの<code>11111111</code>は255になる。<a class="term" href="index.html#term-concept_33_2_e1445840">2の補数</a>signedでは最上位bitを負の重み<code>-2^(n-1)</code>として読むため、同じ列は-1になる。8 bit signedの範囲は-128から127である。</p>
-<p>有限幅の加算では、結果を<code>2^n</code>で剰余にするwrap模型を使える。127に1を足した8 bit signedのビット列は<code>10000000</code>だが、これは128ではなく-128と読む。carryや<a class="term" href="index.html#term-concept_33_overflow_10e80591">overflow</a> flagを別に保存し、wrapした値だけを真の数学的和と呼ばない。</p>
+<p>有限幅の加算では、結果を<code>2^n</code>で剰余にするwrap模型を使える。127に1を足した8 bit signedのビット列は<code>10000000</code>だが、これは128ではなく-128と読む。carryやoverflow flagを別に保存し、wrapした値だけを真の数学的和と呼ばない。</p>
 <h2 id="section-33-3-32-bit">33.3 同じ32 bit列を別に読む</h2>
 <p>32 bit列<code>0xFFFFFFFF</code>はunsignedなら4294967295、two's complement signedなら-1である。IEEE 754 <a class="term" href="index.html#term-concept_33_binary32_4ab28f14">binary32</a>としては、符号1、指数255、仮数が全て1なので<code>NaN</code>（quiet/signalingの区別は実装・規格の規定に従う）になる。負の無限大<code>-Inf</code>は<code>0xFF800000</code>であり、指数255かつ仮数0の別のbit列である。これは「同じ物理的なbit列に三つの数が同時にある」という意味ではなく、解釈規則が違うという意味である。</p>
 <p>binary32では、符号、指数、仮数のfield幅、bias、NaN/Inf/zeroの予約値を固定しなければならない。ここでは標準に従う予定の解析表だけを置き、浮動小数点の丸めや実装差はrunnerで確認する。</p>

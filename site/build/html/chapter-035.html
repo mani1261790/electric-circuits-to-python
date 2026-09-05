@@ -45,11 +45,17 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-35-1"><code>book run 35 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-01.json">成果物</a></li><li><a href="runner.html#run-35-2"><code>book run 35 2</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-02.json">成果物</a></li><li><a href="runner.html#run-35-3"><code>book run 35 3</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-03.json">成果物</a></li><li><a href="runner.html#run-35-4"><code>book run 35 4</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-04.json">成果物</a></li><li><a href="runner.html#run-35-5"><code>book run 35 5</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-05.json">成果物</a></li><li><a href="runner.html#run-35-6"><code>book run 35 6</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-06.json">成果物</a></li><li><a href="runner.html#run-35-7"><code>book run 35 7</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-07.json">成果物</a></li><li><a href="runner.html#run-35-8"><code>book run 35 8</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-035/experiment-08.json">成果物</a></li></ul></section><h1 id="section-35-shift-alu">第35章　shift、乗除算、<a class="term" href="index.html#term-concept_35_alu_5bfc1981">ALU</a></h1>
 <h2 id="section-35-1">35.1 この章の問い</h2>
 <p>加算器と<a class="term" href="index.html#term-concept_34_term_f405f45c90_f405f45c">比較器</a>ができると、CPUが行う多くの操作はそれらを選ぶdatapathへまとめられる。問いは「CPUが必要とする算術および論理操作を、一つのdatapathへどうまとめるか」である。</p>
+<h3 id="section-35-1-1-opcode">35.1.1　opcodeと結果を別欄にする</h3>
+<p>ALUを読むときは、まず一つの入力<code>A,B</code>とopcodeを固定し、選ばれた演算と結果を表へ置く。<code>0000</code>をADDとしても、結果bit列、carry、<a class="term" href="index.html#term-concept_33_overflow_10e80591">overflow</a>、zero、negativeが同じ欄に自動的に現れるわけではない。</p>
+<table><thead><tr><th>欄</th><th>例</th><th>失敗にするもの</th></tr></thead>
+<tbody><tr><td>opcode</td><td><code>0000</code></td><td>未定義opcodeを勝手にADDへ補正</td></tr><tr><td>演算</td><td>ADD</td><td>signed/unsignedの未指定</td></tr><tr><td>結果</td><td>有限幅のbit列</td><td>数学的な無限幅結果との混同</td></tr><tr><td>flag</td><td>carry/overflow/zero/negative</td><td>非該当flagを0で偽装</td></tr></tbody>
+</table>
+<p>この表を操作ごとに作り、最後にMUXまたは共有<a class="term" href="index.html#term-concept_47_datapath_f5f6ba47">datapath</a>へ戻す。外部HDLの波形や実機の電力は、この解析表とは別の証拠として保存する。</p>
 <h2 id="section-35-2-shift">35.2 shift</h2>
 <p>左shiftはbit位置を上げ、空いた下位bitへ0を入れる。幅を<code>n</code>に固定すれば、論理左shiftは<code>2^k</code>倍と同じになるが、上位から落ちるbitは保存されない。論理右shiftは空いた上位を0で埋める。signedの算術右shiftは符号bitを複製する。</p>
 <p>8 bitで<code>00010011</code>（19）を左へ2 bit shiftすると<code>01001100</code>（76）、<code>11010000</code>を論理右へ2 bit shiftすると<code>00110100</code>（52）である。<code>11010000</code>を8 bit signed（-48）として算術右shiftすると<code>11110100</code>（-12）になる。幅、方向、符号拡張を別に保存する。</p>
 <h2 id="section-35-3">35.3 乗算と除算</h2>
-<p>整数の乗算は、shiftした部分積を加える方法で構成できる。13×3なら、<code>13 + (13&lt;&lt;1) = 39</code>である。部分積の桁幅、符号、<a class="term" href="index.html#term-concept_33_overflow_10e80591">overflow</a>、実行回数を固定する。大きな並列乗算器は速いが面積と電力が増え、逐次乗算器はサイクル数を使う。</p>
+<p>整数の乗算は、shiftした部分積を加える方法で構成できる。13×3なら、<code>13 + (13&lt;&lt;1) = 39</code>である。部分積の桁幅、符号、overflow、実行回数を固定する。大きな並列乗算器は速いが面積と<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>が増え、逐次乗算器はサイクル数を使う。</p>
 <p>除算は、商と余りを返す。13÷3なら商4、余り1で、<code>13 = 3×4 + 1</code>かつ余りは0以上3未満である。ゼロ除算、符号、丸め、overflowは別の契約にする。ここでは負数の商を0方向へtruncationし、<code>-13 / 3 = -4</code>、余り<code>-1</code>とする（<code>-13 = 3×(-4)+(-1)</code>）。床関数で-5にする規約や余りを常に正にする規約は採用せず、除算器の仕様として明記する。逐次除算は発展課題として、必修の論理式と参照模型を分ける。</p>
 <h2 id="section-35-4-alu">35.4 ALU</h2>
 <p>ALUは、加算、減算、AND、OR、XOR、shift、乗算、除算の候補結果を計算し、<a class="term" href="index.html#term-concept_35_operation_code_baad376d">operation code</a>で一つを選ぶ。代表的な4 bit opcodeを <code>0000=ADD, 0001=SUB, 0010=AND, 0011=OR, 0100=XOR, 0101=SLL, 0110=SRL, 0111=SRA, 1000=MUL, 1001=DIV</code> とする。残りは未定義としてfail closedにする。選択器の入力幅、符号、flag、未定義opcodeを固定する。候補を全て計算してMUXで選ぶか、共有加算器を使うかで、論理深さ、fan-out、電力が変わる。</p>
@@ -57,7 +63,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-35-5">35.5 検証と負のテスト</h2>
 <p>参照模型に対して、全操作・境界値・ランダム入力を比較する。ランダムだけで全domainを覆ったとは言わない。shift量が幅以上、opcodeが未定義、divisorが0、signednessが欠落、結果幅が不足、runnerを測定と表示する入力はfail closedにする。</p>
 <h2 id="section-35-6">35.6 次章への橋</h2>
-<p>ALUは<a class="term" href="index.html#term-concept_47_datapath_f5f6ba47">datapath</a>の候補を選べるが、途中結果を次のclockまで保持できない。次章では、出力を入力へ戻す帰還と、二つの安定状態を持つ回路へ進む。</p>
+<p>ALUはdatapathの候補を選べるが、途中結果を次の<a class="term" href="index.html#term-clock">clock</a>まで保持できない。次章では、出力を入力へ戻す帰還と、二つの安定状態を持つ回路へ進む。</p>
 <h3 id="section-5af6083ed6">まとめ</h3>
 <ul><li>shiftは幅・方向・符号拡張の契約を持つ。</li><li>乗算は部分積、除算は商・余り・ゼロ除算を扱う。</li><li>ALUは複数操作とflagをdatapathへまとめる。</li><li>同じ機能でも並列／逐次実装でコストと時間が変わる。</li><li>参照模型、HDL runner、SPICE、測定を分離する。</li></ul>
 <p>&lt;!-- expanded-study-notes --&gt;</p>
@@ -102,7 +108,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続<a class="term" href="index.html#term-voltage">電圧</a>を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタやstack pointerを隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
 <p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
 <h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
-<ul><li>論理／算術shiftを幅・方向・符号つきで説明できる</li><li>shiftと加算による乗算、商と余りを持つ除算を区別できる</li><li>ALUのoperation code、候補結果、MUX、flagを構成できる</li><li>並列・逐次方式の面積・遅延・<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>を比較する契約を作れる</li><li>全domain／ランダムrunner、SPICE、測定の出所を分離できる</li><li>shift量・opcode・ゼロ除算・幅不一致をfail closedにできる</li></ul>
+<ul><li>論理／算術shiftを幅・方向・符号つきで説明できる</li><li>shiftと加算による乗算、商と余りを持つ除算を区別できる</li><li>ALUのoperation code、候補結果、MUX、flagを構成できる</li><li>並列・逐次方式の面積・遅延・電力を比較する契約を作れる</li><li>全domain／ランダムrunner、SPICE、測定の出所を分離できる</li><li>shift量・opcode・ゼロ除算・幅不一致をfail closedにできる</li></ul>
 <p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
 <h3 id="section-86aa35e5e4">故障診断の手順</h3>
 <p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>

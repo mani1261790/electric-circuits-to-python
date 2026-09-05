@@ -45,10 +45,16 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <section class="experiment-panel" aria-labelledby="experiment-heading"><h2 id="experiment-heading">実験台帳への導線</h2><p>入力、期待値、成果物、出所は共通runnerの台帳で管理します。表示が「解析検証済み」の場合も、実測値ではなく固定入力の再生結果です。</p><ul><li><a href="runner.html#run-37-1"><code>book run 37 1</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-01.json">成果物</a></li><li><a href="runner.html#run-37-2"><code>book run 37 2</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-02.json">成果物</a></li><li><a href="runner.html#run-37-3"><code>book run 37 3</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-03.json">成果物</a></li><li><a href="runner.html#run-37-4"><code>book run 37 4</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-04.json">成果物</a></li><li><a href="runner.html#run-37-5"><code>book run 37 5</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-05.json">成果物</a></li><li><a href="runner.html#run-37-6"><code>book run 37 6</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-06.json">成果物</a></li><li><a href="runner.html#run-37-7"><code>book run 37 7</code></a> （入力由来契約モデル検証済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-07.json">成果物</a></li><li><a href="runner.html#run-37-8"><code>book run 37 8</code></a> （解析契約の再生済み（実測なし）） <a href="../../artifacts/runner/chapter-037/experiment-08.json">成果物</a></li></ul></section><h1 id="section-37-latch-flip-flop">第37章　<a class="term" href="index.html#term-latch">latch</a>とflip-flop</h1>
 <h2 id="section-37-1">37.1 保持と書込みを分ける</h2>
 <p>第36章の双安定回路は、二つの状態を保持できる。しかし外から値を設定する時刻と、入力を無視する時刻がない。<strong>latch</strong>はenableが有効な間だけ入力を通し、無効になると直前の値を保持する。<strong><a class="term" href="index.html#term-flip_flop">flip-flop</a></strong>はclockの立上りまたは立下りという一点の境界で入力を取り込む。前者はlevel-sensitive、後者はedge-triggeredである。</p>
-<h2 id="section-37-2-d-latch">37.2 <a class="term" href="index.html#term-d_latch">D latch</a></h2>
+<h3 id="section-37-1-1">37.1.1　透明期間とエッジを表にする</h3>
+<p>同じ<code>D</code>入力でも、latchとflip-flopでは観測時刻の契約が異なる。最初に、<code>D</code>、<code>E</code>または<a class="term" href="index.html#term-clock">clock</a>、<code>Q</code>、更新理由を一行ずつ書く。</p>
+<table><thead><tr><th>素子</th><th>更新を許す時刻</th><th>観測の読み方</th></tr></thead>
+<tbody><tr><td><a class="term" href="index.html#term-d_latch">D latch</a></td><td><code>E=1</code>の期間</td><td>期間中は<code>D</code>を追随し、<code>E=0</code>で保持</td></tr><tr><td>正エッジD flip-flop</td><td>clockの立上り</td><td>エッジ時の<code>D</code>だけを取り込む</td></tr><tr><td>負エッジD flip-flop</td><td>clockの立下り</td><td>立下り時の<code>D</code>だけを取り込む</td></tr></tbody>
+</table>
+<p><code>Q=D</code>だけを式へすると保持区間とエッジの意味が消える。観測時刻、非重複phase、<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>up/hold境界、<code>source_kind</code>を、値とは別に保存する。</p>
+<h2 id="section-37-2-d-latch">37.2 D latch</h2>
 <p>D latchの論理契約は、enable (E=1) なら (Q\leftarrow D)、(E=0) なら (Q\leftarrow Q) である。ここで矢印は物理的な瞬時移動ではなく、観測時刻ごとの模型の更新を表す。例えば (E=1) を0〜5 nsとし、Dが2 nsで0から1へ変われば、Qもenable中に追随する。5 nsでEが0になった後にDが0へ戻っても、Qは1を保持する。</p>
 <h2 id="section-37-3-d-flip-flop">37.3 D flip-flop</h2>
-<p>正エッジD flip-flopは、<a class="term" href="index.html#term-clock">clock</a>の立上り時刻だけDを読む。clockの正エッジを2, 6, 10 ns、各時刻のDをそれぞれ1, 0, 1とする予定波形なら、Qは各エッジの直後に1, 0, 1となり、エッジ間のD変化はQを変えない。master–slave構成は、異なるlevelで開く二つのlatchを直列に置き、外からは一つのエッジで更新したように見せる。本章の予定条件ではmasterをclock lowで透明、slaveをclock highで透明とし、両者が同時に開かない非重複phaseを0.1 ns置く。正edgeではmasterが閉じた値をslaveが受け、edge間のD変化はQへ直通しない。phase重複や非重複時間を実回路で許せるかは、遅延とclock配線を含む別の検証である。</p>
+<p>正エッジD flip-flopは、clockの立上り時刻だけDを読む。clockの正エッジを2, 6, 10 ns、各時刻のDをそれぞれ1, 0, 1とする予定波形なら、Qは各エッジの直後に1, 0, 1となり、エッジ間のD変化はQを変えない。<a class="term" href="index.html#term-master_slave">master–slave</a>構成は、異なるlevelで開く二つのlatchを直列に置き、外からは一つのエッジで更新したように見せる。本章の予定条件ではmasterをclock lowで透明、slaveをclock highで透明とし、両者が同時に開かない非重複phaseを0.1 ns置く。正edgeではmasterが閉じた値をslaveが受け、edge間のD変化はQへ直通しない。phase重複や非重複時間を実回路で許せるかは、遅延とclock配線を含む別の検証である。</p>
 <h2 id="section-37-4-hdl">37.4 回路、<a class="term" href="index.html#term-hdl">HDL</a>、波形の境界</h2>
 <p>ゲート模型は論理状態と遅延規則を扱い、SPICEはトランジスタ、容量、電源、初期条件を扱う。SystemVerilogの <code>always_latch</code> や <code>always_ff</code> は、意図を記述する契約であって、シミュレーション実行や合成結果そのものではない。図や台帳では、解析予測、HDL runner、SPICE、測定を別々にする。</p>
 <p>表にすると、同じD入力でも観測時刻によって結果が変わる。</p>
@@ -57,7 +63,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 </table>
 <p>この表から、<code>Q=D</code>という組合せ論理の式だけでは、保持状態を表せないことが分かる。runnerでは、入力列、enableまたはedge、観測時刻、期待Qを一行ずつ保存する。HDLの波形が一致しても、遅延を含む回路モデルとの一致を意味しないため、<code>source_kind</code>を必ず併記する。変更課題では、enableの切替を1 ns早め、追随区間と保持区間を取り違えた診断を行う。</p>
 <h2 id="section-37-5">37.5 次章への橋</h2>
-<p>入力がclock境界の近くで変わると、「どの値を取り込んだか」が一意でなくなり得る。第38章では、Dがエッジの前後に安定していなければならない<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>up/hold、そして一時的なmetastabilityを扱う。</p>
+<p>入力がclock境界の近くで変わると、「どの値を取り込んだか」が一意でなくなり得る。第38章では、Dがエッジの前後に安定していなければならないsetup/hold、そして一時的な<a class="term" href="index.html#term-metastability">metastability</a>を扱う。</p>
 <p>&lt;!-- expanded-study-notes --&gt;</p>
 <h2 id="section-37">37.補助線　式を状態へ戻す</h2>
 <p>latchとflip-flopで最初に固定する問いは、保持、書込み、読出しの時刻を制御する記憶素子をどう作るか。 この問いへ答えるときは、いきなり結果の数値を覚えず、入力、状態変化、出力、成立条件の順に書く。入力の単位や符号が一つでも抜けると、同じ数値が出ても別の模型を計算している可能性がある。そこで以下の節では、manifestに宣言した代表入力を一つずつ、手計算と小さなプログラムの両方で追う。</p>
@@ -75,7 +81,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>実行入口は<code>book run 37 3</code>である。caseは<code>posedge_sequence</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>Q_sequence_1_0_1</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
 <ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
 <p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
-<h3 id="section-4-master-slave">実験4　<a class="term" href="index.html#term-master_slave">master–slave</a></h3>
+<h3 id="section-4-master-slave">実験4　master–slave</h3>
 <p>実行入口は<code>book run 37 4</code>である。caseは<code>master_slave</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>edge_behavior_matches</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
 <ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
 <p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
@@ -282,7 +288,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>前章から受け取るもの:</p>
 <ul><li>第36章の<a class="term" href="index.html#term-feedback">帰還</a>・双安定性と、第32章のHDL・検証、第27章の物理出所を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第38章へ、clock境界前後のsetup/holdと<a class="term" href="index.html#term-metastability">metastability</a>を渡す。</li></ul>
+<ul><li>第38章へ、clock境界前後のsetup/holdとmetastabilityを渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>

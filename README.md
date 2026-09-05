@@ -17,7 +17,7 @@ https://mani1261790.github.io/electric-circuits-to-python/
 - MiniPy参照runtime: 20受入ケース成功
 - 利用可能章host evidence: 第1〜21・24・32・92章の24/24章（物理測定ではない）
 - 第1〜106章change/fault教育モデル: 106/106章で変更・故障経路を確認（`measured=false`、learner gateではない）
-- 現行HTML分量: 先行一周12頁、第1〜106章3,504頁、合算3,516頁（各章24〜40頁、24頁未満0章）。第24〜27章の導線に加え、第28〜32章の境界導入を追記した後の固定Chrome測定値です
+- 現行HTML分量: 先行一周12頁、第1〜106章3,505頁、合算3,517頁（各章24〜40頁、24頁未満0章）。第24〜32章の導線に加え、第33〜37章の状態導入を追記した後の固定Chrome測定値です
 - acceptance構造契約: 385/699 verified、host evidence 16件（非測定・非学習者）、298件未実行、failed 0件
 
 第1〜106章の限定的な教育モデル実行記録は、[`site/reviews/chapter-change-fault-20260905.md`](./site/reviews/chapter-change-fault-20260905.md) と [`site/artifacts/learning-contract/chapter-change-fault-20260905.json`](./site/artifacts/learning-contract/chapter-change-fault-20260905.json) にあります。これは学習者の合格、外部tool、物理測定、独立レビュー、106章全体の完了を示しません。
