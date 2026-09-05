@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "7fa515cd785118b821b78f0bd9f84166f541eef2a8e54b6fac08623ccd5067e2",
-  "scope": "chapters 9-52; executable educational models",
+  "source_sha256": "00ad7dc2aa4e10e6938b4c572702a32eee8820b0d6545280ae444f3ab7962b9e",
+  "scope": "chapters 9-56; executable educational models",
   "summary": {
-    "chapters": 44,
-    "baseline_passed": 44,
-    "change_passed": 44,
-    "fault_passed": 44,
+    "chapters": 48,
+    "baseline_passed": 48,
+    "change_passed": 48,
+    "fault_passed": 48,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -3510,6 +3510,308 @@
           "input_sha256": "2f88d1b9e42f6998282b1dea57edde09e61c98031aa0086f3175299c0114d040",
           "error_code": "input_contract_error",
           "error": "stage_count must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 53,
+      "title": "data hazardとstructural hazard",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E3",
+        "E6"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "raw_forwarding_and_load_use_stall",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "producer_ready_cycle": 3,
+          "consumer_need_cycle": 2
+        },
+        "input_sha256": "01cc442e215102f1b91c9495cb77b7cff86a00b939ead183d8b89ce04173eebd",
+        "output": {
+          "stall_cycles": 1.0,
+          "forwarding_possible": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "producer_ready_cycle": 2,
+          "consumer_need_cycle": 2
+        },
+        "output_changed_key": "stall_cycles",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "producer_ready_cycle": 2,
+            "consumer_need_cycle": 2
+          },
+          "input_sha256": "9434b348d7977cdda922d43e33d0e1f3219edf65ea49d86e452d93426536bd43",
+          "output": {
+            "stall_cycles": 0.0,
+            "forwarding_possible": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "producer_ready_cycle": -1,
+          "consumer_need_cycle": 2
+        },
+        "expected_error_fragment": "pipeline cycle indices must be nonnegative",
+        "observed": {
+          "status": "error",
+          "input": {
+            "producer_ready_cycle": -1,
+            "consumer_need_cycle": 2
+          },
+          "input_sha256": "a40cb7498362226f8db9a1baceccdd4d5454b3a763b8d03f06162a65713c5bf2",
+          "error_code": "input_contract_error",
+          "error": "pipeline cycle indices must be nonnegative"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 54,
+      "title": "control hazardとbranch prediction",
+      "exercise_refs": [
+        "E2",
+        "E3",
+        "E5",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "branch_misprediction_penalty",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "branch_count": 10,
+          "mispredictions": 3,
+          "penalty_cycles": 3
+        },
+        "input_sha256": "1835e9771d55e0558e509bad897fb0d144fbc89d7dbb324e0d1ed56f5f8bdda3",
+        "output": {
+          "misprediction_rate": 0.3,
+          "penalty_cycles_total": 9.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "branch_count": 10,
+          "mispredictions": 5,
+          "penalty_cycles": 3
+        },
+        "output_changed_key": "penalty_cycles_total",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "branch_count": 10,
+            "mispredictions": 5,
+            "penalty_cycles": 3
+          },
+          "input_sha256": "e5d1aeefef504dab79fe1f9b682b914b0ca5244b781e5061f3d92ce79e56ef85",
+          "output": {
+            "misprediction_rate": 0.5,
+            "penalty_cycles_total": 15.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "branch_count": 10,
+          "mispredictions": 11,
+          "penalty_cycles": 3
+        },
+        "expected_error_fragment": "mispredictions must be between zero and branch_count",
+        "observed": {
+          "status": "error",
+          "input": {
+            "branch_count": 10,
+            "mispredictions": 11,
+            "penalty_cycles": 3
+          },
+          "input_sha256": "93d937e5a133b7ee1dfe777ea73aaab9cba7c69a88170a0617452cfd35eaa405",
+          "error_code": "input_contract_error",
+          "error": "mispredictions must be between zero and branch_count"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 55,
+      "title": "cacheと局所性",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E5",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "cache_offset_index_tag_mapping",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "address": 4660,
+          "line_size_bytes": 64,
+          "set_count": 16
+        },
+        "input_sha256": "7c454af5b921081a369d525482be3cdcf9756d524bda7bc034dc757bbfb4ea33",
+        "output": {
+          "offset": 52.0,
+          "index": 8.0,
+          "tag": 4.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "address": 4660,
+          "line_size_bytes": 32,
+          "set_count": 16
+        },
+        "output_changed_key": "offset",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "address": 4660,
+            "line_size_bytes": 32,
+            "set_count": 16
+          },
+          "input_sha256": "d7498272a8f2d37b32557e4062073662b2016da90cc62a9ffe38f745d5100d5f",
+          "output": {
+            "offset": 20.0,
+            "index": 1.0,
+            "tag": 9.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "address": 4660,
+          "line_size_bytes": 0,
+          "set_count": 16
+        },
+        "expected_error_fragment": "line_size_bytes must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "address": 4660,
+            "line_size_bytes": 0,
+            "set_count": 16
+          },
+          "input_sha256": "75734a8ce337234787f3c094309c9e9d6c9bac4180981bde74db242d3ec0043c",
+          "error_code": "input_contract_error",
+          "error": "line_size_bytes must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 56,
+      "title": "仮想address、page table、TLB",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "sv32_virtual_to_physical_translation",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "virtual_address": 74565,
+          "page_size_bytes": 4096,
+          "pte_ppn": 32,
+          "pte_valid": true
+        },
+        "input_sha256": "bf3a0f33c58275c12f25ac8f644fb966da5bff1b07abd69a3bd2cd8ec45df2cc",
+        "output": {
+          "vpn": 18.0,
+          "physical_address": 131909.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "virtual_address": 74565,
+          "page_size_bytes": 4096,
+          "pte_ppn": 33,
+          "pte_valid": true
+        },
+        "output_changed_key": "physical_address",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "virtual_address": 74565,
+            "page_size_bytes": 4096,
+            "pte_ppn": 33,
+            "pte_valid": true
+          },
+          "input_sha256": "602f668c9aa5469585dff3e1625e9d2556c34aab60f179639a4b14791b7e77b8",
+          "output": {
+            "vpn": 18.0,
+            "physical_address": 136005.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "virtual_address": 74565,
+          "page_size_bytes": 4096,
+          "pte_ppn": 32,
+          "pte_valid": false
+        },
+        "expected_error_fragment": "invalid PTE returns a page fault",
+        "observed": {
+          "status": "error",
+          "input": {
+            "virtual_address": 74565,
+            "page_size_bytes": 4096,
+            "pte_ppn": 32,
+            "pte_valid": false
+          },
+          "input_sha256": "1a24e622f8b5e88bb05a52daa3ec099bca470990dc1f4d27ff4845756b56be92",
+          "error_code": "input_contract_error",
+          "error": "invalid PTE returns a page fault"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
