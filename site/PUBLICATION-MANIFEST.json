@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T11:26:48.121951+00:00",
+  "generated_at_utc": "2026-09-05T11:36:00.937841+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21363742,
+  "total_bytes_before_manifest": 21364248,
   "files": [
     {
       "path": ".nojekyll",
@@ -34,7 +34,7 @@
     {
       "path": "artifacts/learning-contract/chapter-acceptance-results-20260904.json",
       "bytes": 354810,
-      "sha256": "b3c028237e5a40d773670a1dec56e03c23b0f5176e6831e2f3ac017cf49280f3"
+      "sha256": "5c0a95e865fccdde2c039bfd102452de3330a8f5eb646c4272d293289e3bac01"
     },
     {
       "path": "artifacts/learning-contract/chapter-change-fault-20260905.json",
@@ -44,12 +44,12 @@
     {
       "path": "artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json",
       "bytes": 583200,
-      "sha256": "7d0f6a0feeef32eddc554e83b99322120773ccddf0ac6948b94243d2b272cc8a"
+      "sha256": "ea6dd58ac2381f6c8c9aac104d071ba6c9f0be8931fb1bacffecf3120826d789"
     },
     {
       "path": "artifacts/learning-contract/external-acceptance-evidence-20260905.json",
-      "bytes": 8642,
-      "sha256": "6bb7c6b6195d916ff39cb7f672c30ae29b67413ae381ce651a48c1f9424f4c6a"
+      "bytes": 8715,
+      "sha256": "e7204b8c8dd1371720aab184617000c5ab185626d6f7a91b3577f58d9d1e2d1c"
     },
     {
       "path": "artifacts/learning-contract/pc-only-change-fault-20260904.json",
@@ -5328,8 +5328,8 @@
     },
     {
       "path": "reviews/completion-audit-20260905.md",
-      "bytes": 2895,
-      "sha256": "d656709f7ba6f60fbbb672404ddd63b08a0af13426fd4508939d5ac59136f33a"
+      "bytes": 3328,
+      "sha256": "e5ea27c05cce0292dddad2f98e392e3b6bad7495c2515eb58777690a1017af0c"
     },
     {
       "path": "reviews/completion-gates.md",

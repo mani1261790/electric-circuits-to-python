@@ -13,6 +13,7 @@
 | 出典semantic gate | `source-semantic-signoff-verification-20260904.json` の631/631行、`verified=423`、`accepted_boundary=208`、`hold=0`、`gate_complete=true` | pass（出典範囲） |
 | Prelude＋106章＋13巻の統合 | 別sessionの現行統合レビューが構造・意味境界・導線・lineage範囲を確認 | pass（範囲限定） |
 | 実装受入との境界 | `runner.html` が `command_status=implemented` は入口・契約であり実装本体受入ではないと明記 | pass |
+| 範囲限定のhost tool証跡 | `external-acceptance-evidence-20260905.json` がmacOS host run 30件を検査し、第9〜12章4章をhash・版・終了コード・狭い不変条件つきで確認 | pass（範囲限定、measured=false） |
 | MiniPy対象外の境界 | 第99章E5/E7が `contract_model_only`、`execution_scope=contract_model_only_not_minipy` | pass |
 | HTMLリンク・公開Bundle | `check_public_site.py` と `check_site.py` が失敗0、Pages実URL HTTP 200 | pass |
 
@@ -23,6 +24,7 @@
 - 章受入台帳は106章・699行のうち、構造確認294行、未実行405行、学習者実行0行である。構造確認は本文・manifest・artifactの形を検査したもので、実験や理解の合格ではない。
 - FPGA、SPICE波形、RTL/QEMU、実CPU性能、USB/TTY、block device、NIC、実回路・物理測定は、対応する境界を越えて実行していない。
 - 独立レビューのP1/P2判定は、この追補だけでは完了扱いにしない。出典semantic gateと範囲限定のwhole sign-offは完了しているが、外部domain測定、章固有の変更・故障診断、学習者受入は別ゲートである。
+- host toolの範囲限定証跡は第9〜12章の狭いprobeに限られる。第13章以降の全domain acceptance、変更・故障診断、FPGA、物理測定へは昇格しない。
 
 ## 結論
 

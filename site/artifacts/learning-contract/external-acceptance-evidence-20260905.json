@@ -50,16 +50,16 @@
       "evidence": {
         "provenance": {
           "input_paths": [
-            "artifacts/external/host-20260902/chapter-009-intermediate-probe.py"
+            "artifacts/external/host-3.11-20260905/chapter-009-intermediate-probe.py"
           ],
           "input_hashes_match": true,
-          "output": "artifacts/external/host-20260902/chapter-009-intermediate-output.json",
+          "output": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-output.json",
           "output_hash_matches": true,
-          "log": "artifacts/external/host-20260902/chapter-009-intermediate-command.log",
+          "log": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-command.log",
           "log_hash_matches": true,
           "exit_code": 0,
           "tool": "CPython",
-          "version": "Python 3.14.7",
+          "version": "Python 3.11.14",
           "physical_measurement": false
         },
         "output": {
@@ -109,16 +109,16 @@
       "evidence": {
         "provenance": {
           "input_paths": [
-            "artifacts/external/host-20260902/chapter-010-intermediate-probe.py"
+            "artifacts/external/host-3.11-20260905/chapter-010-intermediate-probe.py"
           ],
           "input_hashes_match": true,
-          "output": "artifacts/external/host-20260902/chapter-010-intermediate-output.json",
+          "output": "artifacts/external/host-3.11-20260905/chapter-010-intermediate-output.json",
           "output_hash_matches": true,
-          "log": "artifacts/external/host-20260902/chapter-010-intermediate-command.log",
+          "log": "artifacts/external/host-3.11-20260905/chapter-010-intermediate-command.log",
           "log_hash_matches": true,
           "exit_code": 0,
           "tool": "CPython",
-          "version": "Python 3.14.7",
+          "version": "Python 3.11.14",
           "physical_measurement": false
         },
         "output": {
@@ -194,9 +194,9 @@
               "artifacts/chapter-11/netlists/rc-transient.cir"
             ],
             "input_hashes_match": true,
-            "output": "artifacts/external/host-20260902/rc-transient.csv",
+            "output": "artifacts/external/host-3.11-20260905/rc-transient.csv",
             "output_hash_matches": true,
-            "log": "artifacts/external/host-20260902/chapter-011-rc-ngspice-command.log",
+            "log": "artifacts/external/host-3.11-20260905/chapter-011-rc-ngspice-command.log",
             "log_hash_matches": true,
             "exit_code": 0,
             "tool": "ngspice",
@@ -223,9 +223,9 @@
               "artifacts/chapter-11/netlists/rlc-transient.cir"
             ],
             "input_hashes_match": true,
-            "output": "artifacts/external/host-20260902/rlc-transient.csv",
+            "output": "artifacts/external/host-3.11-20260905/rlc-transient.csv",
             "output_hash_matches": true,
-            "log": "artifacts/external/host-20260902/chapter-011-rlc-ngspice-command.log",
+            "log": "artifacts/external/host-3.11-20260905/chapter-011-rlc-ngspice-command.log",
             "log_hash_matches": true,
             "exit_code": 0,
             "tool": "ngspice",
@@ -286,16 +286,16 @@
       "evidence": {
         "provenance": {
           "input_paths": [
-            "artifacts/external/host-20260902/chapter-012-intermediate-probe.py"
+            "artifacts/external/host-3.11-20260905/chapter-012-intermediate-probe.py"
           ],
           "input_hashes_match": true,
-          "output": "artifacts/external/host-20260902/chapter-012-intermediate-output.json",
+          "output": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-output.json",
           "output_hash_matches": true,
-          "log": "artifacts/external/host-20260902/chapter-012-intermediate-command.log",
+          "log": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-command.log",
           "log_hash_matches": true,
           "exit_code": 0,
           "tool": "CPython",
-          "version": "Python 3.14.7",
+          "version": "Python 3.11.14",
           "physical_measurement": false
         },
         "output": {
@@ -311,5 +311,5 @@
     }
   ],
   "boundary": "host_evidence_verified confirms hashes, exit status, tool identity, and narrow output invariants only; it does not close chapter acceptance, change/fault diagnosis, independent review, FPGA, or physical measurement.",
-  "source_index": "artifacts/external/host-20260902/index.json"
+  "source_index": "artifacts/external/host-3.11-20260905/index.json"
 }

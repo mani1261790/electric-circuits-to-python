@@ -23,7 +23,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 25056,
+        "body_characters": 25054,
         "central_question": "端末で python hello.py を実行し、print(1 + 2) が画面へ現れるまでに何が起きるのか。"
       },
       "checks": [
@@ -49,7 +49,7 @@
           "contract": true,
           "implementation": true
         },
-        "body_characters": 25056
+        "body_characters": 25054
       },
       "checks": [
         true,
@@ -213,7 +213,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 21488,
+        "body_characters": 21486,
         "central_question": "なぜコンピュータの説明は層ごとに異なる言葉を使っても矛盾しないのか。"
       },
       "checks": [
@@ -239,7 +239,7 @@
           "contract": true,
           "implementation": true
         },
-        "body_characters": 21488
+        "body_characters": 21486
       },
       "checks": [
         true,
@@ -439,7 +439,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 31322,
+        "body_characters": 31320,
         "central_question": "電磁気、量子、回路、CPU、OS、処理系をつなぐために、どの数学がどこで要るのか。"
       },
       "checks": [
@@ -460,7 +460,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 15,
-        "body_characters": 31322
+        "body_characters": 31320
       },
       "checks": [
         true,
@@ -645,7 +645,7 @@
           "contract": true,
           "implementation": true
         },
-        "body_characters": 31322
+        "body_characters": 31320
       },
       "checks": [
         true,
@@ -870,7 +870,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 7,
-        "body_characters": 25550
+        "body_characters": 25548
       },
       "checks": [
         true,
@@ -1700,7 +1700,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 24313,
+        "body_characters": 24311,
         "central_question": "空間に広がる電磁場を、回路図の線と素子へ置き換えてよいのはいつか。"
       },
       "checks": [
@@ -1930,7 +1930,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 27790,
+        "body_characters": 27788,
         "central_question": "KCLとKVLは暗記規則ではなく、どの保存則と近似から出てくるのか。"
       },
       "checks": [
@@ -2051,7 +2051,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 25917,
+        "body_characters": 25852,
         "central_question": "回路が過去の状態を記憶するのは、どの物理量にエネルギーが残るからか。"
       },
       "checks": [
@@ -2286,7 +2286,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 21905,
+        "body_characters": 21903,
         "central_question": "デジタル信号が0と1にしか見えなくても、なぜ帯域、反射、雑音が問題になるのか。"
       },
       "checks": [
@@ -2495,7 +2495,7 @@
       "measured": false,
       "execution_mode": "manifest_structural_check",
       "evidence": {
-        "body_characters": 21092,
+        "body_characters": 21284,
         "central_question": "原子が崩壊せず、固体が導体と絶縁体に分かれる事実を古典力学で説明できないのはなぜか。"
       },
       "checks": [
@@ -6913,7 +6913,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 5,
-        "body_characters": 32268
+        "body_characters": 32344
       },
       "checks": [
         true,
@@ -7789,7 +7789,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 8,
-        "body_characters": 35491
+        "body_characters": 35557
       },
       "checks": [
         true,
@@ -7969,7 +7969,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 8,
-        "body_characters": 35836
+        "body_characters": 35979
       },
       "checks": [
         true,
@@ -8057,7 +8057,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 8,
-        "body_characters": 35680
+        "body_characters": 35762
       },
       "checks": [
         true,
@@ -8213,7 +8213,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 32176
+        "body_characters": 32297
       },
       "checks": [
         true,
@@ -8312,7 +8312,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 31069
+        "body_characters": 31177
       },
       "checks": [
         true,
@@ -8411,7 +8411,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 30587
+        "body_characters": 30707
       },
       "checks": [
         true,
@@ -8510,7 +8510,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 9,
-        "body_characters": 31633
+        "body_characters": 31760
       },
       "checks": [
         true,
@@ -8609,7 +8609,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 31492
+        "body_characters": 31613
       },
       "checks": [
         true,
@@ -8708,7 +8708,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 31680
+        "body_characters": 31807
       },
       "checks": [
         true,
@@ -8807,7 +8807,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 32029
+        "body_characters": 32148
       },
       "checks": [
         true,
@@ -8906,7 +8906,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 10,
-        "body_characters": 31569
+        "body_characters": 31698
       },
       "checks": [
         true,
@@ -9986,7 +9986,7 @@
       "execution_mode": "manifest_structural_check",
       "evidence": {
         "introduced_concepts": 6,
-        "body_characters": 33551
+        "body_characters": 33731
       },
       "checks": [
         true,
