@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "0ccedcea4d50c6c3a1b24a38b8436b88fbcd81f3e6d94109be64b5b96685dd82",
-  "scope": "chapters 9-60; executable educational models",
+  "source_sha256": "020ae655e85b5c4f42f50a80a0806d11defc1095812b372e3b1071eb663a18a9",
+  "scope": "chapters 9-64; executable educational models",
   "summary": {
-    "chapters": 52,
-    "baseline_passed": 52,
-    "change_passed": 52,
-    "fault_passed": 52,
+    "chapters": 56,
+    "baseline_passed": 56,
+    "change_passed": 56,
+    "fault_passed": 56,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -4116,6 +4116,383 @@
           "input_sha256": "338a28caaaeb37b49dfed5047ef4d5a76a044109e99b5a8bbd35a437f8046e3e",
           "error_code": "input_contract_error",
           "error": "secret_bit and probe_line must be binary and barrier must be boolean"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 61,
+      "title": "bus、interconnect、MMIO",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "ready_valid_mmio_interconnect",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "valid": true,
+          "ready": true,
+          "address": 32768,
+          "request_id": 1
+        },
+        "input_sha256": "cfde326864bdff4e6cc1188db1051c4ec1c6c23a30cb5aabc3df93081b19bf85",
+        "output": {
+          "transfer": 1.0,
+          "target_code": 2.0,
+          "response_id": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "valid": true,
+          "ready": false,
+          "address": 32768,
+          "request_id": 1
+        },
+        "output_changed_key": "transfer",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "valid": true,
+            "ready": false,
+            "address": 32768,
+            "request_id": 1
+          },
+          "input_sha256": "938af9699670644843b5db4d49b2a1f4a647c8be6ed5a741b52af3e3b66939dd",
+          "output": {
+            "transfer": 0.0,
+            "target_code": 2.0,
+            "response_id": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "valid": true,
+          "ready": true,
+          "address": 32768,
+          "request_id": -1
+        },
+        "expected_error_fragment": "address and request_id must be nonnegative",
+        "observed": {
+          "status": "error",
+          "input": {
+            "valid": true,
+            "ready": true,
+            "address": 32768,
+            "request_id": -1
+          },
+          "input_sha256": "93ae978aca31f2da2a32e6e03138c1ecca215ce56ce5e89336de440db4782e27",
+          "error_code": "input_contract_error",
+          "error": "address and request_id must be nonnegative"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 62,
+      "title": "device controller、interrupt、DMA",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "bounded_dma_copy_and_descriptor_ownership",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "source": 0,
+          "destination": 128,
+          "length": 32,
+          "buffer_size": 256,
+          "ownership": "device"
+        },
+        "input_sha256": "57a321375f3afa675c68c06b1f0df200d745efd1fae0eab28cbf2034ea621819",
+        "output": {
+          "completion": 1.0,
+          "destination_end": 160.0,
+          "irq_asserted": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "source": 0,
+          "destination": 160,
+          "length": 32,
+          "buffer_size": 256,
+          "ownership": "device"
+        },
+        "output_changed_key": "destination_end",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "source": 0,
+            "destination": 160,
+            "length": 32,
+            "buffer_size": 256,
+            "ownership": "device"
+          },
+          "input_sha256": "c0ebc3e5f6cfa85d131120123154a8492c2fc911172fe8badb56c9efbcee886f",
+          "output": {
+            "completion": 1.0,
+            "destination_end": 192.0,
+            "irq_asserted": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "source": 0,
+          "destination": 240,
+          "length": 32,
+          "buffer_size": 256,
+          "ownership": "device"
+        },
+        "expected_error_fragment": "DMA range exceeds buffer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "source": 0,
+            "destination": 240,
+            "length": 32,
+            "buffer_size": 256,
+            "ownership": "device"
+          },
+          "input_sha256": "9a8cce55079aa77672710d4d6beda1b111cdd6f46cb8afdb2d89df0b63f7b4b0",
+          "error_code": "input_contract_error",
+          "error": "DMA range exceeds buffer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 63,
+      "title": "電源、clock、温度、信頼性",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "lumped_power_delivery_and_thermal_rc",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "load_current_a": 1.0,
+          "rail_resistance_ohm": 0.01,
+          "decoupling_cap_f": 1e-06,
+          "power_w": 5.0,
+          "thermal_resistance_k_per_w": 2.0,
+          "ambient_c": 25.0,
+          "clock_skew_s": 2e-11
+        },
+        "input_sha256": "95a2a5c929c495f900271e7c19c9062b5ab8320b2b0e350d1bde8c9f4c373566",
+        "output": {
+          "voltage_droop_v": 0.01,
+          "rail_tau_s": 1e-08,
+          "junction_temperature_c": 35.0,
+          "clock_skew_s": 2e-11
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "load_current_a": 2.0,
+          "rail_resistance_ohm": 0.01,
+          "decoupling_cap_f": 1e-06,
+          "power_w": 5.0,
+          "thermal_resistance_k_per_w": 2.0,
+          "ambient_c": 25.0,
+          "clock_skew_s": 2e-11
+        },
+        "output_changed_key": "voltage_droop_v",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "load_current_a": 2.0,
+            "rail_resistance_ohm": 0.01,
+            "decoupling_cap_f": 1e-06,
+            "power_w": 5.0,
+            "thermal_resistance_k_per_w": 2.0,
+            "ambient_c": 25.0,
+            "clock_skew_s": 2e-11
+          },
+          "input_sha256": "1969bf52b5a10d8b309332027a446ab621ee800885490fd7182d51a4b67bc34b",
+          "output": {
+            "voltage_droop_v": 0.02,
+            "rail_tau_s": 1e-08,
+            "junction_temperature_c": 35.0,
+            "clock_skew_s": 2e-11
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "load_current_a": 1.0,
+          "rail_resistance_ohm": 0.0,
+          "decoupling_cap_f": 1e-06,
+          "power_w": 5.0,
+          "thermal_resistance_k_per_w": 2.0,
+          "ambient_c": 25.0,
+          "clock_skew_s": 2e-11
+        },
+        "expected_error_fragment": "rail_resistance_ohm must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "load_current_a": 1.0,
+            "rail_resistance_ohm": 0.0,
+            "decoupling_cap_f": 1e-06,
+            "power_w": 5.0,
+            "thermal_resistance_k_per_w": 2.0,
+            "ambient_c": 25.0,
+            "clock_skew_s": 2e-11
+          },
+          "input_sha256": "9b5ec551127f6ea1411db3441344ede30da1cb76428f10a22d373a9dc460247b",
+          "error_code": "input_contract_error",
+          "error": "rail_resistance_ohm must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 64,
+      "title": "reset vector、firmware、boot chain",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "verified_reset_to_kernel_entry",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "reset_pc": 0,
+          "rom_base": 0,
+          "rom_size": 4096,
+          "image_addr": 256,
+          "image_size": 512,
+          "ram_base": 32768,
+          "ram_size": 16384,
+          "entry": 33024,
+          "verified": true
+        },
+        "input_sha256": "765cc729c1e745782217f1490bd574461c8bebe666d74ea841b2c4b216e2c050",
+        "output": {
+          "first_fetch_pc": 0.0,
+          "image_end": 768.0,
+          "entry_pc": 33024.0,
+          "verification_before_jump": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "reset_pc": 0,
+          "rom_base": 0,
+          "rom_size": 4096,
+          "image_addr": 256,
+          "image_size": 512,
+          "ram_base": 32768,
+          "ram_size": 16384,
+          "entry": 33280,
+          "verified": true
+        },
+        "output_changed_key": "entry_pc",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "reset_pc": 0,
+            "rom_base": 0,
+            "rom_size": 4096,
+            "image_addr": 256,
+            "image_size": 512,
+            "ram_base": 32768,
+            "ram_size": 16384,
+            "entry": 33280,
+            "verified": true
+          },
+          "input_sha256": "d9a49204febfbe43367ffdf64d310b2313c31045aa0c83da98d0bd1a7083d3dc",
+          "output": {
+            "first_fetch_pc": 0.0,
+            "image_end": 768.0,
+            "entry_pc": 33280.0,
+            "verification_before_jump": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "reset_pc": 0,
+          "rom_base": 0,
+          "rom_size": 4096,
+          "image_addr": 256,
+          "image_size": 512,
+          "ram_base": 32768,
+          "ram_size": 16384,
+          "entry": 33024,
+          "verified": false
+        },
+        "expected_error_fragment": "image must be verified before kernel entry",
+        "observed": {
+          "status": "error",
+          "input": {
+            "reset_pc": 0,
+            "rom_base": 0,
+            "rom_size": 4096,
+            "image_addr": 256,
+            "image_size": 512,
+            "ram_base": 32768,
+            "ram_size": 16384,
+            "entry": 33024,
+            "verified": false
+          },
+          "input_sha256": "7dfab4457356b917641e04a6fabfeaa7fdf821d67ae7159782e1feff1551986e",
+          "error_code": "input_contract_error",
+          "error": "image must be verified before kernel entry"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
