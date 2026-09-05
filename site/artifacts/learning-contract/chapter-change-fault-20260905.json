@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "4e01c0deda2e8c29da3f3a8c5ad7fa80474b949200a4f2ce1899f1f45f29b114",
-  "scope": "chapters 9-40; executable educational models",
+  "source_sha256": "cc7a6f0906403c2ddc70029a88822abf9e7afc995de6ea5b525c07bba5e3a7ba",
+  "scope": "chapters 9-44; executable educational models",
   "summary": {
-    "chapters": 32,
-    "baseline_passed": 32,
-    "change_passed": 32,
-    "fault_passed": 32,
+    "chapters": 36,
+    "baseline_passed": 36,
+    "change_passed": 36,
+    "fault_passed": 36,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -2603,6 +2603,310 @@
           "input_sha256": "8d92ad2b2ccbeb3421e1cf3c184e644abb35706b7c1a69bd4814832969f7a2e6",
           "error_code": "input_contract_error",
           "error": "inverter_delay_s must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 41,
+      "title": "SRAMセルとregister file",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E5",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "sram_read_write_cell_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "stored_bit": 0,
+          "write_data": 1,
+          "write_enable": false
+        },
+        "input_sha256": "32521098b21eb4a38af9aa22dfd0e1ed39b02a719a0a7a8c9c81c8270d0051b4",
+        "output": {
+          "read_bit": 0.0,
+          "write_changed": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "stored_bit": 0,
+          "write_data": 1,
+          "write_enable": true
+        },
+        "output_changed_key": "read_bit",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "stored_bit": 0,
+            "write_data": 1,
+            "write_enable": true
+          },
+          "input_sha256": "8f02c13d689f5ad85ce620c3278d4a5604378f8253f4f13e2f07a3a18bfbf518",
+          "output": {
+            "read_bit": 1.0,
+            "write_changed": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "stored_bit": 0,
+          "write_data": 2,
+          "write_enable": true
+        },
+        "expected_error_fragment": "stored_bit, write_data must be binary and write_enable must be boolean",
+        "observed": {
+          "status": "error",
+          "input": {
+            "stored_bit": 0,
+            "write_data": 2,
+            "write_enable": true
+          },
+          "input_sha256": "7b41b95b0c35598730fcb5aa115cfda73fdce3a18778d5c5c9ab96bd8d69b48c",
+          "error_code": "input_contract_error",
+          "error": "stored_bit, write_data must be binary and write_enable must be boolean"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 42,
+      "title": "DRAM、ROM、flash、誤り訂正",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E5",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "dram_retention_refresh_boundary",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "retention_time_s": 0.064,
+          "refresh_period_s": 0.007
+        },
+        "input_sha256": "2bf6411e3f3d866542902b90dcf82dc0a47190a95b521c37e3c552eae886182e",
+        "output": {
+          "retention_time_s": 0.064,
+          "refresh_period_s": 0.007,
+          "refresh_margin_s": 0.057
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "retention_time_s": 0.064,
+          "refresh_period_s": 0.02
+        },
+        "output_changed_key": "refresh_margin_s",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "retention_time_s": 0.064,
+            "refresh_period_s": 0.02
+          },
+          "input_sha256": "bb990ae3d4b99683e291cb8315146e002d5cc8fc5dd1cf9a33d1fc33c368ff85",
+          "output": {
+            "retention_time_s": 0.064,
+            "refresh_period_s": 0.02,
+            "refresh_margin_s": 0.044
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "retention_time_s": 0.064,
+          "refresh_period_s": 0.064
+        },
+        "expected_error_fragment": "refresh_period_s must be below retention_time_s",
+        "observed": {
+          "status": "error",
+          "input": {
+            "retention_time_s": 0.064,
+            "refresh_period_s": 0.064
+          },
+          "input_sha256": "42ad790743b6733787d37725e6e1331f90003148c7b6b7820cd9ef1a76084eef",
+          "error_code": "input_contract_error",
+          "error": "refresh_period_s must be below retention_time_s"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 43,
+      "title": "memory array、bank、timing interface",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "bank_address_decode_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "address": 292,
+          "banks": 4,
+          "bank_bytes": 256
+        },
+        "input_sha256": "f1da86e2fc1e18b1545cc854e57a6017ade4f2f92e69823632a20e437041e4e9",
+        "output": {
+          "bank": 1.0,
+          "offset": 36.0,
+          "bank_count": 4.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "address": 548,
+          "banks": 4,
+          "bank_bytes": 256
+        },
+        "output_changed_key": "bank",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "address": 548,
+            "banks": 4,
+            "bank_bytes": 256
+          },
+          "input_sha256": "635374cca4a2b556487cd7d1694bf498734d4f6136cb9be89a6e9cbc9a49e84f",
+          "output": {
+            "bank": 2.0,
+            "offset": 36.0,
+            "bank_count": 4.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "address": -1,
+          "banks": 4,
+          "bank_bytes": 256
+        },
+        "expected_error_fragment": "address must be within the configured memory array",
+        "observed": {
+          "status": "error",
+          "input": {
+            "address": -1,
+            "banks": 4,
+            "bank_bytes": 256
+          },
+          "input_sha256": "6a982449d4d2e1028bd844013e1f7e0e20f53d36f6b9dac3b9b0680c643ced8c",
+          "error_code": "input_contract_error",
+          "error": "address must be within the configured memory array"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 44,
+      "title": "stored-program machineとISA",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E5",
+        "E6"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "stored_program_pc_and_r0_protection",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "pc": 0,
+          "branch_offset": 8,
+          "branch_taken": false,
+          "write_register": 3
+        },
+        "input_sha256": "2ae1ed23de3ec5090a0715283d75d55a5f783903051997c89b9b7a5151c8d4a0",
+        "output": {
+          "next_pc": 2.0,
+          "write_register": 3.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "pc": 0,
+          "branch_offset": 8,
+          "branch_taken": true,
+          "write_register": 3
+        },
+        "output_changed_key": "next_pc",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "pc": 0,
+            "branch_offset": 8,
+            "branch_taken": true,
+            "write_register": 3
+          },
+          "input_sha256": "0034021d755a98a993c49643b22cce42b2e7c3c8cce5c259670fcc3600402b96",
+          "output": {
+            "next_pc": 8.0,
+            "write_register": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "pc": 0,
+          "branch_offset": 8,
+          "branch_taken": false,
+          "write_register": 0
+        },
+        "expected_error_fragment": "writes to architectural r0 are forbidden",
+        "observed": {
+          "status": "error",
+          "input": {
+            "pc": 0,
+            "branch_offset": 8,
+            "branch_taken": false,
+            "write_register": 0
+          },
+          "input_sha256": "784f09cfe9668016b3fac92bb42a321a72c8b35a0dd63fd7e550bf10fe224ec6",
+          "error_code": "input_contract_error",
+          "error": "writes to architectural r0 are forbidden"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
