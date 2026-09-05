@@ -1097,7 +1097,7 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 
 ## 117. 2026-09-05 第1巻本文内容契約の追加確認
 
-第1巻の本文を学習者向けの読み順で再確認し、未確認だった24件を、実験測定へ昇格させない構造・内容契約としてcheckerへ追加した。第2章は四つの抽象化台帳行、抵抗モデルの適用範囲、NANDの真理値表と波形の分離、RV32Iの有限幅を照合した。第3章は次元解析から形式文法までの数学mapと変更・故障診断欄、第4章はfigure/source registryとRC四経路・測定負荷・収束／不確かさの分離を照合した。第5〜8章は電場・電束・電位エネルギー・連続の式・電流の向き・発熱の式と境界を、本文および既存artifactへ照合した。
+第1巻の本文を学習者向けの読み順で再確認し、未確認だった25件を、実験測定へ昇格させない構造・内容契約としてcheckerへ追加した。第2章は四つの抽象化台帳行、抵抗モデルの適用範囲、NANDの真理値表と波形の分離、RV32Iの有限幅を照合した。第3章は次元解析から形式文法までの数学mapと変更・故障診断欄、第4章はfigure/source registryとRC四経路・測定負荷・収束／不確かさの分離を照合した。第5〜8章は電場・電束・電位エネルギー・連続の式・電流の向き・発熱の式と境界を、本文および既存artifactへ照合した。
 
 結果JSON（[`chapter-acceptance-results-20260904.json`](../artifacts/learning-contract/chapter-acceptance-results-20260904.json)）はacceptance 699件中`structural_contract_verified` 294件、structural failed 0件、domain／learner未実行405件、`measured=true` 0件である。章別inventory（[`chapter-learning-gate-inventory-20260904.json`](../artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json)）も同じ内訳へ更新した。構造確認は本文・manifest・演習・解答・artifactの整合を示すだけであり、全章必修実験、章固有change／fault、外部実装受入、FPGA、実回路・実機測定の完了へは昇格させない。
 

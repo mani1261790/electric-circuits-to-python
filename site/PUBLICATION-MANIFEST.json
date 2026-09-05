@@ -1,6 +1,6 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T09:02:09.432217+00:00",
+  "generated_at_utc": "2026-09-05T09:05:43.249086+00:00",
   "source_file_count": 1065,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1070,
@@ -5309,7 +5309,7 @@
     {
       "path": "reviews/completion-gates.md",
       "bytes": 178781,
-      "sha256": "9a4deb8bc24fe81169fbc860dba1071fd2d0063d6e9d05c87b7d511c85c1e698"
+      "sha256": "a90495cf32b8294ff4da770c8380cd9e4dad1fbad8962b1457b12742d6875241"
     },
     {
       "path": "reviews/independent-chapter-confirmation-20260904.md",
