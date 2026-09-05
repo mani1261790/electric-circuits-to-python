@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "8ee01641582019ab015db3fc768e292a2bc3ccb2c26482bf120c1a5ff4ca35cc",
-  "scope": "chapters 9-20; executable educational models",
+  "source_sha256": "93c75825a203ba9264d0da33984b9dacefcb02ff75d6a0963079f31ee6caaede",
+  "scope": "chapters 9-24; executable educational models",
   "summary": {
-    "chapters": 12,
-    "baseline_passed": 12,
-    "change_passed": 12,
-    "fault_passed": 12,
+    "chapters": 16,
+    "baseline_passed": 16,
+    "change_passed": 16,
+    "fault_passed": 16,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -1036,6 +1036,340 @@
           "input_sha256": "078d65f555ebaa8801b8ee8a88de1a48725160c247488caab82c3aa250eec272",
           "error_code": "input_contract_error",
           "error": "epsilon_r must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 21,
+      "title": "MOSキャパシタ",
+      "exercise_refs": [
+        "E2",
+        "E4",
+        "E7",
+        "E10"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "ideal_mos_oxide_capacitance",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "epsilon_ox_r": 3.9,
+          "oxide_thickness_m": 1e-09,
+          "work_function_v": 0.0,
+          "fixed_charge_c_per_m2": 0.0
+        },
+        "input_sha256": "2bb6ad51b7cbd27ae92f583536f7f62b0301350e544587f8944792ed004f130f",
+        "output": {
+          "Cox_f_per_m2": 0.034531332469920004,
+          "VFB_v": 0.0,
+          "oxide_thickness_m": 1e-09
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "epsilon_ox_r": 3.9,
+          "oxide_thickness_m": 2e-09,
+          "work_function_v": 0.0,
+          "fixed_charge_c_per_m2": 0.0
+        },
+        "output_changed_key": "Cox_f_per_m2",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "epsilon_ox_r": 3.9,
+            "oxide_thickness_m": 2e-09,
+            "work_function_v": 0.0,
+            "fixed_charge_c_per_m2": 0.0
+          },
+          "input_sha256": "e0370055c6b67bc1fee1cc9762211b183d9c16b4514c557234647d6b48181d36",
+          "output": {
+            "Cox_f_per_m2": 0.017265666234960002,
+            "VFB_v": 0.0,
+            "oxide_thickness_m": 2e-09
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "epsilon_ox_r": 3.9,
+          "oxide_thickness_m": 0.0,
+          "work_function_v": 0.0,
+          "fixed_charge_c_per_m2": 0.0
+        },
+        "expected_error_fragment": "oxide_thickness_m must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "epsilon_ox_r": 3.9,
+            "oxide_thickness_m": 0.0,
+            "work_function_v": 0.0,
+            "fixed_charge_c_per_m2": 0.0
+          },
+          "input_sha256": "37b69daa3e33dc4369137b43ab08b09a06b2640155b2ad143e4236e9f80ef37b",
+          "error_code": "input_contract_error",
+          "error": "oxide_thickness_m must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 22,
+      "title": "MOSFETの形成とI-V特性",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "long_channel_nmos_square_law",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "V_GS_v": 1.2,
+          "V_th_v": 0.588175,
+          "beta_a_per_v2": 0.001
+        },
+        "input_sha256": "ae7fd82dc950b542be22e4cf040210e1b62c6bfb519990134ec565b04029e19f",
+        "output": {
+          "V_OV_v": 0.611825,
+          "I_D_a": 0.00018716491531249997
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "V_GS_v": 1.4,
+          "V_th_v": 0.588175,
+          "beta_a_per_v2": 0.001
+        },
+        "output_changed_key": "I_D_a",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "V_GS_v": 1.4,
+            "V_th_v": 0.588175,
+            "beta_a_per_v2": 0.001
+          },
+          "input_sha256": "034917fcaff63ff7d9a6278c4e1d19cdb071e6315c3634abf444f3d686f3d206",
+          "output": {
+            "V_OV_v": 0.8118249999999999,
+            "I_D_a": 0.00032952991531249996
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "V_GS_v": 0.5,
+          "V_th_v": 0.588175,
+          "beta_a_per_v2": 0.001
+        },
+        "expected_error_fragment": "V_GS_v must exceed V_th_v for the square-law model",
+        "observed": {
+          "status": "error",
+          "input": {
+            "V_GS_v": 0.5,
+            "V_th_v": 0.588175,
+            "beta_a_per_v2": 0.001
+          },
+          "input_sha256": "d973412a693a52519e3ba51c2e8d6519d876c82e578fdae0ca2e9a1728acce74",
+          "error_code": "input_contract_error",
+          "error": "V_GS_v must exceed V_th_v for the square-law model"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 23,
+      "title": "非理想性、微細化、現代トランジスタ",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "velocity_saturation_and_dibl",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "mobility_m2_per_vs": 0.05,
+          "v_sat_m_per_s": 10000.0,
+          "field_v_per_m": 100000.0,
+          "V_th0_v": 0.588175,
+          "eta_dibl_v_per_v": 0.05,
+          "V_DS_v": 0.1
+        },
+        "input_sha256": "26d928c163e3a5851cdd25a89b874c90749563c51778782a0f1dfddc77b3d2ae",
+        "output": {
+          "carrier_velocity_m_per_s": 3333.3333333333335,
+          "V_th_v": 0.583175
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "mobility_m2_per_vs": 0.05,
+          "v_sat_m_per_s": 10000.0,
+          "field_v_per_m": 200000.0,
+          "V_th0_v": 0.588175,
+          "eta_dibl_v_per_v": 0.05,
+          "V_DS_v": 0.1
+        },
+        "output_changed_key": "carrier_velocity_m_per_s",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "mobility_m2_per_vs": 0.05,
+            "v_sat_m_per_s": 10000.0,
+            "field_v_per_m": 200000.0,
+            "V_th0_v": 0.588175,
+            "eta_dibl_v_per_v": 0.05,
+            "V_DS_v": 0.1
+          },
+          "input_sha256": "40c10a59f3af9e4da8080a977b5b29d734736b8622e1e7bae5d873b01925010d",
+          "output": {
+            "carrier_velocity_m_per_s": 5000.0,
+            "V_th_v": 0.583175
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "mobility_m2_per_vs": 0.05,
+          "v_sat_m_per_s": 0.0,
+          "field_v_per_m": 100000.0,
+          "V_th0_v": 0.588175,
+          "eta_dibl_v_per_v": 0.05,
+          "V_DS_v": 0.1
+        },
+        "expected_error_fragment": "v_sat_m_per_s must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "mobility_m2_per_vs": 0.05,
+            "v_sat_m_per_s": 0.0,
+            "field_v_per_m": 100000.0,
+            "V_th0_v": 0.588175,
+            "eta_dibl_v_per_v": 0.05,
+            "V_DS_v": 0.1
+          },
+          "input_sha256": "eef9149e8e00c384f7c8c84985edb914b5834d8d1fafe2b6d00ce3ddaae8ac4c",
+          "error_code": "input_contract_error",
+          "error": "v_sat_m_per_s must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 24,
+      "title": "CMOSインバータ",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "static_cmos_switching_point",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.0,
+          "beta_n_a_per_v2": 0.001,
+          "beta_p_a_per_v2": 0.001,
+          "V_tn_v": 0.3,
+          "abs_V_tp_v": 0.3
+        },
+        "input_sha256": "8b5c23dc8941842046d8b7ce51e8c6bb97482ebeb16d70e7137145c588cb423f",
+        "output": {
+          "switching_point_v": 0.5,
+          "output_low_v": 0.0,
+          "output_high_v": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.0,
+          "beta_n_a_per_v2": 0.002,
+          "beta_p_a_per_v2": 0.001,
+          "V_tn_v": 0.3,
+          "abs_V_tp_v": 0.3
+        },
+        "output_changed_key": "switching_point_v",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "V_DD_v": 1.0,
+            "beta_n_a_per_v2": 0.002,
+            "beta_p_a_per_v2": 0.001,
+            "V_tn_v": 0.3,
+            "abs_V_tp_v": 0.3
+          },
+          "input_sha256": "571fedf777483e8f77287fa278714496ca3f3bcde0af1ec41d36371ff4368cf5",
+          "output": {
+            "switching_point_v": 0.46568542494923787,
+            "output_low_v": 0.0,
+            "output_high_v": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 0.0,
+          "beta_n_a_per_v2": 0.001,
+          "beta_p_a_per_v2": 0.001,
+          "V_tn_v": 0.3,
+          "abs_V_tp_v": 0.3
+        },
+        "expected_error_fragment": "V_DD_v must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "V_DD_v": 0.0,
+            "beta_n_a_per_v2": 0.001,
+            "beta_p_a_per_v2": 0.001,
+            "V_tn_v": 0.3,
+            "abs_V_tp_v": 0.3
+          },
+          "input_sha256": "2f2cd5cafca8dd982040dedc7c09e4964e111306c560caaeb870c25a7f00a8b8",
+          "error_code": "input_contract_error",
+          "error": "V_DD_v must be a finite positive number"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
