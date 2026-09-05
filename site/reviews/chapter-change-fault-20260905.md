@@ -1,11 +1,19 @@
-# 第9〜106章 change/fault 教育モデル実行記録
+# 第1〜106章 change/fault 教育モデル実行記録
 
 確認日: 2026-09-05（Asia/Tokyo）
 
-`tools/run_chapter_change_fault.py` を標準ライブラリだけで実行し、第9〜106章について、章の演習参照に対応する「基準入力 → 条件変更 → 故障入力」を1組ずつ記録した。結果の機械台帳は [`chapter-change-fault-20260905.json`](../artifacts/learning-contract/chapter-change-fault-20260905.json) である。前半の第9〜12章host補助記録は同じ台帳へ統合し、第13〜16章の量子・バンド入口、第17〜20章の半導体基礎、第21〜24章のMOS・CMOS入口、第25〜28章の論理電圧・ゲート・遅延・レイアウト入口、第29〜32章のビット・NAND・論理合成・HDL入口、第33〜36章の有限幅算術・ALU・帰還入口、第37〜40章のlatch・setup/hold・FSM・clock/reset入口、第41〜44章のSRAM・DRAM/ECC・memory array・stored-program入口、第45〜48章のRV32I・assembly・datapath・memory map入口、第49〜52章のtrap・boot・性能・pipeline入口、第53〜56章のhazard・branch prediction・cache・Sv32入口、第57〜60章のcoherence・atomic・out-of-order・speculation入口、第61〜64章のbus/MMIO・DMA・電源/熱・boot chain入口、第65〜70章のstorage・入力/TTY・framebuffer・network・assembler・relocation入口、第71〜80章のlinker/loader・C ABI・compiler IR/codegen・debug/bootstrap・syscall/scheduler入口、第81〜90章のpage table・demand paging・kernel allocator・atomicity・同期・driver/filesystem・shell/socket・OS統合入口、第91〜100章のPython syntax/tokenizer・scope・bytecode/VM・object/GC・container・function/module I/O入口に続いて、第101〜106章のGIL/free-threading・adaptive interpreter/JIT・MiniPy compiler・RISC-V port・trace atlas・現代PC統合入口を追加した。
+`tools/run_chapter_change_fault.py` を標準ライブラリだけで実行し、第1〜106章について、章の演習参照に対応する「基準入力 → 条件変更 → 故障入力」を1組ずつ記録した。結果の機械台帳は [`chapter-change-fault-20260905.json`](../artifacts/learning-contract/chapter-change-fault-20260905.json) である。第1〜8章のtrace/物理量・観測・導電性入口を先頭へ追加し、第9〜12章host補助記録、第13〜16章の量子・バンド入口、第17〜20章の半導体基礎、第21〜24章のMOS・CMOS入口、第25〜28章の論理電圧・ゲート・遅延・レイアウト入口、第29〜32章のビット・NAND・論理合成・HDL入口、第33〜36章の有限幅算術・ALU・帰還入口、第37〜40章のlatch・setup/hold・FSM・clock/reset入口、第41〜44章のSRAM・DRAM/ECC・memory array・stored-program入口、第45〜48章のRV32I・assembly・datapath・memory map入口、第49〜52章のtrap・boot・性能・pipeline入口、第53〜56章のhazard・branch prediction・cache・Sv32入口、第57〜60章のcoherence・atomic・out-of-order・speculation入口、第61〜64章のbus/MMIO・DMA・電源/熱・boot chain入口、第65〜70章のstorage・入力/TTY・framebuffer・network・assembler・relocation入口、第71〜80章のlinker/loader・C ABI・compiler IR/codegen・debug/bootstrap・syscall/scheduler入口、第81〜90章のpage table・demand paging・kernel allocator・atomicity・同期・driver/filesystem・shell/socket・OS統合入口、第91〜100章のPython syntax/tokenizer・scope・bytecode/VM・object/GC・container・function/module I/O入口、第101〜106章のGIL/free-threading・adaptive interpreter/JIT・MiniPy compiler・RISC-V port・trace atlas・現代PC統合入口を対象にした。
 
 | 章 | 教育モデル | 基準 | 変更 | 故障 | measured |
 |---:|---|---:|---:|---:|---:|
+| 1 | trace-A・ADD・UART依存 | pass | pass | pass | false |
+| 2 | law/model/contract/implementation境界 | pass | pass | pass | false |
+| 3 | 無次元比・スケール解析 | pass | pass | pass | false |
+| 4 | 解析値・数値値・許容差 | pass | pass | pass | false |
+| 5 | 点電荷の電場 | pass | pass | pass | false |
+| 6 | 点電荷の電位・エネルギー | pass | pass | pass | false |
+| 7 | 有限体積の電流連続 | pass | pass | pass | false |
+| 8 | Drude導電率・抵抗 | pass | pass | pass | false |
 | 9 | 分布線路・集中RC | pass | pass | pass | false |
 | 10 | 2節点抵抗網の節点解析 | pass | pass | pass | false |
 | 11 | RC解析ステップ応答 | pass | pass | pass | false |
@@ -116,6 +124,8 @@
 
 第81章はpage-table walkとwritable permissionを扱い、未present PTEを拒否した。第82章はnot-present/COW/file-backed faultの処理区別を扱い、負のpage indexを拒否した。第83章はphysical page allocationとcopyin boundsを扱い、user buffer外copyを拒否した。第84章はatomic incrementとlost updateを扱い、thread数0を拒否した。第85章はsemaphore permitとwait-for cycleを扱い、不正な負permitを拒否した。第86章はblock I/Oのpartial completionとIRQを扱い、request超過completionを拒否した。第87章はinode/data block allocationとjournal recoveryを扱い、総block超過を拒否した。第88章はshellのfork/exec・pipe・TTYを扱い、空commandを拒否した。第89章はsocket namespace/capabilityとMTU境界を扱い、capabilityなしを拒否した。第90章はboot handoffとcomponent correspondenceを扱い、必須component不足を拒否した。
 第81章はpage-table walkとwritable permissionを扱い、未present PTEを拒否した。第82章はnot-present/COW/file-backed faultの処理区別を扱い、負のpage indexを拒否した。第83章はphysical page allocationとcopyin boundsを扱い、user buffer外copyを拒否した。第84章はatomic incrementとlost updateを扱い、thread数0を拒否した。第85章はsemaphore permitとwait-for cycleを扱い、不正な負permitを拒否した。第86章はblock I/Oのpartial completionとIRQを扱い、request超過completionを拒否した。第87章はinode/data block allocationとjournal recoveryを扱い、総block超過を拒否した。第88章はshellのfork/exec・pipe・TTYを扱い、空commandを拒否した。第89章はsocket namespace/capabilityとMTU境界を扱い、capabilityなしを拒否した。第90章はboot handoffとcomponent correspondenceを扱い、必須component不足を拒否した。
+
+第1章はconstant folding後のADDからUART byteへの依存を扱い、signed 32-bit外の入力を拒否した。第2章はlaw/model/contract/implementationの境界を扱い、未知層を拒否した。第3章は無次元比と速度・時間・長さのscaleを扱い、非正速度を拒否した。第4章は解析値・数値値・許容差・sample countを扱い、零sampleを拒否した。第5章は点電荷の電場を扱い、零距離を拒否した。第6章は点電荷の電位と試験電荷のエネルギーを扱い、零距離を拒否した。第7章は有限体積の電流連続を扱い、零断面積を拒否した。第8章はDrude導電率・抵抗・電流を扱い、零移動度を拒否した。
 
 第91章はPython source/ASTとCPython実装詳細の境界を扱い、AST過大を拒否した。第92章はlogical lineとINDENT/DEDENTを扱い、indent/dedent不整合を拒否した。第93章はsymbol tableのlocal/global/freeとclosure cellを扱い、free nameなしclosureを拒否した。第94章はASTからbytecode/CFG/stack effectへの変換を扱い、負のstack effectを拒否した。第95章はoperand stackとevaluation loopを扱い、stack underflowを拒否した。第96章はobject header、type、identityを扱い、負のrefcountを拒否した。第97章はreference countとcycle候補のreclaimを扱い、heap超過rootを拒否した。第98章はlist over-allocationとdict load factorを扱い、範囲外load factorを拒否した。第99章はfunction frame、closure、generator suspensionを扱い、parameter超過引数を拒否した。第100章はmodule cache、import、file I/Oを扱い、module数超過importを拒否した。
 第91章はPython source/ASTとCPython実装詳細の境界を扱い、AST過大を拒否した。第92章はlogical lineとINDENT/DEDENTを扱い、indent/dedent不整合を拒否した。第93章はsymbol tableのlocal/global/freeとclosure cellを扱い、free nameなしclosureを拒否した。第94章はASTからbytecode/CFG/stack effectへの変換を扱い、負のstack effectを拒否した。第95章はoperand stackとevaluation loopを扱い、stack underflowを拒否した。第96章はobject header、type、identityを扱い、負のrefcountを拒否した。第97章はreference countとcycle候補のreclaimを扱い、heap超過rootを拒否した。第98章はlist over-allocationとdict load factorを扱い、範囲外load factorを拒否した。第99章はfunction frame、closure、generator suspensionを扱い、parameter超過引数を拒否した。第100章はmodule cache、import、file I/Oを扱い、module数超過importを拒否した。

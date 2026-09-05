@@ -7,7 +7,7 @@
 | 条件 | 現行証拠 | 判定 |
 | --- | --- | --- |
 | 全106章の構造 | `./tools/validate_book` が `validated global manifest and 106 written chapter(s)` | pass |
-| 章別change/fault教育モデル | `artifacts/learning-contract/chapter-change-fault-20260905.json` の第9〜106章98件 | 98/98基準・変更・故障 pass |
+| 章別change/fault教育モデル | `artifacts/learning-contract/chapter-change-fault-20260905.json` の第1〜106章106件 | 106/106基準・変更・故障 pass |
 | 実験台帳HTML | `build/html/runner.html` の `id="run-..."` が718件 | pass |
 | 第97〜106章の実験導線 | manifestの実験コマンドもHTMLへ含まれる | pass |
 | 実装受入との境界 | `runner.html` が `command_status=implemented` は入口・契約であり実装本体受入ではないと明記 | pass |

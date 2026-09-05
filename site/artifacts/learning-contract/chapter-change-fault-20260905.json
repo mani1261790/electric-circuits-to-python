@@ -3,18 +3,655 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "31fb3c9a9d2abacecdff11f98c4247fda825d358b912316b69577b9e85f422c9",
-  "scope": "chapters 9-106; executable educational models",
+  "source_sha256": "d13b4b018b5f848f7254d197e2dc98774983368505f18499ca4f447ce4b83e4c",
+  "scope": "chapters 1-106; executable educational models",
   "summary": {
-    "chapters": 98,
-    "baseline_passed": 98,
-    "change_passed": 98,
-    "fault_passed": 98,
+    "chapters": 106,
+    "baseline_passed": 106,
+    "change_passed": 106,
+    "fault_passed": 106,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
   },
   "chapters": [
+    {
+      "chapter_id": 1,
+      "title": "一行のPythonが通る全層",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "trace_a_constant_fold_and_uart_dependency",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "left": 1,
+          "right": 2,
+          "uart_bias": 48
+        },
+        "input_sha256": "d084a541f5db82325e04b3ee58fcfb85b1da3967668671642177ecf1a8ae0763",
+        "output": {
+          "add_result": 3.0,
+          "uart_byte": 51.0,
+          "dependency_preserved": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "left": 2,
+          "right": 2,
+          "uart_bias": 48
+        },
+        "output_changed_key": "add_result",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "left": 2,
+            "right": 2,
+            "uart_bias": 48
+          },
+          "input_sha256": "ba8960c19ac0d077c6506c273032d5ba8b9decdf607ecd5d708c9f4575cf2346",
+          "output": {
+            "add_result": 4.0,
+            "uart_byte": 52.0,
+            "dependency_preserved": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "left": 2147483648,
+          "right": 1,
+          "uart_bias": 48
+        },
+        "expected_error_fragment": "trace-A integer operands must fit signed 32-bit values",
+        "observed": {
+          "status": "error",
+          "input": {
+            "left": 2147483648,
+            "right": 1,
+            "uart_bias": 48
+          },
+          "input_sha256": "0e0d01f472d04d01f80b5a0cfd0280dd1bfc1f959db889d3cbe5fd6379130d51",
+          "error_code": "input_contract_error",
+          "error": "trace-A integer operands must fit signed 32-bit values"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 2,
+      "title": "法則、モデル、契約、実装",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "law_model_contract_implementation_boundary",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "layer": "law",
+          "value": 1.0
+        },
+        "input_sha256": "211b1def6376aceb4fa2d892bccb7517980f0904b212428661a8323982a55687",
+        "output": {
+          "layer_code": 1.0,
+          "value": 1.0,
+          "boundary_explicit": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "layer": "contract",
+          "value": 1.0
+        },
+        "output_changed_key": "layer_code",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "layer": "contract",
+            "value": 1.0
+          },
+          "input_sha256": "e1cc2590489be722ccce4528273c9f2d1b454018508a2e4dbeb0298d2e4a804d",
+          "output": {
+            "layer_code": 3.0,
+            "value": 1.0,
+            "boundary_explicit": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "layer": "unknown",
+          "value": 1.0
+        },
+        "expected_error_fragment": "layer must be one of law/model/contract/implementation and value finite",
+        "observed": {
+          "status": "error",
+          "input": {
+            "layer": "unknown",
+            "value": 1.0
+          },
+          "input_sha256": "25be54cfb838b970837d5afb902bfbd15e7b19a05837c260df937bb2aecedd48",
+          "error_code": "input_contract_error",
+          "error": "layer must be one of law/model/contract/implementation and value finite"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 3,
+      "title": "必要な数学を必要な場所で使う",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "dimensionless_scale_analysis",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "length_m": 1.0,
+          "time_s": 1.0,
+          "speed_m_per_s": 2.0
+        },
+        "input_sha256": "ce4e0101209bb1a2c600de305f9c4d9470e03fbecd8a74b1dcc71a5dc13de6fb",
+        "output": {
+          "dimensionless_ratio": 0.5,
+          "length_m": 1.0,
+          "time_s": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "length_m": 2.0,
+          "time_s": 1.0,
+          "speed_m_per_s": 2.0
+        },
+        "output_changed_key": "dimensionless_ratio",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "length_m": 2.0,
+            "time_s": 1.0,
+            "speed_m_per_s": 2.0
+          },
+          "input_sha256": "1f60fd58c5c5aaf804bc84753ea97bcb9865295e072fddedde29d6cac088ea04",
+          "output": {
+            "dimensionless_ratio": 1.0,
+            "length_m": 2.0,
+            "time_s": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "length_m": 1.0,
+          "time_s": 1.0,
+          "speed_m_per_s": 0.0
+        },
+        "expected_error_fragment": "speed_m_per_s must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "length_m": 1.0,
+            "time_s": 1.0,
+            "speed_m_per_s": 0.0
+          },
+          "input_sha256": "cbed2297d00b6a4ae3cb7d2ce2b89faabc1e6627ad3f5eac7bc6af9794ba3857",
+          "error_code": "input_contract_error",
+          "error": "speed_m_per_s must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 4,
+      "title": "観測、測定、数値計算",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "analytic_numeric_observation_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "analytic": 1.0,
+          "numeric": 1.01,
+          "tolerance": 0.02,
+          "samples": 10
+        },
+        "input_sha256": "788ff4abd458eb0be0316d0a1afdec7d570d5f37064c11829e60a7b49fb751fd",
+        "output": {
+          "absolute_error": 0.010000000000000009,
+          "within_tolerance": 1.0,
+          "samples": 10.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "analytic": 1.0,
+          "numeric": 1.03,
+          "tolerance": 0.02,
+          "samples": 10
+        },
+        "output_changed_key": "absolute_error",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "analytic": 1.0,
+            "numeric": 1.03,
+            "tolerance": 0.02,
+            "samples": 10
+          },
+          "input_sha256": "4bb6679d26d18f55e4e6606e400fb2c8d5f806b0f597c40ae1af3c7950796fb0",
+          "output": {
+            "absolute_error": 0.030000000000000027,
+            "within_tolerance": 0.0,
+            "samples": 10.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "analytic": 1.0,
+          "numeric": 1.01,
+          "tolerance": 0.02,
+          "samples": 0
+        },
+        "expected_error_fragment": "samples must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "analytic": 1.0,
+            "numeric": 1.01,
+            "tolerance": 0.02,
+            "samples": 0
+          },
+          "input_sha256": "0d23d4c57dc54f6dd60c7983c71b8b13dd5ae35627d53037010c02868017f861",
+          "error_code": "input_contract_error",
+          "error": "samples must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 5,
+      "title": "電荷と電場",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "point_charge_electric_field",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "charge_c": 1e-09,
+          "distance_m": 0.001,
+          "epsilon_r": 1.0
+        },
+        "input_sha256": "b9c6b98893e259178a465cf54f490da057501683e8e4e34874b721ab9182a986",
+        "output": {
+          "electric_field_v_per_m": 8987551.7861708,
+          "distance_m": 0.001
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "charge_c": 2e-09,
+          "distance_m": 0.001,
+          "epsilon_r": 1.0
+        },
+        "output_changed_key": "electric_field_v_per_m",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "charge_c": 2e-09,
+            "distance_m": 0.001,
+            "epsilon_r": 1.0
+          },
+          "input_sha256": "65019b359cc9c3e571caa087c63440b99081434f8c98421bee11b2b297ca4c17",
+          "output": {
+            "electric_field_v_per_m": 17975103.5723416,
+            "distance_m": 0.001
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "charge_c": 1e-09,
+          "distance_m": 0.0,
+          "epsilon_r": 1.0
+        },
+        "expected_error_fragment": "distance_m must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "charge_c": 1e-09,
+            "distance_m": 0.0,
+            "epsilon_r": 1.0
+          },
+          "input_sha256": "9ad6251b7984a8dfc945bcbe794e4a3713afffc0ae749735583aa5c5224a702c",
+          "error_code": "input_contract_error",
+          "error": "distance_m must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 6,
+      "title": "電位、電圧、エネルギー",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "point_charge_potential_energy",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "source_charge_c": 1e-09,
+          "test_charge_c": 2e-09,
+          "distance_m": 0.001,
+          "reference_v": 0.0
+        },
+        "input_sha256": "651806099c1a904e0ad3553f5d0d9234a3785e0af0dfac7610dbbc397c314760",
+        "output": {
+          "potential_v": 8987.5517861708,
+          "potential_energy_j": 1.79751035723416e-05
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "source_charge_c": 1e-09,
+          "test_charge_c": 2e-09,
+          "distance_m": 0.002,
+          "reference_v": 0.0
+        },
+        "output_changed_key": "potential_v",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "source_charge_c": 1e-09,
+            "test_charge_c": 2e-09,
+            "distance_m": 0.002,
+            "reference_v": 0.0
+          },
+          "input_sha256": "c72d002e1a7c4e3c6eee4d3d2d77cefd9d7fd4ab2d8779cc622ef3999a948426",
+          "output": {
+            "potential_v": 4493.7758930854,
+            "potential_energy_j": 8.9875517861708e-06
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "source_charge_c": 1e-09,
+          "test_charge_c": 2e-09,
+          "distance_m": 0.0,
+          "reference_v": 0.0
+        },
+        "expected_error_fragment": "distance_m must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "source_charge_c": 1e-09,
+            "test_charge_c": 2e-09,
+            "distance_m": 0.0,
+            "reference_v": 0.0
+          },
+          "input_sha256": "d6162f7d7f4bef3b50e96f9dbbf6eb60b556c1289dde1f7978df0ac8ae8f54cb",
+          "error_code": "input_contract_error",
+          "error": "distance_m must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 7,
+      "title": "電流、連続の式、電力",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "finite_volume_current_continuity",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "area_in_m2": 1e-06,
+          "area_out_m2": 1e-06,
+          "current_density_in_a_per_m2": 2.0,
+          "current_density_out_a_per_m2": 2.0
+        },
+        "input_sha256": "b34be1764cebac7ad809ca3df55559006c747c5ff64da4e74bf0a92bceb531a3",
+        "output": {
+          "current_in_a": 2e-06,
+          "current_out_a": 2e-06,
+          "continuity_residual_a": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "area_in_m2": 2e-06,
+          "area_out_m2": 1e-06,
+          "current_density_in_a_per_m2": 2.0,
+          "current_density_out_a_per_m2": 2.0
+        },
+        "output_changed_key": "continuity_residual_a",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "area_in_m2": 2e-06,
+            "area_out_m2": 1e-06,
+            "current_density_in_a_per_m2": 2.0,
+            "current_density_out_a_per_m2": 2.0
+          },
+          "input_sha256": "d706a9113b1e50931a575f1afaa99101829fba037b131f5e4a92c37dbda50685",
+          "output": {
+            "current_in_a": 4e-06,
+            "current_out_a": 2e-06,
+            "continuity_residual_a": 2e-06
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "area_in_m2": 0.0,
+          "area_out_m2": 1e-06,
+          "current_density_in_a_per_m2": 2.0,
+          "current_density_out_a_per_m2": 2.0
+        },
+        "expected_error_fragment": "area_in_m2 must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "area_in_m2": 0.0,
+            "area_out_m2": 1e-06,
+            "current_density_in_a_per_m2": 2.0,
+            "current_density_out_a_per_m2": 2.0
+          },
+          "input_sha256": "bb6ea630872f28c538c721d0b90a4b1b7c9e9996fadcfd0061b4bfe7adf12021",
+          "error_code": "input_contract_error",
+          "error": "area_in_m2 must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 8,
+      "title": "物質の導電性と古典モデル",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "drude_conductivity_and_resistance",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "carrier_density_m3": 1e+22,
+          "charge_c": 1.602176634e-19,
+          "mobility_m2_per_vs": 0.1,
+          "length_m": 1.0,
+          "area_m2": 1e-06,
+          "voltage_v": 1.0
+        },
+        "input_sha256": "63d9a6b2d87882bbd30296d4d82a5cf9105f77d9ae34bc873732443f8ccf5fc6",
+        "output": {
+          "conductivity_s_per_m": 160.2176634,
+          "resistance_ohm": 6241.509074460763,
+          "current_a": 0.0001602176634
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "carrier_density_m3": 1e+22,
+          "charge_c": 1.602176634e-19,
+          "mobility_m2_per_vs": 0.2,
+          "length_m": 1.0,
+          "area_m2": 1e-06,
+          "voltage_v": 1.0
+        },
+        "output_changed_key": "conductivity_s_per_m",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "carrier_density_m3": 1e+22,
+            "charge_c": 1.602176634e-19,
+            "mobility_m2_per_vs": 0.2,
+            "length_m": 1.0,
+            "area_m2": 1e-06,
+            "voltage_v": 1.0
+          },
+          "input_sha256": "733e5f53b6cf27d4f0395d39fc64fd926870ed68092b627e638750be48300317",
+          "output": {
+            "conductivity_s_per_m": 320.4353268,
+            "resistance_ohm": 3120.7545372303816,
+            "current_a": 0.0003204353268
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "carrier_density_m3": 1e+22,
+          "charge_c": 1.602176634e-19,
+          "mobility_m2_per_vs": 0.0,
+          "length_m": 1.0,
+          "area_m2": 1e-06,
+          "voltage_v": 1.0
+        },
+        "expected_error_fragment": "mobility_m2_per_vs must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "carrier_density_m3": 1e+22,
+            "charge_c": 1.602176634e-19,
+            "mobility_m2_per_vs": 0.0,
+            "length_m": 1.0,
+            "area_m2": 1e-06,
+            "voltage_v": 1.0
+          },
+          "input_sha256": "03972a90e21745df16c893d7b61afbc80c15bca2a936c6aee5e665f30f2f70b6",
+          "error_code": "input_contract_error",
+          "error": "mobility_m2_per_vs must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
     {
       "chapter_id": 9,
       "title": "回路という近似",
