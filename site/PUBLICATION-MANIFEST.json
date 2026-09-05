@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T11:01:12.946134+00:00",
+  "generated_at_utc": "2026-09-05T11:06:49.103541+00:00",
   "source_file_count": 1070,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1075,
-  "total_bytes_before_manifest": 21350422,
+  "total_bytes_before_manifest": 21351044,
   "files": [
     {
       "path": ".nojekyll",
@@ -5323,8 +5323,8 @@
     },
     {
       "path": "reviews/completion-audit-20260905.md",
-      "bytes": 2273,
-      "sha256": "120accfd9171967e7d70e568fa057c54fd5b224c837dcda3f434b73344a815cb"
+      "bytes": 2895,
+      "sha256": "d656709f7ba6f60fbbb672404ddd63b08a0af13426fd4508939d5ac59136f33a"
     },
     {
       "path": "reviews/completion-gates.md",
