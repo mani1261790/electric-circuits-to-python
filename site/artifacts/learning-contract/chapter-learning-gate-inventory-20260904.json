@@ -15,9 +15,10 @@
     "runner_measurement_not_run": 718,
     "acceptance_result_rows": 699,
     "acceptance_executed_rows": 0,
-    "acceptance_structural_verified_rows": 294,
+    "acceptance_structural_verified_rows": 385,
+    "acceptance_host_evidence_rows": 11,
     "acceptance_structural_failed_rows": 0,
-    "acceptance_not_run_rows": 405,
+    "acceptance_not_run_rows": 303,
     "acceptance_execution_rows": 0,
     "negative_result_rows": 459,
     "negative_executed_rows": 12,
@@ -34,7 +35,7 @@
     "chapters_with_fault_prompt": 106
   },
   "blockers": [
-    "manifest acceptance_tests have 294 structural-contract rows verified; 0 structural rows failed and 405 domain/learner rows remain not_run",
+    "manifest acceptance_tests have 385 structural-contract rows and 11 mapped host-evidence rows; 0 structural rows failed and 303 domain/learner rows remain not_run",
     "manifest negative_tests have 12 educational-model result rows; the remaining 447 are not_run and measured=true is still zero",
     "chapter-keyed educational change/fault model rows are 106 (baseline 106, change 106, fault 106); these are not learner interactions or external-domain executions",
     "the explicit model mapping is still only an educational contract check; it does not close external-tool, FPGA, physical, or learner interaction gates"
@@ -62,7 +63,7 @@
           "measured": false,
           "execution_mode": "manifest_structural_check",
           "evidence": {
-            "body_characters": 25054,
+            "body_characters": 25755,
             "central_question": "端末で python hello.py を実行し、print(1 + 2) が画面へ現れるまでに何が起きるのか。"
           },
           "checks": [
@@ -87,7 +88,7 @@
               "contract": true,
               "implementation": true
             },
-            "body_characters": 25054
+            "body_characters": 25755
           },
           "checks": [
             true,
@@ -1956,62 +1957,377 @@
           "test_id": "A5",
           "check": "lossless_wave_units_and_limits",
           "status": "not_run",
-          "contract_status": "structural_contract_verified",
+          "contract_status": "host_evidence_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "external_host_tool_output",
           "evidence": {
-            "derivations": 5,
-            "equation_ids": 14
+            "chapter": 9,
+            "acceptance_ids": [
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-9-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-009-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "tau_s": 5e-09,
+                "v_p_m_per_s": 200000000.0,
+                "t_prop_s": 5e-09,
+                "gamma_50ohm": 0.0,
+                "gamma_open": 1.0,
+                "sample_boundary": {
+                  "4ns": 0.0,
+                  "5ns": 1.0
+                }
+              }
+            },
+            "boundary": "代表的な集中／分布解析とκ・終端のhost probeのみ。章全体の実験、変更、故障診断、実測は未閉鎖。"
           },
           "checks": [
             true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
             true
           ],
-          "reason": "manifest/file structure only; not a domain experiment or learner gate"
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A6",
           "check": "lumped_validity_ratio",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 9,
+            "acceptance_ids": [
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-9-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-009-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "tau_s": 5e-09,
+                "v_p_m_per_s": 200000000.0,
+                "t_prop_s": 5e-09,
+                "gamma_50ohm": 0.0,
+                "gamma_open": 1.0,
+                "sample_boundary": {
+                  "4ns": 0.0,
+                  "5ns": 1.0
+                }
+              }
+            },
+            "boundary": "代表的な集中／分布解析とκ・終端のhost probeのみ。章全体の実験、変更、故障診断、実測は未閉鎖。"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A7",
           "check": "same_input_model_comparison",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 9,
+            "acceptance_ids": [
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-9-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-009-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "tau_s": 5e-09,
+                "v_p_m_per_s": 200000000.0,
+                "t_prop_s": 5e-09,
+                "gamma_50ohm": 0.0,
+                "gamma_open": 1.0,
+                "sample_boundary": {
+                  "4ns": 0.0,
+                  "5ns": 1.0
+                }
+              }
+            },
+            "boundary": "代表的な集中／分布解析とκ・終端のhost probeのみ。章全体の実験、変更、故障診断、実測は未閉鎖。"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A8",
           "check": "boundary_and_measurement_separation",
           "status": "not_run",
-          "contract_status": "structural_contract_verified",
+          "contract_status": "host_evidence_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "external_host_tool_output",
           "evidence": {
-            "model_limits": 9,
-            "required_outputs": 7
+            "chapter": 9,
+            "acceptance_ids": [
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-9-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-009-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-009-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "tau_s": 5e-09,
+                "v_p_m_per_s": 200000000.0,
+                "t_prop_s": 5e-09,
+                "gamma_50ohm": 0.0,
+                "gamma_open": 1.0,
+                "sample_boundary": {
+                  "4ns": 0.0,
+                  "5ns": 1.0
+                }
+              }
+            },
+            "boundary": "代表的な集中／分布解析とκ・終端のhost probeのみ。章全体の実験、変更、故障診断、実測は未閉鎖。"
           },
           "checks": [
             true,
             true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
             true
           ],
-          "reason": "manifest/file structure only; not a domain experiment or learner gate"
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A9",
@@ -2184,13 +2500,85 @@
           "test_id": "A5",
           "check": "nodal_resistor_current_source",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 10,
+            "acceptance_ids": [
+              "A5",
+              "A7"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-10-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-010-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-010-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-010-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "node1_V": 2.7499999999999996,
+                "node2_V": 2.4999999999999996,
+                "residual_A": [
+                  -8.673617379884035e-19,
+                  0.0
+                ],
+                "max_abs_residual_A": 8.673617379884035e-19
+              }
+            },
+            "boundary": "電流源付き抵抗網のhost probeのみ。電圧源MNA、学習者実装、負のテスト全体は未閉鎖。"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A6",
@@ -2208,20 +2596,85 @@
           "test_id": "A7",
           "check": "solver_validation_boundary",
           "status": "not_run",
-          "contract_status": "structural_contract_verified",
+          "contract_status": "host_evidence_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "external_host_tool_output",
           "evidence": {
-            "model_limits": 8,
-            "required_outputs": 7
+            "chapter": 10,
+            "acceptance_ids": [
+              "A5",
+              "A7"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-10-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-010-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-010-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-010-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "node1_V": 2.7499999999999996,
+                "node2_V": 2.4999999999999996,
+                "residual_A": [
+                  -8.673617379884035e-19,
+                  0.0
+                ],
+                "max_abs_residual_A": 8.673617379884035e-19
+              }
+            },
+            "boundary": "電流源付き抵抗網のhost probeのみ。電圧源MNA、学習者実装、負のテスト全体は未閉鎖。"
           },
           "checks": [
             true,
             true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
             true
           ],
-          "reason": "manifest/file structure only; not a domain experiment or learner gate"
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A8",
@@ -2384,13 +2837,165 @@
           "test_id": "A8",
           "check": "analytic_numeric_spice_comparison",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 11,
+            "acceptance_ids": [
+              "A8",
+              "A10"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": [
+              "chapter-11-ngspice-rc",
+              "chapter-11-ngspice-rlc"
+            ],
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "rc": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/chapter-11/netlists/rc-transient.cir"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/rc-transient.csv",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-011-rc-ngspice-command.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "ngspice",
+                  "version": "ngspice-47 : Circuit level simulation program",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "rows": 5091,
+                  "columns": 4,
+                  "time_range_s": [
+                    0.0,
+                    0.005
+                  ],
+                  "output_range_V": [
+                    0.0,
+                    3.64623251
+                  ],
+                  "case": "rc"
+                }
+              },
+              "rlc": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/chapter-11/netlists/rlc-transient.cir"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/rlc-transient.csv",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-011-rlc-ngspice-command.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "ngspice",
+                  "version": "ngspice-47 : Circuit level simulation program",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "rows": 5098,
+                  "columns": 6,
+                  "time_range_s": [
+                    1e-11,
+                    0.005
+                  ],
+                  "output_range_V": [
+                    -8.1642462,
+                    13.102607
+                  ],
+                  "case": "rlc"
+                }
+              }
+            },
+            "boundary": "ngspice RC/RLC transient execution only; cross-path learner comparison, change, fault diagnosis, and physical measurement remain open."
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A9",
@@ -2415,19 +3020,165 @@
           "test_id": "A10",
           "check": "units_and_negative_tests",
           "status": "not_run",
-          "contract_status": "structural_contract_verified",
+          "contract_status": "host_evidence_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "external_host_tool_output",
           "evidence": {
-            "derivations": 6,
-            "equation_ids": 11
+            "chapter": 11,
+            "acceptance_ids": [
+              "A8",
+              "A10"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": [
+              "chapter-11-ngspice-rc",
+              "chapter-11-ngspice-rlc"
+            ],
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "rc": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/chapter-11/netlists/rc-transient.cir"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/rc-transient.csv",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-011-rc-ngspice-command.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "ngspice",
+                  "version": "ngspice-47 : Circuit level simulation program",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "rows": 5091,
+                  "columns": 4,
+                  "time_range_s": [
+                    0.0,
+                    0.005
+                  ],
+                  "output_range_V": [
+                    0.0,
+                    3.64623251
+                  ],
+                  "case": "rc"
+                }
+              },
+              "rlc": {
+                "provenance": {
+                  "input_paths": [
+                    "artifacts/chapter-11/netlists/rlc-transient.cir"
+                  ],
+                  "input_hashes_match": true,
+                  "output": "artifacts/external/host-3.11-20260905/rlc-transient.csv",
+                  "output_hash_matches": true,
+                  "log": "artifacts/external/host-3.11-20260905/chapter-011-rlc-ngspice-command.log",
+                  "log_hash_matches": true,
+                  "exit_code": 0,
+                  "tool": "ngspice",
+                  "version": "ngspice-47 : Circuit level simulation program",
+                  "physical_measurement": false
+                },
+                "output": {
+                  "rows": 5098,
+                  "columns": 6,
+                  "time_range_s": [
+                    1e-11,
+                    0.005
+                  ],
+                  "output_range_V": [
+                    -8.1642462,
+                    13.102607
+                  ],
+                  "case": "rlc"
+                }
+              }
+            },
+            "boundary": "ngspice RC/RLC transient execution only; cross-path learner comparison, change, fault diagnosis, and physical measurement remain open."
           },
           "checks": [
             true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
             true
           ],
-          "reason": "manifest/file structure only; not a domain experiment or learner gate"
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A11",
@@ -2576,13 +3327,91 @@
           "test_id": "A4",
           "check": "rc_frequency_response",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 12,
+            "acceptance_ids": [
+              "A4",
+              "A6",
+              "A7"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-12-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-012-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "fc_Hz": 159.15494309189535,
+                "gain_100Hz": 0.8467330159648304,
+                "gain_1kHz": 0.15717672547758987,
+                "thermal_rms_V": 1.2871591976131003e-07,
+                "reflection_gamma": 0.9047619047619048,
+                "dft_bin_count": 7
+              }
+            },
+            "boundary": "RC周波数、FFT、熱雑音、有限終端のhost probeのみ。SPICE、測定、窓掃引、変更、故障診断は未閉鎖。"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A5",
@@ -2607,25 +3436,181 @@
           "test_id": "A6",
           "check": "noise_density_and_bandwidth",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 12,
+            "acceptance_ids": [
+              "A4",
+              "A6",
+              "A7"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-12-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-012-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "fc_Hz": 159.15494309189535,
+                "gain_100Hz": 0.8467330159648304,
+                "gain_1kHz": 0.15717672547758987,
+                "thermal_rms_V": 1.2871591976131003e-07,
+                "reflection_gamma": 0.9047619047619048,
+                "dft_bin_count": 7
+              }
+            },
+            "boundary": "RC周波数、FFT、熱雑音、有限終端のhost probeのみ。SPICE、測定、窓掃引、変更、故障診断は未閉鎖。"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A7",
           "check": "transmission_line_reflection",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "host_evidence_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "external_host_tool_output",
+          "evidence": {
+            "chapter": 12,
+            "acceptance_ids": [
+              "A4",
+              "A6",
+              "A7"
+            ],
+            "status": "host_evidence_verified",
+            "passed": true,
+            "measured": false,
+            "execution_mode": "external_host_tool_output",
+            "tool_run_record": "chapter-12-cpython-intermediate-probe",
+            "provenance_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "output_checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "evidence": {
+              "provenance": {
+                "input_paths": [
+                  "artifacts/external/host-3.11-20260905/chapter-012-intermediate-probe.py"
+                ],
+                "input_hashes_match": true,
+                "output": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-output.json",
+                "output_hash_matches": true,
+                "log": "artifacts/external/host-3.11-20260905/chapter-012-intermediate-command.log",
+                "log_hash_matches": true,
+                "exit_code": 0,
+                "tool": "CPython",
+                "version": "Python 3.11.14",
+                "physical_measurement": false
+              },
+              "output": {
+                "fc_Hz": 159.15494309189535,
+                "gain_100Hz": 0.8467330159648304,
+                "gain_1kHz": 0.15717672547758987,
+                "thermal_rms_V": 1.2871591976131003e-07,
+                "reflection_gamma": 0.9047619047619048,
+                "dft_bin_count": 7
+              }
+            },
+            "boundary": "RC周波数、FFT、熱雑音、有限終端のhost probeのみ。SPICE、測定、窓掃引、変更、故障診断は未閉鎖。"
+          },
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reason": "mapped macOS host-tool evidence only; not fixed-target measurement or a learner-interaction pass"
         },
         {
           "test_id": "A8",
@@ -4462,7 +5447,9 @@
       "experiments_declared": 8,
       "acceptance_tests_declared": 5,
       "negative_tests_declared": 6,
-      "negative_test_statuses": {},
+      "negative_test_statuses": {
+        "planned": 6
+      },
       "negative_tests_measured_true": 0,
       "runner_results": 8,
       "runner_successes": 8,
@@ -4520,13 +5507,22 @@
           "test_id": "A21-05",
           "check": "negative tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 6,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -4610,7 +5606,9 @@
       "experiments_declared": 8,
       "acceptance_tests_declared": 5,
       "negative_tests_declared": 5,
-      "negative_test_statuses": {},
+      "negative_test_statuses": {
+        "planned": 5
+      },
       "negative_tests_measured_true": 0,
       "runner_results": 8,
       "runner_successes": 8,
@@ -4668,13 +5666,22 @@
           "test_id": "A22-05",
           "check": "negative tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -4748,7 +5755,9 @@
       "experiments_declared": 8,
       "acceptance_tests_declared": 5,
       "negative_tests_declared": 9,
-      "negative_test_statuses": {},
+      "negative_test_statuses": {
+        "planned": 9
+      },
       "negative_tests_measured_true": 0,
       "runner_results": 8,
       "runner_successes": 8,
@@ -4806,13 +5815,22 @@
           "test_id": "A23-05",
           "check": "negative tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 9,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -4926,7 +5944,9 @@
       "experiments_declared": 8,
       "acceptance_tests_declared": 5,
       "negative_tests_declared": 10,
-      "negative_test_statuses": {},
+      "negative_test_statuses": {
+        "planned": 10
+      },
       "negative_tests_measured_true": 0,
       "runner_results": 8,
       "runner_successes": 8,
@@ -4984,13 +6004,22 @@
           "test_id": "A24-05",
           "check": "negative tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 10,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -5205,13 +6234,22 @@
           "test_id": "A25-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 11,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A25-07",
@@ -5461,13 +6499,22 @@
           "test_id": "A26-07",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 9,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -5665,13 +6712,22 @@
           "test_id": "A27-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 9,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -5864,13 +6920,22 @@
           "test_id": "A28-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 9,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -6068,13 +7133,22 @@
           "test_id": "A29-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 20,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -6390,13 +7464,22 @@
           "test_id": "A30-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -6584,13 +7667,22 @@
           "test_id": "A31-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 11,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -6820,13 +7912,22 @@
           "test_id": "A32-07",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7002,13 +8103,22 @@
           "test_id": "A33-05",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7196,13 +8306,22 @@
           "test_id": "A34-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7390,13 +8509,22 @@
           "test_id": "A35-06",
           "check": "negative_tests",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7572,13 +8700,22 @@
           "test_id": "A36-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7714,13 +8851,22 @@
           "test_id": "A37-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7856,13 +9002,22 @@
           "test_id": "A38-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -7986,13 +9141,22 @@
           "test_id": "A39-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -8128,13 +9292,22 @@
           "test_id": "A40-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -8282,13 +9455,22 @@
           "test_id": "A41-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -8436,13 +9618,22 @@
           "test_id": "A42-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -8602,13 +9793,22 @@
           "test_id": "A43-07",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -8694,13 +9894,26 @@
           "test_id": "A44-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A44-02",
@@ -8942,13 +10155,22 @@
           "test_id": "A45-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -9124,13 +10346,22 @@
           "test_id": "A46-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 8,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -9306,13 +10537,22 @@
           "test_id": "A47-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 9,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -9692,13 +10932,22 @@
           "test_id": "A49-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 3,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -9812,13 +11061,22 @@
           "test_id": "A50-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 3,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -9944,13 +11202,22 @@
           "test_id": "A51-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 3,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -10028,13 +11295,26 @@
           "test_id": "A52-02",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A52-03",
@@ -10076,13 +11356,22 @@
           "test_id": "A52-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 3,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -10196,13 +11485,22 @@
           "test_id": "A53-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 3,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -10316,13 +11614,22 @@
           "test_id": "A54-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A54-06",
@@ -10492,13 +11799,22 @@
           "test_id": "A55-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -10982,13 +12298,22 @@
           "test_id": "A58-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 4,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A58-06",
@@ -12594,13 +13919,22 @@
           "test_id": "A68-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A68-06",
@@ -12753,13 +14087,22 @@
           "test_id": "A69-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A69-06",
@@ -12919,13 +14262,22 @@
           "test_id": "A70-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A70-06",
@@ -13085,13 +14437,22 @@
           "test_id": "A71-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A71-06",
@@ -13244,13 +14605,22 @@
           "test_id": "A72-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A72-06",
@@ -13394,13 +14764,22 @@
           "test_id": "A73-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A73-04",
@@ -13529,13 +14908,22 @@
           "test_id": "A74-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A74-04",
@@ -13664,13 +15052,22 @@
           "test_id": "A75-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A75-04",
@@ -13799,13 +15196,22 @@
           "test_id": "A76-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A76-04",
@@ -13934,13 +15340,22 @@
           "test_id": "A77-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A77-04",
@@ -14069,13 +15484,22 @@
           "test_id": "A78-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A78-04",
@@ -14204,13 +15628,22 @@
           "test_id": "A79-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A79-04",
@@ -14339,13 +15772,22 @@
           "test_id": "A80-03",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 1,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A80-04",
@@ -14495,13 +15937,22 @@
           "test_id": "A81-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -14655,13 +16106,22 @@
           "test_id": "A82-06",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         }
       ],
       "negative_results": [
@@ -14747,25 +16207,47 @@
           "test_id": "A83-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A83-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A83-03",
@@ -14934,25 +16416,47 @@
           "test_id": "A84-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A84-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A84-03",
@@ -15121,25 +16625,47 @@
           "test_id": "A85-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A85-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A85-03",
@@ -15308,25 +16834,47 @@
           "test_id": "A86-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A86-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A86-03",
@@ -15495,25 +17043,47 @@
           "test_id": "A87-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A87-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A87-03",
@@ -15682,25 +17252,47 @@
           "test_id": "A88-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A88-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A88-03",
@@ -16077,13 +17669,22 @@
           "test_id": "A90-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A90-06",
@@ -16244,13 +17845,22 @@
           "test_id": "A91-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A91-06",
@@ -16724,13 +18334,22 @@
           "test_id": "A94-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A94-06",
@@ -16884,13 +18503,22 @@
           "test_id": "A95-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A95-06",
@@ -17156,25 +18784,47 @@
           "test_id": "A97-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A97-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A97-03",
@@ -17183,10 +18833,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -17223,13 +18874,22 @@
           "test_id": "A97-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A97-06",
@@ -17335,25 +18995,47 @@
           "test_id": "A98-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A98-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A98-03",
@@ -17362,10 +19044,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -17402,13 +19085,22 @@
           "test_id": "A98-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A98-06",
@@ -17514,25 +19206,47 @@
           "test_id": "A99-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A99-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A99-03",
@@ -17541,10 +19255,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -17581,13 +19296,22 @@
           "test_id": "A99-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A99-06",
@@ -17693,25 +19417,47 @@
           "test_id": "A100-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A100-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A100-03",
@@ -17720,10 +19466,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -17760,13 +19507,22 @@
           "test_id": "A100-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A100-06",
@@ -17872,25 +19628,47 @@
           "test_id": "A101-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A101-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A101-03",
@@ -17899,10 +19677,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -17939,13 +19718,22 @@
           "test_id": "A101-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A101-06",
@@ -18051,25 +19839,47 @@
           "test_id": "A102-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A102-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A102-03",
@@ -18078,10 +19888,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -18118,13 +19929,22 @@
           "test_id": "A102-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A102-06",
@@ -18230,25 +20050,47 @@
           "test_id": "A103-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A103-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A103-03",
@@ -18257,10 +20099,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -18297,13 +20140,22 @@
           "test_id": "A103-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A103-06",
@@ -18409,25 +20261,47 @@
           "test_id": "A104-01",
           "check": "state",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "state_contract_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "required_outputs": 7,
+            "state_terms_present": {
+              "入力": true,
+              "状態": true,
+              "結果": true
+            },
+            "execution_status": "documentation/manifest shape only; state reproduction remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A104-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A104-03",
@@ -18436,10 +20310,11 @@
           "contract_status": "structural_contract_verified",
           "passed": true,
           "measured": false,
-          "execution_mode": "manifest_structural_check",
+          "execution_mode": "language_boundary_structure_check",
           "evidence": {
-            "model_limits": 3,
-            "required_outputs": 7
+            "spec_present": true,
+            "implementation_present": true,
+            "boundary_present": true
           },
           "checks": [
             true,
@@ -18476,13 +20351,22 @@
           "test_id": "A104-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A104-06",
@@ -18607,13 +20491,22 @@
           "test_id": "A105-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A105-03",
@@ -18662,13 +20555,22 @@
           "test_id": "A105-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A105-06",
@@ -18792,13 +20694,22 @@
           "test_id": "A106-02",
           "check": "normal",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "normal_path_structure_check",
+          "evidence": {
+            "experiments": 8,
+            "normal_or_trace_language_present": true,
+            "experiment_ids_present": true,
+            "execution_status": "documentation/manifest shape only; normal-path replay remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A106-03",
@@ -18847,13 +20758,22 @@
           "test_id": "A106-05",
           "check": "negative",
           "status": "not_run",
-          "contract_status": "not_run",
-          "passed": null,
+          "contract_status": "structural_contract_verified",
+          "passed": true,
           "measured": false,
-          "execution_mode": "not_implemented",
-          "evidence": null,
-          "checks": null,
-          "reason": "domain or learner-interaction acceptance adapter is not implemented"
+          "execution_mode": "negative_contract_structure_check",
+          "evidence": {
+            "negative_tests": 5,
+            "typed_contract": true,
+            "failure_boundary_documented": true,
+            "execution_status": "metadata/documentation only; negative execution remains separate"
+          },
+          "checks": [
+            true,
+            true,
+            true
+          ],
+          "reason": "manifest/file structure only; not a domain experiment or learner gate"
         },
         {
           "test_id": "A106-06",
