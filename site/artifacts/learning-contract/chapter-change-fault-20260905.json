@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "93c75825a203ba9264d0da33984b9dacefcb02ff75d6a0963079f31ee6caaede",
-  "scope": "chapters 9-24; executable educational models",
+  "source_sha256": "b422b00539e99d7ad09567014beec3ef5f3d873c0526a394b92b4c1ae4ba81b6",
+  "scope": "chapters 9-28; executable educational models",
   "summary": {
-    "chapters": 16,
-    "baseline_passed": 16,
-    "change_passed": 16,
-    "fault_passed": 16,
+    "chapters": 20,
+    "baseline_passed": 20,
+    "change_passed": 20,
+    "fault_passed": 20,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -1370,6 +1370,323 @@
           "input_sha256": "2f2cd5cafca8dd982040dedc7c09e4964e111306c560caaeb870c25a7f00a8b8",
           "error_code": "input_contract_error",
           "error": "V_DD_v must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 25,
+      "title": "論理電圧、雑音余裕、信号再生",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "logic_voltage_noise_margin",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.0,
+          "V_IL_fraction": 0.45,
+          "V_IH_fraction": 0.55,
+          "V_OL_fraction": 0.05,
+          "V_OH_fraction": 0.95
+        },
+        "input_sha256": "1b9966694853a9c501947a88319c4bb4e8e887f37623c9d2e838ba355377b3e9",
+        "output": {
+          "NML_v": 0.4,
+          "NMH_v": 0.3999999999999999
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 1.2,
+          "V_IL_fraction": 0.45,
+          "V_IH_fraction": 0.55,
+          "V_OL_fraction": 0.05,
+          "V_OH_fraction": 0.95
+        },
+        "output_changed_key": "NML_v",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "V_DD_v": 1.2,
+            "V_IL_fraction": 0.45,
+            "V_IH_fraction": 0.55,
+            "V_OL_fraction": 0.05,
+            "V_OH_fraction": 0.95
+          },
+          "input_sha256": "765a46e505b3d2f327f28228a97164eacb6e3543b37a1aa253e88a26fe09c3ed",
+          "output": {
+            "NML_v": 0.48,
+            "NMH_v": 0.47999999999999987
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "V_DD_v": 0.0,
+          "V_IL_fraction": 0.45,
+          "V_IH_fraction": 0.55,
+          "V_OL_fraction": 0.05,
+          "V_OH_fraction": 0.95
+        },
+        "expected_error_fragment": "V_DD_v must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "V_DD_v": 0.0,
+            "V_IL_fraction": 0.45,
+            "V_IH_fraction": 0.55,
+            "V_OL_fraction": 0.05,
+            "V_OH_fraction": 0.95
+          },
+          "input_sha256": "b765ea929ab9a3cec637d08aa3a73bca2344658beb3f3cdee9861f7ea13a641d",
+          "error_code": "input_contract_error",
+          "error": "V_DD_v must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 26,
+      "title": "CMOS NAND、NOR、伝送ゲート",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "cmos_gate_network_contract",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "input_arity": 2,
+          "gate_kind": "nand"
+        },
+        "input_sha256": "78533ab20b3a790c0295914c909a75dc040b9a78fc959c7d58c056ddb0a380d8",
+        "output": {
+          "input_arity": 2.0,
+          "truth_table_rows": 4.0,
+          "series_stack_depth": 2.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "input_arity": 3,
+          "gate_kind": "nand"
+        },
+        "output_changed_key": "input_arity",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "input_arity": 3,
+            "gate_kind": "nand"
+          },
+          "input_sha256": "f94fe4011ddf339ced7b7c8ff053329c2856905b611041712cef0446175e06a8",
+          "output": {
+            "input_arity": 3.0,
+            "truth_table_rows": 8.0,
+            "series_stack_depth": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "input_arity": 0,
+          "gate_kind": "nand"
+        },
+        "expected_error_fragment": "input_arity must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "input_arity": 0,
+            "gate_kind": "nand"
+          },
+          "input_sha256": "c06dea645e45393149fa34f824ae5a793521d8e00412b2ed53387a3b375a33cd",
+          "error_code": "input_contract_error",
+          "error": "input_arity must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 27,
+      "title": "伝搬遅延、負荷、消費電力",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "first_order_cmos_delay_power",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "effective_resistance_ohm": 1000.0,
+          "load_capacitance_f": 1e-15,
+          "V_DD_v": 1.0,
+          "frequency_hz": 1000000000.0,
+          "activity": 0.5
+        },
+        "input_sha256": "b0c218d1d7fce72e67303207147b6ab8d90837d6519873d92d6fd430f2dcd302",
+        "output": {
+          "propagation_delay_s": 6.900000000000001e-13,
+          "dynamic_power_w": 5.000000000000001e-07
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "effective_resistance_ohm": 1000.0,
+          "load_capacitance_f": 2e-15,
+          "V_DD_v": 1.0,
+          "frequency_hz": 1000000000.0,
+          "activity": 0.5
+        },
+        "output_changed_key": "propagation_delay_s",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "effective_resistance_ohm": 1000.0,
+            "load_capacitance_f": 2e-15,
+            "V_DD_v": 1.0,
+            "frequency_hz": 1000000000.0,
+            "activity": 0.5
+          },
+          "input_sha256": "2e0e6a1f9790223a9bd4cb301a6215d0ed658b0d5608eaf06f50fd914f435eb3",
+          "output": {
+            "propagation_delay_s": 1.3800000000000002e-12,
+            "dynamic_power_w": 1.0000000000000002e-06
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "effective_resistance_ohm": 1000.0,
+          "load_capacitance_f": -1e-15,
+          "V_DD_v": 1.0,
+          "frequency_hz": 1000000000.0,
+          "activity": 0.5
+        },
+        "expected_error_fragment": "load_capacitance_f must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "effective_resistance_ohm": 1000.0,
+            "load_capacitance_f": -1e-15,
+            "V_DD_v": 1.0,
+            "frequency_hz": 1000000000.0,
+            "activity": 0.5
+          },
+          "input_sha256": "bb9d92c83791e983c54a583eedcddb303f35856729058ff7604bdcce0f58463e",
+          "error_code": "input_contract_error",
+          "error": "load_capacitance_f must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 28,
+      "title": "製造、レイアウト、設計規則",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E8"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "generic_layout_pitch_and_area",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "width_m": 1e-06,
+          "height_m": 2e-06,
+          "spacing_m": 2e-07
+        },
+        "input_sha256": "7f9e29df15e1337d7d6dfee2ebb0f411294ebdde3b8dec8c43900ff1280cf2cb",
+        "output": {
+          "area_m2": 2e-12,
+          "pitch_m": 1.2e-06
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "width_m": 1e-06,
+          "height_m": 2e-06,
+          "spacing_m": 4e-07
+        },
+        "output_changed_key": "pitch_m",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "width_m": 1e-06,
+            "height_m": 2e-06,
+            "spacing_m": 4e-07
+          },
+          "input_sha256": "9118b9c571f0ded42456ed644eef59d6e265d7c00676a673f3bfbc92d764a0d4",
+          "output": {
+            "area_m2": 2e-12,
+            "pitch_m": 1.4e-06
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "width_m": 1e-06,
+          "height_m": 2e-06,
+          "spacing_m": 0.0
+        },
+        "expected_error_fragment": "spacing_m must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "width_m": 1e-06,
+            "height_m": 2e-06,
+            "spacing_m": 0.0
+          },
+          "input_sha256": "5bd9e14210521a10b2c647a22ca5ebf00e73e7eab59c9c0968a55be17e88ffa2",
+          "error_code": "input_contract_error",
+          "error": "spacing_m must be a finite positive number"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },

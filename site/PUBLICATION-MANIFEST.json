@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T09:44:52.294322+00:00",
+  "generated_at_utc": "2026-09-05T09:48:05.641104+00:00",
   "source_file_count": 1069,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1074,
-  "total_bytes_before_manifest": 21102755,
+  "total_bytes_before_manifest": 21113636,
   "files": [
     {
       "path": ".nojekyll",
@@ -38,8 +38,8 @@
     },
     {
       "path": "artifacts/learning-contract/chapter-change-fault-20260905.json",
-      "bytes": 44834,
-      "sha256": "4f6259689a9c68ded8bc50f64b4c2c67df54c7d196dfbdd531dabff5d51c7e2a"
+      "bytes": 54977,
+      "sha256": "c0af47102ec7b8e68604da30aefacf174b3fa4138e375f99015c0134ecb1543d"
     },
     {
       "path": "artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json",
@@ -5279,7 +5279,7 @@
     {
       "path": "build/html/index.html",
       "bytes": 102489,
-      "sha256": "2efcab6901fdd097c298daecba28e6040768e91401e03870f15e2de504ec8576"
+      "sha256": "8aee47a327e1a2eb910f1c2b7b757329eac92a57401e5701419c22bb96f071bf"
     },
     {
       "path": "build/html/prelude.html",
@@ -5303,8 +5303,8 @@
     },
     {
       "path": "reviews/chapter-change-fault-20260905.md",
-      "bytes": 4123,
-      "sha256": "25272aab36ea062e19a8460aa641eeba4d6af3c1b44ebd6bfbd03ca5b2aa1f54"
+      "bytes": 4861,
+      "sha256": "5dbc0cfe9ba4f1a9598ffee03b4985db77304988939736458f1b13c2cf67a8e1"
     },
     {
       "path": "reviews/chapter-learning-gate-inventory-20260904.md",
