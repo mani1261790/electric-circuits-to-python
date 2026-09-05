@@ -46,10 +46,16 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-38-1">38.1 エッジの前後にある時間</h2>
 <p><a class="term" href="index.html#term-flip_flop">flip-flop</a>はclockの一点だけを読むように見えるが、実際の素子には入力を準備する時間が要る。<strong>setup time</strong>はclock edgeより前にDが安定しているべき時間、<strong>hold time</strong>はedgeの後もDを変えてはいけない時間である。clock edgeを10 ns、(t_{setup}=2\,ns)、(t_{hold}=1\,ns) とする予定契約なら、Dは少なくとも8〜11 nsの窓で安定していなければならない。</p>
 <p>この窓を守ったかどうかは、論理値だけでなく時刻の関係で判定する。Dが9.5 nsで変わる例はsetup違反、10.5 nsで変わる例はhold違反であり、どちらも通常の0または1として固定しない。</p>
-<h2 id="section-38-2">38.2 <a class="term" href="index.html#term-concept_36_term_103c95fdbd_103c95fd">準安定</a></h2>
+<h3 id="section-38-1-1">38.1.1　まず時間窓を一枚にする</h3>
+<p>最初は式を覚えるより、<a class="term" href="index.html#term-clock">clock</a> edgeとDの変化を同じ表に置く。<code>t_e=10 ns</code>、<code>t_setup=2 ns</code>、<code>t_hold=1 ns</code>なら、境界の外側だけが「安定」と判定できる。</p>
+<table><thead><tr><th>Dの変化時刻</th><th>edgeとの関係</th><th>判定</th><th>次のQの扱い</th></tr></thead>
+<tbody><tr><td>7 ns</td><td>setupより前</td><td>合格</td><td>通常の論理モデルへ進む</td></tr><tr><td>9.5 ns</td><td>setup窓の内側</td><td>setup違反</td><td>0/1に固定しない</td></tr><tr><td>10.5 ns</td><td>hold窓の内側</td><td>hold違反</td><td>0/1に固定しない</td></tr><tr><td>12 ns</td><td>holdより後</td><td>合格</td><td>通常の論理モデルへ進む</td></tr></tbody>
+</table>
+<p>この表の「合格」は実機でQが必ず安定するという意味ではなく、入力時刻が予定契約の外側にあるという意味である。違反行を都合のよい0または1へ丸めないことが、<a class="term" href="index.html#term-concept_36_term_103c95fdbd_103c95fd">準安定</a>を学ぶ最初の境界になる。</p>
+<h2 id="section-38-2">38.2 準安定</h2>
 <p>setup/hold違反のとき、内部の二つの<a class="term" href="index.html#term-feedback">帰還</a>ノードが一方の値へ決まるまで長く留まることがある。この状態を<strong>metastability</strong>（準安定）と呼ぶ。これは第三の安定な論理値ではなく、解決途中のアナログ状態である。いつ解決するか、どちらへ解決するかは、入力時刻、雑音、電源、素子差に依存する。</p>
 <h2 id="section-38-3-synchronizer">38.3 <a class="term" href="index.html#term-synchronizer">synchronizer</a></h2>
-<p>別<a class="term" href="index.html#term-clock">clock</a>領域から来た1 bit信号を一つのflip-flopへ直接入れると、そのflip-flopが準安定になる可能性がある。そこで同じclockのflip-flopを二段直列にし、第一段の不確かな出力が第二段のedgeまでに解決する時間を稼ぐ。二段構成は確率を下げる設計であり、発生をゼロにする証明ではない。複数bitを各bit独立に同期するだけでは、word全体の同時性を保証しない。</p>
+<p>別clock領域から来た1 bit信号を一つのflip-flopへ直接入れると、そのflip-flopが準安定になる可能性がある。そこで同じclockのflip-flopを二段直列にし、第一段の不確かな出力が第二段のedgeまでに解決する時間を稼ぐ。二段構成は確率を下げる設計であり、発生をゼロにする証明ではない。複数bitを各bit独立に同期するだけでは、word全体の同時性を保証しない。</p>
 <p>cycle番号で書けば、第一段は (Q_1[n]=sample(async\_input,n))、第二段は (Q_2[n]=Q_1[n-1]) である。第二段が第一段の値を読むまでに使える模型上の時間は、(T_{available}=T_{clk}-t_{CQ}-t_{setup}-margin)。この予算を確保しても、第一段がその時間内に必ず解決する（<code>after_resolution</code>）とは保証しない。確率的な故障率を下げる契約と、全入力での論理同値性を混同しない。</p>
 <h2 id="section-38-4">38.4 解決時間と出所</h2>
 <p>準安定の解決時間はSPICEや測定で観察できるが、環境とモデルを指定しなければ数値は意味を持たない。<a class="term" href="index.html#term-mtbf">MTBF</a>の式は確率模型であり、特定製品の保証値ではない。RTL runnerで <code>X</code> を表示しても、それだけでアナログ電圧を測ったことにはならない。本章の予定実験は、入力時刻掃引、二段synchronizer比較、出所台帳を別々に残す。入力時刻掃引の実行前に、解決済み出力を保証するという期待を書かず、<code>after_resolution: not_guaranteed</code> と記録する。</p>

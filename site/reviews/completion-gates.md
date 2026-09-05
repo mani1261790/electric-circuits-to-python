@@ -1095,6 +1095,14 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 
 現行判定は **P0=0 / P1=1（必修実験・章固有change/fault・外部実装受入） / P2=2（FPGA任意経路、trace D/E/F物理下位層） / `learner-ready`保留**を維持する。
 
+## 124. 2026-09-06 第38〜42章の状態・記憶導入追記後
+
+第38〜42章へ、setup/holdの時間窓、registerの幅とload、clock/resetの時間所有者、SRAM一bitのread/write、SRAM・DRAM・ROM・flashの保持方式を表で読む導入を追加した。既存の実験契約・未実行境界・PC-only基準は変更していない。
+
+HTML再生成・`validate_book`・固定Chrome測定はPrelude 12頁、本文3,509頁、合算3,521頁、各章24〜40頁、under24=0、107/107 hash一致。`tmp/page-counts.json`は生成`2026-09-05T15:05:22+00:00`、SHA-256=`1bb95e6fe417b907128cd1b1fa66b5d5f193a58857f805c595e1c38de18a705b`である。
+
+現行acceptanceは699件中`structural_contract_verified=385`、`host_evidence_verified=16`、failed=0、domain／learner未実行298件、`measured=true=0`。negativeは教育モデル12/459件、固定runnerは718/718 successだが測定欄718件すべて`not_run`、章固有change/fault execution artifactは0章である。P1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）は残り、`learner-ready`は保留する。
+
 ## 121. 2026-09-05 第24〜27章の初心者導線追記後
 
 執筆へ戻る区切りとして、第24〜27章へ、既存の数式・実験契約を置き換えない初心者向け橋渡しを追加した。

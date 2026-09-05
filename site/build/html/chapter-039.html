@@ -46,12 +46,18 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-39-1">39.1 状態を幅付きで持つ</h2>
 <p><a class="term" href="index.html#term-flip_flop">flip-flop</a>を複数並べ、同じclockで一度に更新すると<strong>register</strong>になる。registerは値を保持し、load enableが有効なcycleだけ新しい値を取り込む。例えば4-bit registerを初期値 <code>0000</code>、load=1のcycleに <code>1010</code> とすれば、次の観測で <code>1010</code> になる。load=0の間に入力が変わっても値は変わらない。</p>
 <p><strong><a class="term" href="index.html#term-counter">counter</a></strong>は、現在値から次の値を規則的に作るregisterである。2-bit modulo-4 counterの予定遷移は <code>00→01→10→11→00</code>。各矢印は一つの有効clockを表す。最大値の次に <code>00</code> へ戻るのは有限幅の契約であり、無限整数の計算ではない。</p>
+<h3 id="section-39-1-1">39.1.1　まず幅と更新条件を分ける</h3>
+<p>registerを読むときは、「入力が何か」と「今cycleに書き込むか」を別の欄にする。4-bit registerの初期値を<code>0000</code>とすると、<code>load=0</code>では入力が変わっても状態は保持され、<code>load=1</code>のedgeでだけ入力が状態へ移る。</p>
+<table><thead><tr><th>cycle</th><th>load</th><th>入力D</th><th>観測される状態Q</th><th>読み方</th></tr></thead>
+<tbody><tr><td>0</td><td>0</td><td><code>1010</code></td><td><code>0000</code></td><td>保持</td></tr><tr><td>1</td><td>1</td><td><code>1010</code></td><td><code>1010</code></td><td>edgeで取込み</td></tr><tr><td>2</td><td>0</td><td><code>0011</code></td><td><code>1010</code></td><td>入力変更は未反映</td></tr></tbody>
+</table>
+<p>counterでは、同じ表の入力欄を「現在値から作る次状態」に置き換える。2-bitなら<code>3+1</code>を無限整数の<code>4</code>として残さず、幅の契約に従って<code>00</code>へ戻す。幅、re<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>、未定義状態を一行ずつ残すと、算術の誤りと状態機械の誤りを分けて診断できる。</p>
 <h2 id="section-39-2">39.2 <a class="term" href="index.html#term-finite_state_machine">有限状態機械</a></h2>
 <p>有限状態機械（FSM）は、状態register、次状態を作る組合せ回路、出力回路からなる。例として<a class="term" href="index.html#term-concept_67_uart_3c85ca67">UART</a>送信器を小さく抽象化し、<code>IDLE --start=1--&gt; SEND0 --tick=1--&gt; SEND1 --tick=1--&gt; DONE --tick=1--&gt; IDLE</code> とする。本章の代表契約はMoore型で、出力<code>busy</code>をIDLE/DONE=0、SEND0/SEND1=1とする。各状態について<code>start,tick</code>の4通り、合計16行を遷移表へ置き、startとtickが同時に1でも優先規則を隠さない。Moore型なら出力は状態だけ、Mealy型なら状態と入力で決まるため、実装前にどちらかを選ぶ。3 bit符号化をIDLE=<code>000</code>、SEND0=<code>001</code>、SEND1=<code>010</code>、DONE=<code>011</code>とし、<code>100</code>〜<code>111</code>はillegalとしてIDLEへ回復する。resetはどの状態からもIDLEへ戻す。表にない入力や遷移を黙って補わず、既定の安全状態を定める。</p>
 <h2 id="section-39-3-datapath-controller">39.3 <a class="term" href="index.html#term-concept_47_datapath_f5f6ba47">datapath</a>とcontroller</h2>
 <p>counterやFSMの状態は、時間を持つ<a class="term" href="index.html#term-controller">controller</a>である。演算結果そのものは第35章のdatapathに置き、controllerがload、shift、加算などを指示する。状態符号化はbinaryでもone-hotでもよいが、符号化の違いと機能の違いを分ける。到達不能状態、幅不足、reset未定義は検証対象にする。</p>
 <p>FSMの検査では、状態だけでなく入力と副作用を一つの行へまとめる。例えば <code>SEND1</code> で <code>tick=1</code> なら次状態は <code>DONE</code>、<code>busy</code>はそのcycle中も1、次の観測で0になる。<code>start=1</code> を同時に与えたときに再送を受け付けるかは、表の優先順位で決まる。ここを暗黙のif文へ任せると、シミュレーションと合成後の読みやすさが失われる。変更課題では、illegal状態 <code>101</code> を入力し、IDLE回復が一cycleで起きること、回復中にUART出力を発生させないことを確認する。counterについては、2-bit加算をPythonの無限整数で計算した後にマスクする順序と、最初から幅を制限する順序が一致するかを小さな表で比較する。</p>
-<p>この比較では、<code>3 + 1 = 4</code> をそのまま表示する実装は4-bit以上の値を許してしまう一方、<code>(3 + 1) &amp; 0b11 = 0</code> は2-bit counterの契約に沿う。状態の幅、re<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>値、未定義入力の扱いを同じ表へ置くことで、controllerのバグをdatapathの算術バグと切り分けられる。</p>
+<p>この比較では、<code>3 + 1 = 4</code> をそのまま表示する実装は4-bit以上の値を許してしまう一方、<code>(3 + 1) &amp; 0b11 = 0</code> は2-bit counterの契約に沿う。状態の幅、reset値、未定義入力の扱いを同じ表へ置くことで、controllerのバグをdatapathの算術バグと切り分けられる。</p>
 <p>runnerの失敗診断には、現在状態、入力、期待次状態、実際の次状態を残す。 期待値だけを比較して途中の状態を捨てると、同じ最終出力へ到達する誤った遷移を見逃す。</p>
 <h2 id="section-39-4">39.4 検証の境界</h2>
 <p>全状態・全入力の表を照合するformal/runnerは論理契約の検査であり、<a class="term" href="index.html#term-clock_skew">clock skew</a>や電源電圧を測ったものではない。SystemVerilog assertionは「この状態なら次はこの状態」という主張を記録する。合成面積・遅延・電力は、第27〜28章の物理・実装出所で別に扱う。</p>

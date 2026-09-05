@@ -46,18 +46,24 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-41-1-bit">41.1 一つのbitを保持する</h2>
 <p>第40章で扱った<a class="term" href="index.html#term-clock">clock</a>とresetを、記憶セルの配列へ持ち込む。6T SRAM（static random-access memory）は、二つの交差結合インバータで <code>Q</code> と <code>Qbar</code> を保持し、二つのaccess transistorで外部のbit lineへ接続する。word lineが0ならaccess transistorは閉じ、セルは外部から切り離される。word lineが1ならbit lineとの読書きが許される。</p>
 <p>理想論理だけならセルは <code>Q=0,Qbar=1</code> または <code>Q=1,Qbar=0</code> のどちらかを保持する。実際のセルでは、読出し時にprechargeした<a class="term" href="index.html#term-concept_41_bit_line_6d60fe27">bit line</a>がセルをわずかに引っ張るため、内部の低い側が持ち上がるread disturbを調べる必要がある。これは「保持できるか」という論理の問いと、「電圧がどれだけ動くか」というSPICEの問いを分ける例である。</p>
+<h3 id="section-41-1-1-bit">41.1.1　まず一bitの状態表を作る</h3>
+<p>セルを配列やCPUの<a class="term" href="index.html#term-concept_41_register_file_8c2dd3d3">register file</a>へ広げる前に、内部ノード、word line、bit lineを一行ずつ対応させる。ここでの「read成功」は、物理測定値ではなく、指定した簡略模型の状態遷移が契約どおりという意味である。</p>
+<table><thead><tr><th>操作</th><th><a class="term" href="index.html#term-concept_41_word_line_3673db4f">word line</a></th><th>bit line</th><th>内部状態</th><th>注意する境界</th></tr></thead>
+<tbody><tr><td>hold</td><td>0</td><td>precharge</td><td>0/1を保持</td><td>電源と<a class="term" href="index.html#term-feedback">帰還</a>を仮定</td></tr><tr><td>read</td><td>1</td><td>小さな差</td><td>状態をsenseへ渡す</td><td><a class="term" href="index.html#term-concept_41_read_disturb_c4a9e2a4">read disturb</a></td></tr><tr><td>write</td><td>1</td><td>反対の強い値</td><td>新しい0/1へ遷移</td><td><a class="term" href="index.html#term-concept_41_write_margin_6aafe3d6">write margin</a></td></tr></tbody>
+</table>
+<p>readとwriteを同じ「値を読む／書く」という言葉だけで済ませず、どの線が駆動し、どのノードが変化するかを残す。その後で<a class="term" href="index.html#term-concept_48_decoder_f9e61677">decoder</a>、array、2-read 1-writeへ進むと、セルの故障とアドレス選択の故障を取り違えにくい。</p>
 <h2 id="section-41-2-read-write">41.2 readとwriteを<a class="term" href="index.html#term-voltage">電圧</a>の過程として考える</h2>
 <p>読出しでは、二本のbit lineを同じ初期<a class="term" href="index.html#term-concept_5_term_505acbf1f4_505acbf1">電位</a>へprechargeし、word lineを有効にする。セルが保持する0側の線だけが放電し、sense amplifierが微小な差を論理値へ増幅する。読出しはセルを壊さない理想操作ではなく、セルの保持能力とbit-line負荷に依存する。</p>
-<p>書込みでは、一方のbit lineを0、もう一方を1へ駆動し、<a class="term" href="index.html#term-concept_41_word_line_3673db4f">word line</a>を有効にして交差結合インバータを新しい固定点へ押す。駆動側が弱ければwrite marginを失い、古い値を反転できない。したがって「word line=1なら必ず書ける」とは言わず、電源、トランジスタモデル、bit-line初期値、負荷を含む条件付きの主張にする。</p>
+<p>書込みでは、一方のbit lineを0、もう一方を1へ駆動し、word lineを有効にして<a class="term" href="index.html#term-cross_coupled_inverter">交差結合インバータ</a>を新しい固定点へ押す。駆動側が弱ければwrite marginを失い、古い値を反転できない。したがって「word line=1なら必ず書ける」とは言わず、電源、トランジスタモデル、bit-line初期値、負荷を含む条件付きの主張にする。</p>
 <p>予定するSPICE入力は、<code>ngspice-42-candidate</code>、generic <a class="term" href="index.html#term-cmos">CMOS</a> level-1 candidate、27 °C、<code>V_DD=1.0 V</code>、bit-line容量10 fF、刻み0.1 psで固定する。これは実測条件でも、既定ライブラリの性能値でもない。実行後にはモデル、初期状態、判定電圧、ログを同じartifactへ保存する。</p>
 <h2 id="section-41-3">41.3 セルを配列にする</h2>
-<p>セルを行と列へ並べると、row <a class="term" href="index.html#term-concept_48_decoder_f9e61677">decoder</a>が一つのword lineを選び、column muxまたはsense amplifierが必要な列を選ぶ。アドレスは「値そのもの」ではなく、どのセルへ操作を届けるかを指定する。選択されない行のword lineは0でなければならず、複数行を同時に1にするのは負のテスト対象である。</p>
+<p>セルを行と列へ並べると、row decoderが一つのword lineを選び、column muxまたはsense amplifierが必要な列を選ぶ。アドレスは「値そのもの」ではなく、どのセルへ操作を届けるかを指定する。選択されない行のword lineは0でなければならず、複数行を同時に1にするのは負のテスト対象である。</p>
 <p>面積と速度の見方も分ける。<a class="term" href="index.html#term-concept_41_6t_sram_2795b377">6T SRAM</a>は1 bitあたりのセル面積が大きい代わりに、refreshを必要とせず、短い読書き経路を作りやすい。そのためregister fileやcacheに向く。一方、これは「常に最速・最小」という意味ではなく、容量、配線、port数、製造技術で変わる。</p>
-<h2 id="section-41-4-2-read-1-write-register-file">41.4 2-read 1-write <a class="term" href="index.html#term-concept_41_register_file_8c2dd3d3">register file</a></h2>
+<h2 id="section-41-4-2-read-1-write-register-file">41.4 2-read 1-write register file</h2>
 <p>CPUのregister fileは複数の<a class="term" href="index.html#term-register">register</a>をアドレスで選び、二本のread portから同じcycleに二つの値を読み、一つのwrite portで一つの値を書ける構成を代表例とする。32語×32 bitでは、5 bitのread addressが32語の一つを選ぶ。writeはclock edgeでだけ行い、<code>write_enable=0</code> なら保持する。<code>x0</code> を持つISAへ接続する場合は、x0への書込みを捨て、読出しを常に0へする契約を追加する。</p>
 <p>同じaddressを読書きするcycleには、read-during-writeの仕様が必要である。本章の基準は「書込みedge後の次の観測で新値」、edge直前の組合せ読出しは未定義として記録する。未定義を都合よく旧値や新値へ置換しない。SystemVerilog runnerでは、re<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>、単独read、write、二本のread、同一address、x0保護を別ケースにする。</p>
 <h2 id="section-41-5">41.5 何を次へ渡すか</h2>
-<p>6Tセルの論理状態、word line/bit lineの選択、<a class="term" href="index.html#term-concept_41_read_disturb_c4a9e2a4">read disturb</a>とwrite margin、register fileのport契約を得た。ただしSPICE波形、合成面積、実測のアクセス時間はまだ得ていない。次章では、refreshが必要なDRAM、不揮発なROM・flash、ビット誤りを訂正するSECDEDへ進む。</p>
+<p>6Tセルの論理状態、word line/bit lineの選択、read disturbとwrite margin、register fileのport契約を得た。ただしSPICE波形、合成面積、実測のアクセス時間はまだ得ていない。次章では、<a class="term" href="index.html#term-concept_42_refresh_26b56c1b">refresh</a>が必要なDRAM、不揮発なROM・flash、ビット誤りを訂正するSECDEDへ進む。</p>
 <p>&lt;!-- expanded-study-notes --&gt;</p>
 <h2 id="section-41">41.補助線　式を状態へ戻す</h2>
 <p>SRAMセルとregister fileで最初に固定する問いは、一つの双安定回路を、アドレスで選択できる高速なbit配列へどう広げるか。 この問いへ答えるときは、いきなり結果の数値を覚えず、入力、状態変化、出力、成立条件の順に書く。入力の単位や符号が一つでも抜けると、同じ数値が出ても別の模型を計算している可能性がある。そこで以下の節では、manifestに宣言した代表入力を一つずつ、手計算と小さなプログラムの両方で追う。</p>
@@ -75,7 +81,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>実行入口は<code>book run 41 3</code>である。caseは<code>read_disturb</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>cell_voltage_shift_is_recorded_not_measured</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
 <ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
 <p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
-<h3 id="section-4-write-margin">実験4　<a class="term" href="index.html#term-concept_41_write_margin_6aafe3d6">write margin</a></h3>
+<h3 id="section-4-write-margin">実験4　write margin</h3>
 <p>実行入口は<code>book run 41 4</code>である。caseは<code>write_margin</code>として固定し、同じ入力を再実行できるようにする。 この実験で先に読むべき出力は、期待値<code>model_and_threshold_saved</code>である。期待値が文章の場合も、観測する状態を一つずつ箇条書きにしてから判定する。 実行前に、入力の所有者、単位、境界条件、失敗時に後段を止める条件を記録する。実行後は、予測と実行結果を比較し、測定欄が<code>not_run</code>ならそのまま残す。</p>
 <ul><li>期待観測: 宣言された期待観測を、状態と出力へ分解する</li></ul>
 <p>数値が一致した場合でも、どの式を使ったか、どの近似を捨てたかを確認する。一致は模型の内部整合性を示すが、現実の装置が同じ値を出す証明ではない。</p>
@@ -149,7 +155,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h3 id="section-2">2　式・状態・コードを往復する</h3>
 <p>式を一度紙へ書き、同じ式をコードの変数名へ対応づける。コードの一行を読んだら、式のどの項を計算しているかを指で戻る。この往復を省略して出力だけを比較すると、係数の取り違え、整数のwrap、境界条件の欠落を見逃す。</p>
 <p>導出では、既知の値と未知の値を分ける。未知量を一つずつ消去し、最後に単位・符号・範囲を検査する。数値計算では刻み幅や反復回数も入力であり、結果の末尾の桁だけを見て精度を判断しない。</p>
-<ul><li>用語<code>6T SRAM</code>は、<a class="term" href="index.html#term-cross_coupled_inverter">交差結合インバータ</a>とaccess transistorでbitを保持するセル。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
+<ul><li>用語<code>6T SRAM</code>は、交差結合インバータとaccess transistorでbitを保持するセル。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
 <p><code>6T SRAM</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
 <ul><li>用語<code>word line</code>は、行を選択してaccess transistorを開く信号。この語を使うときは、下位表現、上位契約、隠した変数、成立条件、破綻条件を一組で書く。</li></ul>
 <p><code>word line</code>を数値だけでなく状態名としても記録し、前後の実験で同じ意味が保たれているかを確認する。</p>
@@ -284,7 +290,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>前章から受け取るもの:</p>
 <ul><li>第40章のclock・reset・負荷、第39章のregister、第36章の<a class="term" href="index.html#term-bistability">双安定性</a>、第32章のHDL・検証を受け取る。</li></ul>
 <p>次章へ渡すもの:</p>
-<ul><li>第42章へ、SRAMの保持と<a class="term" href="index.html#term-concept_42_refresh_26b56c1b">refresh</a>不要という対比、配列と誤りの観点を渡す。</li></ul>
+<ul><li>第42章へ、SRAMの保持とrefresh不要という対比、配列と誤りの観点を渡す。</li></ul>
 <p>橋を渡すときは、値だけでなく定義、版、status、measured、未対応条件を残す。同じ記号が次章で再登場しても、契約が同じとは限らない。</p>
 <h3 id="section-6-2">6　合格前のセルフチェック</h3>
 <p>次の欄を本文を閉じて埋める。空欄があれば、結論を暗記する前に該当する導出カードまたは実験カードへ戻る。</p>
