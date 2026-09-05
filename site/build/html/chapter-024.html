@@ -51,6 +51,15 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p><code>V_SG=V_DD-V_in</code>、<code>V_SD=V_DD-V_out</code></p>
 <p>を使い、しきい値は<code>|V_tp|</code>とする。nMOSの過駆動は<code>V_in-V_tn</code>、pMOSの過駆動は<code>V_DD-V_in-|V_tp|</code>である。body端子は各トランジスタのソースへ固定するという理想規約を採用する。</p>
 <p>入力が低いときはnMOSが遮断、pMOSが導通し、<code>V_out≈V_DD</code>。入力が高いときはpMOSが遮断、nMOSが導通し、<code>V_out≈0</code>。中間では両方が導通し、出力は二つのチャネル<a class="term" href="index.html#term-current">電流</a>が等しくなる点で決まる。</p>
+<h3 id="section-2-1">2.1　まず図を言葉にする</h3>
+<p>回路図を初めて読むときは、トランジスタの記号をいきなり式へ変換しない。上から下へ「電源、pMOS、出力、nMOS、GND」とたどり、横から入る同じ線が二つのゲートを制御している、と声に出して確認する。ここでの<code>V_in</code>は二つのゲートに共通な電圧、<code>V_out</code>は二つのドレインが接続された節点の電圧である。</p>
+<table><thead><tr><th>図で見えるもの</th><th>この章での読み方</th><th>まだ言えていないこと</th></tr></thead>
+<tbody><tr><td><code>V_DD</code></td><td>pMOS側の上側レール。<a class="term" href="index.html#term-concept_6_term_bc3281ce43_bc3281ce">基準電位</a>を0とした電源電圧</td><td>実際の電源が理想電圧源か、配線抵抗がどれだけあるか</td></tr><tr><td>pMOS</td><td>入力が低いときに上側から出力へ電流を供給する素子</td><td>漏れ、短チャネル効果、実測のしきい値</td></tr><tr><td>共通のゲート線</td><td><code>V_in</code>を二素子へ同時に与える制御端子</td><td>信号源の出力抵抗、入力容量、時間変化</td></tr><tr><td>共通のドレイン節点</td><td><code>V_out</code>を読む場所。上へも下へも引かれる</td><td><a class="term" href="index.html#term-load_capacitance">負荷容量</a>、プローブ、次段の入力電流</td></tr><tr><td>nMOS</td><td>入力が高いときに出力を下側へ放電する素子</td><td>GNDが完全な0 Vか、基板・bodyの接続が同じか</td></tr></tbody>
+</table>
+<p>この表で「上へ引く」「下へ引く」は、スイッチの直感を使った短い説明である。実際にどれだけ流れるかは<code>V_GS</code>、<code>V_DS</code>、しきい値、<code>beta</code>で決まり、接続図だけから電流値は決まらない。また、<code>V_out=V_DD</code>や<code>V_out=0</code>は、まず理想静的モデルの極限として読む。測定器を接続して得た電圧、過渡中の電圧、負荷を含む電圧を意味するわけではない。</p>
+<p>次の計算へ進む前に、紙へ次の四つを書けばよい。</p>
+<ol><li><code>V_in</code>が低いとき、どの素子が導通し、どの素子が遮断するか。</li><li><code>V_in</code>が高いとき、どの素子が導通し、どの素子が遮断するか。</li><li><code>V_out</code>が上側レールまたは下側レールへ近づく経路はどちらか。</li><li>両方が導通する中間領域で、何を等しく置くのか。</li></ol>
+<p>4番目の答えが<code>I_p=I_n</code>であり、これが次節の<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>である。ここで「電流が同じ」と言うときは、向き付き端子電流ではなく、出力節点へ流れ込む・流れ出す大きさを揃えている。符号を含む定義は次節で別欄に保存する。</p>
 <h2 id="section-3-vtc">3　平方則からVTCを作る</h2>
 <h3 id="section-3-1">3.1　電流の大きさ</h3>
 <p><code>beta_n=mu_e C_ox(W_n/L_n)</code>、<code>beta_p=mu_h C_ox(W_p/L_p)</code>を、ここではA/V²の係数として保存する。<code>mu_e,mu_h</code>は<a class="term" href="index.html#term-mobility">移動度</a>であり、第18〜19章で準Fermi準位に使った<code>mu_n,mu_p</code>とは混同しない。第22章のnMOS I–Vを使い、pMOSは電流の大きさを</p>
@@ -66,7 +75,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p><code>V_M=V_DD/2</code>　　　　　　　　　　　　　　　　(24.2)</p>
 <p>となる。非対称な<code>beta</code>やしきい値では、切替点は</p>
 <p><code>V_M=[sqrt(beta_p)(V_DD-|V_tp|)+sqrt(beta_n)V_tn]/[sqrt(beta_n)+sqrt(beta_p)]</code>　(24.3)</p>
-<p>という飽和近似の予測になる。式(24.3)は、両素子が飽和となる入力範囲に限る。ただし、理想平方則で<code>lambda=0</code>としたまま<code>V_in=V_M</code>へ置くと、両素子の飽和電流が<code>V_out</code>に依存しない。対称caseでは<code>V_in=0.5 V</code>のとき<code>0.2&lt;=V_out&lt;=0.8 V</code>の連続区間が<a class="term" href="index.html#term-concept_10_kirchhoff_fef1e228">KCL</a>を満たす。この退化を「一意なVTC根」と呼ばず、<code>V_M</code>はVTCと直線<code>V_out=V_in</code>の交点、または前後の入力からの極限として定義する。一意な過渡波形を得るには、出力コンダクタンス、負荷、寄生容量、短絡電流を追加した別モデルが必要である。</p>
+<p>という飽和近似の予測になる。式(24.3)は、両素子が飽和となる入力範囲に限る。ただし、理想平方則で<code>lambda=0</code>としたまま<code>V_in=V_M</code>へ置くと、両素子の飽和電流が<code>V_out</code>に依存しない。対称caseでは<code>V_in=0.5 V</code>のとき<code>0.2&lt;=V_out&lt;=0.8 V</code>の連続区間がKCLを満たす。この退化を「一意なVTC根」と呼ばず、<code>V_M</code>はVTCと直線<code>V_out=V_in</code>の交点、または前後の入力からの極限として定義する。一意な過渡波形を得るには、出力コンダクタンス、負荷、<a class="term" href="index.html#term-parasitic_capacitance">寄生容量</a>、短絡電流を追加した別モデルが必要である。</p>
 <h2 id="section-4-case">4　代表case</h2>
 <p><code>V_DD=1.0 V</code>、<code>V_tn=|V_tp|=0.3 V</code>、<code>beta_n=beta_p=1.0e-3 A/V^2</code>の理想対称caseを考える。</p>
 <table><thead><tr><th>入力</th><th>期待出力・状態</th></tr></thead>
@@ -76,7 +85,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-5">5　<a class="term" href="index.html#term-concept_7_term_839a9f063a_839a9f06">電力</a>と負荷</h2>
 <p>理想静的状態では、片側のトランジスタが遮断するため、入力が低または高のとき電源からGNDへの<a class="term" href="index.html#term-concept_7_term_a2aacf23e9_a2aacf23">定常電流</a>は0に近い。ただし切替入力付近では両方が導通し、代表caseでは<code>I_DD=2.0e-5 A</code>、<code>P_DD=2.0e-5 W</code>となる。実際にはサブスレッショルド、接合・ゲート漏れ、短絡電流、負荷があり、</p>
 <p><code>P_DD=V_DD I_DD</code>　　　　　　　　　　　　　　　　(24.4)</p>
-<p>を入力状態・遷移時間・<a class="term" href="index.html#term-load_capacitance">負荷容量</a>とともに測る。0→<code>V_DD</code>の一回の遷移では、電源が供給する充電エネルギー<code>E_charge=C_load V_DD^2</code>と、容量に蓄積される<code>E_stored=(1/2)C_load V_DD^2</code>を分ける。平均動的電力は活動率<code>alpha</code>と周波数<code>f</code>を用いて<code>P_dyn=alpha C_load V_DD^2 f</code>とする。出力容量の充放電は第23章の遅延模型へ渡し、静的VTCのartifactへ混ぜない。</p>
+<p>を入力状態・遷移時間・負荷容量とともに測る。0→<code>V_DD</code>の一回の遷移では、電源が供給する充電エネルギー<code>E_charge=C_load V_DD^2</code>と、容量に蓄積される<code>E_stored=(1/2)C_load V_DD^2</code>を分ける。平均<a class="term" href="index.html#term-dynamic_power">動的電力</a>は活動率<code>alpha</code>と周波数<code>f</code>を用いて<code>P_dyn=alpha C_load V_DD^2 f</code>とする。出力容量の充放電は第23章の遅延模型へ渡し、静的VTCのartifactへ混ぜない。</p>
 <h2 id="section-6">6　数値実験の設計</h2>
 <p>予定commandは<code>book run 24 1</code>から<code>book run 24 8</code>。素子極性、領域判定、対称切替点、非対称寸法、VTCの根、電源電力、SPICE比較、出所・単位・body境界の負のテストを分ける。解析式、簡略数値根、SPICE、測定の<code>model</code>と<code>source_kind</code>を同じ値として扱わない。</p>
 <h2 id="section-7">7　限界と次章への橋渡し</h2>
@@ -297,7 +306,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
 <ul><li>合格条件2: <code>A24-02</code> — 対称・非対称切替点。</li></ul>
 <p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
-<ul><li>合格条件3: <code>A24-03</code> — 静的/<a class="term" href="index.html#term-dynamic_power">動的電力</a>。</li></ul>
+<ul><li>合格条件3: <code>A24-03</code> — 静的/動的電力。</li></ul>
 <p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
 <ul><li>合格条件4: <code>A24-04</code> — SPICE・解析・測定出所。</li></ul>
 <p>pass条件を実際の入力と出力へ分解し、未実行なら未実行のまま記録する。</p>
