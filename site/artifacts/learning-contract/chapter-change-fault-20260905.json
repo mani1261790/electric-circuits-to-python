@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "e0cc158beea6c85e9af9e757db43c3be4b46e762f62b4cfd8a8cd1d7adccfa8a",
-  "scope": "chapters 9-36; executable educational models",
+  "source_sha256": "4e01c0deda2e8c29da3f3a8c5ad7fa80474b949200a4f2ce1899f1f45f29b114",
+  "scope": "chapters 9-40; executable educational models",
   "summary": {
-    "chapters": 28,
-    "baseline_passed": 28,
-    "change_passed": 28,
-    "fault_passed": 28,
+    "chapters": 32,
+    "baseline_passed": 32,
+    "change_passed": 32,
+    "fault_passed": 32,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -2292,6 +2292,317 @@
           "input_sha256": "9f04cf11d05c71e467e0dbe3086bec7069214d90d7e3f2e31c25401bd757c11d",
           "error_code": "input_contract_error",
           "error": "initial_q and initial_qbar must be complementary"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 37,
+      "title": "latchとflip-flop",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "level_sensitive_d_latch",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "enable": true,
+          "data": 1.0,
+          "previous_q": 0.0
+        },
+        "input_sha256": "72bdde714d36cb54693a00f32199e5df69d4f2c1911baa35288e473ab6c600ff",
+        "output": {
+          "q": 1.0,
+          "transparent": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "enable": true,
+          "data": 0.0,
+          "previous_q": 0.0
+        },
+        "output_changed_key": "q",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "enable": true,
+            "data": 0.0,
+            "previous_q": 0.0
+          },
+          "input_sha256": "7451a4d04c29b7643a930e2d618f658abb3058c18c4177db233817cf025102a9",
+          "output": {
+            "q": 0.0,
+            "transparent": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "enable": null,
+          "data": 1.0,
+          "previous_q": 0.0
+        },
+        "expected_error_fragment": "enable must be a boolean clock-mode value",
+        "observed": {
+          "status": "error",
+          "input": {
+            "enable": null,
+            "data": 1.0,
+            "previous_q": 0.0
+          },
+          "input_sha256": "1c00a6c7888be58bfbf3aae3e4e03859d3897775491155a9bfc5a138454f2546",
+          "error_code": "input_contract_error",
+          "error": "enable must be a boolean clock-mode value"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 38,
+      "title": "setup、hold、metastability",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "setup_hold_safe_window",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "clock_period_s": 1e-08,
+          "setup_time_s": 1e-09,
+          "hold_time_s": 1e-09
+        },
+        "input_sha256": "63ffc93804009e8318a6e9ba7c3ce18cd8e6128009de0a0446d17bb918e13141",
+        "output": {
+          "safe_window_s": 7.999999999999999e-09,
+          "setup_fraction": 0.1,
+          "hold_fraction": 0.1
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "clock_period_s": 1e-08,
+          "setup_time_s": 2e-09,
+          "hold_time_s": 1e-09
+        },
+        "output_changed_key": "safe_window_s",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "clock_period_s": 1e-08,
+            "setup_time_s": 2e-09,
+            "hold_time_s": 1e-09
+          },
+          "input_sha256": "6fc947635b9ad59d14cd99e7b8e5649495c25d83c4abf828c648a062eb20b6cb",
+          "output": {
+            "safe_window_s": 7.000000000000001e-09,
+            "setup_fraction": 0.2,
+            "hold_fraction": 0.1
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "clock_period_s": 0.0,
+          "setup_time_s": 1e-09,
+          "hold_time_s": 1e-09
+        },
+        "expected_error_fragment": "clock_period_s must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "clock_period_s": 0.0,
+            "setup_time_s": 1e-09,
+            "hold_time_s": 1e-09
+          },
+          "input_sha256": "33e0edcd5a8f65645ef61631316a650e63f7d2778c9157b27ad6ee2f8efcef2e",
+          "error_code": "input_contract_error",
+          "error": "clock_period_s must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 39,
+      "title": "register、counter、有限状態機械",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "register_load_hold_next_state",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "width_bits": 4,
+          "state": 10,
+          "data": 5,
+          "load_enable": true
+        },
+        "input_sha256": "e87e47bc19a7b1668354273717d50958a2b4e883b847e79834ada8078be7488d",
+        "output": {
+          "next_state": 5.0,
+          "width_bits": 4.0,
+          "held": 0.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "width_bits": 4,
+          "state": 10,
+          "data": 7,
+          "load_enable": true
+        },
+        "output_changed_key": "next_state",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "width_bits": 4,
+            "state": 10,
+            "data": 7,
+            "load_enable": true
+          },
+          "input_sha256": "07f6d7fad9ec4ef6d05fb1481dc46711d2ef99503f9a5316dd7e787561c4798c",
+          "output": {
+            "next_state": 7.0,
+            "width_bits": 4.0,
+            "held": 0.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "width_bits": 0,
+          "state": 0,
+          "data": 1,
+          "load_enable": true
+        },
+        "expected_error_fragment": "width_bits must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "width_bits": 0,
+            "state": 0,
+            "data": 1,
+            "load_enable": true
+          },
+          "input_sha256": "6efb193e2bd05e5661af5d674614abdd016ad01b5d88987042dabbd97170e018",
+          "error_code": "input_contract_error",
+          "error": "width_bits must be a positive integer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 40,
+      "title": "clock、発振、分配、reset",
+      "exercise_refs": [
+        "E1",
+        "E3",
+        "E5",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "ring_oscillator_and_reset_timing",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "inverter_stages": 3,
+          "inverter_delay_s": 1e-11,
+          "reset_release_edge_s": 2e-08
+        },
+        "input_sha256": "12b64047b68188ebeb3349eace1e27bf3c624cf2067a82d425192c366cdaa937",
+        "output": {
+          "period_s": 6e-11,
+          "frequency_hz": 16666666666.666666,
+          "release_edge_s": 2e-08
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "inverter_stages": 3,
+          "inverter_delay_s": 2e-11,
+          "reset_release_edge_s": 2e-08
+        },
+        "output_changed_key": "period_s",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "inverter_stages": 3,
+            "inverter_delay_s": 2e-11,
+            "reset_release_edge_s": 2e-08
+          },
+          "input_sha256": "946d13f92a1acabdc7fcaa7b29c971a1406e7da36ad1d876b36a0759e350ba86",
+          "output": {
+            "period_s": 1.2e-10,
+            "frequency_hz": 8333333333.333333,
+            "release_edge_s": 2e-08
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "inverter_stages": 3,
+          "inverter_delay_s": 0.0,
+          "reset_release_edge_s": 2e-08
+        },
+        "expected_error_fragment": "inverter_delay_s must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "inverter_stages": 3,
+            "inverter_delay_s": 0.0,
+            "reset_release_edge_s": 2e-08
+          },
+          "input_sha256": "8d92ad2b2ccbeb3421e1cf3c184e644abb35706b7c1a69bd4814832969f7a2e6",
+          "error_code": "input_contract_error",
+          "error": "inverter_delay_s must be a finite positive number"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
