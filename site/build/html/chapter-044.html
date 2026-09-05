@@ -49,6 +49,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>機械のarchitectural stateは次の組である。</p>
 <pre><code class="language-text">S = (pc, r[0..7], memory[0..255], halted, fault)</code></pre>
 <p>re<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>後は<code>pc=0</code>、全register=0、<code>halted=false</code>、<code>fault=none</code>とする。1ステップは、<code>memory[pc]</code>と<code>memory[pc+1]</code>を命令wordとして読むfetch、opcodeとfieldを読むdecode、状態を変えるexecute/writebackからなる。faultまたはHALT後は勝手に次の命令へ進まない。</p>
+<h3 id="section-44-1-1">44.1.1　まず一命令の状態遷移を追う</h3>
+<p>stored-program machineを最初に読むときは、命令wordをいきなりopcode表へ当てはめず、同じ一行へ時系列を置く。</p>
+<table><thead><tr><th>段階</th><th>参照するもの</th><th>状態への作用</th></tr></thead>
+<tbody><tr><td>fetch</td><td><code>pc</code>、memoryの2 byte</td><td>命令wordを得る</td></tr><tr><td>decode</td><td>opcode、field</td><td>どの規則を使うか決める</td></tr><tr><td><a class="term" href="index.html#term-exec">exec</a>ute/writeback</td><td>register、memory、<a class="term" href="index.html#term-concept_35_alu_5bfc1981">ALU</a></td><td>状態を更新する</td></tr><tr><td>next PC</td><td><code>pc+2</code>またはbranch <a class="term" href="index.html#term-target">target</a></td><td>次のfetch位置を決める</td></tr></tbody>
+</table>
+<p>faultまたはHALTなら、次のfetchへ勝手に進まない。Pythonの関数呼出しとCPUのstate updateを同じものとして扱わず、<code>pc</code>、register、memory、停止理由を一つのtrace行へ残す。</p>
 <h2 id="section-44-2-isa">44.2 極小<a class="term" href="index.html#term-concept_44_isa_52ed4c0e">ISA</a>の命令形式</h2>
 <p>この章のopcodeは4 bitで、上位から次の形式を取る。</p>
 <table><thead><tr><th>opcode</th><th>命令</th><th>bit field</th><th>意味</th></tr></thead>
@@ -56,9 +62,9 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 </table>
 <p>未定義opcode、予約bit違反、奇数アドレスの16-bit load/store、memory範囲外はfaultにする。<code>ADDI</code>のimm6と<code>BEQZ</code>のrel9は二の補数として解釈する。<code>BEQZ</code>の相対値の単位は命令数であり、<a class="term" href="index.html#term-concept_43_byte_address_914c4f2e">byte address</a>へ変換するときだけ2倍する。このようにfield幅、符号、PC単位を仕様へ書かなければ、同じhex wordをdecodeできない。</p>
 <h2 id="section-44-3-fetch-writeback">44.3 fetchからwritebackまで</h2>
-<p>例えばPC=0で<code>0x2207</code>をfetchする。上位opcodeは2、<code>rd=1</code>、<code>rs1=0</code>、<code>imm6=7</code>なので、<code>r1=0+7</code>を書き、次のPCを2にする。次の命令が<code>0x2405</code>なら<code>r2=5</code>となる。ADDは<code>r1</code>と<code>r2</code>をreadし、<a class="term" href="index.html#term-concept_35_alu_5bfc1981">ALU</a>で加算し、<code>r3</code>へwriteする。書込み時にも<code>rd=0</code>なら無視してr0を守る。</p>
+<p>例えばPC=0で<code>0x2207</code>をfetchする。上位opcodeは2、<code>rd=1</code>、<code>rs1=0</code>、<code>imm6=7</code>なので、<code>r1=0+7</code>を書き、次のPCを2にする。次の命令が<code>0x2405</code>なら<code>r2=5</code>となる。ADDは<code>r1</code>と<code>r2</code>をreadし、ALUで加算し、<code>r3</code>へwriteする。書込み時にも<code>rd=0</code>なら無視してr0を守る。</p>
 <p>LOADとSTOREは第43章のmemory interfaceへ接続する。<code>LOAD</code>は<code>base+sign_extend(off6)</code>をbyte addressとして要求し、2 byteの整列、<a class="term" href="index.html#term-latency">latency</a>、response handshake、faultを引き継ぐ。STOREはregisterの16 bit値をlittle-endianの2 byteへ分ける。命令fetchも同じarrayから2 byteを読み出すため、instructionとdataの領域をどこに置くかはprogramのmemory mapの責任になる。</p>
-<p>BEQZでは、まず通常の次PC <code>pc_next=pc+2</code>を作り、条件が真なら<code>pc_next + 2*rel9</code>へ置き換える。例えばPC=<code>0x0008</code>の<code>BEQZ r1,+2</code>でr1=0なら、次の命令のPC=<code>0x000a</code>から4 byte進んで<code>0x000e</code>へ移る。r1が非零なら<code>0x000a</code>へ進む。branch <a class="term" href="index.html#term-target">target</a>が命令境界やmemory範囲にない場合は実行せずfaultにする。</p>
+<p>BEQZでは、まず通常の次PC <code>pc_next=pc+2</code>を作り、条件が真なら<code>pc_next + 2*rel9</code>へ置き換える。例えばPC=<code>0x0008</code>の<code>BEQZ r1,+2</code>でr1=0なら、次の命令のPC=<code>0x000a</code>から4 byte進んで<code>0x000e</code>へ移る。r1が非零なら<code>0x000a</code>へ進む。branch targetが命令境界やmemory範囲にない場合は実行せずfaultにする。</p>
 <h2 id="section-44-4-program-machine">44.4 二つのprogramを同じmachineで動かす</h2>
 <p>Program Aは7と5を加える。</p>
 <pre><code class="language-text">address  word       assembly
@@ -127,7 +133,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続<a class="term" href="index.html#term-voltage">電圧</a>を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタやstack pointerを隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
 <p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
 <h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
-<ul><li>stored-program machineのstateをPC、register、memory、停止・faultで表す</li><li>固定長16-bit教育用ISAのopcode、field、符号拡張、PC更新をdecodeする</li><li>fetch、decode、<a class="term" href="index.html#term-exec">exec</a>ute、writebackの1ステップを状態遷移として追跡する</li><li>同じhardwareで加算programとload/store programの結果が変わる理由を説明する</li><li>custom ISAの論理runnerと実CPUの性能を出所として分ける</li></ul>
+<ul><li>stored-program machineのstateをPC、register、memory、停止・faultで表す</li><li>固定長16-bit教育用ISAのopcode、field、符号拡張、PC更新をdecodeする</li><li>fetch、decode、execute、writebackの1ステップを状態遷移として追跡する</li><li>同じhardwareで加算programとload/store programの結果が変わる理由を説明する</li><li>custom ISAの論理runnerと実CPUの性能を出所として分ける</li></ul>
 <p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
 <h3 id="section-86aa35e5e4">故障診断の手順</h3>
 <p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>

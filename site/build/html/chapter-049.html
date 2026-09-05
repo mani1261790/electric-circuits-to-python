@@ -46,10 +46,16 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-49-1-cpu">49.1 予測できない事象を、CPUはどこで受け取るか</h2>
 <p>命令を一つずつ実行している最中にも、CPUには二種類の制御移動が起こる。命令そのものが不正なら、実行した命令に同期して<a class="term" href="index.html#term-exception">例外</a>（exception）が起こる。timerの期限のように、外部から到着する事象なら割込み（interrupt）である。どちらも、通常の次の命令へ進む代わりに、原因を保存してhandlerへ移る点は共通している。</p>
 <p>ただし、<code>rv32edu</code>の実装範囲ではmachine modeだけを提供する。名前に<a class="term" href="index.html#term-concept_49_privilege_4754701a">privilege</a>が含まれていても、user modeとkernel modeの二層が既に動くという意味ではない。ここでは「どの命令とCSR操作を許すか」「trap entryでどの状態を保存するか」という権限の境界を定め、後のOS章で利用する。</p>
+<h3 id="section-49-1-1-cause">49.1.1　まずcause・保存・復帰を一行にする</h3>
+<p>trapを最初に読むときは、通常の次PCとhandlerへ移る例外経路を同じ表へ置く。</p>
+<table><thead><tr><th>事象</th><th>cause</th><th>保存するPC</th><th>handler後の復帰</th></tr></thead>
+<tbody><tr><td>illegal instruction</td><td>命令が不正</td><td>faulting instructionのPC</td><td>明示的停止または診断</td></tr><tr><td><a class="term" href="index.html#term-timer_interrupt">timer interrupt</a></td><td>timer pending</td><td>次に実行するPC</td><td><code>mret</code>後に再開</td></tr></tbody>
+</table>
+<p><code>mepc</code>は単なるログ欄ではなく、復帰先を決めるarchitectural stateである。causeを消してから保存すると、違う事象を同じtrapとして扱うので、保存順序とpendingのclearを別々に記録する。</p>
 <h2 id="section-49-2-trap-entry">49.2 <a class="term" href="index.html#term-trap_entry">trap entry</a>の最小状態</h2>
 <p>代表的なtrap entryを次の状態遷移として読む。</p>
 <table><thead><tr><th>事象</th><th><code>mcause</code></th><th><code>mepc</code></th><th><code>mtval</code></th><th>次の<code>pc</code></th></tr></thead>
-<tbody><tr><td>illegal instruction</td><td>illegal-instruction</td><td>その命令の<code>pc</code></td><td>命令wordまたは0</td><td><code>mtvec</code></td></tr><tr><td><a class="term" href="index.html#term-timer_interrupt">timer interrupt</a></td><td>machine-timer-<a class="term" href="index.html#term-interrupt">interrupt</a></td><td>次に戻る命令の<code>pc</code></td><td>0</td><td><code>mtvec</code></td></tr></tbody>
+<tbody><tr><td>illegal instruction</td><td>illegal-instruction</td><td>その命令の<code>pc</code></td><td>命令wordまたは0</td><td><code>mtvec</code></td></tr><tr><td>timer interrupt</td><td>machine-timer-<a class="term" href="index.html#term-interrupt">interrupt</a></td><td>次に戻る命令の<code>pc</code></td><td>0</td><td><code>mtvec</code></td></tr></tbody>
 </table>
 <p><code>mepc</code>は「原因を表示するための値」ではなく、復帰先を決めるarchitectural stateである。標準RISC-Vのprecise trapでは、同期例外は通常 faulting instruction のPCを<code>mepc</code>へ保存し、interruptはretire境界にある次の実行可能PCを保存する。本章の教育模型もこの区別を採用し、どの命令をもう一度実行するかを明示する。timer割込みでは、既にretireした命令を飛ばさず、次の命令から再開する。<code>mstatus</code>の割込み許可ビットを保存・更新し、handlerがtimerのpending状態をclearしてから<code>mret</code>する。</p>
 <p><code>mtvec</code>はこの教材ではdirect modeの基底アドレスとし、代表例では<code>0x00000100</code>に置く。実装していないcause番号を、都合よくtimerとして扱ってはいけない。unknown causeは<a class="term" href="index.html#term-diagnostic">diagnostic</a>へ送り、停止または明示したdefault handlerにする。</p>

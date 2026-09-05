@@ -46,6 +46,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-52-1">52.1 一つの長い仕事を五つに分ける</h2>
 <p>単一cycle CPUでは、fetchから<a class="term" href="index.html#term-concept_47_write_back_843c8f9e">write-back</a>までを一つのclock周期に押し込む。五段pipelineでは、IF（命令fetch）、ID（decodeとregister read）、EX（ALUと分岐判定）、MEM（load/store）、WB（register write-back）へ分け、段の間にpipeline registerを置く。各段は別の命令を同時に処理する。</p>
 <p>一つの命令は五cycle程度の<a class="term" href="index.html#term-latency">latency</a>を持つが、依存もstallもない列なら、充填後は一cycleごとに一命令を完了できる。これは「命令一つの完了が一cycleになる」という意味ではない。cycle 1の命令がWBへ着くまでに、複数の段を通る。</p>
+<h3 id="section-52-1-1">52.1.1　まず一命令を五段へ分ける</h3>
+<p>pipelineでは、latencyと完了間隔が違う。各cycleの命令とs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e validを表に置き、空白を命令として数えない。</p>
+<table><thead><tr><th>cycle</th><th>I1</th><th>I2</th><th>読み方</th></tr></thead>
+<tbody><tr><td>1</td><td>IF</td><td>—</td><td>I1を取り込む</td></tr><tr><td>2</td><td>ID</td><td>IF</td><td>二つの命令が別stageにいる</td></tr><tr><td>3</td><td>EX</td><td>ID</td><td>I1の計算とI2のdecode</td></tr><tr><td>5</td><td>WB</td><td>EX</td><td>I1の状態更新、I2は途中</td></tr></tbody>
+</table>
+<p>branchやre<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>ではvalidを0にしてflushする行が必要である。理想的な表の一件/cycleは、実機の周波数や全命令の同じlatencyを保証しない。</p>
 <h2 id="section-52-2-cycle">52.2 cycle表で状態を追う</h2>
 <p>代表列を次の五つの独立命令とする。</p>
 <pre><code class="language-text">addi x1, x0, 1
@@ -57,7 +63,7 @@ addi x5, x0, 5</code></pre>
 <p>理想条件を数式で分ける。段数を<code>D</code>、命令数を<code>N</code>、各段の<a class="term" href="index.html#term-clock">clock</a> periodを同じ<code>T</code>とし、pipeline registerの追加遅延を無視すれば、非pipelineの時間は<code>NDT</code>、pipelineの時間は<code>(D+N-1)T</code>である。したがって理想speedupは<code>ND/(D+N-1)</code>で、<code>N</code>が十分大きいときだけ<code>D</code>へ近づく。実際には段ごとの組合せ遅延が違うため、clock periodは最長段の<code>max(T_i)</code>とpipeline registerのsetup・clock-to-Q・skew余裕で決まる。短い段を増やしても、最長段が変わらなければspeedupは増えない。</p>
 <h2 id="section-52-3-control-flush">52.3 controlと<a class="term" href="index.html#term-concept_52_flush_e4706359">flush</a></h2>
 <p>命令が段を越えるとき、<a class="term" href="index.html#term-concept_47_control_signal_0b4ec1f2">control signal</a>も同じ命令に属して運ばなければならない。たとえばloadの<code>mem_read</code>を次の命令へ誤って渡すと、別命令がRAMへアクセスする。branchがtakenになったら、既にIF/IDへ取り込んだ後続命令をvalid=0へしてflushする。この章ではbranch予測を扱わず、次章へ渡す。</p>
-<p>re<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>中は各pipeline registerのvalidを0にする。reset解除後にIFだけを有効にし、無効な空白cycleを命令としてretireしない。<code>x0</code>へのwriteは捨てるというrv32edu契約も、WB段で維持する。</p>
+<p>reset中は各pipeline registerのvalidを0にする。reset解除後にIFだけを有効にし、無効な空白cycleを命令としてretireしない。<code>x0</code>へのwriteは捨てるというrv32edu契約も、WB段で維持する。</p>
 <h2 id="section-52-4">52.4 予定実験</h2>
 <p>Pythonのcycle simulatorで、独立5命令列の<a class="term" href="index.html#term-concept_52_if_id_ex_mem_wb_b69a5fb5">IF/ID/EX/MEM/WB</a>表とretirement traceを作る。次に同じ表へ一つだけbranchを入れ、taken時にどの段をflushするかを明示する。RTL経路ではVerilatorのcycle traceと参照表を命令ごとに比較し、形式検証ではpipeline registerのvalidとarchitectural stateの対応を調べる。</p>
 <p>全実験はplannedである。五段を想定した表は解析予測、Verilatorは将来のrunner出力、Yosysは将来の合成・<a class="term" href="index.html#term-formal_verification">形式検証</a>であり、どれもこの草稿で実行した値ではない。SPICEは論理pipelineの合否には使わず、必要になった場合も遅延の物理模型として別出所にする。</p>
@@ -241,7 +247,7 @@ addi x5, x0, 5</code></pre>
 <h3 id="section-2-2">2　導出カード</h3>
 <p>導出は、結果の式を覚えるためではなく、どの仮定からその式が出るかを確かめるために使う。各カードについて、左辺の意味、使った仮定、途中の消去、境界での挙動を四行で書く。</p>
 <p>#### 導出1: <code>derivation-52-schedule</code></p>
-<p>到達する結果は「五段のcycleごとのs<a class="term" href="index.html#term-concept_55_tag_5e9b60f6">tag</a>e占有表」で、参照する式IDまたは検証項目は <code>["fsm_transition", "register_update"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
+<p>到達する結果は「五段のcycleごとのstage占有表」で、参照する式IDまたは検証項目は <code>["fsm_transition", "register_update"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>
 <ul><li>仮定: この導出で固定した条件を一つ書く。</li><li>更新: 既知量から未知量へ進む一つの変形を書く。</li><li>検査: 残差、範囲、真理値、stack effect、または状態不変条件を一つ選ぶ。</li><li>反例: 仮定を一つ外したとき、どの結論を撤回するかを書く。</li></ul>
 <p>#### 導出2: <code>derivation-52-valid</code></p>
 <p>到達する結果は「valid/control/pcを段間へ渡す契約」で、参照する式IDまたは検証項目は <code>["load_enable_contract", "register_update"]</code> である。本文の式を一度変数名へ対応づけ、各変数の単位または幅を横に書く。</p>

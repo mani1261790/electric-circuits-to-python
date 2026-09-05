@@ -49,6 +49,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <pre><code class="language-text">bank   = (addr &gt;&gt; 8) &amp; 0b11
 offset = addr &amp; 0xff</code></pre>
 <p>例えば <code>addr=0x00000124</code> は <code>bank=1</code>、<code>offset=0x24</code> である。これは「アドレスの下位bitを常にbank番号と呼ぶ」という一般則ではなく、この配列寸法で選んだbit割当である。bank数や容量を変えると分解も変わるため、実装と仕様表を同じ設定から生成する。</p>
+<h3 id="section-43-1-1-address">43.1.1　まずaddressと応答を同じ表にする</h3>
+<p>CPUから見たmemoryを読むときは、アドレスを分解する計算と、いつ結果を返すかを分ける。ここでの4 bank・各256 byteという設定では、<code>addr=0x124</code>から<code>bank=1</code>、<code>offset=0x24</code>を得る。</p>
+<table><thead><tr><th>欄</th><th>例</th><th>意味</th></tr></thead>
+<tbody><tr><td>address</td><td><code>0x00000124</code></td><td>CPUが指定した<a class="term" href="index.html#term-concept_43_byte_address_914c4f2e">byte address</a></td></tr><tr><td>bank/off<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a></td><td><code>1</code> / <code>0x24</code></td><td>配列選択の結果</td></tr><tr><td>request</td><td><code>valid &amp;&amp; ready</code></td><td>このcycleで受理したか</td></tr><tr><td>response</td><td><code>valid</code>, data, fault</td><td>結果を保持して返す欄</td></tr></tbody>
+</table>
+<p><code>valid</code>を一瞬だけ出して受け手が<a class="term" href="index.html#term-bus">bus</a>yなら、正しいdataでも失われる。受理cycle、response cycle、data、fault、ECC状態を別欄に残すと、address計算の誤りとhandshakeの誤りを切り分けられる。</p>
 <h2 id="section-43-2-byte-halfword-word">43.2 byte、halfword、word</h2>
 <p>32-bit CPUでも、memoryの最小アドレス単位をbyteにすると、byte load、16-bit halfword load、32-bit word loadを一つの経路で表せる。本章はlittle-endianを採用する。word <code>0x12345678</code> をアドレス <code>0x24</code> へ格納すると、<code>0x24</code>から順に <code>78 56 34 12</code> が置かれる。load wordはその順序を戻して <code>0x12345678</code> を返す。</p>
 <p>storeの<code>size</code>から<a class="term" href="index.html#term-byte_enable">byte enable</a>を決める。wordを<code>addr</code>が4の倍数へ書くときは <code>1111</code>、halfwordを2の倍数へ書くときは下位側なら <code>0011</code>、上位側なら <code>1100</code>、byteなら対象の一ビットだけを1にする。<code>byte_enable</code>は「書込みデータの全bitが有効」という意味ではなく、各byte laneを更新するマスクである。</p>
@@ -56,7 +62,7 @@ offset = addr &amp; 0xff</code></pre>
 <p>簡略モデルでは、境界をまたぐwordやhalfwordは分割しない。<code>addr % size != 0</code> なら <code>misaligned</code> faultを返す。実機には二回のアクセスへ分ける実装もあるが、その場合は原子性、ページ境界、<a class="term" href="index.html#term-exception">例外</a>の途中状態を別途定義しなければならない。</p>
 <h2 id="section-43-3-bank-latency">43.3 bank選択と可変<a class="term" href="index.html#term-latency">latency</a></h2>
 <p>同じmemoryでも、直前に開かれたrowを再利用できるbank hitと、別rowを開くbank missでは待ち時間が違う。ここでは論理timing modelとして、hitは要求受付から2 cycle、missは4 cycle後に応答を返す。2や4という数字は実測値ではなく、<a class="term" href="index.html#term-concept_48_handshake_7cc65897">handshake</a>を学ぶために固定した候補条件である。<code>hit/miss</code>の判定は、各bankが持つ<code>open_row</code>と要求のrowを比較する。</p>
-<p>要求側は <code>req_valid</code> と <code>req_ready</code> が同じcycleに1のときだけ要求を受け付ける。受け付けた後、応答側は正本仕様の <code>rsp_valid</code>（本文の短縮表記では<code>resp_valid</code>）を1にし、受け手が <code>rsp_ready</code>（短縮表記では<code>resp_ready</code>）=1になるまで結果とfaultを保持する。<code>rsp_valid</code>を一瞬だけ出すと、受け手が<a class="term" href="index.html#term-bus">bus</a>yのときにload結果を失う。単一outstanding requestの本章モデルでは、応答を返すまで新しい要求を受け付けない。</p>
+<p>要求側は <code>req_valid</code> と <code>req_ready</code> が同じcycleに1のときだけ要求を受け付ける。受け付けた後、応答側は正本仕様の <code>rsp_valid</code>（本文の短縮表記では<code>resp_valid</code>）を1にし、受け手が <code>rsp_ready</code>（短縮表記では<code>resp_ready</code>）=1になるまで結果とfaultを保持する。<code>rsp_valid</code>を一瞬だけ出すと、受け手がbusyのときにload結果を失う。単一outstanding requestの本章モデルでは、応答を返すまで新しい要求を受け付けない。</p>
 <pre><code class="language-text">request:  req_valid &amp;&amp; req_ready  -&gt; accept(addr, op, size, wdata, byte_enable)
 response: rsp_valid &amp;&amp; rsp_ready -&gt; consume(rsp_rdata, rsp_err, ecc_status)</code></pre>
 <p>storeも同じ受付規則を持つ。store応答を返す時点を「書込みが完了した」と定義するなら、以後のloadが新しい値を見られることを契約へ書く。これを定めずにhit/missだけを語ると、CPUの順序保証を説明できない。</p>
@@ -64,7 +70,7 @@ response: rsp_valid &amp;&amp; rsp_ready -&gt; consume(rsp_rdata, rsp_err, ecc_s
 <p>第42章の<a class="term" href="index.html#term-secded">SECDED</a>は、arrayが保持するdataへ検査bitを添える内部層として置ける。CPUからのstoreでは、byte enableを適用してwordを作り、ECC encoderでarrayへ書く。loadではarrayからcodewordを読み、decoderの後でCPUへdataと<code>ecc_corrected</code>または<code>ecc_uncorrectable</code>を返す。二ビット誤りを訂正済みと報告してはいけない。</p>
 <p>ECCの有無はlatencyと同じくinterfaceの結果へ表すが、<code>runner_output</code>の予定値と製造メモリの実故障率を混同しない。本章で計算するのは、指定した論理入力と候補タイミングに対する解析・runnerの予定出力だけである。</p>
 <h2 id="section-43-5-systemverilog">43.5 SystemVerilogの予定模型</h2>
-<p>予定runnerでは、4 bankのbyte配列を持つSystemVerilog模型を作る。入力は <code>req_valid, req_ready, addr, is_write, size, signed_load, wdata, byte_enable</code>、出力は <code>resp_valid, resp_ready, rdata, fault, ecc_corrected, ecc_uncorrectable</code> とする。受け付け時にbankとoff<a class="term" href="index.html#term-concept_55_set_65c10dc3">set</a>を記録し、hit/missに応じたcycle counterが0になったら応答を保持する。<code>resp_ready=0</code>の間も応答payloadは変えない。</p>
+<p>予定runnerでは、4 bankのbyte配列を持つSystemVerilog模型を作る。入力は <code>req_valid, req_ready, addr, is_write, size, signed_load, wdata, byte_enable</code>、出力は <code>resp_valid, resp_ready, rdata, fault, ecc_corrected, ecc_uncorrectable</code> とする。受け付け時にbankとoffsetを記録し、hit/missに応じたcycle <a class="term" href="index.html#term-counter">counter</a>が0になったら応答を保持する。<code>resp_ready=0</code>の間も応答payloadは変えない。</p>
 <p>検証対象は、(1) <code>0x12345678</code>のlittle-endian格納とload、(2) byte/halfwordの符号拡張、(3) byte enableによる部分更新、(4) hit=2/miss=4 cycle、(5) misalignedと範囲外、(6) ECC状態の伝達である。<a class="term" href="index.html#term-hdl">HDL</a> runnerが成功しても、SRAMやDRAMの実遅延を測ったことにはならない。</p>
 <h2 id="section-43-6">43.6 ここで確定した契約</h2>
 <p>memory arrayは、セルの集合をCPUの同期interfaceへ変換する。アドレス分解、<a class="term" href="index.html#term-endianness">endianness</a>、alignment、byte enable、latency、valid-ready、ECC結果は別々の欄に記録する。これらを一つの「memory speed」という数字に潰さない。</p>
@@ -114,7 +120,7 @@ response: rsp_valid &amp;&amp; rsp_ready -&gt; consume(rsp_rdata, rsp_err, ecc_s
 <p>内部状態から上位の契約へ進むとき、隠した変数を一つ選ぶ。たとえば連続<a class="term" href="index.html#term-voltage">電圧</a>を論理値へ写すなら、しきい値の近くの電圧と雑音を隠している。命令列を関数呼出しへ写すなら、レジスタやstack pointerを隠している。隠した変数が変化しても契約が保たれる範囲が、その抽象化の強さである。</p>
 <p>次に、同じ表へ失敗時の値を書く。未定義電圧、負の容量、範囲外アドレス、stack underflow、権限違反などは、正常なゼロや空文字へ丸めない。失敗を早い層で止め、診断名と入力を保存しておくと、後で別の層の故障と取り違えにくい。</p>
 <h3 id="section-35fd2523b0">この章で到達する小さな説明</h3>
-<ul><li><a class="term" href="index.html#term-concept_43_byte_address_914c4f2e">byte address</a>をbankとoffsetへ分解し、選んだ配列寸法の根拠を説明する</li><li>byte、halfword、wordのendiannessと符号拡張を具体的なbyte列で追跡する</li><li>byte enableと<a class="term" href="index.html#term-concept_43_misaligned_access_41dc9fce">misaligned access</a>の扱いをinterface契約として表にする</li><li><a class="term" href="index.html#term-concept_43_valid_ready_handshake_2eea7cdb">valid-ready handshake</a>で可変latencyの要求と応答を失わずに扱う</li><li>ECC結果、runner予定出力、実測値を別の出所として扱う</li></ul>
+<ul><li>byte addressをbankとoffsetへ分解し、選んだ配列寸法の根拠を説明する</li><li>byte、halfword、wordのendiannessと符号拡張を具体的なbyte列で追跡する</li><li>byte enableと<a class="term" href="index.html#term-concept_43_misaligned_access_41dc9fce">misaligned access</a>の扱いをinterface契約として表にする</li><li><a class="term" href="index.html#term-concept_43_valid_ready_handshake_2eea7cdb">valid-ready handshake</a>で可変latencyの要求と応答を失わずに扱う</li><li>ECC結果、runner予定出力、実測値を別の出所として扱う</li></ul>
 <p>この箇条書きは暗記項目ではない。各項目について、代表入力を一つ選び、式または状態遷移を二段以上書き、最後に『別の入力なら何が変わるか』を説明できればよい。説明できない項目は、次の実験へ進む前に本文の該当式へ戻る。</p>
 <h3 id="section-86aa35e5e4">故障診断の手順</h3>
 <p>故障は、入力、計算、表現、境界、出所の五分類で調べる。まず入力が有限で単位付きかを見る。次に計算の符号、係数、添字、丸めを確認する。その後、出力の表現幅、アドレス、状態名、source kindを確認する。最後に、予測を測定と呼んでいないか、上流の失敗を隠していないかを確認する。</p>

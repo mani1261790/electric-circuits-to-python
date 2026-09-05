@@ -46,6 +46,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>第46章では、<a class="term" href="index.html#term-rv32i">RV32I</a>の命令をassemblyとして並べ、register、stack、memory、PCが一命令ごとにどう変わるかを追った。次に必要なのは、その一命令を実際の配線へ落とすことである。第47章では、命令fetchから結果の書戻しまでを一つのclock周期に通す単一cycle datapath（単一周期データ経路）を作る。</p>
 <p>ここでいう一周期は「すべての命令が同じ計算量である」という意味ではない。<code>ADD</code>は<a class="term" href="index.html#term-register">register</a>を読み、ALUで加え、registerへ戻す。<code>LW</code>はさらにaddressを作ってdata memoryを読み、<code>BEQ</code>は比較結果で次のPCを選ぶ。異なる経路を一つの周期へ重ね、命令ごとにcontrol signalとmuxの選択を変える。周期の終わりにだけarchitectural stateを更新するので、途中の組合せ信号を次の命令の状態と取り違えない。</p>
 <h2 id="section-47-1">47.1 一周期の入口と出口</h2>
+<h3 id="section-47-1-1-state-control-write">47.1.1　まずstate・control・writeを一行にする</h3>
+<p>一周期を読む最初の表では、edge前のarchitectural state、decodeが作るcontrol、edgeで確定するwriteを分ける。</p>
+<table><thead><tr><th>欄</th><th><code>ADD</code>の例</th><th>境界</th></tr></thead>
+<tbody><tr><td>state before</td><td><code>PC</code>, <code>x6=10</code>, <code>x7=3</code></td><td>edge前の値</td></tr><tr><td>control</td><td><code>reg_write=1</code>, <code>alu_src_imm=0</code>, <code>alu_op=add</code></td><td>decodeの結果</td></tr><tr><td>combinational result</td><td><code>alu_result=13</code>, <code>PC_next=PC+4</code></td><td>まだ状態ではない</td></tr><tr><td>state after</td><td><code>x5=13</code>, <code>PC=PC+4</code></td><td>edge後に確定</td></tr></tbody>
+</table>
+<p>組合せ信号を途中で見ただけでは、registerやmemoryが更新されたとは言えない。<code>LW</code>や<code>BEQ</code>でも同じ欄を作ると、<a class="term" href="index.html#term-concept_47_write_back_843c8f9e">write-back</a>、memory side effect、next-PC選択の違いが見える。</p>
 <p>本章の最小状態は、32-bitの<code>PC</code>、32本の32-bit register、instruction memory、data memoryである。<a class="term" href="index.html#term-clock">clock</a> edgeの直前を状態<code>S_n</code>、直後を<code>S_{n+1}</code>と書く。一周期中の組合せ論理は<code>S_n</code>とfetchした命令を入力に取り、次のPC、register write、memory writeを計算する。edgeで有効なwriteだけを状態へ反映する。</p>
 <pre><code class="language-text">       PC
         │
@@ -78,7 +84,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p><code>—</code>はその信号を使わないという意味であり、任意の値を安全に流してよいという意味ではない。未定義opcodeで<code>reg_write</code>や<code>mem_write</code>を1にしない。decodeが失敗したら<code>illegal_instruction</code>として停止するか、少なくともすべてのside effectを無効にする。後者を採る場合も、停止・faultの規則をtraceへ記録する。</p>
 <p>ALUの入力第二項は、R-typeなら<code>rs2</code>、I/S-typeなら符号拡張immediateでmux選択する。<code>BEQ</code>の比較は、<code>rs1-rs2=0</code>というALU結果のzeroを使う実装と、等値<a class="term" href="index.html#term-concept_34_term_f405f45c90_f405f45c">比較器</a>を別に置く実装がある。どちらも、比較信号がbranch controlへ届く前に次のPC muxを選べることが条件である。内部の部品数はISAが固定しないが、信号の意味とedgeで見える結果は固定する。</p>
 <h2 id="section-47-3-add">47.3 <code>ADD</code>の経路を数値で追う</h2>
-<p><code>PC=0x00001000</code>、命令が<code>ADD x5,x6,x7</code>、<code>x6=10</code>、<code>x7=3</code>とする。decodeの出力は<code>rd=5</code>、<code>rs1=6</code>、<code>rs2=7</code>、<code>reg_write=1</code>、<code>alu_src_imm=0</code>、<code>alu_op=add</code>である。register fileは二つのread dataを同じ周期に出し、ALUは13を作る。<a class="term" href="index.html#term-concept_47_write_back_843c8f9e">write-back</a> muxはALU側を選び、edgeでx5へ13を保存する。PC muxはsequential側を選び、<code>PC_next=0x00001004</code>とする。</p>
+<p><code>PC=0x00001000</code>、命令が<code>ADD x5,x6,x7</code>、<code>x6=10</code>、<code>x7=3</code>とする。decodeの出力は<code>rd=5</code>、<code>rs1=6</code>、<code>rs2=7</code>、<code>reg_write=1</code>、<code>alu_src_imm=0</code>、<code>alu_op=add</code>である。register fileは二つのread dataを同じ周期に出し、ALUは13を作る。write-back muxはALU側を選び、edgeでx5へ13を保存する。PC muxはsequential側を選び、<code>PC_next=0x00001004</code>とする。</p>
 <p>数式としては、ALU結果を式(47-1)で表す。</p>
 <pre><code class="language-text">alu_result = (rs1_value + operand2) mod 2^32                         (47-1)
 operand2 = rs2_value                    (R-type)

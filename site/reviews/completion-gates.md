@@ -1103,6 +1103,14 @@ HTML再生成・`validate_book`・固定Chrome測定はPrelude 12頁、本文3,5
 
 現行acceptanceは699件中`structural_contract_verified=385`、`host_evidence_verified=16`、failed=0、domain／learner未実行298件、`measured=true=0`。negativeは教育モデル12/459件、固定runnerは718/718 successだが測定欄718件すべて`not_run`、章固有change/fault execution artifactは0章である。P1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）は残り、`learner-ready`は保留する。
 
+## 125. 2026-09-06 第43〜52章のCPU接続導入追記後
+
+第43〜52章へ、memory interfaceのaddress／応答、stored-programの一命令遷移、RV32Iの観測可能状態、assemblyの三層、単一cycleのstate／control／write、control／decode／memory map、trapのcause／保存／復帰、boot ROM、latency／throughput／critical path、pipelineのstage validを表で読む導入を追加した。既存の実験契約・未実行境界・PC-only基準は変更していない。
+
+HTML再生成・`validate_book`・固定Chrome測定はPrelude 12頁、本文3,512頁、合算3,524頁、各章24〜40頁、under24=0、107/107 hash一致。`tmp/page-counts.json`は生成`2026-09-05T15:26:12+00:00`、SHA-256=`e63323957578ab6943fc7a7abdcfdc0cb5dc966716724fc54bcda2b97af80d84`である。
+
+現行acceptanceは699件中`structural_contract_verified=385`、`host_evidence_verified=16`、failed=0、domain／learner未実行298件、`measured=true=0`。negativeは教育モデル12/459件、固定runnerは718/718 successだが測定欄718件すべて`not_run`、章固有change/fault execution artifactは0章である。P1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）は残り、`learner-ready`は保留する。
+
 ## 121. 2026-09-05 第24〜27章の初心者導線追記後
 
 執筆へ戻る区切りとして、第24〜27章へ、既存の数式・実験契約を置き換えない初心者向け橋渡しを追加した。

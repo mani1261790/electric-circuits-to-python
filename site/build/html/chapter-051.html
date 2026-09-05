@@ -48,11 +48,17 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>順次実行の単純な模型なら、命令数を<code>N_inst</code>、平均cycle数を<code>CPI</code>、<a class="term" href="index.html#term-clock">clock</a>周波数を<code>f</code>として</p>
 <p><span class="math" role="math" aria-label="数式"> T_{program}=N_{inst}\,CPI/f,\qquad throughput=f/CPI </span></p>
 <p>と置く。これはarchitectural traceとclock契約を結びつける式であり、分岐ミス、<a class="term" href="index.html#term-cache">cache</a> miss、割込み待ちをCPIへ含めるかを明記する必要がある。</p>
-<h2 id="section-51-2-critical-path">51.2 <a class="term" href="index.html#term-critical_path">critical path</a>を表にする</h2>
+<h3 id="section-51-1-1-latency-throughput-path">51.1.1　まずlatency・throughput・pathを別欄にする</h3>
+<p>「速い」を一つの数字に潰さないため、同じprogramでも三つの欄を分ける。</p>
+<table><thead><tr><th>欄</th><th>問い</th><th>代表単位</th></tr></thead>
+<tbody><tr><td>latency</td><td>一件が始まって終わるまで</td><td>ns / cycle</td></tr><tr><td>throughput</td><td>単位時間に何件終わるか</td><td>item/s</td></tr><tr><td><a class="term" href="index.html#term-critical_path">critical path</a></td><td>一周期で最長の組合せ経路はどれか</td><td>ns</td></tr></tbody>
+</table>
+<p><code>f=1/T</code>は候補clockの解析関係であり、boardや製品の実測frequencyではない。<a class="term" href="index.html#term-concept_51_cpi_22b698df">CPI</a>、stall、branch penalty、測定環境を別欄に置いてから比較する。</p>
+<h2 id="section-51-2-critical-path">51.2 critical pathを表にする</h2>
 <p>一周期<a class="term" href="index.html#term-concept_47_datapath_f5f6ba47">datapath</a>では、instruction fetch、decode、register read、ALU、memory、write-backの遅延が同じcycleへ積み重なる。候補経路を<code>path_fetch_to_decode</code>、<code>path_decode_to_alu</code>、<code>path_alu_to_mem</code>、<code>path_mem_to_wb</code>のように分け、各stageの遅延を単位付きで保存する。経路の最大値が<code>D_est</code>である。</p>
 <p>単純な一連の経路をfetch 2 ns、decode 1 ns、<a class="term" href="index.html#term-concept_35_alu_5bfc1981">ALU</a> 3 ns、memory 4 ns、write-back 1 nsと置く別例なら、合計は11 nsとなる。一方、manifestの<code>critical_path_table</code>は経路候補の最大7 nsにstage overhead 1 nsとskew margin 0.5 nsを別欄で持つ。この二つを同じ測定値として足し直さず、どの経路表に基づく計算かを記録する。clock periodにはregisterのsetup、clock skewの余裕、clock-to-Qを加えるため、経路和だけを最大周波数の保証値にしない。ここでの値は遅延表からの解析予測であり、配置配線後のtiming reportではない。</p>
 <h2 id="section-51-3-instruction-mix">51.3 <a class="term" href="index.html#term-concept_51_instruction_mix_d28f4cb5">instruction mix</a>から実行時間へ</h2>
-<p>ADDの<a class="term" href="index.html#term-concept_51_cpi_22b698df">CPI</a>が1、loadが2、branchが3で、割合がそれぞれ0.5、0.25、0.25なら、平均CPIは<code>0.5×1+0.25×2+0.25×3=1.75</code>である。100命令を10 ns周期で動かす予定なら、実行時間模型は<code>100×1.75×10 ns=1.75 µs</code>となる。これは命令列と仮定したCPIから計算した値で、実機のwall-clock測定ではない。</p>
+<p>ADDのCPIが1、loadが2、branchが3で、割合がそれぞれ0.5、0.25、0.25なら、平均CPIは<code>0.5×1+0.25×2+0.25×3=1.75</code>である。100命令を10 ns周期で動かす予定なら、実行時間模型は<code>100×1.75×10 ns=1.75 µs</code>となる。これは命令列と仮定したCPIから計算した値で、実機のwall-clock測定ではない。</p>
 <p>同じ命令セットでも、長いcritical pathを持つCPUはclockを遅くしなければならない。逆に<a class="term" href="index.html#term-pipeline">pipeline</a>で一段を短くすると、単一命令のlatencyが増えることがある。比較表にはfrequency、CPI、命令数、stall、branch penaltyを同時に置く。</p>
 <h2 id="section-51-4-amdahl-energy-delay">51.4 Amdahlとenergy-delay</h2>
 <p>処理の割合<code>p</code>だけを<code> s</code>倍に高速化しても、残りの割合はそのままなので、全体のspeedupは</p>

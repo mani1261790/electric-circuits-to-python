@@ -47,6 +47,12 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-46-1-assembly-isa">46.1 assemblyは<a class="term" href="index.html#term-concept_44_isa_52ed4c0e">ISA</a>の表記である</h2>
 <p>assemblyは、機械語wordを人間が読める<a class="term" href="index.html#term-concept_69_mnemonic_d93f3f06">mnemonic</a>とregister名で書く表記である。<code>add a0, a0, t0</code>のような別名は、実際には<code>add x10, x10, x5</code>である。<code>mv</code>、<code>li</code>、<code>ret</code>のようなpseudoinstruction（疑似命令）は便利だが、RV32Iの独立したopcodeとは限らない。runnerでは、入力に書いたpseudoinstruction、展開後のbase instruction、生成wordを別欄にする。</p>
 <p>本章のプログラムはRV32I baseの範囲に限定し、乗算・除算のM extensionを使わない。整数和は<code>add</code>、配列要素の読出しは<code>lw</code>、分岐は<code>beq</code>または<code>bne</code>、戻りは<code>jalr x0,0(ra)</code>で書ける。命令の見た目がCに似ていても、Cの変数や関数がCPUに直接存在するわけではない。必要なaddressとlifetimeを<a class="term" href="index.html#term-register">register</a>またはmemoryへ割り当てる。</p>
+<h3 id="section-46-1-1-assembly">46.1.1　まず一行のassemblyを三層に分ける</h3>
+<p>assemblyを読むときは、表記、命令word、状態変化を一つに潰さない。例えば<code>addi sp, sp, -16</code>は、mnemonicの表記、RV32IのI-type word、<code>sp</code>を16 byte下げる状態更新という三つの欄を持つ。</p>
+<table><thead><tr><th>層</th><th>例</th><th>確認すること</th></tr></thead>
+<tbody><tr><td>表記</td><td><code>mv a0, t0</code></td><td>pseudoinstructionか</td></tr><tr><td>base instruction</td><td><code>addi a0, t0, 0</code></td><td>実際のopcodeとfield</td></tr><tr><td>状態更新</td><td><code>a0 ← t0</code></td><td>幅、符号、次PC</td></tr></tbody>
+</table>
+<p>この分離をしてから<a class="term" href="index.html#term-stack_frame">stack frame</a>へ進むと、便利な別名がcalling conventionやhardwareに新しい機能を追加したように見える誤りを防げる。</p>
 <h2 id="section-46-2-stack-pointer-frame">46.2 <a class="term" href="index.html#term-stack_pointer">stack pointer</a>とframe</h2>
 <p>stackは関数呼出しの一時領域として使うmemoryの一部で、stack pointer（<code>sp</code>、x2）が現在の<a class="term" href="index.html#term-frame">frame</a>を指す。本章のentry <code>sp</code>を<code>0x00008000</code>、alignmentを16 byteとする。これらの数値はcalling conventionを追うための抽象assembly runner domainであり、rv32eduの物理memory mapを意味しない。16 byteのframeを確保するprologueは次のように書ける。</p>
 <pre><code class="language-asm">    addi sp, sp, -16
@@ -58,7 +64,7 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <h2 id="section-46-3-calling-convention">46.3 <a class="term" href="index.html#term-calling_convention">calling convention</a>の責任分担</h2>
 <p>calling convention（呼出し規約）は、関数の境界で引数、戻り値、register保存をどう合意するかである。本章の表は次のように固定する。</p>
 <table><thead><tr><th>register</th><th>役割</th><th>呼出し後の責任</th></tr></thead>
-<tbody><tr><td><code>a0</code>–<code>a7</code></td><td>引数、戻り値（最初の戻り値は<code>a0</code>）</td><td>caller-saved</td></tr><tr><td><code>t0</code>–<code>t6</code></td><td>一時値</td><td>caller-saved</td></tr><tr><td><code>ra</code></td><td><code>jal</code>が保存する戻りaddress</td><td>nested callがあればcalleeが保存</td></tr><tr><td><code>s0</code>–<code>s11</code></td><td>長く生かす値、<code>s0</code>はframe pointerにも使える</td><td>callee-saved</td></tr><tr><td><code>sp</code></td><td><a class="term" href="index.html#term-stack_frame">stack frame</a>の先頭</td><td>calleeがentry値へ戻す</td></tr></tbody>
+<tbody><tr><td><code>a0</code>–<code>a7</code></td><td>引数、戻り値（最初の戻り値は<code>a0</code>）</td><td>caller-saved</td></tr><tr><td><code>t0</code>–<code>t6</code></td><td>一時値</td><td>caller-saved</td></tr><tr><td><code>ra</code></td><td><code>jal</code>が保存する戻りaddress</td><td>nested callがあればcalleeが保存</td></tr><tr><td><code>s0</code>–<code>s11</code></td><td>長く生かす値、<code>s0</code>はframe pointerにも使える</td><td>callee-saved</td></tr><tr><td><code>sp</code></td><td>stack frameの先頭</td><td>calleeがentry値へ戻す</td></tr></tbody>
 </table>
 <p>caller-savedは、呼出し側が必要ならcallの前に保存するregisterである。calleeは<code> t0</code>を自由に使える。callee-savedは、calleeが変更したなら元へ戻すregisterである。<code>s0</code>を使って保存しない関数は、呼出し元のlive valueを壊してはならない。<code>ra</code>は関数returnに必要なので、さらに別の関数を呼ぶcalleeはstackへ退避する。</p>
 <p>これはレジスタの物理的な性質ではなく、各assembly関数が守る契約である。callerとcalleeの一方だけが別の表を使えば、単純な関数では動いてもnested callや<a class="term" href="index.html#term-compiler">コンパイラ</a>生成コードで破綻する。</p>
