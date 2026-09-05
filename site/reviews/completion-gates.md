@@ -1095,6 +1095,19 @@ HTML正本を公開制作版として表示し、全321文書へ未完了ゲー�
 
 現行判定は **P0=0 / P1=1（必修実験・章固有change/fault・外部実装受入） / P2=2（FPGA任意経路、trace D/E/F物理下位層） / `learner-ready`保留**を維持する。
 
+## 121. 2026-09-05 第24〜27章の初心者導線追記後
+
+執筆へ戻る区切りとして、第24〜27章へ、既存の数式・実験契約を置き換えない初心者向け橋渡しを追加した。
+
+- 第24章: `V_DD`、pMOS、共通ゲート、`V_out`、nMOS、GNDを回路図から言葉へ戻し、`I_p=I_n`へ進む確認項目を追加
+- 第25章: 送り手の`V_OL`／`V_OH`と受け手の`V_IL`／`V_IH`を4行表にし、`V_DD=1.0 V`の解析例でNML/NMHを計算
+- 第26章: 2入力NANDの4通りをPDN（nMOS直列）、PUN（pMOS並列）、出力railへ一行ずつ対応
+- 第27章: `V_in(t)`／`V_out(t)`を同じ時間軸へ置き、`t_pHL`、`t_pLH`、立上り／立下り時間、`delay_not_observable`を分離
+
+各章のHTML再生成・`validate_book`・固定Chrome全107文書測定を実行し、Prelude 12頁、本文3,500頁、合算3,512頁、各章24〜40頁、under24=0、107/107 hash一致を確認した。現行`tmp/page-counts.json`は生成`2026-09-05T14:01:30+00:00`、SHA-256=`64736f679d4b8ac803c635a140afc09a862998275a0a0b9b8bbaf8d1d0caa751`である。第24〜27章の公開Pages反映とActions deployも完了している。
+
+本文導線の改善後も学習ゲートは昇格させていない。現行acceptanceは699件中`structural_contract_verified=385`、`host_evidence_verified=16`、failed=0、domain／learner未実行298件、`measured=true=0`。negativeは教育モデル12/459件、固定runnerは718/718 successだが全件`measurement_status=not_run`、章固有change/fault execution artifactは0章である。したがってP1（必修実験・章固有change/fault・外部実装受入）とP2（FPGA任意経路・trace D/E/F物理下位層）は残り、`learner-ready`は保留する。
+
 ## 120. 2026-09-05 acceptance構造契約とhost証拠の現行反映
 
 acceptance checkerに、汎用的な負の入力・正常経路・状態記録・言語境界の構造契約を追加し、第21〜24章のnegative manifestへ`status`、`measured`、`accessed_for_this_draft`を補った。さらに、第9〜12章について、実行済みmacOS host toolのうちmanifest acceptance IDへ明示対応する11行を、固定Linux target・物理測定・学習者操作とは分離した`host_evidence_verified`として結果へ投影した。

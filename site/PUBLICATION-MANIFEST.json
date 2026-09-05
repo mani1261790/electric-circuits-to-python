@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T14:02:48.445774+00:00",
+  "generated_at_utc": "2026-09-05T14:04:31.537771+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21611495,
+  "total_bytes_before_manifest": 21613258,
   "files": [
     {
       "path": ".nojekyll",
@@ -5333,8 +5333,8 @@
     },
     {
       "path": "reviews/completion-gates.md",
-      "bytes": 182300,
-      "sha256": "437101e656f5df013d8a8f9cd307b7f1638ab020ce43b3347d9e6dd495b47bdd"
+      "bytes": 184063,
+      "sha256": "68366e998bdbb341a12503474d801c3ebf7a6b0c3c6172b21383568824aa6571"
     },
     {
       "path": "reviews/external-acceptance-evidence-20260905.md",
