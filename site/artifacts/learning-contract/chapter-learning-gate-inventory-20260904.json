@@ -26,13 +26,17 @@
     "negative_contract_model_passed": 12,
     "negative_tests_measured_true": 0,
     "chapter_change_fault_execution_rows": 0,
+    "chapter_change_fault_model_rows": 106,
+    "chapter_change_fault_model_baseline_passed": 106,
+    "chapter_change_fault_model_change_passed": 106,
+    "chapter_change_fault_model_fault_passed": 106,
     "chapters_with_change_prompt": 97,
     "chapters_with_fault_prompt": 106
   },
   "blockers": [
     "manifest acceptance_tests have 294 structural-contract rows verified; 0 structural rows failed and 405 domain/learner rows remain not_run",
     "manifest negative_tests have 12 educational-model result rows; the remaining 447 are not_run and measured=true is still zero",
-    "no chapter-keyed change/fault execution artifact exists; the PC-only anchor is a separate three-change/four-fault check",
+    "chapter-keyed educational change/fault model rows are 106 (baseline 106, change 106, fault 106); these are not learner interactions or external-domain executions",
     "the explicit model mapping is still only an educational contract check; it does not close external-tool, FPGA, physical, or learner interaction gates"
   ],
   "learner_ready": false,
@@ -234,6 +238,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -469,6 +482,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -729,6 +751,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -918,6 +949,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -1196,6 +1236,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -1352,6 +1401,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -1509,6 +1567,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -1786,6 +1853,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -2024,6 +2100,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -2160,6 +2245,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -2404,6 +2498,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -2624,6 +2727,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -2840,6 +2952,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -3082,6 +3203,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -3305,6 +3435,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -3517,6 +3656,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -3708,6 +3856,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -3899,6 +4056,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -4103,6 +4269,15 @@
         }
       ],
       "negative_results": [],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": false,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -4268,6 +4443,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -4407,6 +4591,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -4536,6 +4729,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -4705,6 +4907,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -4884,6 +5095,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -5126,6 +5346,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -5333,6 +5562,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -5528,6 +5766,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -5718,6 +5965,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -6023,6 +6279,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -6216,6 +6481,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -6431,6 +6705,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -6628,6 +6911,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -6801,6 +7093,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -6986,6 +7287,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7171,6 +7481,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7304,6 +7623,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7437,6 +7765,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7570,6 +7907,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7691,6 +8037,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7824,6 +8179,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -7969,6 +8333,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -8114,6 +8487,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -8281,6 +8663,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -8448,6 +8839,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -8633,6 +9033,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -8806,6 +9215,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -8989,6 +9407,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9174,6 +9601,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9297,6 +9733,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9408,6 +9853,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9531,6 +9985,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9654,6 +10117,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9765,6 +10237,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -9920,6 +10401,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -10063,6 +10553,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -10228,6 +10727,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -10388,6 +10896,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -10536,6 +11053,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -10689,6 +11215,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -10849,6 +11384,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11002,6 +11546,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11147,6 +11700,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11288,6 +11850,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11441,6 +12012,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11591,6 +12171,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11748,6 +12337,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -11910,6 +12508,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12067,6 +12674,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12217,6 +12833,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12374,6 +12999,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12531,6 +13165,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12681,6 +13324,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12807,6 +13459,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -12933,6 +13594,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13059,6 +13729,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13185,6 +13864,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13311,6 +13999,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13437,6 +14134,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13563,6 +14269,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13689,6 +14404,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13832,6 +14556,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -13983,6 +14716,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -14161,6 +14903,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -14339,6 +15090,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -14517,6 +15277,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -14695,6 +15464,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -14873,6 +15651,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15051,6 +15838,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15202,6 +15998,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15353,6 +16158,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15511,6 +16325,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15662,6 +16485,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15813,6 +16645,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -15964,6 +16805,15 @@
           "reason": null
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -16115,6 +16965,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -16266,6 +17125,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -16436,6 +17304,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -16606,6 +17483,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -16776,6 +17662,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -16946,6 +17841,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -17116,6 +18020,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -17286,6 +18199,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -17456,6 +18378,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -17626,6 +18557,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -17802,6 +18742,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"
@@ -17978,6 +18927,15 @@
           "reason": "no explicit checked-in educational model mapping"
         }
       ],
+      "change_fault_model": {
+        "present": true,
+        "baseline": "passed",
+        "change": "passed",
+        "fault": "passed",
+        "measured": false,
+        "learner_interaction": false,
+        "independent_review": false
+      },
       "change_prompt_detected": true,
       "fault_diagnosis_prompt_detected": true,
       "chapter_change_fault_execution": "not_recorded"

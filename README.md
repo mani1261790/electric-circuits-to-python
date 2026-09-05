@@ -15,7 +15,9 @@ https://mani1261790.github.io/electric-circuits-to-python/
 - canonical artifact: 739件（全件 `measured=false`）
 - 独立出典sign-off: 631/631、hold 0
 - MiniPy参照runtime: 20受入ケース成功
+- 利用可能章host evidence: 第1〜21・24・32・92章の24/24章（物理測定ではない）
 - 第1〜106章change/fault教育モデル: 106/106章で変更・故障経路を確認（`measured=false`、learner gateではない）
+- 現行HTML分量: 先行一周12頁、第1〜106章3,497頁、合算3,509頁（各章24〜40頁、24頁未満0章）
 
 第1〜106章の限定的な教育モデル実行記録は、[`site/reviews/chapter-change-fault-20260905.md`](./site/reviews/chapter-change-fault-20260905.md) と [`site/artifacts/learning-contract/chapter-change-fault-20260905.json`](./site/artifacts/learning-contract/chapter-change-fault-20260905.json) にあります。これは学習者の合格、外部tool、物理測定、独立レビュー、106章全体の完了を示しません。
 

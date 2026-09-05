@@ -1,9 +1,9 @@
-# 第9〜12章 外部host実行エビデンス（2026-09-05）
+# 利用可能な章の外部host実行エビデンス（2026-09-05）
 
-macOS上のCPython/ngspice実行について、入力・出力・ログのhash、終了状態、版、狭い出力不変条件を検査した別台帳です。固定Linux runnerや物理測定とは分離しています。
+macOS上のCPython/ngspice/Verilator/Icarus/Yosys実行について、入力・出力・ログのhash、終了状態、版、狭い出力不変条件を検査した別台帳です。固定Linux runnerや物理測定とは分離しています。
 
-- 対象章: 4章
-- host_evidence_verified: 4章
+- 対象章: 24章
+- host_evidence_verified: 24章
 - host_evidence_failed: 0章
 - measured=true: 0（物理測定ではない）
 - learner_ready: false

@@ -1,10 +1,10 @@
 {
   "schema": "ELECTRON-TO-PYTHON-PUBLICATION-1",
-  "generated_at_utc": "2026-09-05T11:39:00.732098+00:00",
+  "generated_at_utc": "2026-09-05T12:02:24.116724+00:00",
   "source_file_count": 1071,
   "generated_entrypoint_count": 5,
   "file_count_before_manifest": 1076,
-  "total_bytes_before_manifest": 21365356,
+  "total_bytes_before_manifest": 21429505,
   "files": [
     {
       "path": ".nojekyll",
@@ -43,13 +43,13 @@
     },
     {
       "path": "artifacts/learning-contract/chapter-learning-gate-inventory-20260904.json",
-      "bytes": 583200,
-      "sha256": "ea6dd58ac2381f6c8c9aac104d071ba6c9f0be8931fb1bacffecf3120826d789"
+      "bytes": 609946,
+      "sha256": "8321387733965fb9203e319a57d4680a964aea4699d1809b095dd7b360a3ce58"
     },
     {
       "path": "artifacts/learning-contract/external-acceptance-evidence-20260905.json",
-      "bytes": 8715,
-      "sha256": "e7204b8c8dd1371720aab184617000c5ab185626d6f7a91b3577f58d9d1e2d1c"
+      "bytes": 45725,
+      "sha256": "746a3b63370baef91ee93492adc3fda34576d6f86922963ca15679b55e45913c"
     },
     {
       "path": "artifacts/learning-contract/pc-only-change-fault-20260904.json",
@@ -5278,8 +5278,8 @@
     },
     {
       "path": "build/html/index.html",
-      "bytes": 102754,
-      "sha256": "9100dcb413a6241e9c6c6661a5d8174a0a7bd842e41d3fad86ec1e3add087944"
+      "bytes": 102762,
+      "sha256": "237d6daf550f309a9e98aefbe2e6584f17aa052b281b3fde38ee703c26fadfc8"
     },
     {
       "path": "build/html/prelude.html",
@@ -5313,8 +5313,8 @@
     },
     {
       "path": "reviews/chapter-learning-gate-inventory-20260904.md",
-      "bytes": 1721,
-      "sha256": "31b0b72d9cadcfe081ec4432c36d11ad018a6132e19f8fa52c589f4456a15be9"
+      "bytes": 1832,
+      "sha256": "ed21e44c48f9330e08564fa4f45bb31b4a515974ea32a045e59b1806352d8a94"
     },
     {
       "path": "reviews/chapter-schema-audit-20260904.md",
@@ -5328,8 +5328,8 @@
     },
     {
       "path": "reviews/completion-audit-20260905.md",
-      "bytes": 3328,
-      "sha256": "e5ea27c05cce0292dddad2f98e392e3b6bad7495c2515eb58777690a1017af0c"
+      "bytes": 3569,
+      "sha256": "f842b5f14c72baf818213086932b7d8d3d4d4ac2bb00364ee1fbcec0511f12f0"
     },
     {
       "path": "reviews/completion-gates.md",
@@ -5338,8 +5338,8 @@
     },
     {
       "path": "reviews/external-acceptance-evidence-20260905.md",
-      "bytes": 689,
-      "sha256": "351a5e932e853e848ab5ec4e6ae30818627183a39159785260438aad8dd4f788"
+      "bytes": 722,
+      "sha256": "4025be65dfa5ed40a5bc6491e3704d972ea3a4b492b147a31e17f22b4c8e272a"
     },
     {
       "path": "reviews/independent-chapter-confirmation-20260904.md",
