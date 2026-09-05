@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "74a94866c99f5ede45899d3ae8501a00088b770a90daf4aeeea068e041b9b234",
-  "scope": "chapters 9-100; executable educational models",
+  "source_sha256": "31fb3c9a9d2abacecdff11f98c4247fda825d358b912316b69577b9e85f422c9",
+  "scope": "chapters 9-106; executable educational models",
   "summary": {
-    "chapters": 92,
-    "baseline_passed": 92,
-    "change_passed": 92,
-    "fault_passed": 92,
+    "chapters": 98,
+    "baseline_passed": 98,
+    "change_passed": 98,
+    "fault_passed": 98,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -7472,6 +7472,532 @@
           "input_sha256": "eb436d4353ca4da180d3887ea388b24205757daa474d78e739adc458891aa5b7",
           "error_code": "input_contract_error",
           "error": "module/import/file descriptor counts are invalid"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 101,
+      "title": "GIL、free-threading、subinterpreter",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "gil_free_threading_interpreter_states",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "threads": 4,
+          "work_units": 100,
+          "interpreters": 1,
+          "gil": true,
+          "io_fraction": 0.2
+        },
+        "input_sha256": "4628c71acfdea86597099cda65669648f1364df30a5040224c316f58b5abf4b8",
+        "output": {
+          "cpu_parallelism": 1.0,
+          "effective_ticks": 90.0,
+          "thread_states": 4.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "threads": 4,
+          "work_units": 100,
+          "interpreters": 4,
+          "gil": false,
+          "io_fraction": 0.2
+        },
+        "output_changed_key": "cpu_parallelism",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "threads": 4,
+            "work_units": 100,
+            "interpreters": 4,
+            "gil": false,
+            "io_fraction": 0.2
+          },
+          "input_sha256": "d946147caf052c1d9510933914993a4a24be920d723ff2c9bd251b4e1f72a741",
+          "output": {
+            "cpu_parallelism": 4.0,
+            "effective_ticks": 22.5,
+            "thread_states": 4.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "threads": 4,
+          "work_units": 100,
+          "interpreters": 1,
+          "gil": true,
+          "io_fraction": 1.2
+        },
+        "expected_error_fragment": "gil must be boolean and 0<=io_fraction<=1",
+        "observed": {
+          "status": "error",
+          "input": {
+            "threads": 4,
+            "work_units": 100,
+            "interpreters": 1,
+            "gil": true,
+            "io_fraction": 1.2
+          },
+          "input_sha256": "f848e74895dffe47fa31a05232e3d28ad044ad7ad4e62f0fb47ae84daedebc5d",
+          "error_code": "input_contract_error",
+          "error": "gil must be boolean and 0<=io_fraction<=1"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 102,
+      "title": "adaptive interpreter、inline cache、tier 2、JIT",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "adaptive_inline_cache_and_tier",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "bytecodes": 100,
+          "cache_hits": 60,
+          "guard_failures": 2,
+          "tier": "interpreter"
+        },
+        "input_sha256": "9489faa294a159e0b04bbc23ea8fe74e4a57ee30936dbf898b2db7a947807a35",
+        "output": {
+          "dispatches": 42.0,
+          "specialized": 60.0,
+          "tier_code": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "bytecodes": 100,
+          "cache_hits": 80,
+          "guard_failures": 2,
+          "tier": "tier2"
+        },
+        "output_changed_key": "dispatches",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "bytecodes": 100,
+            "cache_hits": 80,
+            "guard_failures": 2,
+            "tier": "tier2"
+          },
+          "input_sha256": "1546d433218dc049d792a9a9a41b1bbbb08129306bca93ca8b7f53cea911f914",
+          "output": {
+            "dispatches": 22.0,
+            "specialized": 80.0,
+            "tier_code": 2.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "bytecodes": 100,
+          "cache_hits": 60,
+          "guard_failures": 2,
+          "tier": "unknown"
+        },
+        "expected_error_fragment": "tier is outside the adaptive interpreter table",
+        "observed": {
+          "status": "error",
+          "input": {
+            "bytecodes": 100,
+            "cache_hits": 60,
+            "guard_failures": 2,
+            "tier": "unknown"
+          },
+          "input_sha256": "980db386c367a08887ce12fbe7d11e1a81aeec8ac882ae1bd44365529e2903ac",
+          "error_code": "input_contract_error",
+          "error": "tier is outside the adaptive interpreter table"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 103,
+      "title": "MiniPyの言語仕様とcompiler統合",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "minipy_grammar_symbol_bytecode_pipeline",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "source_tokens": 40,
+          "grammar_version": 1,
+          "symbol_pass": true,
+          "tests_passed": 40,
+          "constant_folds": 4
+        },
+        "input_sha256": "346b94e5d6ce343a51dd1b204d7ab211296930d75d9be3aef48ca4afce315394",
+        "output": {
+          "bytecode_ops": 36.0,
+          "grammar_version": 1.0,
+          "tests_passed": 40.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "source_tokens": 40,
+          "grammar_version": 2,
+          "symbol_pass": true,
+          "tests_passed": 40,
+          "constant_folds": 4
+        },
+        "output_changed_key": "grammar_version",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "source_tokens": 40,
+            "grammar_version": 2,
+            "symbol_pass": true,
+            "tests_passed": 40,
+            "constant_folds": 4
+          },
+          "input_sha256": "17ce83cb51da5ebd61ca8289e9b59ed1fd7e895a7278365d6936f455ce15fdd6",
+          "output": {
+            "bytecode_ops": 36.0,
+            "grammar_version": 2.0,
+            "tests_passed": 40.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "source_tokens": 40,
+          "grammar_version": 1,
+          "symbol_pass": false,
+          "tests_passed": 40,
+          "constant_folds": 4
+        },
+        "expected_error_fragment": "MiniPy symbol pass must succeed",
+        "observed": {
+          "status": "error",
+          "input": {
+            "source_tokens": 40,
+            "grammar_version": 1,
+            "symbol_pass": false,
+            "tests_passed": 40,
+            "constant_folds": 4
+          },
+          "input_sha256": "a402aa802c1ef085738eabe59945c8c44fcbcaf4684af3a84cd0f5dd8af3c85e",
+          "error_code": "input_contract_error",
+          "error": "MiniPy symbol pass must succeed"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 104,
+      "title": "MiniPyのRISC-V port",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "minipy_riscv_freestanding_runtime",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "instructions": 120,
+          "stack_alignment": 16,
+          "uart": true,
+          "timer": true,
+          "endian": "little"
+        },
+        "input_sha256": "6474538e321020fa858061346244e58512c1258529b936823cbde79d0e62c886",
+        "output": {
+          "startup_pc": 0.0,
+          "instruction_count": 120.0,
+          "uart_ready": 1.0,
+          "timer_ready": 1.0,
+          "little_endian": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "instructions": 240,
+          "stack_alignment": 16,
+          "uart": true,
+          "timer": true,
+          "endian": "little"
+        },
+        "output_changed_key": "instruction_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "instructions": 240,
+            "stack_alignment": 16,
+            "uart": true,
+            "timer": true,
+            "endian": "little"
+          },
+          "input_sha256": "f133ec45beaa2b56a973d1d054691042b6f1bd54c93a0b136ddb740cd4cb5520",
+          "output": {
+            "startup_pc": 0.0,
+            "instruction_count": 240.0,
+            "uart_ready": 1.0,
+            "timer_ready": 1.0,
+            "little_endian": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "instructions": 120,
+          "stack_alignment": 8,
+          "uart": true,
+          "timer": true,
+          "endian": "little"
+        },
+        "expected_error_fragment": "stack_alignment must be a multiple of 16",
+        "observed": {
+          "status": "error",
+          "input": {
+            "instructions": 120,
+            "stack_alignment": 8,
+            "uart": true,
+            "timer": true,
+            "endian": "little"
+          },
+          "input_sha256": "8502b1028cf7431da3488c993cd65026a1e88780b8c29b11cf1c44c024e00e47",
+          "error_code": "input_contract_error",
+          "error": "stack_alignment must be a multiple of 16"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 105,
+      "title": "全層trace atlas",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "cross_layer_trace_atlas_join",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "events": 20,
+          "layers": 8,
+          "joins": 10,
+          "trace_id": "trace-105",
+          "waveform": true
+        },
+        "input_sha256": "b67e2c5047a17331f2150de121226939264c3fd87c82d2ee06a029a506de2bf3",
+        "output": {
+          "cross_layer_events": 160.0,
+          "joined_events": 10.0,
+          "waveform_present": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "events": 20,
+          "layers": 9,
+          "joins": 10,
+          "trace_id": "trace-105",
+          "waveform": true
+        },
+        "output_changed_key": "cross_layer_events",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "events": 20,
+            "layers": 9,
+            "joins": 10,
+            "trace_id": "trace-105",
+            "waveform": true
+          },
+          "input_sha256": "e2bd45d525f70c15a9c6a537cadcdca4458eb987d634b24d81aaf5c523b70ed7",
+          "output": {
+            "cross_layer_events": 180.0,
+            "joined_events": 10.0,
+            "waveform_present": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "events": 20,
+          "layers": 8,
+          "joins": 10,
+          "trace_id": "",
+          "waveform": true
+        },
+        "expected_error_fragment": "trace ID, joins, and waveform coverage are invalid",
+        "observed": {
+          "status": "error",
+          "input": {
+            "events": 20,
+            "layers": 8,
+            "joins": 10,
+            "trace_id": "",
+            "waveform": true
+          },
+          "input_sha256": "e4e242fa683bcd8ef00e0e175916ffc336803b91a9a60097d5380c50cee1a182",
+          "error_code": "input_contract_error",
+          "error": "trace ID, joins, and waveform coverage are invalid"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 106,
+      "title": "現代PCへの写像と最終統合",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "modern_pc_mapping_final_integration",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "isa": "arm64",
+          "cache_levels": 3,
+          "gpu": true,
+          "iommu": true,
+          "secure_boot": true,
+          "layers": 106
+        },
+        "input_sha256": "ca2040c48607ca2dd8b44d80d2e9b0b6f55cdc143fa6ff7283b570a8bc49a100",
+        "output": {
+          "mapped_components": 6.0,
+          "layer_coverage": 106.0,
+          "trust_boundary": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "isa": "riscv",
+          "cache_levels": 3,
+          "gpu": false,
+          "iommu": true,
+          "secure_boot": true,
+          "layers": 106
+        },
+        "output_changed_key": "mapped_components",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "isa": "riscv",
+            "cache_levels": 3,
+            "gpu": false,
+            "iommu": true,
+            "secure_boot": true,
+            "layers": 106
+          },
+          "input_sha256": "cbbb71312094a4f23846138361d61e9f42b39b9ade8b90b3021685d339a2b3c8",
+          "output": {
+            "mapped_components": 5.0,
+            "layer_coverage": 106.0,
+            "trust_boundary": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "isa": "arm64",
+          "cache_levels": 3,
+          "gpu": true,
+          "iommu": true,
+          "secure_boot": true,
+          "layers": 107
+        },
+        "expected_error_fragment": "layers must cover the 106-chapter boundary",
+        "observed": {
+          "status": "error",
+          "input": {
+            "isa": "arm64",
+            "cache_levels": 3,
+            "gpu": true,
+            "iommu": true,
+            "secure_boot": true,
+            "layers": 107
+          },
+          "input_sha256": "42e1fe9eaabb5c211b0e1ff3525f42f5f45439517387cc273857cf9069830782",
+          "error_code": "input_contract_error",
+          "error": "layers must cover the 106-chapter boundary"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
