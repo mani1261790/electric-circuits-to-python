@@ -59,6 +59,13 @@ footer { border-top: 1px solid #cbd5e1; margin-top: 3rem; padding-top: 1rem; col
 <p>Y = NOT (A AND B AND C)</p>
 <p>である。PDNはnMOS三つの直列、<a class="term" href="index.html#term-pun">PUN</a>はpMOS三つの並列になる。出力が低くなるのは<code>A=B=C=1</code>の一通りで、それ以外は高出力の契約を目指す。</p>
 <p>入力数が増えると、PDNの直列段数が増える。同じトランジスタ寸法をそのまま使ったままでは、直列経路の抵抗、<a class="term" href="index.html#term-parasitic_capacitance">寄生容量</a>、遅延、低出力の条件が変わる。論理関数が同じだからといって、電圧範囲や速度も2入力と同じだと仮定しない。</p>
+<h3 id="section-2-1-1">2.1.1　表から配線へ一行ずつ移す</h3>
+<p>2入力NANDを初めて読むときは、式<code>NOT (A AND B)</code>をいきなりトランジスタ数へ変換しない。まず「出力をGNDへつなぐ条件」を一つだけ探す。NANDではそれが<code>A=1</code>かつ<code>B=1</code>であり、PDNの二つのnMOSがともにオンになる条件である。残りの三つでは、少なくとも一方のnMOSがオフなので、PDNの経路は切れる。</p>
+<table><thead><tr><th><code>A</code></th><th><code>B</code></th><th>PDN（nMOS直列）</th><th>PUN（pMOS並列）</th><th>出力の読み方</th></tr></thead>
+<tbody><tr><td>0</td><td>0</td><td>どちらかがオフ</td><td>両方がオン</td><td>電源側へつながり、高い出力を目指す</td></tr><tr><td>0</td><td>1</td><td>A側がオフ</td><td>A側がオン</td><td>電源側へつながり、高い出力を目指す</td></tr><tr><td>1</td><td>0</td><td>B側がオフ</td><td>B側がオン</td><td>電源側へつながり、高い出力を目指す</td></tr><tr><td>1</td><td>1</td><td>両方がオン</td><td>両方がオフ</td><td>GNDへつながり、低い出力を目指す</td></tr></tbody>
+</table>
+<p>この表の「オン」「オフ」は、まず論理スイッチとしての状態である。実際の電圧や電流は、<code>V_IL</code>、<code>V_IH</code>、しきい値、<code>V_DD</code>、直列抵抗、負荷、過渡時間を追加してから計算する。たとえば<code>A=0, B=1</code>を「入力が一つ高いから低出力」と読んではいけない。PDNは直列なので、A側の一つがオフならGNDへの連続経路がないからである。</p>
+<p>次に3入力へ進むときも、同じ順序を使う。出力をGNDへつなぐ入力組合せを先に書き、直列の全素子がオンかを確認し、その補集合をPUNの並列条件へ写す。論理式の否定を先に暗記するより、「どのrailへの経路が連続するか」を毎行確認する方が、浮きや競合を見つけやすい。</p>
 <h3 id="section-2-3">2.3　真理値と物理状態</h3>
 <p><a class="term" href="index.html#term-concept_2_nand_a8e83472">NANDの真理値表</a>は、入力を0または1の論理値として与え、出力の論理値を返す。これは論理レベルの契約である。実際の回路では、入力には<code>V_IL</code>、<code>V_IH</code>、出力には<code>V_OL</code>、<code>V_OH</code>があり、遷移中には未定義領域がある。</p>
 <p>したがって、各入力組合せには、少なくとも次の情報を併記する。</p>
