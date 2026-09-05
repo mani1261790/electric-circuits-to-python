@@ -1,8 +1,8 @@
-# 第9〜64章 change/fault 教育モデル実行記録
+# 第9〜70章 change/fault 教育モデル実行記録
 
 確認日: 2026-09-05（Asia/Tokyo）
 
-`tools/run_chapter_change_fault.py` を標準ライブラリだけで実行し、第9〜64章について、章の演習参照に対応する「基準入力 → 条件変更 → 故障入力」を1組ずつ記録した。結果の機械台帳は [`chapter-change-fault-20260905.json`](../artifacts/learning-contract/chapter-change-fault-20260905.json) である。前半の第9〜12章host補助記録は同じ台帳へ統合し、第13〜16章の量子・バンド入口、第17〜20章の半導体基礎、第21〜24章のMOS・CMOS入口、第25〜28章の論理電圧・ゲート・遅延・レイアウト入口、第29〜32章のビット・NAND・論理合成・HDL入口、第33〜36章の有限幅算術・ALU・帰還入口、第37〜40章のlatch・setup/hold・FSM・clock/reset入口、第41〜44章のSRAM・DRAM/ECC・memory array・stored-program入口、第45〜48章のRV32I・assembly・datapath・memory map入口、第49〜52章のtrap・boot・性能・pipeline入口、第53〜56章のhazard・branch prediction・cache・Sv32入口、第57〜60章のcoherence・atomic・out-of-order・speculation入口に続いて、第61〜64章のbus/MMIO・DMA・電源/熱・boot chain入口を追加した。
+`tools/run_chapter_change_fault.py` を標準ライブラリだけで実行し、第9〜70章について、章の演習参照に対応する「基準入力 → 条件変更 → 故障入力」を1組ずつ記録した。結果の機械台帳は [`chapter-change-fault-20260905.json`](../artifacts/learning-contract/chapter-change-fault-20260905.json) である。前半の第9〜12章host補助記録は同じ台帳へ統合し、第13〜16章の量子・バンド入口、第17〜20章の半導体基礎、第21〜24章のMOS・CMOS入口、第25〜28章の論理電圧・ゲート・遅延・レイアウト入口、第29〜32章のビット・NAND・論理合成・HDL入口、第33〜36章の有限幅算術・ALU・帰還入口、第37〜40章のlatch・setup/hold・FSM・clock/reset入口、第41〜44章のSRAM・DRAM/ECC・memory array・stored-program入口、第45〜48章のRV32I・assembly・datapath・memory map入口、第49〜52章のtrap・boot・性能・pipeline入口、第53〜56章のhazard・branch prediction・cache・Sv32入口、第57〜60章のcoherence・atomic・out-of-order・speculation入口、第61〜64章のbus/MMIO・DMA・電源/熱・boot chain入口に続いて、第65〜70章のstorage・入力/TTY・framebuffer・network・assembler・relocation入口を追加した。
 
 | 章 | 教育モデル | 基準 | 変更 | 故障 | measured |
 |---:|---|---:|---:|---:|---:|
@@ -62,9 +62,17 @@
 | 62 | bounded DMA・descriptor ownership | pass | pass | pass | false |
 | 63 | power delivery・thermal RC | pass | pass | pass | false |
 | 64 | verified reset-to-kernel entry | pass | pass | pass | false |
+| 65 | LBA・physical page mapping | pass | pass | pass | false |
+| 66 | keyboard debounce・HID・TTY | pass | pass | pass | false |
+| 67 | framebuffer stride・pixel address | pass | pass | pass | false |
+| 68 | MTU fragmentation・receive queue | pass | pass | pass | false |
+| 69 | two-pass label resolution | pass | pass | pass | false |
+| 70 | section bounds・relocation | pass | pass | pass | false |
 
 第9章は線路長を1.0 mから0.1 mへ変更して `κ` の変化を確認し、`C'=0` を入力契約エラーとして検出した。第10章は接地抵抗を変更して節点電圧が変わることと、零抵抗入力の検出を確認した。第11章は `R` を変更して時定数が変わることと、非正の `C` の検出を確認した。第12章は終端を50 Ωから1 kΩへ変更して反射係数が変わることと、ナイキスト条件違反の検出を確認した。第13章は井戸幅の変更で準位が変わることと、非整数・零の量子数を拒否する入力契約を確認した。第14章は障壁幅の変更で指数減衰尺度が変わることと、`E>=V0` の境界を検出した。第15章は温度変更で占有率が変わることと、`T=0` を有限温度モデルの外側として検出した。第16章は二サイト準位差の変更でギャップが変わることと、零格子定数を検出した。第17章は温度変更で真性キャリア密度が変わることと、負の状態密度を検出した。第18章はドナー濃度変更で多数キャリアが変わることと、負の濃度を検出した。第19章は電場変更でdrift電流が変わることと、負の移動度を検出した。第20章は内蔵電位変更で空乏幅が変わることと、非正の誘電率を検出した。第21章は酸化膜厚変更で `C_ox` が変わることと、零膜厚を検出した。第22章はゲート電圧変更で平方則電流が変わることと、しきい値以下を検出した。第23章は電場変更で速度飽和補正が変わることと、非正の飽和速度を検出した。第24章は `β_n` 変更で切替点が変わることと、零電源を検出した。第25章は電源電圧変更で雑音余裕が変わることと、零電源を検出した。第26章は入力段数変更で真理値表・直列段数が変わることと、零段数を検出した。第27章は負荷容量変更で遅延が変わることと、負荷容量の符号違反を検出した。第28章は配線間隔変更でpitchが変わることと、零間隔を検出した。第29章はしきい値幅変更でundefined領域が変わることと、順序違反を検出した。第30章はNAND入力段数変更で真理値表行数が変わることと、零段数を検出した。第31章は積項・リテラル変更でNANDコストが変わることと、不正な積項数を検出した。第32章はRTLデータ幅変更で入力ベクトル数契約が変わることと、零幅を検出した。第33章はビット幅変更でsigned解釈が変わることと、零幅を検出した。第34章は加数変更で固定幅和が変わることと、零幅を検出した。第35章はshift量変更で結果が変わることと、幅外shiftを検出した。第36章はloop gain変更で安定状態数が変わることと、非相補初期状態を検出した。第37章はラッチ入力変更で保持出力が変わることと、clock mode欠落を検出した。第38章はsetup時間変更でsafe windowが変わることと、零clock periodを検出した。第39章はload data変更でnext stateが変わることと、零幅を検出した。第40章は反転段遅延変更で発振周期が変わることと、零遅延を検出した。第41章はSRAM書込みでread bitが変わることと、非binary cellを検出した。第42章はrefresh周期変更で余裕が変わることと、retention超過を検出した。第43章はアドレス変更でbankが変わることと、配列外アドレスを検出した。第44章はbranch条件変更でnext PCが変わることと、r0書込みを検出した。第45章はrd変更で命令語が変わることと、x31超えのレジスタを検出した。第46章はcall depth変更でstack pointerが変わることと、未整列frameを検出した。第47章はbranch条件変更でnext PCが変わることと、未整列PCを検出した。第48章はアドレス変更でmemory regionが変わることと、負のアドレスを検出した。第49章はtrap cause変更でmcauseが変わることと、未知causeを検出した。第50章はreset vector変更でfirst fetchが変わることと、未整列resetを検出した。第51章はcritical path変更でcycle timeが変わることと、零CPIを検出した。第52章はflush数変更で総cycleが変わることと、零stageを検出した。第53章はproducer/consumer timing変更でstallが変わることと、負cycleを検出した。第54章はmisprediction数変更でpenaltyが変わることと、過大mispredictionを検出した。第55章はline size変更でoffsetが変わることと、零line sizeを検出した。第56章はPTEのPPN変更でphysical addressが変わることと、invalid PTEを検出した。第57章はreader/writer数変更でMESI状態が変わることと、複数writerを検出した。第58章はCAS current変更でsuccessが変わることと、非CAS操作を検出した。第59章はissue width変更でissue cycleが変わることと、零幅を検出した。第60章はsecret bit変更でcache observationが変わることと、非binary secretを検出した。
 
 第61章は `valid∧ready` transfer と固定MMIO decodeを扱い、backpressure時にtransferが成立しないこと、負のrequest IDを拒否することを確認した。第62章はdescriptor ownershipをdeviceに限定した範囲付きDMA copyとcompletion/IRQを扱い、buffer外copyを拒否した。第63章はlumped rail/thermal RCとしてload current変更によるvoltage droop変化を扱い、非正のrail resistanceを拒否した。第64章はreset vectorから検証済みkernel entryまでの順序とROM/RAM boundsを扱い、verification前のjumpを拒否した。
+
+第65章はLBAからphysical pageへの教材用FTL写像とfree-page計算を扱い、logical address外を拒否した。第66章はkeyboard debounceからHID/TTY echoまでを扱い、8-bit HID外のkey codeを拒否した。第67章はpixel座標からstride付きframebuffer byte addressを計算し、画面外座標を拒否した。第68章はMTU fragmentationとreceive queueの収容数を扱い、キュー不足を拒否した。第69章は二pass assemblerのlabel解決とbranch displacementを扱い、未整列labelを拒否した。第70章はsection bounds内のrelocation fieldとsymbol+addendを扱い、section外のrelocationを拒否した。
 
 この証跡は、章ごとの変更・故障をモデルコードで再現できるという限定的な実装確認である。学習者が本文を読み、同じ操作を自力で行い、説明・再挑戦まで通過したことは記録しない。また、外部tool、固定Linux target、FPGA、実回路・実機測定、独立専門家AIレビュー、106章全体の学習ゲートへは昇格させない。従って `learner-ready=false` と `measured_true=0` は維持する。

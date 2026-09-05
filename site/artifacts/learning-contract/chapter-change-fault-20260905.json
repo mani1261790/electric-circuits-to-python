@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "020ae655e85b5c4f42f50a80a0806d11defc1095812b372e3b1071eb663a18a9",
-  "scope": "chapters 9-64; executable educational models",
+  "source_sha256": "6233e3ce66b12997fd42302799983554ddab54e308ef519737ee36a275f4cd84",
+  "scope": "chapters 9-70; executable educational models",
   "summary": {
-    "chapters": 56,
-    "baseline_passed": 56,
-    "change_passed": 56,
-    "fault_passed": 56,
+    "chapters": 62,
+    "baseline_passed": 62,
+    "change_passed": 62,
+    "fault_passed": 62,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -4493,6 +4493,514 @@
           "input_sha256": "7dfab4457356b917641e04a6fabfeaa7fdf821d67ae7159782e1feff1551986e",
           "error_code": "input_contract_error",
           "error": "image must be verified before kernel entry"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 65,
+      "title": "永続storageの物理とcontroller",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "lba_to_physical_page_mapping",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "lba": 3,
+          "logical_pages": 32,
+          "pages_per_block": 8,
+          "block_count": 8,
+          "valid_pages": 20
+        },
+        "input_sha256": "a70e8b172031d4f00e0194903f1d51ecf1936caeb7185b8557b8b1e58ac5a126",
+        "output": {
+          "physical_page": 21.0,
+          "block": 2.0,
+          "free_pages": 44.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "lba": 7,
+          "logical_pages": 32,
+          "pages_per_block": 8,
+          "block_count": 8,
+          "valid_pages": 20
+        },
+        "output_changed_key": "physical_page",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "lba": 7,
+            "logical_pages": 32,
+            "pages_per_block": 8,
+            "block_count": 8,
+            "valid_pages": 20
+          },
+          "input_sha256": "d8f7bc015b4384053fe82656a814d901e80d5eec3e3085c5832c75780b6ef5fa",
+          "output": {
+            "physical_page": 49.0,
+            "block": 6.0,
+            "free_pages": 44.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "lba": 32,
+          "logical_pages": 32,
+          "pages_per_block": 8,
+          "block_count": 8,
+          "valid_pages": 20
+        },
+        "expected_error_fragment": "lba is outside the logical address space",
+        "observed": {
+          "status": "error",
+          "input": {
+            "lba": 32,
+            "logical_pages": 32,
+            "pages_per_block": 8,
+            "block_count": 8,
+            "valid_pages": 20
+          },
+          "input_sha256": "91c10303429fdddec602340d7116f7beecea1501e5b255d9b3c44e0a2fe2cc97",
+          "error_code": "input_contract_error",
+          "error": "lba is outside the logical address space"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 66,
+      "title": "keyboardからTTYまで",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "keyboard_debounce_hid_tty_pipeline",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "key_code": 65,
+          "debounce_samples": 3,
+          "stable_samples": 3,
+          "pressed": true,
+          "echo": true
+        },
+        "input_sha256": "2257fd9d9911d3d0a58de70e2df708c86b0f11853f14c1d3f3651f66e81f0f1a",
+        "output": {
+          "debounced": 1.0,
+          "hid_byte": 65.0,
+          "tty_byte": 65.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "key_code": 65,
+          "debounce_samples": 3,
+          "stable_samples": 2,
+          "pressed": true,
+          "echo": true
+        },
+        "output_changed_key": "debounced",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "key_code": 65,
+            "debounce_samples": 3,
+            "stable_samples": 2,
+            "pressed": true,
+            "echo": true
+          },
+          "input_sha256": "c2d4f341ba145613b220458ec95152d536968188634af1a357c51a801e27a133",
+          "output": {
+            "debounced": 0.0,
+            "hid_byte": 65.0,
+            "tty_byte": 0.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "key_code": 256,
+          "debounce_samples": 3,
+          "stable_samples": 3,
+          "pressed": true,
+          "echo": true
+        },
+        "expected_error_fragment": "key_code must fit an 8-bit HID report",
+        "observed": {
+          "status": "error",
+          "input": {
+            "key_code": 256,
+            "debounce_samples": 3,
+            "stable_samples": 3,
+            "pressed": true,
+            "echo": true
+          },
+          "input_sha256": "86b863990b177c1757898ff1201dbd9ee899b73aef8594a3578916d8849ab482",
+          "error_code": "input_contract_error",
+          "error": "key_code must fit an 8-bit HID report"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 67,
+      "title": "UART、framebuffer、GPU、画面表示",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "framebuffer_stride_and_pixel_address",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "x": 10,
+          "y": 2,
+          "width": 640,
+          "height": 480,
+          "bits_per_pixel": 32,
+          "frame_base": 268435456
+        },
+        "input_sha256": "43e9c22fb68a8630accef3892f1bdc1a5dc34cfeba125871a49f655026e21246",
+        "output": {
+          "stride_bytes": 2560.0,
+          "byte_address": 268440616.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "x": 20,
+          "y": 2,
+          "width": 640,
+          "height": 480,
+          "bits_per_pixel": 32,
+          "frame_base": 268435456
+        },
+        "output_changed_key": "byte_address",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "x": 20,
+            "y": 2,
+            "width": 640,
+            "height": 480,
+            "bits_per_pixel": 32,
+            "frame_base": 268435456
+          },
+          "input_sha256": "95d075e13bc6a343c169b83cbf784619923c4f47db2191dcac11449d65f9cb7b",
+          "output": {
+            "stride_bytes": 2560.0,
+            "byte_address": 268440656.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "x": 640,
+          "y": 2,
+          "width": 640,
+          "height": 480,
+          "bits_per_pixel": 32,
+          "frame_base": 268435456
+        },
+        "expected_error_fragment": "pixel coordinate is outside the framebuffer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "x": 640,
+            "y": 2,
+            "width": 640,
+            "height": 480,
+            "bits_per_pixel": 32,
+            "frame_base": 268435456
+          },
+          "input_sha256": "934b8561cf0e71d477d8ccb4016fbd5b47b9ee4fcb88251f599c6ef0eada8598",
+          "error_code": "input_contract_error",
+          "error": "pixel coordinate is outside the framebuffer"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 68,
+      "title": "network interfaceからsocketまで",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "mtu_fragmentation_and_receive_queue",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "payload_bytes": 1200,
+          "mtu_bytes": 600,
+          "queue_capacity": 8,
+          "queued_packets": 0
+        },
+        "input_sha256": "641e6758f0e80c43170cf739314810b95fb1791a86d2876e3d2a15dde6f747f4",
+        "output": {
+          "fragment_count": 2.0,
+          "queued_after_send": 2.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "payload_bytes": 1800,
+          "mtu_bytes": 600,
+          "queue_capacity": 8,
+          "queued_packets": 0
+        },
+        "output_changed_key": "fragment_count",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "payload_bytes": 1800,
+            "mtu_bytes": 600,
+            "queue_capacity": 8,
+            "queued_packets": 0
+          },
+          "input_sha256": "04c9769a2e7f33dde655f670aa31244f06b5c8b2e24258c37638f67814953921",
+          "output": {
+            "fragment_count": 3.0,
+            "queued_after_send": 3.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "payload_bytes": 1200,
+          "mtu_bytes": 600,
+          "queue_capacity": 1,
+          "queued_packets": 0
+        },
+        "expected_error_fragment": "receive queue cannot hold all payload fragments",
+        "observed": {
+          "status": "error",
+          "input": {
+            "payload_bytes": 1200,
+            "mtu_bytes": 600,
+            "queue_capacity": 1,
+            "queued_packets": 0
+          },
+          "input_sha256": "9dc44a3801fcbc7c71efe8eb4eb50648a703f2af830e8e0f63c4e2d39f49ab50",
+          "error_code": "input_contract_error",
+          "error": "receive queue cannot hold all payload fragments"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 69,
+      "title": "二pass assembler",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "two_pass_label_and_branch_resolution",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "label": 4112
+        },
+        "input_sha256": "e3fbe43e4723b8b3a73f3496746c0a2183c24b2eefb49a72c6bc653370d9cb50",
+        "output": {
+          "displacement_bytes": 16.0,
+          "displacement_words": 4.0,
+          "resolved": 1.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "label": 4128
+        },
+        "output_changed_key": "displacement_words",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "pc": 4096,
+            "label": 4128
+          },
+          "input_sha256": "084cbbd74735fb456e1451c50bb4dbdfb8efc784deda96f776da89a1a71cf189",
+          "output": {
+            "displacement_bytes": 32.0,
+            "displacement_words": 8.0,
+            "resolved": 1.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "pc": 4096,
+          "label": 4098
+        },
+        "expected_error_fragment": "pc and label must be nonnegative 4-byte aligned addresses",
+        "observed": {
+          "status": "error",
+          "input": {
+            "pc": 4096,
+            "label": 4098
+          },
+          "input_sha256": "3b9e7dffff89b0d4c16051787e387b6657be59841715769d938d5d6d9792fec5",
+          "error_code": "input_contract_error",
+          "error": "pc and label must be nonnegative 4-byte aligned addresses"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 70,
+      "title": "object file、section、relocation",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "section_bounds_and_absolute_relocation",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "section_base": 8192,
+          "section_size": 64,
+          "relocation_offset": 16,
+          "symbol_value": 12288,
+          "addend": 4,
+          "width_bytes": 4
+        },
+        "input_sha256": "18ef9b0db56e704d01522141e080b5704dcc783ce9525b52a240dd07d3b9a073",
+        "output": {
+          "relocation_address": 8208.0,
+          "relocated_value": 12292.0,
+          "field_width_bytes": 4.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "section_base": 8192,
+          "section_size": 64,
+          "relocation_offset": 16,
+          "symbol_value": 16384,
+          "addend": 4,
+          "width_bytes": 4
+        },
+        "output_changed_key": "relocated_value",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "section_base": 8192,
+            "section_size": 64,
+            "relocation_offset": 16,
+            "symbol_value": 16384,
+            "addend": 4,
+            "width_bytes": 4
+          },
+          "input_sha256": "111e804d781d19fb7f087ab7fec9d1185068ae72af81ebc22b6b9e553ea7cc1e",
+          "output": {
+            "relocation_address": 8208.0,
+            "relocated_value": 16388.0,
+            "field_width_bytes": 4.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "section_base": 8192,
+          "section_size": 16,
+          "relocation_offset": 16,
+          "symbol_value": 12288,
+          "addend": 4,
+          "width_bytes": 4
+        },
+        "expected_error_fragment": "relocation field is outside the section",
+        "observed": {
+          "status": "error",
+          "input": {
+            "section_base": 8192,
+            "section_size": 16,
+            "relocation_offset": 16,
+            "symbol_value": 12288,
+            "addend": 4,
+            "width_bytes": 4
+          },
+          "input_sha256": "72ffb02717052e468f1730c9fdd4c296e431341f16af3dd2bcc27664d2eddf43",
+          "error_code": "input_contract_error",
+          "error": "relocation field is outside the section"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
