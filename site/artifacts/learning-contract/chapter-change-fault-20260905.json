@@ -3,13 +3,13 @@
   "kind": "chapter_change_fault_evidence",
   "generated_by": "tools/run_chapter_change_fault.py",
   "command": "python3 tools/run_chapter_change_fault.py",
-  "source_sha256": "e69a6836136897ec5e3a4cec951189b180066ca08654b44054ef2f257c953f2a",
-  "scope": "chapters 9-48; executable educational models",
+  "source_sha256": "7fa515cd785118b821b78f0bd9f84166f541eef2a8e54b6fac08623ccd5067e2",
+  "scope": "chapters 9-52; executable educational models",
   "summary": {
-    "chapters": 40,
-    "baseline_passed": 40,
-    "change_passed": 40,
-    "fault_passed": 40,
+    "chapters": 44,
+    "baseline_passed": 44,
+    "change_passed": 44,
+    "fault_passed": 44,
     "measured_true": 0,
     "learner_interaction_true": 0,
     "independent_review_true": 0
@@ -3204,6 +3204,312 @@
           "input_sha256": "a8a2296c3a14519c1ad1cd08d59b46dce0193cfa03dbc6f9d46309be30430a3d",
           "error_code": "input_contract_error",
           "error": "address must be nonnegative"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 49,
+      "title": "trap、interrupt、privilege",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "rv32edu_trap_cause_and_mepc",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "cause": 2,
+          "mepc": 4096,
+          "interrupt": false
+        },
+        "input_sha256": "c0a4785eb849f01ceaf74c791e62b5b625fdfee7fa355a0843da0b4d77562ed0",
+        "output": {
+          "mcause": 2.0,
+          "mepc": 4096.0,
+          "return_pc": 4096.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "cause": 7,
+          "mepc": 4096,
+          "interrupt": true
+        },
+        "output_changed_key": "mcause",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "cause": 7,
+            "mepc": 4096,
+            "interrupt": true
+          },
+          "input_sha256": "1028d86832ffca3ce3f05543ba55a1464bca57b3877bb045143c1cb1d9f0edcc",
+          "output": {
+            "mcause": 7.0,
+            "mepc": 4096.0,
+            "return_pc": 4096.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "cause": 99,
+          "mepc": 4096,
+          "interrupt": false
+        },
+        "expected_error_fragment": "cause is outside the declared RV32edu trap table",
+        "observed": {
+          "status": "error",
+          "input": {
+            "cause": 99,
+            "mepc": 4096,
+            "interrupt": false
+          },
+          "input_sha256": "fb1428b3c2ec9c7e424b2edc7cc2f369486628a3a612ccde44e981367ee2449e",
+          "error_code": "input_contract_error",
+          "error": "cause is outside the declared RV32edu trap table"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 50,
+      "title": "rv32eduの統合とboot ROM",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E5",
+        "E6"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "reset_vector_and_uart_mmio_bridge",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "reset_pc": 0,
+          "uart_address": 32768,
+          "uart_byte": 72
+        },
+        "input_sha256": "4fd899edea9f99b3fa242bce16253a8b93f9df1656a38f4b1e6bfa1a566a2d04",
+        "output": {
+          "first_fetch_pc": 0.0,
+          "uart_address": 32768.0,
+          "uart_byte": 72.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "reset_pc": 256,
+          "uart_address": 32768,
+          "uart_byte": 72
+        },
+        "output_changed_key": "first_fetch_pc",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "reset_pc": 256,
+            "uart_address": 32768,
+            "uart_byte": 72
+          },
+          "input_sha256": "edc8477fa08be6614d8fd3723124b9d83e12dc6b40057fc120625be0c708c56b",
+          "output": {
+            "first_fetch_pc": 256.0,
+            "uart_address": 32768.0,
+            "uart_byte": 72.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "reset_pc": -4,
+          "uart_address": 32768,
+          "uart_byte": 72
+        },
+        "expected_error_fragment": "reset_pc must be a nonnegative 4-byte aligned address",
+        "observed": {
+          "status": "error",
+          "input": {
+            "reset_pc": -4,
+            "uart_address": 32768,
+            "uart_byte": 72
+          },
+          "input_sha256": "a88f36daf5ad8ce35664c1c6e9b0402c62221e033edcad607e14e226631a1b8f",
+          "error_code": "input_contract_error",
+          "error": "reset_pc must be a nonnegative 4-byte aligned address"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 51,
+      "title": "latency、throughput、critical path",
+      "exercise_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E6"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "critical_path_cpi_performance",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "critical_path_ns": 1.0,
+          "cpi": 1.75,
+          "frequency_hz": 1000000000.0
+        },
+        "input_sha256": "f43db2b7d924f897c67e83385f57e54b2c88a4a550a8ab032fba61fcc72f3904",
+        "output": {
+          "cycle_time_s": 1e-09,
+          "latency_s": 1.75e-09,
+          "throughput_instr_per_s": 571428571.4285715
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "critical_path_ns": 2.0,
+          "cpi": 1.75,
+          "frequency_hz": 1000000000.0
+        },
+        "output_changed_key": "cycle_time_s",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "critical_path_ns": 2.0,
+            "cpi": 1.75,
+            "frequency_hz": 1000000000.0
+          },
+          "input_sha256": "7d31f2ec9759461ab206f096d9f200919673493441212bfed37890d295ee42d1",
+          "output": {
+            "cycle_time_s": 2e-09,
+            "latency_s": 1.75e-09,
+            "throughput_instr_per_s": 571428571.4285715
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "critical_path_ns": 1.0,
+          "cpi": 0.0,
+          "frequency_hz": 1000000000.0
+        },
+        "expected_error_fragment": "cpi must be a finite positive number",
+        "observed": {
+          "status": "error",
+          "input": {
+            "critical_path_ns": 1.0,
+            "cpi": 0.0,
+            "frequency_hz": 1000000000.0
+          },
+          "input_sha256": "d49b601d94222bda2510960f9ca61dccfd72c54ae2e8da64c5485db1e3e4c924",
+          "error_code": "input_contract_error",
+          "error": "cpi must be a finite positive number"
+        },
+        "diagnosis": "入力契約エラーを明示できた"
+      },
+      "measured": false,
+      "measurement_status": "not_run",
+      "learner_interaction": false,
+      "independent_review": false,
+      "boundary": "教育モデルの再現記録であり、学習者の合格、外部tool実行、物理測定、独立レビューを証明しない"
+    },
+    {
+      "chapter_id": 52,
+      "title": "五段pipeline",
+      "exercise_refs": [
+        "E1",
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "execution_mode": "educational_model",
+      "model_name": "pipeline_fill_drain_and_flush",
+      "baseline": {
+        "status": "passed",
+        "input": {
+          "stage_count": 5,
+          "instruction_count": 5,
+          "flushes": 0
+        },
+        "input_sha256": "45064db3e00de9e4a84b8b437795259817b244dedbf6d67e56ce3494d2a63eda",
+        "output": {
+          "total_cycles": 9.0,
+          "retire_cycle_last": 9.0
+        }
+      },
+      "change": {
+        "status": "passed",
+        "input": {
+          "stage_count": 5,
+          "instruction_count": 5,
+          "flushes": 1
+        },
+        "output_changed_key": "total_cycles",
+        "output_changed": true,
+        "observed": {
+          "status": "passed",
+          "input": {
+            "stage_count": 5,
+            "instruction_count": 5,
+            "flushes": 1
+          },
+          "input_sha256": "642dcce17d117854ad7f349035ab611f4d8fb0cdb00b0fbbb99fe8e032d52201",
+          "output": {
+            "total_cycles": 10.0,
+            "retire_cycle_last": 10.0
+          }
+        },
+        "diagnosis": "変更入力で予測量が変化した"
+      },
+      "fault": {
+        "status": "passed",
+        "input": {
+          "stage_count": 0,
+          "instruction_count": 5,
+          "flushes": 0
+        },
+        "expected_error_fragment": "stage_count must be a positive integer",
+        "observed": {
+          "status": "error",
+          "input": {
+            "stage_count": 0,
+            "instruction_count": 5,
+            "flushes": 0
+          },
+          "input_sha256": "2f88d1b9e42f6998282b1dea57edde09e61c98031aa0086f3175299c0114d040",
+          "error_code": "input_contract_error",
+          "error": "stage_count must be a positive integer"
         },
         "diagnosis": "入力契約エラーを明示できた"
       },
